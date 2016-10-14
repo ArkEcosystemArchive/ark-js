@@ -713,11 +713,11 @@ describe("Ark JS", function () {
 			});
 
 			it("should fail if transaction with vendorField > 64 bytes", function () {
-				var vf="0";
+				var vf="z";
 				for(i=0;i<6;i++){
 					vf=vf+vf;
 				}
-				vf=vf+"1";
+				vf=vf+"z";
 				try{
 					trs = createTransaction("58191285901858109L", 1000, vf, "secret");
 				}	catch(e){
@@ -728,7 +728,7 @@ describe("Ark JS", function () {
 			});
 
 			it("should be ok if transaction with vendorField = 64 bytes", function () {
-				var vf="0";
+				var vf="z";
 				for(i=0;i<6;i++){
 					vf=vf+vf;
 				}

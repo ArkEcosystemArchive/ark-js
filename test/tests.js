@@ -51,7 +51,7 @@ describe("Ark JS", function () {
 				(getBytes).should.be.type("function");
 			});
 
-			it("should return Buffer of simply transaction and buffer most be 117 length", function () {
+			it("should return Buffer of simply transaction and buffer most be 181 length", function () {
 				var transaction = {
 					type: 0,
 					amount: 1000,
@@ -66,10 +66,10 @@ describe("Ark JS", function () {
 				bytes = getBytes(transaction);
 				(bytes).should.be.ok;
 				(bytes).should.be.type("object");
-				(bytes.length).should.be.equal(117);
+				(bytes.length).should.be.equal(181);
 			});
 
-			it("should return Buffer of transaction with second signature and buffer most be 181 length", function () {
+			it("should return Buffer of transaction with second signature and buffer most be 245 length", function () {
 				var transaction = {
 					type: 0,
 					amount: 1000,
@@ -85,7 +85,7 @@ describe("Ark JS", function () {
 				bytes = getBytes(transaction);
 				(bytes).should.be.ok;
 				(bytes).should.be.type("object");
-				(bytes.length).should.be.equal(181);
+				(bytes.length).should.be.equal(245);
 			});
 		});
 
@@ -130,7 +130,7 @@ describe("Ark JS", function () {
 				(getId).should.be.type("function");
 			});
 
-			it("should return string id and be equal to 13987348420913138422", function () {
+			it("should return string id and be equal to 5235387351130653323", function () {
 				var transaction = {
 					type: 0,
 					amount: 1000,
@@ -142,7 +142,7 @@ describe("Ark JS", function () {
 				};
 
 				var id = getId(transaction);
-				(id).should.be.type("string").and.equal("13987348420913138422");
+				(id).should.be.type("string").and.equal("5235387351130653323");
 			});
 		});
 
@@ -703,7 +703,36 @@ describe("Ark JS", function () {
 			});
 
 			it("should create transaction without second signature", function () {
-				trs = createTransaction("58191285901858109L", 1000, "secret");
+				trs = createTransaction("58191285901858109L", 1000, null, "secret");
+				(trs).should.be.ok;
+			});
+
+			it("should create transaction with vendorField", function () {
+				trs = createTransaction("58191285901858109L", 1000, "this is a test vendorfield", "secret");
+				(trs).should.be.ok;
+			});
+
+			it("should fail if transaction with vendorField > 64 bytes", function () {
+				var vf="0";
+				for(i=0;i<6;i++){
+					vf=vf+vf;
+				}
+				vf=vf+"1";
+				try{
+					trs = createTransaction("58191285901858109L", 1000, vf, "secret");
+				}	catch(e){
+					return true;
+				}
+				return false;
+
+			});
+
+			it("should be ok if transaction with vendorField = 64 bytes", function () {
+				var vf="0";
+				for(i=0;i<6;i++){
+					vf=vf+vf;
+				}
+				trs = createTransaction("58191285901858109L", 1000, vf, "secret");
 				(trs).should.be.ok;
 			});
 
@@ -788,7 +817,7 @@ describe("Ark JS", function () {
 			});
 
 			it("should create transaction without second signature", function () {
-				trs = createTransaction("58191285901858109L", 1000, "secret", secondSecret);
+				trs = createTransaction("58191285901858109L", 1000, null, "secret", secondSecret);
 				(trs).should.be.ok;
 			});
 

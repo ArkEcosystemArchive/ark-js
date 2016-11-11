@@ -1,5 +1,5 @@
 {
-  "name": "ark-js",
+  "name": "arkjs",
   "version": "0.1.0",
   "description": "JavaScript library for sending Ark transactions from the client or server",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:arkio/ark-js.git"
+    "url": "git+https://github.com/ArkEcosystem/ark-js.git"
   },
   "author": "FX Thoorens <fx@ark.io>, Boris Povod <boris@crypti.me>, Oliver Beddows <oliver@lisk.io>",
   "license": "MIT",

@@ -4,9 +4,7 @@ Ark JS is a JavaScript library for sending Ark transactions. It's main benefit i
 
 ## Installation
 
-```
-npm install ark-js
-```
+[![npm package](https://nodei.co/npm/arkjs.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/arkjs/)
 
 ## Tests
 

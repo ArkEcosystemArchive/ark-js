@@ -21,13 +21,13 @@ Tests written using mocha + schedule.js.
 On the client:
 
 ```html
-<script src="node_modules/ark-js/app.js"></script>
+<script src="node_modules/arkjs/app.js"></script>
 ```
 
 On the server:
 
 ```js
-var ark = require('ark-js');
+var ark = require('arkjs');
 ```
 
 ### Generating a key pair

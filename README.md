@@ -4,9 +4,7 @@ Ark JS is a JavaScript library for sending Ark transactions. It's main benefit i
 
 ## Installation
 
-```
-npm install ark-js
-```
+[![npm package](https://nodei.co/npm/arkjs.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/arkjs/)
 
 ## Tests
 
@@ -23,13 +21,13 @@ Tests written using mocha + schedule.js.
 On the client:
 
 ```html
-<script src="node_modules/ark-js/app.js"></script>
+<script src="node_modules/arkjs/app.js"></script>
 ```
 
 On the server:
 
 ```js
-var ark = require('ark-js');
+var ark = require('arkjs');
 ```
 
 ### Generating a key pair
@@ -262,8 +260,8 @@ var transaction = ark.vote.createVote("secret", ["+58199578191950019299181920120
 
 The MIT License (MIT)
 
-Copyright (c) 2016 Ark
-Copyright (c) 2016 Lisk
+Copyright (c) 2016 Ark<br />
+Copyright (c) 2016 Lisk<br />
 Copyright (c) 2015 Crypti
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:

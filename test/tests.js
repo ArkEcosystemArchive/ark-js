@@ -51,11 +51,11 @@ describe("Ark JS", function () {
 				(getBytes).should.be.type("function");
 			});
 
-			it("should return Buffer of simply transaction and buffer most be 181 length", function () {
+			it("should return Buffer of simply transaction and buffer most be 205 length", function () {
 				var transaction = {
 					type: 0,
 					amount: 1000,
-					recipientId: "58191285901858109A",
+					recipientId: "hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA",
 					timestamp: 141738,
 					asset: {},
 					senderPublicKey: "5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
@@ -66,14 +66,14 @@ describe("Ark JS", function () {
 				bytes = getBytes(transaction);
 				(bytes).should.be.ok;
 				(bytes).should.be.type("object");
-				(bytes.length).should.be.equal(181);
+				(bytes.length).should.be.equal(205);
 			});
 
-			it("should return Buffer of transaction with second signature and buffer most be 245 length", function () {
+			it("should return Buffer of transaction with second signature and buffer most be 269 length", function () {
 				var transaction = {
 					type: 0,
 					amount: 1000,
-					recipientId: "58191285901858109A",
+					recipientId: "hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA",
 					timestamp: 141738,
 					asset: {},
 					senderPublicKey: "5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
@@ -85,7 +85,7 @@ describe("Ark JS", function () {
 				bytes = getBytes(transaction);
 				(bytes).should.be.ok;
 				(bytes).should.be.type("object");
-				(bytes.length).should.be.equal(245);
+				(bytes.length).should.be.equal(269);
 			});
 		});
 
@@ -104,7 +104,7 @@ describe("Ark JS", function () {
 				var transaction = {
 					type: 0,
 					amount: 1000,
-					recipientId: "58191285901858109A",
+					recipientId: "hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA",
 					timestamp: 141738,
 					asset: {},
 					senderPublicKey: "5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
@@ -130,11 +130,11 @@ describe("Ark JS", function () {
 				(getId).should.be.type("function");
 			});
 
-			it("should return string id and be equal to 5235387351130653323", function () {
+			it("should return string id and be equal to 5201658155162152093", function () {
 				var transaction = {
 					type: 0,
 					amount: 1000,
-					recipientId: "58191285901858109A",
+					recipientId: "hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA",
 					timestamp: 141738,
 					asset: {},
 					senderPublicKey: "5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
@@ -142,7 +142,7 @@ describe("Ark JS", function () {
 				};
 
 				var id = getId(transaction);
-				(id).should.be.type("string").and.equal("5235387351130653323");
+				(id).should.be.type("string").and.equal("5201658155162152093");
 			});
 		});
 
@@ -280,7 +280,7 @@ describe("Ark JS", function () {
 
 				(address).should.be.ok;
 				(address).should.be.type("string");
-				(address).should.be.equal("18160565574430594874A");
+				(address).should.be.equal("hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA");
 			});
 		});
 
@@ -703,12 +703,13 @@ describe("Ark JS", function () {
 			});
 
 			it("should create transaction without second signature", function () {
-				trs = createTransaction("58191285901858109A", 1000, null, "secret");
+				trs = createTransaction("hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA", 1000, null, "secret");
+				console.log(trs);
 				(trs).should.be.ok;
 			});
 
 			it("should create transaction with vendorField", function () {
-				trs = createTransaction("58191285901858109A", 1000, "this is a test vendorfield", "secret");
+				trs = createTransaction("hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA", 1000, "this is a test vendorfield", "secret");
 				(trs).should.be.ok;
 			});
 
@@ -719,7 +720,7 @@ describe("Ark JS", function () {
 				}
 				vf=vf+"z";
 				try{
-					trs = createTransaction("58191285901858109A", 1000, vf, "secret");
+					trs = createTransaction("hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA", 1000, vf, "secret");
 				}	catch(e){
 					return true;
 				}
@@ -732,7 +733,7 @@ describe("Ark JS", function () {
 				for(i=0;i<6;i++){
 					vf=vf+vf;
 				}
-				trs = createTransaction("58191285901858109A", 1000, vf, "secret");
+				trs = createTransaction("hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA", 1000, vf, "secret");
 				(trs).should.be.ok;
 			});
 
@@ -765,8 +766,8 @@ describe("Ark JS", function () {
 					})
 				});
 
-				it("should have recipientId as string and to be equal 58191285901858109A", function () {
-					(trs.recipientId).should.be.type("string").and.equal("58191285901858109A");
+				it("should have recipientId as string and to be equal hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA", function () {
+					(trs.recipientId).should.be.type("string").and.equal("hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA");
 				});
 
 				it("should have amount as number and eqaul to 1000", function () {
@@ -817,7 +818,7 @@ describe("Ark JS", function () {
 			});
 
 			it("should create transaction without second signature", function () {
-				trs = createTransaction("58191285901858109A", 1000, null, "secret", secondSecret);
+				trs = createTransaction("hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA", 1000, null, "secret", secondSecret);
 				(trs).should.be.ok;
 			});
 
@@ -850,8 +851,8 @@ describe("Ark JS", function () {
 					})
 				});
 
-				it("should have recipientId as string and to be equal 58191285901858109A", function () {
-					(trs.recipientId).should.be.type("string").and.equal("58191285901858109A");
+				it("should have recipientId as string and to be equal hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA", function () {
+					(trs.recipientId).should.be.type("string").and.equal("hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA");
 				});
 
 				it("should have amount as number and eqaul to 1000", function () {
@@ -1061,7 +1062,7 @@ describe("Ark JS", function () {
 					(vt).should.have.property("recipientId").and.be.type("string").and.equal(ark.crypto.getAddress(publicKey))
 				});
 
-				it("should have amount number eaul to 0", function () {
+				it("should have amount number equal to 0", function () {
 					(vt).should.have.property("amount").and.be.type("number").and.equal(0);
 				});
 

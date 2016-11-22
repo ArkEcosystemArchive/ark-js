@@ -55,7 +55,7 @@ describe("Ark JS", function () {
 				var transaction = {
 					type: 0,
 					amount: 1000,
-					recipientId: "58191285901858109L",
+					recipientId: "58191285901858109A",
 					timestamp: 141738,
 					asset: {},
 					senderPublicKey: "5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
@@ -73,7 +73,7 @@ describe("Ark JS", function () {
 				var transaction = {
 					type: 0,
 					amount: 1000,
-					recipientId: "58191285901858109L",
+					recipientId: "58191285901858109A",
 					timestamp: 141738,
 					asset: {},
 					senderPublicKey: "5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
@@ -104,7 +104,7 @@ describe("Ark JS", function () {
 				var transaction = {
 					type: 0,
 					amount: 1000,
-					recipientId: "58191285901858109L",
+					recipientId: "58191285901858109A",
 					timestamp: 141738,
 					asset: {},
 					senderPublicKey: "5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
@@ -134,7 +134,7 @@ describe("Ark JS", function () {
 				var transaction = {
 					type: 0,
 					amount: 1000,
-					recipientId: "58191285901858109L",
+					recipientId: "58191285901858109A",
 					timestamp: 141738,
 					asset: {},
 					senderPublicKey: "5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
@@ -280,7 +280,7 @@ describe("Ark JS", function () {
 
 				(address).should.be.ok;
 				(address).should.be.type("string");
-				(address).should.be.equal("18160565574430594874L");
+				(address).should.be.equal("18160565574430594874A");
 			});
 		});
 
@@ -703,12 +703,12 @@ describe("Ark JS", function () {
 			});
 
 			it("should create transaction without second signature", function () {
-				trs = createTransaction("58191285901858109L", 1000, null, "secret");
+				trs = createTransaction("58191285901858109A", 1000, null, "secret");
 				(trs).should.be.ok;
 			});
 
 			it("should create transaction with vendorField", function () {
-				trs = createTransaction("58191285901858109L", 1000, "this is a test vendorfield", "secret");
+				trs = createTransaction("58191285901858109A", 1000, "this is a test vendorfield", "secret");
 				(trs).should.be.ok;
 			});
 
@@ -719,7 +719,7 @@ describe("Ark JS", function () {
 				}
 				vf=vf+"z";
 				try{
-					trs = createTransaction("58191285901858109L", 1000, vf, "secret");
+					trs = createTransaction("58191285901858109A", 1000, vf, "secret");
 				}	catch(e){
 					return true;
 				}
@@ -732,7 +732,7 @@ describe("Ark JS", function () {
 				for(i=0;i<6;i++){
 					vf=vf+vf;
 				}
-				trs = createTransaction("58191285901858109L", 1000, vf, "secret");
+				trs = createTransaction("58191285901858109A", 1000, vf, "secret");
 				(trs).should.be.ok;
 			});
 
@@ -765,8 +765,8 @@ describe("Ark JS", function () {
 					})
 				});
 
-				it("should have recipientId as string and to be equal 58191285901858109L", function () {
-					(trs.recipientId).should.be.type("string").and.equal("58191285901858109L");
+				it("should have recipientId as string and to be equal 58191285901858109A", function () {
+					(trs.recipientId).should.be.type("string").and.equal("58191285901858109A");
 				});
 
 				it("should have amount as number and eqaul to 1000", function () {
@@ -817,7 +817,7 @@ describe("Ark JS", function () {
 			});
 
 			it("should create transaction without second signature", function () {
-				trs = createTransaction("58191285901858109L", 1000, null, "secret", secondSecret);
+				trs = createTransaction("58191285901858109A", 1000, null, "secret", secondSecret);
 				(trs).should.be.ok;
 			});
 
@@ -850,8 +850,8 @@ describe("Ark JS", function () {
 					})
 				});
 
-				it("should have recipientId as string and to be equal 58191285901858109L", function () {
-					(trs.recipientId).should.be.type("string").and.equal("58191285901858109L");
+				it("should have recipientId as string and to be equal 58191285901858109A", function () {
+					(trs.recipientId).should.be.type("string").and.equal("58191285901858109A");
 				});
 
 				it("should have amount as number and eqaul to 1000", function () {

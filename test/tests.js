@@ -360,9 +360,13 @@ describe("Ark JS", function () {
 					(trs).should.have.property("amount").and.type("number").and.equal(0);
 				})
 
-				it("should have type equal 0", function () {
+				it("should have type equal 2", function () {
 					(trs).should.have.property("type").and.type("number").and.equal(2);
 				});
+
+				// it("should have id equal 15288096047519225673", function () {
+				// 	(trs).should.have.property("id").and.type("string").and.equal('15288096047519225673');
+				// });
 
 				it("should have timestamp number", function () {
 					(trs).should.have.property("timestamp").and.type("number");

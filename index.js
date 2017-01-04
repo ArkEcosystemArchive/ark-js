@@ -6,10 +6,10 @@ ark = {
 	vote : require("./lib/transactions/vote.js"),
 	ipfs : require("./lib/transactions/ipfs.js"),
 	wallet {
-		hdnode : require("./lib/hdnode.js"),
-		ecpair : require("./lib/ecpair.js"),
-		ecsignature : require("./lib/ecsignature.js")
-	}
+		hdnode : require("./lib/hdnode.js")
+	},
+	ecpair : require("./lib/ecpair.js"),
+	ecsignature : require("./lib/ecsignature.js")
 
 }
 

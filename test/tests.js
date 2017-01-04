@@ -51,11 +51,11 @@ describe("Ark JS", function () {
 				(getBytes).should.be.type("function");
 			});
 
-			it("should return Buffer of simply transaction and buffer most be 205 length", function () {
+			it("should return Buffer of simply transaction and buffer most be 194 length", function () {
 				var transaction = {
 					type: 0,
 					amount: 1000,
-					recipientId: "hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA",
+					recipientId: "AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff",
 					timestamp: 141738,
 					asset: {},
 					senderPublicKey: "5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
@@ -66,14 +66,14 @@ describe("Ark JS", function () {
 				bytes = getBytes(transaction);
 				(bytes).should.be.ok;
 				(bytes).should.be.type("object");
-				(bytes.length).should.be.equal(205);
+				(bytes.length).should.be.equal(194);
 			});
 
-			it("should return Buffer of transaction with second signature and buffer most be 269 length", function () {
+			it("should return Buffer of transaction with second signature and buffer most be 258 length", function () {
 				var transaction = {
 					type: 0,
 					amount: 1000,
-					recipientId: "hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA",
+					recipientId: "AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff",
 					timestamp: 141738,
 					asset: {},
 					senderPublicKey: "5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
@@ -85,7 +85,7 @@ describe("Ark JS", function () {
 				bytes = getBytes(transaction);
 				(bytes).should.be.ok;
 				(bytes).should.be.type("object");
-				(bytes.length).should.be.equal(269);
+				(bytes.length).should.be.equal(258);
 			});
 		});
 
@@ -104,7 +104,7 @@ describe("Ark JS", function () {
 				var transaction = {
 					type: 0,
 					amount: 1000,
-					recipientId: "hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA",
+					recipientId: "AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff",
 					timestamp: 141738,
 					asset: {},
 					senderPublicKey: "5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
@@ -130,11 +130,11 @@ describe("Ark JS", function () {
 				(getId).should.be.type("function");
 			});
 
-			it("should return string id and be equal to 5201658155162152093", function () {
+			it("should return string id and be equal to 1725923320430829409", function () {
 				var transaction = {
 					type: 0,
 					amount: 1000,
-					recipientId: "hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA",
+					recipientId: "AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff",
 					timestamp: 141738,
 					asset: {},
 					senderPublicKey: "5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
@@ -142,7 +142,7 @@ describe("Ark JS", function () {
 				};
 
 				var id = getId(transaction);
-				(id).should.be.type("string").and.equal("5201658155162152093");
+				(id).should.be.type("string").and.equal("1725923320430829409");
 			});
 		});
 
@@ -280,7 +280,16 @@ describe("Ark JS", function () {
 
 				(address).should.be.ok;
 				(address).should.be.type("string");
-				(address).should.be.equal("hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA");
+				(address).should.be.equal("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff");
+			});
+
+			it("should generate address by publicKey - second test", function () {
+				var keys = crypto.getKeys("secret second test to be sure it works correctly");
+				var address = getAddress(keys.publicKey);
+
+				(address).should.be.ok;
+				(address).should.be.type("string");
+				(address).should.be.equal("AQSqYnjmwj1GBL5twD4K9EBXDaTHZognox");
 			});
 		});
 
@@ -364,8 +373,8 @@ describe("Ark JS", function () {
 					(trs).should.have.property("type").and.type("number").and.equal(2);
 				});
 
-				// it("should have id equal 15288096047519225673", function () {
-				// 	(trs).should.have.property("id").and.type("string").and.equal('15288096047519225673');
+				// it("should have id equal 11636400490162225218", function () {
+				// 	(trs).should.have.property("id").and.type("string").and.equal('11636400490162225218');
 				// });
 
 				it("should have timestamp number", function () {
@@ -414,7 +423,7 @@ describe("Ark JS", function () {
 				})
 
 				it("should be signed correctly", function () {
-					var result = ark.crypto.verify(trs, keys.publicKey);
+					var result = ark.crypto.verify(trs);
 					(result).should.be.ok;
 				});
 
@@ -425,13 +434,13 @@ describe("Ark JS", function () {
 
 				it("should not be signed correctly now", function () {
 					trs.amount = 100;
-					var result = ark.crypto.verify(trs, keys.publicKey);
+					var result = ark.crypto.verify(trs);
 					(result).should.be.not.ok;
 				});
 
 				it("should not be second signed correctly now", function () {
 					trs.amount = 100;
-					var result = ark.crypto.verify(trs, secondKeys.publicKey);
+					var result = ark.crypto.verifySecondSignature(trs, secondKeys.publicKey);
 					(result).should.be.not.ok;
 				});
 
@@ -526,9 +535,9 @@ describe("Ark JS", function () {
 						});
 					});
 
-					it("should have publicKey in 32 bytes", function () {
+					it("should have publicKey in 33 bytes", function () {
 						var publicKey = new Buffer(sgn.asset.signature.publicKey, "hex");
-						(publicKey.length).should.be.equal(32);
+						(publicKey.length).should.be.equal(33);
 					});
 				});
 			});
@@ -707,13 +716,12 @@ describe("Ark JS", function () {
 			});
 
 			it("should create transaction without second signature", function () {
-				trs = createTransaction("hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA", 1000, null, "secret");
-				console.log(trs);
+				trs = createTransaction("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", 1000, null, "secret");
 				(trs).should.be.ok;
 			});
 
 			it("should create transaction with vendorField", function () {
-				trs = createTransaction("hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA", 1000, "this is a test vendorfield", "secret");
+				trs = createTransaction("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", 1000, "this is a test vendorfield", "secret");
 				(trs).should.be.ok;
 			});
 
@@ -724,7 +732,7 @@ describe("Ark JS", function () {
 				}
 				vf=vf+"z";
 				try{
-					trs = createTransaction("hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA", 1000, vf, "secret");
+					trs = createTransaction("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", 1000, vf, "secret");
 				}	catch(e){
 					return true;
 				}
@@ -737,7 +745,7 @@ describe("Ark JS", function () {
 				for(i=0;i<6;i++){
 					vf=vf+vf;
 				}
-				trs = createTransaction("hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA", 1000, vf, "secret");
+				trs = createTransaction("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", 1000, vf, "secret");
 				(trs).should.be.ok;
 			});
 
@@ -770,8 +778,8 @@ describe("Ark JS", function () {
 					})
 				});
 
-				it("should have recipientId as string and to be equal hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA", function () {
-					(trs.recipientId).should.be.type("string").and.equal("hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA");
+				it("should have recipientId as string and to be equal AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", function () {
+					(trs.recipientId).should.be.type("string").and.equal("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff");
 				});
 
 				it("should have amount as number and eqaul to 1000", function () {
@@ -822,7 +830,7 @@ describe("Ark JS", function () {
 			});
 
 			it("should create transaction without second signature", function () {
-				trs = createTransaction("hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA", 1000, null, "secret", secondSecret);
+				trs = createTransaction("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", 1000, null, "secret", secondSecret);
 				(trs).should.be.ok;
 			});
 
@@ -855,8 +863,8 @@ describe("Ark JS", function () {
 					})
 				});
 
-				it("should have recipientId as string and to be equal hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA", function () {
-					(trs.recipientId).should.be.type("string").and.equal("hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA");
+				it("should have recipientId as string and to be equal AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", function () {
+					(trs.recipientId).should.be.type("string").and.equal("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff");
 				});
 
 				it("should have amount as number and eqaul to 1000", function () {

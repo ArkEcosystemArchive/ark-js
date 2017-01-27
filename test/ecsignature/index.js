@@ -3,9 +3,9 @@
 var assert = require('assert')
 
 var BigInteger = require('bigi')
-var ECSignature = require('../lib/ecsignature')
+var ECSignature = require('../../lib/ecsignature')
 
-var fixtures = require('./fixtures/ecsignature.json')
+var fixtures = require('./fixtures.json')
 
 describe('ECSignature', function () {
   describe('toCompact', function () {

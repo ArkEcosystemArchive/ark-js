@@ -2,18 +2,18 @@
 /* eslint-disable no-new */
 
 var assert = require('assert')
-var ecdsa = require('../lib/ecdsa')
+var ecdsa = require('../../lib/ecdsa')
 var ecurve = require('ecurve')
 var proxyquire = require('proxyquire')
 var sinon = require('sinon')
 
 var BigInteger = require('bigi')
-var ECPair = require('../lib/ecpair')
+var ECPair = require('../../lib/ecpair')
 
-var fixtures = require('./fixtures/ecpair.json')
+var fixtures = require('./fixtures.json')
 var curve = ecdsa.__curve
 
-var NETWORKS = require('../lib/networks')
+var NETWORKS = require('../../lib/networks')
 var NETWORKS_LIST = [] // Object.values(NETWORKS)
 for (var networkName in NETWORKS) {
   NETWORKS_LIST.push(NETWORKS[networkName])
@@ -135,7 +135,7 @@ describe('ECPair', function () {
     describe('uses randombytes RNG', function () {
       it('generates a ECPair', function () {
         var stub = { randombytes: function () { return d } }
-        var ProxiedECPair = proxyquire('../lib/ecpair', stub)
+        var ProxiedECPair = proxyquire('../../lib/ecpair', stub)
 
         var keyPair = ProxiedECPair.makeRandom()
         assert.strictEqual(keyPair.toWIF(), exWIF)

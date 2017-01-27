@@ -1,16 +1,16 @@
 /* global describe, it */
 
 var assert = require('assert')
-var bcrypto = require('../lib/crypto')
-var ecdsa = require('../lib/ecdsa')
+var bcrypto = require('../../lib/crypto')
+var ecdsa = require('../../lib/ecdsa')
 var sinon = require('sinon')
 
 var BigInteger = require('bigi')
-var ECSignature = require('../lib/ecsignature')
+var ECSignature = require('../../lib/ecsignature')
 
 var curve = ecdsa.__curve
 
-var fixtures = require('./fixtures/ecdsa.json')
+var fixtures = require('./fixtures.json')
 
 describe('ecdsa', function () {
   describe('deterministicGenerateK', function () {

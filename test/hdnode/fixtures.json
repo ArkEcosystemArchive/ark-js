@@ -7,11 +7,11 @@
         "wif": "SHP217APiCmjmgjnf9pLDhP1ijJSxu6rsyAV2fibupLKp86JhaBo",
         "pubKey": "0339a36013301597daef41fbe593a02cc513d0b55527ec2df1050e2e8ff49c85c2",
         "chainCode": "873dff81c02f525623fd1fe5167eac3a55a049de3d314bb42ee227ffed37d508",
-        "base58": "xpub661MyMwAqRbcFtXgS5sYJABqqG9YLmC4Q1Rdap9gSE8NqtwybGhePY2gZ29ESFjqJoCu1Rupje8YtGqsefD265TMg7usUDFdp6W1EGMcet8",
-        "base58Priv": "xprv9s21ZrQH143K3QTDL4LXw2F7HEK3wJUD2nW2nRk4stbPy6cq3jPPqjiChkVvvNKmPGJxWUtg6LnF5kejMRNNU3TGtRBeJgk33yuGBxrMPHi",
+        "base58": "apubFZ6vkWBiARunuLDjfSpynmXY5xJb8rKCfhK9LPjZoxMqb4tCCW5wyYAQkCtbWYVRBedRjvbjNapwtdFCNd7JheoXeZeYeX7HBrooJFbR2km",
+        "base58Priv": "aprvbwWwpofWx4cF2p3v8fZ9WB1ZZupzF8XTidjuWGbKyVMgdeQHpfnNh8ShYf5Z2vDC73jkTwNoUmy8YkwncgHFEPAqvmzKXLU3mTu2tY4UFKr",
         "identifier": "3442193e1bb70916e914552172cd4e2dbc9df811",
         "fingerprint": "3442193e",
-        "address": "15mKKb2eos1hWa6tisdPwwDC1a5J1y9nma"
+        "address": "ALYBy5tH91frKYJtHXHj6pUHVAzzSiUwh5"
       },
       "children": [
         {
@@ -89,17 +89,17 @@
       ]
     },
     {
-      "network": "bitcoin",
+      "network": "ark",
       "master": {
         "seed": "000102030405060708090a0b0c0d0e0f",
-        "wif": "L52XzL2cMkHxqxBXRyEpnPQZGUs3uKiL3R11XbAdHigRzDozKZeW",
+        "wif": "SHP217APiCmjmgjnf9pLDhP1ijJSxu6rsyAV2fibupLKp86JhaBo",
         "pubKey": "0339a36013301597daef41fbe593a02cc513d0b55527ec2df1050e2e8ff49c85c2",
         "chainCode": "873dff81c02f525623fd1fe5167eac3a55a049de3d314bb42ee227ffed37d508",
-        "base58": "xpub661MyMwAqRbcFtXgS5sYJABqqG9YLmC4Q1Rdap9gSE8NqtwybGhePY2gZ29ESFjqJoCu1Rupje8YtGqsefD265TMg7usUDFdp6W1EGMcet8",
-        "base58Priv": "xprv9s21ZrQH143K3QTDL4LXw2F7HEK3wJUD2nW2nRk4stbPy6cq3jPPqjiChkVvvNKmPGJxWUtg6LnF5kejMRNNU3TGtRBeJgk33yuGBxrMPHi",
+        "base58": "apubFZ6vkWBiARunuLDjfSpynmXY5xJb8rKCfhK9LPjZoxMqb4tCCW5wyYAQkCtbWYVRBedRjvbjNapwtdFCNd7JheoXeZeYeX7HBrooJFbR2km",
+        "base58Priv": "aprvbwWwpofWx4cF2p3v8fZ9WB1ZZupzF8XTidjuWGbKyVMgdeQHpfnNh8ShYf5Z2vDC73jkTwNoUmy8YkwncgHFEPAqvmzKXLU3mTu2tY4UFKr",
         "identifier": "3442193e1bb70916e914552172cd4e2dbc9df811",
         "fingerprint": "3442193e",
-        "address": "15mKKb2eos1hWa6tisdPwwDC1a5J1y9nma"
+        "address": "ALYBy5tH91frKYJtHXHj6pUHVAzzSiUwh5"
       },
       "children": [
         {
@@ -177,17 +177,17 @@
       ]
     },
     {
-      "network": "bitcoin",
+      "network": "ark",
       "master": {
         "seed": "fffcf9f6f3f0edeae7e4e1dedbd8d5d2cfccc9c6c3c0bdbab7b4b1aeaba8a5a29f9c999693908d8a8784817e7b7875726f6c696663605d5a5754514e4b484542",
-        "wif": "KyjXhyHF9wTphBkfpxjL8hkDXDUSbE3tKANT94kXSyh6vn6nKaoy",
+        "wif": "SC61ikR2WPwbcvJw49Jqa1ifyTuqeoSR9iXve9JW55LzkgT9z6Ux",
         "pubKey": "03cbcaa9c98c877a26977d00825c956a238e8dddfbd322cce4f74b0b5bd6ace4a7",
         "chainCode": "60499f801b896d83179a4374aeb7822aaeaceaa0db1f85ee3e904c4defbd9689",
-        "base58": "xpub661MyMwAqRbcFW31YEwpkMuc5THy2PSt5bDMsktWQcFF8syAmRUapSCGu8ED9W6oDMSgv6Zz8idoc4a6mr8BDzTJY47LJhkJ8UB7WEGuduB",
-        "base58Priv": "xprv9s21ZrQH143K31xYSDQpPDxsXRTUcvj2iNHm5NUtrGiGG5e2DtALGdso3pGz6ssrdK4PFmM8NSpSBHNqPqm55Qn3LqFtT2emdEXVYsCzC2U",
+        "base58": "apubFZ6vkWBiARuntwj4mbuGEyFJL9T1pUa2MH6sdLUPnLUht3uPNertQSL16JyaDnrP6CsDebFtmfLCcQyRVp2TqZoUWVr1V1bwWEUua7Fjrr1",
+        "base58Priv": "aprvbwWwpofWx4cF2RZFEpdRxNjKp6yQvknHQDXdoDL9wsUYvdRUzpZK82cHtircDRmHM6VBDDqFkt1KeHftf6fwqkVcPC4ZfgNnLiXGFSSJ1eR",
         "identifier": "bd16bee53961a47d6ad888e29545434a89bdfe95",
         "fingerprint": "bd16bee5",
-        "address": "1JEoxevbLLG8cVqeoGKQiAwoWbNYSUyYjg"
+        "address": "AZ1gc9nDfUvHRU3eMuyjs4CtzCJEo1ui4L"
       },
       "children": [
         {
@@ -266,17 +266,17 @@
     },
     {
       "comment": "Private key has leading zeros, see PR #673",
-      "network": "bitcoin",
+      "network": "ark",
       "master": {
         "seed": "d13de7bd1e54422d1a3b3b699a27fb460de2849e7e66a005c647e8e4a54075cb",
-        "wif": "KwDiCU5bs8xQwsRgxjhkcJcVuR7NE4Mei8X9uSAVviVTE7JmMoS6",
+        "wif": "S9aCDFDPDbSBsbyxBvHG3caxMfYmHdkBYggdQWiUYp9M41cTBtT2",
         "pubKey": "0298ccc720d5dea817c7077605263bae52bca083cf8888fee77ff4c1b4797ee180",
         "chainCode": "c23ab32b36ddff49fae350a1bed8ec6b4d9fc252238dd789b7273ba4416054eb",
-        "base58": "xpub661MyMwAqRbcGUbHLLJ5n2DzFAt8mmaDxbmbdimh68m8EiXGEQPiJya4BJat5yMzy4e68VSUoLGCu5uvzf8dUoGvwuJsLE6F1cibmWsxFNn",
-        "base58Priv": "xprv9s21ZrQH143K3zWpEJm5QtHFh93eNJrNbNqzqLN5XoE9MvC7gs5TmBFaL2PpaXpDc8FBYVe5EChc73ApjSQ5fWsXS7auHy1MmG6hdpywE1q",
+        "base58": "apubFZ6vkWBiARunuvHLZhFXGdZgVs3BZrhNEHf7PJMaTrzaytTUqdn1tyhnNVLFAG7aqv4crz8PSGxbuSKFid2v6Nd6vM3YWXwtPP2PqYAifBo",
+        "base58Priv": "aprvbwWwpofWx4cF3Q7X2uygz33hypZag8udHE5sZBDLdPzS2TyaToUScZz5AvySh5heKufyVx8CcdtVa3TszhJxRrb6UUPaWcjNUk6ULQVVdRR",
         "identifier": "1a87677be6f73cc9655e8b4c5d2fd0aeeb1b23c7",
         "fingerprint": "1a87677b",
-        "address": "KyDarNhq8WK8rSU36UY7bDv9MAwdpKFZYKPN89Geh2dUwHjTqVh5"
+        "address": "AJC9RY6uYvMRp2M7vnPPaeNbgJLMx1DwNy"
       },
       "children": [
         {
@@ -295,17 +295,17 @@
       ]
     },
     {
-      "network": "litecoin",
+      "network": "bitcoin",
       "master": {
         "seed": "000102030405060708090a0b0c0d0e0f",
-        "wif": "TAroS5Knm8GZcnpPycBgzjwwDLWMyQjDrcuGPPoArgrbW7Ln22qp",
+        "wif": "L52XzL2cMkHxqxBXRyEpnPQZGUs3uKiL3R11XbAdHigRzDozKZeW",
         "pubKey": "0339a36013301597daef41fbe593a02cc513d0b55527ec2df1050e2e8ff49c85c2",
         "chainCode": "873dff81c02f525623fd1fe5167eac3a55a049de3d314bb42ee227ffed37d508",
-        "base58": "Ltub2SSUS19CirucWFod2ZsYA2J4v4U76YiCXHdcQttnoiy5aGanFHCPDBX7utfG6f95u1cUbZJNafmvzNCzZZJTw1EmyFoL8u1gJbGM8ipu491",
-        "base58Priv": "Ltpv71G8qDifUiNetP6nmxPA5STrUVmv2J9YSmXajv8VsYBUyuPhvN9xCaQrfX2wo5xxJNtEazYCFRUu5FmokYMM79pcqz8pcdo4rNXAFPgyB4k",
+        "base58": "xpub661MyMwAqRbcFtXgS5sYJABqqG9YLmC4Q1Rdap9gSE8NqtwybGhePY2gZ29ESFjqJoCu1Rupje8YtGqsefD265TMg7usUDFdp6W1EGMcet8",
+        "base58Priv": "xprv9s21ZrQH143K3QTDL4LXw2F7HEK3wJUD2nW2nRk4stbPy6cq3jPPqjiChkVvvNKmPGJxWUtg6LnF5kejMRNNU3TGtRBeJgk33yuGBxrMPHi",
         "identifier": "3442193e1bb70916e914552172cd4e2dbc9df811",
         "fingerprint": "3442193e",
-        "address": "LPzGaoLUtXFkmNo3u1chDxGxDnSaBQTTxm"
+        "address": "15mKKb2eos1hWa6tisdPwwDC1a5J1y9nma"
       },
       "children": [
         {
@@ -334,22 +334,22 @@
       },
       {
         "exception": "Invalid buffer length",
-        "network": "bitcoin",
+        "network": "ark",
         "string": "HAsbc6CgKmTYEQg2CTz7m5STEPAB"
       },
       {
         "exception": "Invalid parent fingerprint",
-        "network": "bitcoin",
+        "network": "ark",
         "string": "xprv9tnJFvAXAXPfPnMTKfwpwnkty7MzJwELVgp4NTBquaKXy4RndyfJJCJJf7zNaVpBpzrwVRutZNLRCVLEcZHcvuCNG3zGbGBcZn57FbNnmSP"
       },
       {
         "exception": "Invalid private key",
-        "network": "bitcoin",
+        "network": "ark",
         "string": "xprv9s21ZrQH143K3yLysFvsu3n1dMwhNusmNHr7xArzAeCc7MQYqDBBStmqnZq6WLi668siBBNs3SjiyaexduHu9sXT9ixTsqptL67ADqcaBdm"
       },
       {
         "exception": "Invalid index",
-        "network": "bitcoin",
+        "network": "ark",
         "string": "xprv9s21ZrQYdgnodnKW4Drm1Qg7poU6Gf2WUDsjPxvYiK7iLBMrsjbnF1wsZZQgmXNeMSG3s7jmHk1b3JrzhG5w8mwXGxqFxfrweico7k8DtxR"
       },
       {
@@ -358,7 +358,7 @@
       },
       {
         "exception": "Invalid network version",
-        "network": "bitcoin",
+        "network": "ark",
         "string": "Ltpv73XYpw28ZyVe2zEVyiFnxUZxoKLGQNdZ8NxUi1WcqjNmMBgtLbh3KimGSnPHCoLv1RmvxHs4dnKmo1oXQ8dXuDu8uroxrbVxZPA1gXboYvx"
       },
       {

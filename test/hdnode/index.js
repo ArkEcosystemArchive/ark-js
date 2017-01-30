@@ -178,9 +178,7 @@ describe('HDNode', function () {
     validAll.forEach(function (f) {
       it('exports ' + f.base58 + ' (public) correctly', function () {
         var hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
-        if(f.seed)
-          console.log(HDNode.fromSeedHex(f.seed, NETWORKS[f.network]).toBase58());
-        console.log(hd.toBase58()+" <-> "+f.base58);
+        
         assert.strictEqual(hd.toBase58(), f.base58)
         assert.throws(function () { hd.keyPair.toWIF() }, /Missing private key/)
       })

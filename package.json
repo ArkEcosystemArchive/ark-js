@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/ArkEcosystem/ark-js.git"
   },
-  "author": "FX Thoorens <fx@ark.io>, Boris Povod <boris@crypti.me>, Oliver Beddows <oliver@lisk.io>",
+  "author": "FX Thoorens <fx@ark.io>, Guillaume Verbal <doweig@ark.io>, Boris Povod <boris@crypti.me>, Oliver Beddows <oliver@lisk.io>",
   "license": "MIT",
   "dependencies": {
     "bigi": "^1.4.2",

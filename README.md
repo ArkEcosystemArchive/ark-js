@@ -253,6 +253,7 @@ var transaction = ark.vote.createVote("secret", ["+58199578191950019299181920120
 
 ## Authors
 - FX Thoorens <fx@ark.io>
+- Guillaume Verbal <doweig@ark.io>
 - Boris Povod <boris@crypti.me>
 - Oliver Beddows <oliver@lisk.io>
 

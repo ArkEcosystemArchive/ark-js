@@ -130,7 +130,7 @@ describe('ECPair', function () {
 
   describe('makeRandom', function () {
     var d = new Buffer('0404040404040404040404040404040404040404040404040404040404040404', 'hex')
-    var exWIF = 'KwMWvwRJeFqxYyhZgNwYuYjbQENDAPAudQx5VEmKJrUZcq6aL2pv'
+    var exWIF = 'S9hzwiZ5ziKjUiFpuZX4Lri3rUocDxZSTy7YzKKHvx8TSjUrYQ27'
 
     describe('uses randombytes RNG', function () {
       it('generates a ECPair', function () {
@@ -154,7 +154,7 @@ describe('ECPair', function () {
       var keyPair = ECPair.makeRandom()
 
       assert.strictEqual(keyPair.compressed, true)
-      assert.strictEqual(keyPair.network, NETWORKS.bitcoin)
+      assert.strictEqual(keyPair.network, NETWORKS.ark)
     })
 
     it('supports the options parameter', function () {

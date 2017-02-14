@@ -33,10 +33,11 @@ describe("crypto.js", function () {
       (getBytes).should.be.type("function");
     });
 
-    it("should return Buffer of simply transaction and buffer most be 194 length", function () {
+    it("should return Buffer of simply transaction and buffer must be 202 length", function () {
       var transaction = {
         type: 0,
         amount: 1000,
+        fee: 2000,
         recipientId: "AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff",
         timestamp: 141738,
         asset: {},
@@ -48,13 +49,14 @@ describe("crypto.js", function () {
       bytes = getBytes(transaction);
       (bytes).should.be.ok;
       (bytes).should.be.type("object");
-      (bytes.length).should.be.equal(194);
+      (bytes.length).should.be.equal(202);
     });
 
-    it("should return Buffer of transaction with second signature and buffer most be 258 length", function () {
+    it("should return Buffer of transaction with second signature and buffer most be 266 length", function () {
       var transaction = {
         type: 0,
         amount: 1000,
+        fee: 2000,
         recipientId: "AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff",
         timestamp: 141738,
         asset: {},
@@ -67,7 +69,7 @@ describe("crypto.js", function () {
       bytes = getBytes(transaction);
       (bytes).should.be.ok;
       (bytes).should.be.type("object");
-      (bytes.length).should.be.equal(258);
+      (bytes.length).should.be.equal(266);
     });
   });
 
@@ -86,12 +88,12 @@ describe("crypto.js", function () {
       var transaction = {
         type: 0,
         amount: 1000,
+        fee: 2000,
         recipientId: "AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff",
         timestamp: 141738,
         asset: {},
         senderPublicKey: "5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
         signature: "618a54975212ead93df8c881655c625544bce8ed7ccdfe6f08a42eecfb1adebd051307be5014bb051617baf7815d50f62129e70918190361e5d4dd4796541b0a",
-        id: "13987348420913138422"
       };
 
       var result = getHash(transaction);
@@ -112,10 +114,11 @@ describe("crypto.js", function () {
       (getId).should.be.type("function");
     });
 
-    it("should return string id and be equal to 1725923320430829409", function () {
+    it("should return string id and be equal to 619fd7971db6f317fdee3675c862291c976d072a0a1782410e3a6f5309022491", function () {
       var transaction = {
         type: 0,
         amount: 1000,
+        fee: 2000,
         recipientId: "AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff",
         timestamp: 141738,
         asset: {},
@@ -124,7 +127,7 @@ describe("crypto.js", function () {
       };
 
       var id = getId(transaction);
-      (id).should.be.type("string").and.equal("1725923320430829409");
+      (id).should.be.type("string").and.equal("952e33b66c35a3805015657c008e73a0dee1efefd9af8c41adb59fe79745ccea");
     });
   });
 

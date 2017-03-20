@@ -1,6 +1,11 @@
 var Buffer = require("buffer/").Buffer;
 var should = require("should");
 var ark = require("../../index.js");
+var ECPair = require('../../lib/ecpair');
+
+var ecdsa = require('../../lib/ecdsa')
+var ecurve = require('ecurve')
+var curve = ecdsa.__curve
 
 describe("crypto.js", function () {
 
@@ -275,6 +280,16 @@ describe("crypto.js", function () {
       (address).should.be.ok;
       (address).should.be.type("string");
       (address).should.be.equal("AQSqYnjmwj1GBL5twD4K9EBXDaTHZognox");
+    });
+
+    it("should generate the same address as ECPair.getAddress()", function () {
+      var keys = crypto.getKeys("secret second test to be sure it works correctly");
+      var address = getAddress(keys.publicKey);
+
+      var Q = ecurve.Point.decodeFrom(curve, new Buffer(keys.publicKey, 'hex'))
+      var keyPair = new ECPair(null, Q);
+
+      (address).should.be.equal(keyPair.getAddress());
     });
   });
 

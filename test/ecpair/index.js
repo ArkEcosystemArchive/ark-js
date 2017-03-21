@@ -217,12 +217,12 @@ describe('ECPair', function () {
     })
 
     describe('signing', function () {
-      // it('wraps ecdsa.sign', sinon.test(function () {
-      //   this.mock(ecdsa).expects('sign')
-      //     .once().withArgs(hash, keyPair.d)
-      //
-      //   keyPair.sign(hash)
-      // }))
+      //  it('wraps ecdsa.sign', sinon.test(function () {
+      //    this.mock(ecdsa).expects('sign')
+      //      .once().withArgs(hash, keyPair.d)
+       //
+      //    keyPair.sign(hash)
+      //  }))
 
       it('throws if no private key is found', function () {
         keyPair.d = null

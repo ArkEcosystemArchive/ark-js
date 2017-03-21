@@ -13,7 +13,7 @@ describe('ark-js (basic)', function () {
     var keyPair = ark.ECPair.makeRandom({ rng: rng })
     var address = keyPair.getAddress()
 
-    assert.strictEqual(address, 'AVrNLr9Y5nSd3QMkEBWKYscjicC5guHAHi')
+    assert.strictEqual(address, 'ANoMWEJ9jSdE2FgohBLLXeLzci59BDFsP4')
   })
 
   it('can generate an address from a SHA256 hash', function () {
@@ -23,7 +23,7 @@ describe('ark-js (basic)', function () {
     var keyPair = new ark.ECPair(d)
     var address = keyPair.getAddress()
 
-    assert.strictEqual(address, 'AStsGxXR69Rzp1VeigahuxhQ22EoDsbZax')
+    assert.strictEqual(address, 'AG5AtmiNbgv51eLwAWnRGvkMudVd7anYP2')
   })
 
   it('can generate a random keypair for alternative networks', function () {
@@ -36,7 +36,7 @@ describe('ark-js (basic)', function () {
     var wif = keyPair.toWIF()
     var address = keyPair.getAddress()
 
-    assert.strictEqual(address, '1F5VhMHukdnUES9kfXqzPzMeF1GPHKiF64')
+    assert.strictEqual(address, '182UrjSXQHy5DHUp8Xg1Nm5u979SojJY2P')
     assert.strictEqual(wif, 'L1Knwj9W3qK3qMKdTvmg3VfzUs3ij2LETTFhxza9LfD5dngnoLG1')
   })
 
@@ -44,7 +44,7 @@ describe('ark-js (basic)', function () {
     var keyPair = ark.ECPair.fromWIF('S9aCCSFvm8kNeyFb1t6pLb5oJs9tv96ag6uA8Du6UM7zsmsNHQiz')
     var address = keyPair.getAddress()
 
-    assert.strictEqual(address, 'AST9CekEhDWuxHPynRmeyjg5biNFSijvb3')
+    assert.strictEqual(address, 'AcMiVQNHjggC1PyfVSvCcdWZKMisMKj8eo')
   })
 
 })

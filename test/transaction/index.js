@@ -200,8 +200,12 @@ describe("transaction.js", function () {
     });
 
     it("should not accept bitcoin address", function(){
-      trs = createTransaction("14owCmVDn8SaAFZcLbZfCVu5jvc4Lq7Tm1", 1000, null, "secret", secondSecret);
-      (trs===null).should.equal(true);
+      try {
+        trs = createTransaction("14owCmVDn8SaAFZcLbZfCVu5jvc4Lq7Tm1", 1000, null, "secret", secondSecret);
+      } catch(error){
+        return (error).should.have.property("message").and.equal("Wrong recipientId")
+      }
+      true.should.equal(false);
     });
 
     it("should create transaction without second signature", function () {

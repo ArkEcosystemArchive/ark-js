@@ -6,6 +6,7 @@ ark = {
 	vote : require("./lib/transactions/vote.js"),
 	ipfs : require("./lib/transactions/ipfs.js"),
 	networks : require("./lib/networks.js"),
+	slots : require("./lib/time/slots.js"),
 
 	ECPair : require("./lib/ecpair.js"),
 	HDNode : require("./lib/hdnode.js"),

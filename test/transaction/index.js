@@ -213,8 +213,6 @@ describe("transaction.js", function () {
       (trs).should.be.ok;
     });
 
-
-
     describe("returned transaction", function () {
       it("should be object", function () {
         (trs).should.be.type("object");

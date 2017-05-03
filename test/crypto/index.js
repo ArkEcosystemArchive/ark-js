@@ -318,6 +318,18 @@ describe("crypto.js", function () {
   });
 });
 
+describe("different networks", function () {
+
+  it("validate address on tesnet should be ok", function () {
+    ark.crypto.setNetworkVersion(0x52);
+    ark.crypto.getNetworkVersion().should.equal(0x52);
+    var validate = ark.crypto.validateAddress("a6fpb1BJZq4otWiVsBcuLG1ZGs5WsqqQtH");
+    (validate).should.equal(true);
+    ark.crypto.setNetworkVersion(0x17);
+    ark.crypto.getNetworkVersion().should.equal(0x17);
+  });
+});
+
 describe("delegate.js", function () {
   var delegate = ark.delegate;
 

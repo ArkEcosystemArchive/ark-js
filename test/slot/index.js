@@ -57,7 +57,7 @@ describe("slots.js", function () {
     });
 
     it("should return epoch time as number, equal to 10", function () {
-      var d = 1464109210000;
+      var d = 1490101210000;
       var time = getTime(d);
       (time).should.be.type("number").and.equal(10);
     });
@@ -74,11 +74,11 @@ describe("slots.js", function () {
       (getRealTime).should.be.type("function");
     });
 
-    it("should return return real time, convert 10 to 1464109210000", function () {
+    it("should return return real time, convert 10 to 1490101210000", function () {
       var d = 10;
       var real = getRealTime(d);
       (real).should.be.ok;
-      (real).should.be.type("number").and.equal(1464109210000);
+      (real).should.be.type("number").and.equal(1490101210000);
     });
   });
 
@@ -111,10 +111,9 @@ describe("slots.js", function () {
     });
 
     it("should return slot time number, equal to ", function () {
-      var slot = 19614;
       var slotTime = getSlotTime(19614);
       (slotTime).should.be.ok;
-      (slotTime).should.be.type("number").and.equal(196140);
+      (slotTime).should.be.type("number").and.equal(156912);
     });
   });
 

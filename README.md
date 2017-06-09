@@ -108,7 +108,7 @@ On the client using [jQuery](https://jquery.com/):
 ```js
 var nethash;
 $.ajax({
-  url: 'https://login.ark.io/peer/transactions',
+  url: 'https://api.arknode.net/peer/transactions/',
   data: JSON.stringify({}),
   dataType: 'json',
   method: 'POST',
@@ -130,7 +130,7 @@ From a server using [Request](https://github.com/request/request):
 ```js
 var nethash;
 request({
-  url: 'https://login.ark.io/peer/transactions',
+  url: 'https://api.arknode.net/peer/transactions',
   json: { },
   method: 'POST',
   headers: {
@@ -172,7 +172,7 @@ var success = function(data) {
 };
 
 $.ajax({
-  url: 'https://login.ark.io/peer/transactions',
+  url: 'https://api.arknode.net/peer/transactions',
   data: JSON.stringify({ transaction: transaction }),
   dataType: 'json',
   method: 'POST',
@@ -200,7 +200,7 @@ var callback = function(error, response, body) {
 };
 
 request({
-  url: 'https://login.ark.io/peer/transactions',
+  url: 'https://api.arknode.net/peer/transactions',
   json: { transaction: transaction },
   method: 'POST',
   headers: {

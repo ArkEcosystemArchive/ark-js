@@ -32,22 +32,18 @@ describe("transaction.js", function () {
       (trs).should.be.ok;
     });
 
-    it("should fail if transaction with vendorField > 64 bytes", function () {
+    it("should fail if transaction with vendorField length > 64", function () {
       var vf="z";
       for(i=0;i<6;i++){
         vf=vf+vf;
       }
       vf=vf+"z";
-      try{
-        trs = createTransaction("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", 1000, vf, "secret");
-      }	catch(e){
-        return true;
-      }
-      return false;
+      trs = createTransaction("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", 1000, vf, "secret");
+      return (trs===null).should.equal(true);
 
     });
 
-    it("should be ok if transaction with vendorField = 64 bytes", function () {
+    it("should be ok if transaction with vendorField length = 64", function () {
       var vf="z";
       for(i=0;i<6;i++){
         vf=vf+vf;
@@ -115,15 +111,82 @@ describe("transaction.js", function () {
 
       it("should be signed correctly", function () {
         var result = ark.crypto.verify(trs);
-        (result).should.be.ok;
+        result.should.equal(true);
       });
 
       it("should not be signed correctly now", function () {
         trs.amount = 10000;
         var result = ark.crypto.verify(trs);
-        (result).should.be.not.ok;
+        result.should.equal(false);
       });
     });
+  });
+
+  describe("createTransaction and try to tamper signature", function(){
+
+    it("should not validate overflown signatures", function(){
+      var BigInteger = require('bigi')
+      var bip66 = require('bip66')
+
+      // custom bip66 encode for hacking away signature
+      function BIP66_encode (r, s) {
+        var lenR = r.length;
+        var lenS = s.length;
+        var signature = new Buffer(6 + lenR + lenS);
+
+        // 0x30 [total-length] 0x02 [R-length] [R] 0x02 [S-length] [S]
+        signature[0] = 0x30;
+        signature[1] = signature.length - 2;
+        signature[2] = 0x02;
+        signature[3] = r.length;
+        r.copy(signature, 4);
+        signature[4 + lenR] = 0x02;
+        signature[5 + lenR] = s.length;
+        s.copy(signature, 6 + lenR);
+
+        return signature;
+      }
+
+      // The transaction to replay
+      var old_transaction = ark.transaction.createTransaction('AacRfTLtxAkR3Mind1XdPCddj1uDkHtwzD', 1, null, 'randomstring');
+
+      // Decode signature
+      var decode = bip66.decode(Buffer(old_transaction.signature, "hex"));
+
+      var r = BigInteger.fromDERInteger(decode.r);
+      var s = BigInteger.fromDERInteger(decode.s);
+
+      // Transform the signature
+      /*
+      result = r|00
+      result = result - r
+      r = r + result
+      */
+
+      result = BigInteger.fromBuffer(Buffer(r.toBuffer(r.toDERInteger().length).toString('hex') + '06', 'hex'));
+      result = result.subtract(r);
+      r = r.add(result);
+
+      new_signature = BIP66_encode(r.toBuffer(r.toDERInteger().length), s.toBuffer(s.toDERInteger().length)).toString('hex');
+
+      console.log("OLD TRANSACTION : ");
+      console.log("TXID " + ark.crypto.getId(old_transaction));
+      console.log("VERIFY " + ark.crypto.verify(old_transaction));
+      console.log("SIG " + old_transaction.signature + "\n");
+
+      ark.crypto.verify(old_transaction).should.equal(true);
+
+      old_transaction.signature = new_signature;
+
+      console.log("NEW TRANSACTION : ");
+      console.log("TXID " + ark.crypto.getId(old_transaction));
+      console.log("VERIFY " + ark.crypto.verify(old_transaction));
+      console.log("SIG " + old_transaction.signature);
+
+      ark.crypto.verify(old_transaction).should.equal(false);
+
+    });
+
   });
 
   describe("#createTransaction with second secret", function () {
@@ -134,6 +197,15 @@ describe("transaction.js", function () {
 
     it("should be a function", function () {
       (createTransaction).should.be.type("function");
+    });
+
+    it("should not accept bitcoin address", function(){
+      try {
+        trs = createTransaction("14owCmVDn8SaAFZcLbZfCVu5jvc4Lq7Tm1", 1000, null, "secret", secondSecret);
+      } catch(error){
+        return (error).should.have.property("message").and.equal("Wrong recipientId")
+      }
+      true.should.equal(false);
     });
 
     it("should create transaction without second signature", function () {
@@ -212,26 +284,26 @@ describe("transaction.js", function () {
 
       it("should be signed correctly", function () {
         var result = ark.crypto.verify(trs);
-        (result).should.be.ok;
+        (result).should.equal(true);
       });
 
       it("should be second signed correctly", function () {
         var result = ark.crypto.verifySecondSignature(trs, keys.publicKey);
-        (result).should.be.ok;
+        (result).should.equal(true);
       });
 
       it("should not be signed correctly now", function () {
         trs.amount = 10000;
         var result = ark.crypto.verify(trs);
-        (result).should.be.not.ok;
+        (result).should.equal(false);
       });
 
       it("should not be second signed correctly now", function () {
         trs.amount = 10000;
         var result = ark.crypto.verifySecondSignature(trs, keys.publicKey);
-        (result).should.be.not.ok;
+        (result).should.equal(false);
       });
     });
   });
-  
+
 });

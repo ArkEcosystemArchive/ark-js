@@ -114,6 +114,19 @@ describe("transaction.js", function () {
         result.should.equal(true);
       });
 
+      it("should be deserialised correctly", function () {
+        var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(trs).toString("hex"));
+        deserialisedTx.vendorField = new Buffer(deserialisedTx.vendorFieldHex, "hex").toString("utf8")
+        delete deserialisedTx.vendorFieldHex;
+        var keys = Object.keys(deserialisedTx)
+        for(key in keys){
+          if(keys[key] != "vendorFieldHex"){
+            deserialisedTx[keys[key]].should.equal(trs[keys[key]]);
+          }
+        }
+
+      });
+
       it("should not be signed correctly now", function () {
         trs.amount = 10000;
         var result = ark.crypto.verify(trs);
@@ -168,20 +181,20 @@ describe("transaction.js", function () {
       r = r.add(result);
 
       new_signature = BIP66_encode(r.toBuffer(r.toDERInteger().length), s.toBuffer(s.toDERInteger().length)).toString('hex');
-
-      console.log("OLD TRANSACTION : ");
-      console.log("TXID " + ark.crypto.getId(old_transaction));
-      console.log("VERIFY " + ark.crypto.verify(old_transaction));
-      console.log("SIG " + old_transaction.signature + "\n");
+      //
+      // console.log("OLD TRANSACTION : ");
+      // console.log("TXID " + ark.crypto.getId(old_transaction));
+      // console.log("VERIFY " + ark.crypto.verify(old_transaction));
+      // console.log("SIG " + old_transaction.signature + "\n");
 
       ark.crypto.verify(old_transaction).should.equal(true);
 
       old_transaction.signature = new_signature;
-
-      console.log("NEW TRANSACTION : ");
-      console.log("TXID " + ark.crypto.getId(old_transaction));
-      console.log("VERIFY " + ark.crypto.verify(old_transaction));
-      console.log("SIG " + old_transaction.signature);
+      //
+      // console.log("NEW TRANSACTION : ");
+      // console.log("TXID " + ark.crypto.getId(old_transaction));
+      // console.log("VERIFY " + ark.crypto.verify(old_transaction));
+      // console.log("SIG " + old_transaction.signature);
 
       ark.crypto.verify(old_transaction).should.equal(false);
 
@@ -280,6 +293,16 @@ describe("transaction.js", function () {
 
           return true;
         });
+      });
+
+      it("should be deserialised correctly", function () {
+        var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(trs).toString("hex"));
+        delete deserialisedTx.vendorFieldHex;
+        var keys = Object.keys(deserialisedTx)
+        for(key in keys){
+          deserialisedTx[keys[key]].should.equal(trs[keys[key]]);
+        }
+
       });
 
       it("should be signed correctly", function () {

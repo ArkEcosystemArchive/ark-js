@@ -36,6 +36,21 @@ describe("vote.js", function () {
       vt = createVote("secret", publicKeys, "second secret");
     });
 
+    it("should be deserialised correctly", function () {
+      var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(vt).toString("hex"));
+      delete deserialisedTx.vendorFieldHex;
+      var keys = Object.keys(deserialisedTx)
+      for(key in keys){
+        if(keys[key] == "asset"){
+          deserialisedTx.asset.votes[0].should.equal(vt.asset.votes[0]);
+        }
+        else{
+          deserialisedTx[keys[key]].should.equal(vt[keys[key]]);
+        }
+      }
+
+    });
+
     describe("returned vote", function () {
       it("should be ok", function () {
         (vt).should.be.ok;

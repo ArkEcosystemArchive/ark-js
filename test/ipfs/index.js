@@ -23,6 +23,14 @@ describe("ipfs.js", function () {
     (trs).should.be.ok;
   });
 
+  it("should be deserialised correctly", function () {
+    var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(trs).toString("hex"));
+    var keys = Object.keys(deserialisedTx);
+    for(key in keys){
+      deserialisedTx[keys[key]].should.equal(trs[keys[key]]);
+    }
+  });
+
   describe("returned transaction", function () {
     it("should be object", function () {
       (trs).should.be.type("object");
@@ -33,11 +41,11 @@ describe("ipfs.js", function () {
     });
 
     it("should have vendorField as string", function () {
-      (trs.vendorField).should.be.type("string");
+      (trs.vendorFieldHex).should.be.type("string");
     });
 
-    it("should have vendorField equal to 'QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg'", function () {
-      (trs.vendorField).should.be.type("string").and.equal('QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg');
+    it("should have vendorFieldHex equal to '00000000000000000000516d5732575169376a36633755674a546172416374703774444e696b453442327158744643664c506473676154512f6361742e6a7067'", function () {
+      (trs.vendorFieldHex).should.be.type("string").and.equal('00000000000000000000516d5732575169376a36633755674a546172416374703774444e696b453442327158744643664c506473676154512f6361742e6a7067');
     });
 
     it("should have type as number and equal 5", function () {

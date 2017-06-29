@@ -1,6 +1,6 @@
 {
   "name": "arkjs",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "JavaScript library for sending Ark transactions from the client or server",
   "main": "index.js",
   "scripts": {

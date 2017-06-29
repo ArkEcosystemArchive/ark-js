@@ -361,6 +361,20 @@ describe("delegate.js", function () {
       trs = createDelegate("secret", "delegate", "secret 2");
     });
 
+    it("should be deserialised correctly", function () {
+      var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(trs).toString("hex"));
+      delete deserialisedTx.vendorFieldHex;
+      var keys = Object.keys(deserialisedTx)
+      for(key in keys){
+        if(keys[key] == "asset"){
+          deserialisedTx.asset.delegate.username.should.equal(trs.asset.delegate.username);
+        }
+        else {
+          deserialisedTx[keys[key]].should.equal(trs[keys[key]]);
+        }
+      }
+    });
+
     describe("returned delegate", function () {
       var keys = ark.crypto.getKeys("secret");
       var secondKeys = ark.crypto.getKeys("secret 2");

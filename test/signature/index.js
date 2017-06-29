@@ -32,6 +32,21 @@ describe("signature.js", function () {
       (sgn).should.be.type("object");
     });
 
+    it("should be deserialised correctly", function () {
+      var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(sgn).toString("hex"));
+      delete deserialisedTx.vendorFieldHex;
+      var keys = Object.keys(deserialisedTx)
+      for(key in keys){
+        if(keys[key] == "asset"){
+          deserialisedTx.asset.signature.publicKey.should.equal(sgn.asset.signature.publicKey);
+        }
+        else {
+          deserialisedTx[keys[key]].should.equal(sgn[keys[key]]);
+        }
+      }
+
+    });
+
     describe("returned signature transaction", function () {
       it("should have empty recipientId", function () {
         (sgn).should.have.property("recipientId").equal(null);

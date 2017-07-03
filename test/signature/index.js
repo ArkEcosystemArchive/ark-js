@@ -44,7 +44,6 @@ describe("signature.js", function () {
           deserialisedTx[keys[key]].should.equal(sgn[keys[key]]);
         }
       }
-
     });
 
     describe("returned signature transaction", function () {

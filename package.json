@@ -4,6 +4,7 @@
   "description": "JavaScript library for sending Ark transactions from the client or server",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint .",
     "test": "mocha test/ark.js test/*/*"
   },
   "repository": {
@@ -31,8 +32,9 @@
     "wif": "^2.0.4"
   },
   "devDependencies": {
+    "eslint": "^4.2.0",
     "proxyquire": "^1.7.10",
-    "sinon": "^1.17.7",
-    "should": "=11.1.0"
+    "should": "=11.1.0",
+    "sinon": "^1.17.7"
   }
 }

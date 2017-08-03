@@ -202,6 +202,40 @@ describe("transaction.js", function () {
 
   });
 
+  describe("#createTransaction with entropy or mnemonic", function() {
+    var createTransaction = transaction.createTransaction;
+    var entropy = '44cb72a0e8e03fa5f572d5f94a36fa42';
+    var mnemonic = 'dynamic fortune popular spike advance spray still follow welcome faculty salon lucky';
+    var secondEntropy = 'e21df91d3f80b1e23932f5e2e1858edd';
+    var secondMnemonic = 'tilt used elder lecture arch valve tooth gadget title around glove road';
+    var anyPassphrase = 'zpH96FjvwK61ok5o4A5z0r2L5zsF5nfQ';
+
+    it('should create transaction with entropy and mnemonic', function () {
+      var trs = createTransaction("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", 1000, null, entropy, secondMnemonic);
+      (trs).should.be.ok;
+    })
+
+    it('should create transaction with mnemonic and entropy', function () {
+      var trs = createTransaction("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", 1000, null, mnemonic, secondEntropy);
+      (trs).should.be.ok;
+    })
+
+    it('should create transaction with entropy and entropy', function () {
+      var trs = createTransaction("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", 1000, null, entropy, secondEntropy);
+      (trs).should.be.ok;
+    })
+
+    it('should create transaction with mnemonic and mnemonic', function () {
+      var trs = createTransaction("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", 1000, null, mnemonic, secondMnemonic);
+      (trs).should.be.ok;
+    })
+
+    it('should create transaction with passphrase with 32 chars', function () {
+      var trs = createTransaction("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", 1000, null, anyPassphrase, null);
+      (trs).should.be.ok;
+    })
+  })
+
   describe("#createTransaction with second secret", function () {
     var createTransaction = transaction.createTransaction;
     var trs = null;

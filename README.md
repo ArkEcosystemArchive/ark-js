@@ -156,9 +156,9 @@ Method: POST
 Content-Type: application/json
 
 {
-    "transaction" : {
+    "transactions" : [{
         ...
-    }
+    }]
 }
 ```
 
@@ -173,7 +173,7 @@ var success = function(data) {
 
 $.ajax({
   url: 'https://api.arknode.net/peer/transactions',
-  data: JSON.stringify({ transaction: transaction }),
+  data: JSON.stringify({ transactions: [transaction] }),
   dataType: 'json',
   method: 'POST',
   headers: {
@@ -201,7 +201,7 @@ var callback = function(error, response, body) {
 
 request({
   url: 'https://api.arknode.net/peer/transactions',
-  json: { transaction: transaction },
+  json: { transactions: [transaction] },
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',

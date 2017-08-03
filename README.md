@@ -58,7 +58,7 @@ var address = ark.crypto.getAddress("5d036a858ce89f844491762eb89e2bfbd50a4a0a0da
 Returning:
 
 ```
-hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA
+AGihocTkwDygiFvmg6aG8jThYTic47GzU9
 ```
 
 ### Creating a transaction
@@ -67,7 +67,7 @@ To create a signed transaction object, which can then be posted onto the network
 
 ```js
 var amount      = 1000 * Math.pow(10, 8); // 100000000000
-var transaction = ark.transaction.createTransaction("hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA", amount, null, "passphrase", "secondPassphrase");
+var transaction = ark.transaction.createTransaction("AGihocTkwDygiFvmg6aG8jThYTic47GzU9", amount, null, "passphrase", "secondPassphrase");
 ```
 
 Returning:
@@ -79,7 +79,7 @@ Returning:
   asset: {}, // Transaction asset, dependent on tx type.
   fee: 100000000, // 0.1 ARK expressed as an integer value.
   id: "500224999259823996", // Transaction ID.
-  recipientId: "hxuG6XABWSN7swQ6Y8ner1CYHfTLeHLH6euB52fAtW6qRcbSfA", // Recipient ID.
+  recipientId: "AGihocTkwDygiFvmg6aG8jThYTic47GzU9", // Recipient ID.
   senderPublicKey: "56e106a1d4a53dbe22cac52fefd8fc4123cfb4ee482f8f25a4fc72eb459b38a5", // Sender's public key.
   signSignature: "03fdd33bed30270b97e77ada44764cc8628f6ad3bbd84718571695262a5a18baa37bd76a62dd25bc21beacd61eaf2c63af0cf34edb0d191d225f4974cd3aa509", // Sender's second passphrase signature.
   signature: "9419ca3cf11ed2e3fa4c63bc9a4dc18b5001648e74522bc0f22bda46a188e462da4785e5c71a43cfc0486af08d447b9340ba8b93258c4c7f50798060fff2d709", // Transaction signature.

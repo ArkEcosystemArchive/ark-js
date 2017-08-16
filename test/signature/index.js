@@ -1,5 +1,5 @@
+require("should");
 var Buffer = require("buffer/").Buffer;
-var should = require("should");
 var ark = require("../../index.js");
 
 describe("signature.js", function () {
@@ -36,7 +36,7 @@ describe("signature.js", function () {
       var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(sgn).toString("hex"));
       delete deserialisedTx.vendorFieldHex;
       var keys = Object.keys(deserialisedTx)
-      for(key in keys){
+      for(var key in keys){
         if(keys[key] == "asset"){
           deserialisedTx.asset.signature.publicKey.should.equal(sgn.asset.signature.publicKey);
         }

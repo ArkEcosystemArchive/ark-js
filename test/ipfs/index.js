@@ -1,5 +1,7 @@
+/* eslint-disable max-len */
+
+require("should");
 var Buffer = require("buffer/").Buffer;
-var should = require("should");
 var ark = require("../../index.js");
 
 describe("ipfs.js", function () {
@@ -18,20 +20,25 @@ describe("ipfs.js", function () {
     (ipfs).should.have.property("createHashRegistration");
   });
 
-  it("should create transaction with hashid", function () {
-    trs = ipfs.createHashRegistration("QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg", "secret");
+  it("should create transaction with hashid & deserialise correctly", function () {
+    var trs = ipfs.createHashRegistration("QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg", "secret");
     (trs).should.be.ok;
-  });
 
-  it("should be deserialised correctly", function () {
     var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(trs).toString("hex"));
     var keys = Object.keys(deserialisedTx);
-    for(key in keys){
+    for(var key in keys){
       deserialisedTx[keys[key]].should.equal(trs[keys[key]]);
     }
   });
 
   describe("returned transaction", function () {
+    var trs
+
+    before(function () {
+      trs = ipfs.createHashRegistration("QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg", "secret");
+      (trs).should.be.ok;
+    });
+
     it("should be object", function () {
       (trs).should.be.type("object");
     });

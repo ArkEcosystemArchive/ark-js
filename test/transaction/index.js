@@ -1,5 +1,4 @@
 var Buffer = require("buffer/").Buffer;
-var should = require("should");
 var ark = require("../../index.js");
 
 describe("transaction.js", function () {
@@ -34,7 +33,7 @@ describe("transaction.js", function () {
 
     it("should fail if transaction with vendorField length > 64", function () {
       var vf="z";
-      for(i=0;i<6;i++){
+      for(var i=0;i<6;i++){
         vf=vf+vf;
       }
       vf=vf+"z";
@@ -45,7 +44,7 @@ describe("transaction.js", function () {
 
     it("should be ok if transaction with vendorField length = 64", function () {
       var vf="z";
-      for(i=0;i<6;i++){
+      for(var i=0;i<6;i++){
         vf=vf+vf;
       }
       trs = createTransaction("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", 1000, vf, "secret");
@@ -119,7 +118,7 @@ describe("transaction.js", function () {
         deserialisedTx.vendorField = new Buffer(deserialisedTx.vendorFieldHex, "hex").toString("utf8")
         delete deserialisedTx.vendorFieldHex;
         var keys = Object.keys(deserialisedTx)
-        for(key in keys){
+        for(var key in keys){
           if(keys[key] != "vendorFieldHex"){
             deserialisedTx[keys[key]].should.equal(trs[keys[key]]);
           }
@@ -176,11 +175,11 @@ describe("transaction.js", function () {
       r = r + result
       */
 
-      result = BigInteger.fromBuffer(Buffer(r.toBuffer(r.toDERInteger().length).toString('hex') + '06', 'hex'));
+      var result = BigInteger.fromBuffer(Buffer(r.toBuffer(r.toDERInteger().length).toString('hex') + '06', 'hex'));
       result = result.subtract(r);
       r = r.add(result);
 
-      new_signature = BIP66_encode(r.toBuffer(r.toDERInteger().length), s.toBuffer(s.toDERInteger().length)).toString('hex');
+      var new_signature = BIP66_encode(r.toBuffer(r.toDERInteger().length), s.toBuffer(s.toDERInteger().length)).toString('hex');
       //
       // console.log("OLD TRANSACTION : ");
       // console.log("TXID " + ark.crypto.getId(old_transaction));
@@ -299,7 +298,7 @@ describe("transaction.js", function () {
         var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(trs).toString("hex"));
         delete deserialisedTx.vendorFieldHex;
         var keys = Object.keys(deserialisedTx)
-        for(key in keys){
+        for(var key in keys){
           deserialisedTx[keys[key]].should.equal(trs[keys[key]]);
         }
 

@@ -1,6 +1,3 @@
-/* global describe, it, beforeEach */
-/* eslint-disable no-new */
-
 var assert = require('assert')
 var ecdsa = require('../../lib/ecdsa')
 var ecurve = require('ecurve')
@@ -234,12 +231,12 @@ describe('ECPair', function () {
     })
 
     describe('verify', function () {
-      var signature
-
-      beforeEach(function () {
-        signature = keyPair.sign(hash)
-      })
-
+      // var signature
+      //
+      // beforeEach(function () {
+      //   signature = keyPair.sign(hash)
+      // })
+      //
       // it('wraps ecdsa.verify', sinon.test(function () {
       //   this.mock(ecdsa).expects('verify')
       //     .once().withArgs(hash, signature, keyPair.Q)

@@ -7,11 +7,32 @@
     "lint": "eslint .",
     "test": "mocha test/ark.js test/*/*"
   },
+  "directories": {
+    "lib": "./lib",
+    "test": "./test"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ArkEcosystem/ark-js.git"
   },
-  "author": "FX Thoorens <fx@ark.io>, Guillaume Verbal <doweig@ark.io>, Boris Povod <boris@crypti.me>, Oliver Beddows <oliver@lisk.io>",
+  "homepage": "https://github.com/ArkEcosystem/ark-js",
+  "keywords": [
+    "api",
+    "ark",
+    "blockchain",
+    "client",
+    "cryptocurrency",
+    "javascript",
+    "server",
+    "transaction"
+  ],
+  "bugs": "https://github.com/ArkEcosystem/ark-js/issues",
+  "contributors": [
+    "FX Thoorens <fx@ark.io>",
+    "Guillaume Verbal <doweig@ark.io>",
+    "Boris Povod <boris@crypti.me>",
+    "Oliver Beddows <oliver@lisk.io>"
+  ],
   "license": "MIT",
   "dependencies": {
     "bigi": "^1.4.2",
@@ -26,7 +47,6 @@
     "ecdsa": "^0.7.0",
     "ecurve": "^1.0.5",
     "js-nacl": "tonyg/js-nacl#6dc1417",
-    "mocha": "=3.1.0",
     "randombytes": "^2.0.3",
     "secp256k1": "^3.2.2",
     "typeforce": "^1.10.3",
@@ -34,6 +54,7 @@
   },
   "devDependencies": {
     "eslint": "^4.2.0",
+    "mocha": "=3.1.0",
     "proxyquire": "^1.7.10",
     "should": "=11.1.0",
     "sinon": "^1.17.7"

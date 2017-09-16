@@ -8,6 +8,20 @@ Ark JS is a JavaScript library for sending Ark transactions. It's main benefit i
 
 [![npm package](https://nodei.co/npm/arkjs.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/arkjs/)
 
+## Building
+
+Build the browserify module for client use:
+
+```sh
+npm build:browserify
+```
+
+Clean:
+
+```sh
+npm clean:browserify
+```
+
 ## Tests
 
 ```

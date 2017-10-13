@@ -2,6 +2,8 @@ var Buffer = require("buffer/").Buffer;
 var should = require("should");
 var ark = require("../../index.js");
 
+var NETWORKS = require('../../lib/networks');
+
 describe("vote.js", function () {
 
   var vote = ark.vote;
@@ -34,6 +36,26 @@ describe("vote.js", function () {
 
     it("should create vote", function () {
       vt = createVote("secret", publicKeys, "second secret");
+    });
+
+    it("should create vote from ecpair", function () {
+      var secretKey = ark.ECPair.fromSeed("secret");
+      secretKey.publicKey = secretKey.getPublicKeyBuffer().toString("hex");
+
+      var secondSecretKey = ark.ECPair.fromSeed("second secret");
+      secondSecretKey.publicKey = secondSecretKey.getPublicKeyBuffer().toString("hex");
+
+      vt = createVote(secretKey, publicKeys, secondSecretKey);
+    });
+
+    it("should create vote from wif", function () {
+      var secretKey = ark.ECPair.fromWIF("SB3iDxYmKgjkhfDZSKgLaBrp3Ynzd3yd3ZZF2ujVBK7vLpv6hWKK", NETWORKS.ark);
+      secretKey.publicKey = secretKey.getPublicKeyBuffer().toString("hex");
+
+      var tx = createVote(secretKey, publicKeys);
+      (tx).should.be.ok;
+      (tx).should.be.type("object");
+      (tx).should.have.property("recipientId").and.be.type("string").and.be.equal("AL9uJWA5nd6RWn8VSUzGN7spWeZGHeudg9");
     });
 
     it("should be deserialised correctly", function () {

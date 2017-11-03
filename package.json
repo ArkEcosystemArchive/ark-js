@@ -3,9 +3,14 @@
   "version": "0.2.1",
   "description": "JavaScript library for sending Ark transactions from the client or server",
   "main": "index.js",
+  "engines": {
+    "node": ">=4"
+  },
   "scripts": {
     "build:browserify": "browserify index.js -o app.js",
     "clean:browserify": "shx rm app.js",
+    "build:docs": "jsdoc -c jsdoc.json",
+    "clean:docs": "shx rm -r ./docs",
     "lint": "eslint .",
     "test": "mocha test/ark.js test/*/*"
   },
@@ -57,6 +62,7 @@
   "devDependencies": {
     "browserify": "^14.4.0",
     "eslint": "^4.2.0",
+    "jsdoc": "^3.5.5",
     "mocha": "=3.1.0",
     "proxyquire": "^1.7.10",
     "should": "=11.1.0",

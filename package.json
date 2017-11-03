@@ -3,7 +3,12 @@
   "version": "0.2.1",
   "description": "JavaScript library for sending Ark transactions from the client or server",
   "main": "index.js",
+  "engines": {
+    "node": ">=4"
+  },
   "scripts": {
+    "build:docs": "jsdoc -c jsdoc.json",
+    "clean": "shx rm -r ./docs",
     "lint": "eslint .",
     "test": "mocha test/ark.js test/*/*"
   },
@@ -54,6 +59,7 @@
   },
   "devDependencies": {
     "eslint": "^4.2.0",
+    "jsdoc": "^3.5.5",
     "mocha": "^3.5.3",
     "proxyquire": "^1.7.10",
     "should": "^13.0.1",

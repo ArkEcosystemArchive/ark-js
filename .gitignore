@@ -30,9 +30,13 @@ build/Release
 node_modules
 jspm_packages
 
+# Generated doc directory
+docs
+
 # Optional npm cache directory
 .npm
 
 # Mac OS X local settings
 .DS_Store
 .tags
+bundle.min.js

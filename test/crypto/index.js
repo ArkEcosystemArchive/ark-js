@@ -57,7 +57,7 @@ describe("crypto.js", function () {
       (bytes.length).should.be.equal(202);
     });
 
-    it("should return Buffer of transaction with second signature and buffer most be 266 length", function () {
+    it("should return Buffer of transaction with second signature and buffer must be 266 length", function () {
       var transaction = {
         type: 0,
         amount: 1000,

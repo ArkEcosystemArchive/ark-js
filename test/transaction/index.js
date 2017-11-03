@@ -26,6 +26,14 @@ describe("transaction.js", function () {
       (trs).should.be.ok;
     });
 
+    it("should create transaction without second signature from keys", function () {
+      var secretKey = ark.ECPair.fromSeed("secret");
+      secretKey.publicKey = secretKey.getPublicKeyBuffer().toString("hex");
+
+      trs = createTransaction("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", 1000, null, secretKey);
+      (trs).should.be.ok;
+    });
+
     it("should create transaction with vendorField", function () {
       trs = createTransaction("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", 1000, "this is a test vendorfield", "secret");
       (trs).should.be.ok;

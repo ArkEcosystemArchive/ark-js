@@ -32,6 +32,15 @@ describe("signature.js", function () {
       (sgn).should.be.type("object");
     });
 
+    it("should create signature transaction", function () {
+      var secretKey = ark.ECPair.fromSeed("secret");
+      secretKey.publicKey = secretKey.getPublicKeyBuffer().toString("hex");
+
+      sgn = createSignature(secretKey, "second secret");
+      (sgn).should.be.ok;
+      (sgn).should.be.type("object");
+    });
+
     it("should be deserialised correctly", function () {
       var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(sgn).toString("hex"));
       delete deserialisedTx.vendorFieldHex;

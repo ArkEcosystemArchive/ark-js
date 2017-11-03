@@ -38,6 +38,18 @@ describe("multisignature.js", function () {
       (sgn).should.be.type("object");
     });
 
+    it("should create multisignature transaction from keys", function () {
+      var secretKey = ark.ECPair.fromSeed("secret");
+      secretKey.publicKey = secretKey.getPublicKeyBuffer().toString("hex");
+
+      var secondSecretKey = ark.ECPair.fromSeed("second secret");
+      secondSecretKey.publicKey = secondSecretKey.getPublicKeyBuffer().toString("hex");
+
+      sgn = createMultisignature(secretKey, secondSecretKey,["03a02b9d5fdd1307c2ee4652ba54d492d1fd11a7d1bb3f3a44c4a05e79f19de933","13a02b9d5fdd1307c2ee4652ba54d492d1fd11a7d1bb3f3a44c4a05e79f19de933","23a02b9d5fdd1307c2ee4652ba54d492d1fd11a7d1bb3f3a44c4a05e79f19de933"], 255, 2);
+      (sgn).should.be.ok;
+      (sgn).should.be.type("object");
+    });
+
     it("should be deserialised correctly", function () {
       var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(sgn).toString("hex"));
       delete deserialisedTx.vendorFieldHex;

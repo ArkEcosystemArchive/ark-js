@@ -1,6 +1,6 @@
 /** @module arkjs */
 
-ark = {
+const ark = {
 	crypto : require("./lib/transactions/crypto.js"),
 	delegate : require("./lib/transactions/delegate.js"),
 	signature : require("./lib/transactions/signature.js"),
@@ -17,8 +17,8 @@ ark = {
 }
 
 // extra aliases for bitcoinlib-js compatibility
-var libCrypto = require('./lib/crypto.js')
-for (var method in libCrypto) {
+const libCrypto = require('./lib/crypto.js')
+for (const method in libCrypto) {
 	ark.crypto[method] = libCrypto[method]
 }
 

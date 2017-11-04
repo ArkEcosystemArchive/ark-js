@@ -1,10 +1,10 @@
-var Buffer = require("buffer/").Buffer;
-var should = require("should");
-var ark = require("../../index.js");
+require("should");
+const Buffer = require("buffer/").Buffer;
+const ark = require("../../index.js");
 
 describe("signature.js", function () {
 
-  var signature = ark.signature;
+  const signature = ark.signature;
 
   it("should be ok", function () {
     (signature).should.be.ok;
@@ -19,8 +19,8 @@ describe("signature.js", function () {
   });
 
   describe("#createSignature", function () {
-    var createSignature = signature.createSignature;
-    var sgn = null;
+    const createSignature = signature.createSignature;
+    let sgn = null;
 
     it("should be function", function () {
       (createSignature).should.be.type("function");
@@ -33,7 +33,7 @@ describe("signature.js", function () {
     });
 
     it("should create signature transaction", function () {
-      var secretKey = ark.ECPair.fromSeed("secret");
+      const secretKey = ark.ECPair.fromSeed("secret");
       secretKey.publicKey = secretKey.getPublicKeyBuffer().toString("hex");
 
       sgn = createSignature(secretKey, "second secret");
@@ -42,10 +42,10 @@ describe("signature.js", function () {
     });
 
     it("should be deserialised correctly", function () {
-      var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(sgn).toString("hex"));
+      const deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(sgn).toString("hex"));
       delete deserialisedTx.vendorFieldHex;
-      var keys = Object.keys(deserialisedTx)
-      for(key in keys){
+      const keys = Object.keys(deserialisedTx)
+      for(const key in keys){
         if(keys[key] == "asset"){
           deserialisedTx.asset.signature.publicKey.should.equal(sgn.asset.signature.publicKey);
         }
@@ -99,7 +99,7 @@ describe("signature.js", function () {
         });
 
         it("should have publicKey in 33 bytes", function () {
-          var publicKey = new Buffer(sgn.asset.signature.publicKey, "hex");
+          const publicKey = new Buffer(sgn.asset.signature.publicKey, "hex");
           (publicKey.length).should.be.equal(33);
         });
       });

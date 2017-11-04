@@ -42,7 +42,7 @@ describe('ECPair', function () {
     })
 
     fixtures.valid.forEach(function (f) {
-      it('calculates the public point for ' + f.WIF, function () {
+      it(`calculates the public point for ${f.WIF}`, function () {
         var d = new BigInteger(f.d)
         var keyPair = new ECPair(d, null, {
           compressed: f.compressed
@@ -53,7 +53,7 @@ describe('ECPair', function () {
     })
 
     fixtures.invalid.constructor.forEach(function (f) {
-      it('throws ' + f.exception, function () {
+      it(`throws ${f.exception}`, function () {
         var d = f.d && new BigInteger(f.d)
         var Q = f.Q && ecurve.Point.decodeFrom(curve, new Buffer(f.Q, 'hex'))
 
@@ -81,7 +81,7 @@ describe('ECPair', function () {
 
   describe('fromWIF', function () {
     fixtures.valid.forEach(function (f) {
-      it('imports ' + f.WIF + ' (' + f.network + ')', function () {
+      it(`imports ${f.WIF} (${f.network})`, function () {
         var network = NETWORKS[f.network]
         var keyPair = ECPair.fromWIF(f.WIF, network)
 
@@ -93,7 +93,7 @@ describe('ECPair', function () {
     })
 
     fixtures.valid.forEach(function (f) {
-      it('imports ' + f.WIF + ' (via list of networks)', function () {
+      it(`imports ${f.WIF} (via list of networks)`, function () {
         var keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
 
         assert.strictEqual(keyPair.d.toString(), f.d)
@@ -104,7 +104,7 @@ describe('ECPair', function () {
     })
 
     fixtures.invalid.fromWIF.forEach(function (f) {
-      it('throws on ' + f.WIF, function () {
+      it(`throws on ${f.WIF}`, function () {
         assert.throws(function () {
           var networks = f.network ? NETWORKS[f.network] : NETWORKS_LIST
 
@@ -116,7 +116,7 @@ describe('ECPair', function () {
 
   describe('toWIF', function () {
     fixtures.valid.forEach(function (f) {
-      it('exports ' + f.WIF, function () {
+      it(`exports ${f.WIF}`, function () {
         var keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
         var result = keyPair.toWIF()
 
@@ -186,7 +186,7 @@ describe('ECPair', function () {
 
   describe('getAddress', function () {
     fixtures.valid.forEach(function (f) {
-      it('returns ' + f.address + ' for ' + f.WIF, function () {
+      it(`returns ${f.address} for ${f.WIF}`, function () {
         var keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
 
         assert.strictEqual(keyPair.getAddress(), f.address)
@@ -196,7 +196,7 @@ describe('ECPair', function () {
 
   describe('getNetwork', function () {
     fixtures.valid.forEach(function (f) {
-      it('returns ' + f.network + ' for ' + f.WIF, function () {
+      it(`returns ${f.network} for ${f.WIF}`, function () {
         var network = NETWORKS[f.network]
         var keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
 

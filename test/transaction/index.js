@@ -44,7 +44,7 @@ describe("transaction.js", function () {
       for(var i=0;i<6;i++){
         vf=vf+vf;
       }
-      vf=vf+"z";
+      vf=`${vf}z`;
       trs = createTransaction("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", 1000, vf, "secret");
       return (trs===null).should.equal(true);
 
@@ -183,7 +183,7 @@ describe("transaction.js", function () {
       r = r + result
       */
 
-      var result = BigInteger.fromBuffer(Buffer(r.toBuffer(r.toDERInteger().length).toString('hex') + '06', 'hex'));
+      var result = BigInteger.fromBuffer(Buffer(`${r.toBuffer(r.toDERInteger().length).toString('hex')  }06`, 'hex'));
       result = result.subtract(r);
       r = r.add(result);
 

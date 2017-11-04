@@ -6,8 +6,12 @@
   "extends": [
     "eslint:recommended"
   ],
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
   "rules": {
     "func-names": ["error", "never"],
-    "max-len": ["error", 140, { "ignoreComments": true }]
+    "max-len": ["error", 140, { "ignoreComments": true }],
+    "prefer-template":  "warn"
   }
 }

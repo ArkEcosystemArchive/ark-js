@@ -17,7 +17,7 @@ describe('ecdsa', function () {
     }
 
     fixtures.valid.ecdsa.forEach(function (f) {
-      it('for "' + f.message + '"', function () {
+      it(`for "${f.message  }"`, function () {
         var x = BigInteger.fromHex(f.d).toBuffer(32)
         var h1 = bcrypto.sha256(f.message)
 
@@ -61,7 +61,7 @@ describe('ecdsa', function () {
     }))
 
     fixtures.valid.rfc6979.forEach(function (f) {
-      it('produces the expected k values for ' + f.message + " if k wasn't suitable", function () {
+      it(`produces the expected k values for ${f.message} if k wasn't suitable`, function () {
         var x = BigInteger.fromHex(f.d).toBuffer(32)
         var h1 = bcrypto.sha256(f.message)
 
@@ -81,7 +81,7 @@ describe('ecdsa', function () {
 
   describe('sign', function () {
     fixtures.valid.ecdsa.forEach(function (f) {
-      it('produces a deterministic signature for "' + f.message + '"', function () {
+      it(`produces a deterministic signature for "${f.message}"`, function () {
         var d = BigInteger.fromHex(f.d)
         var hash = bcrypto.sha256(f.message)
         var signature = ecdsa.sign(hash, d).toDER()
@@ -102,7 +102,7 @@ describe('ecdsa', function () {
 
   describe('verify', function () {
     fixtures.valid.ecdsa.forEach(function (f) {
-      it('verifies a valid signature for "' + f.message + '"', function () {
+      it(`verifies a valid signature for "${f.message}"`, function () {
         var d = BigInteger.fromHex(f.d)
         var H = bcrypto.sha256(f.message)
         var signature = ECSignature.fromDER(new Buffer(f.signature, 'hex'))
@@ -113,7 +113,7 @@ describe('ecdsa', function () {
     })
 
     fixtures.invalid.verify.forEach(function (f) {
-      it('fails to verify with ' + f.description, function () {
+      it(`fails to verify with ${f.description}`, function () {
         var H = bcrypto.sha256(f.message)
         var d = BigInteger.fromHex(f.d)
 

@@ -24,7 +24,7 @@ describe("vote.js", function () {
     var createVote = vote.createVote,
       vt = null,
       publicKey = ark.crypto.getKeys("secret").publicKey,
-      publicKeys = ["+" + publicKey];
+      publicKeys = [`+${publicKey}`];
 
     it("should be ok", function () {
       (createVote).should.be.ok;

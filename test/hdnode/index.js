@@ -70,7 +70,7 @@ describe('HDNode', function () {
 
   describe('fromSeed*', function () {
     fixtures.valid.forEach(function (f) {
-      it('calculates privKey and chainCode for ' + f.master.fingerprint, function () {
+      it(`calculates privKey and chainCode for ${f.master.fingerprint}`, function () {
         var network = NETWORKS[f.network]
         var hd = HDNode.fromSeedHex(f.master.seed, network)
 
@@ -175,25 +175,25 @@ describe('HDNode', function () {
 
   describe('fromBase58 / toBase58', function () {
     validAll.forEach(function (f) {
-      it('exports ' + f.base58 + ' (public) correctly', function () {
+      it(`exports ${f.base58} (public) correctly`, function () {
         var hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
-        
+
         assert.strictEqual(hd.toBase58(), f.base58)
         assert.throws(function () { hd.keyPair.toWIF() }, /Missing private key/)
       })
     })
 
     validAll.forEach(function (f) {
-      it('exports ' + f.base58Priv + ' (private) correctly', function () {
+      it(`exports ${f.base58Priv} (private) correctly`, function () {
         var hd = HDNode.fromBase58(f.base58Priv, NETWORKS_LIST)
-        
+
         assert.strictEqual(hd.toBase58(), f.base58Priv)
         assert.strictEqual(hd.keyPair.toWIF(), f.wif)
       })
     })
 
     fixtures.invalid.fromBase58.forEach(function (f) {
-      it('throws on ' + f.string, function () {
+      it(`throws on ${f.string}`, function () {
         assert.throws(function () {
           var networks = f.network ? NETWORKS[f.network] : NETWORKS_LIST
 
@@ -205,7 +205,7 @@ describe('HDNode', function () {
 
   describe('getIdentifier', function () {
     validAll.forEach(function (f) {
-      it('returns the identifier for ' + f.fingerprint, function () {
+      it(`returns the identifier for ${f.fingerprint}`, function () {
         var hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
         assert.strictEqual(hd.getIdentifier().toString('hex'), f.identifier)
@@ -215,7 +215,7 @@ describe('HDNode', function () {
 
   describe('getFingerprint', function () {
     validAll.forEach(function (f) {
-      it('returns the fingerprint for ' + f.fingerprint, function () {
+      it(`returns the fingerprint for ${f.fingerprint}`, function () {
         var hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
         assert.strictEqual(hd.getFingerprint().toString('hex'), f.fingerprint)
@@ -225,7 +225,7 @@ describe('HDNode', function () {
 
   describe('neutered / isNeutered', function () {
     validAll.forEach(function (f) {
-      it('drops the private key for ' + f.fingerprint, function () {
+      it(`drops the private key for ${f.fingerprint}`, function () {
         var hd = HDNode.fromBase58(f.base58Priv, NETWORKS_LIST)
         var hdn = hd.neutered()
 
@@ -270,7 +270,7 @@ describe('HDNode', function () {
 
       // testing deriving path from master
       f.children.forEach(function (c) {
-        it(c.path + ' from ' + f.master.fingerprint + ' by path', function () {
+        it(`${c.path} from ${f.master.fingerprint} by path`, function () {
           var child = master.derivePath(c.path)
           var childNoM = master.derivePath(c.path.slice(2)) // no m/ on path
 
@@ -284,13 +284,13 @@ describe('HDNode', function () {
         var cn = master.derivePath(c.path)
 
         f.children.slice(i + 1).forEach(function (cc) {
-          it(cc.path + ' from ' + c.fingerprint + ' by path', function () {
+          it(`${cc.path} from ${c.fingerprint} by path`, function () {
             var ipath = cc.path.slice(2).split('/').slice(i + 1).join('/')
             var child = cn.derivePath(ipath)
             verifyVector(child, cc)
 
             assert.throws(function () {
-              cn.derivePath('m/' + ipath)
+              cn.derivePath(`m/${ipath}`)
             }, /Not a master node/)
           })
         })
@@ -300,7 +300,7 @@ describe('HDNode', function () {
       f.children.forEach(function (c) {
         if (c.m === undefined) return
 
-        it(c.path + ' from ' + f.master.fingerprint, function () {
+        it(`${c.path} from ${f.master.fingerprint}`, function () {
           if (c.hardened) {
             hd = hd.deriveHardened(c.m)
           } else {

@@ -10,7 +10,7 @@
     "build:docs": "jsdoc -c jsdoc.json",
     "clean": "shx rm -r ./docs",
     "lint": "eslint .",
-    "test": "mocha test/ark.js test/*/*"
+    "test": "mocha --use_strict test/ark.js test/*/*"
   },
   "directories": {
     "lib": "./lib",

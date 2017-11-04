@@ -23,4 +23,4 @@ for (var method in libCrypto) {
 }
 
 /** The arkjs exported object. */
-module.exports = ark;
+module.exports = ark

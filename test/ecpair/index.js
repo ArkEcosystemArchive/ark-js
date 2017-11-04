@@ -230,19 +230,19 @@ describe('ECPair', function () {
       })
     })
 
-    describe('verify', function () {
-      // var signature
-      //
-      // beforeEach(function () {
-      //   signature = keyPair.sign(hash)
-      // })
-      //
-      // it('wraps ecdsa.verify', sinon.test(function () {
-      //   this.mock(ecdsa).expects('verify')
-      //     .once().withArgs(hash, signature, keyPair.Q)
-      //
-      //   keyPair.verify(hash, signature)
-      // }))
-    })
+    // describe('verify', function () {
+    //   var signature
+    //
+    //   beforeEach(function () {
+    //     signature = keyPair.sign(hash)
+    //   })
+    //
+    //   it('wraps ecdsa.verify', sinon.test(function () {
+    //     this.mock(ecdsa).expects('verify')
+    //       .once().withArgs(hash, signature, keyPair.Q)
+    //
+    //     keyPair.verify(hash, signature)
+    //   }))
+    // })
   })
 })

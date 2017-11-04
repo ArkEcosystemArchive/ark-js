@@ -7,7 +7,17 @@
     "eslint:recommended"
   ],
   "rules": {
+    "block-spacing": "error",
+    "comma-spacing": "error",
+    "func-call-spacing": "error",
     "func-names": ["error", "never"],
-    "max-len": ["error", 140, { "ignoreComments": true }]
+    "key-spacing": "error",
+    "keyword-spacing": "error",
+    "max-len": ["error", 140, { "ignoreComments": true }],
+    "no-multiple-empty-lines": "error",
+    "rest-spread-spacing": "error",
+    "space-before-function-paren": "error",
+    "template-curly-spacing": "error",
+    "yield-star-spacing": "error"
   }
 }

@@ -370,8 +370,8 @@ describe("delegate.js", function () {
       var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(trs).toString("hex"));
       delete deserialisedTx.vendorFieldHex;
       var keys = Object.keys(deserialisedTx)
-      for(var key in keys){
-        if(keys[key] == "asset"){
+      for (var key in keys){
+        if (keys[key] == "asset"){
           deserialisedTx.asset.delegate.username.should.equal(trs.asset.delegate.username);
         }
         else {

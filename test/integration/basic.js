@@ -8,7 +8,7 @@ describe('ark-js (basic)', function () {
     function rng () { return new Buffer('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz') }
 
     // generate random keyPair
-    var keyPair = ark.ECPair.makeRandom({ rng: rng })
+    var keyPair = ark.ECPair.makeRandom({ rng })
     var address = keyPair.getAddress()
 
     assert.strictEqual(address, 'ANoMWEJ9jSdE2FgohBLLXeLzci59BDFsP4')
@@ -30,7 +30,7 @@ describe('ark-js (basic)', function () {
 
     var bitcoin = ark.networks.bitcoin
 
-    var keyPair = ark.ECPair.makeRandom({ network: bitcoin, rng: rng })
+    var keyPair = ark.ECPair.makeRandom({ network: bitcoin, rng })
     var wif = keyPair.toWIF()
     var address = keyPair.getAddress()
 

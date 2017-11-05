@@ -12,6 +12,11 @@
   "rules": {
     "func-names": ["error", "never"],
     "max-len": ["error", 140, { "ignoreComments": true }],
-    "prefer-template":  "warn"
+    "no-duplicate-imports": "error",
+    "no-useless-computed-key": "error",
+    "no-useless-rename": "error",
+    "object-shorthand": "warn",
+    "prefer-spread": "error",
+    "prefer-template":  "error"
   }
 }

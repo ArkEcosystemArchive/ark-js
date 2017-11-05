@@ -131,7 +131,7 @@ describe('ECPair', function () {
 
     describe('uses randombytes RNG', function () {
       it('generates a ECPair', function () {
-        var stub = { randombytes: function () { return d } }
+        var stub = { randombytes () { return d } }
         var ProxiedECPair = proxyquire('../../lib/ecpair', stub)
 
         var keyPair = ProxiedECPair.makeRandom()
@@ -141,7 +141,7 @@ describe('ECPair', function () {
 
     it('allows a custom RNG to be used', function () {
       var keyPair = ECPair.makeRandom({
-        rng: function (size) { return d.slice(0, size) }
+        rng (size) { return d.slice(0, size) }
       })
 
       assert.strictEqual(keyPair.toWIF(), exWIF)
@@ -170,7 +170,7 @@ describe('ECPair', function () {
       rng.onCall(0).returns(BigInteger.ZERO.toBuffer(32)) // invalid length
       rng.onCall(1).returns(BigInteger.ONE.toBuffer(32)) // === 1
 
-      ECPair.makeRandom({ rng: rng })
+      ECPair.makeRandom({ rng })
     }))
 
     it('loops until d is within interval [1, n - 1] : n - 1', sinon.test(function () {
@@ -180,7 +180,7 @@ describe('ECPair', function () {
       rng.onCall(1).returns(curve.n.toBuffer(32)) // > n-1
       rng.onCall(2).returns(curve.n.subtract(BigInteger.ONE).toBuffer(32)) // === n-1
 
-      ECPair.makeRandom({ rng: rng })
+      ECPair.makeRandom({ rng })
     }))
   })
 

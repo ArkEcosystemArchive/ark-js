@@ -3,6 +3,7 @@
 var assert = require('assert')
 var ecdsa = require('../../lib/ecdsa')
 var sinon = require('sinon')
+var sinonTest = require('sinon-test')(sinon)
 
 var BigInteger = require('bigi')
 var ECPair = require('../../lib/ecpair')
@@ -79,7 +80,7 @@ describe('HDNode', function () {
       })
     })
 
-    it('throws if IL is not within interval [1, n - 1] | IL === 0', sinon.test(function () {
+    it('throws if IL is not within interval [1, n - 1] | IL === 0', sinonTest(function () {
       this.mock(BigInteger).expects('fromBuffer')
         .once().returns(BigInteger.ZERO)
 
@@ -88,7 +89,7 @@ describe('HDNode', function () {
       }, /Private key must be greater than 0/)
     }))
 
-    it('throws if IL is not within interval [1, n - 1] | IL === n', sinon.test(function () {
+    it('throws if IL is not within interval [1, n - 1] | IL === n', sinonTest(function () {
       this.mock(BigInteger).expects('fromBuffer')
         .once().returns(curve.n)
 
@@ -122,7 +123,7 @@ describe('HDNode', function () {
     })
 
     describe('getAddress', function () {
-      it('wraps keyPair.getAddress', sinon.test(function () {
+      it('wraps keyPair.getAddress', sinonTest(function () {
         this.mock(keyPair).expects('getAddress')
           .once().withArgs().returns('foobar')
 
@@ -131,7 +132,7 @@ describe('HDNode', function () {
     })
 
     describe('getNetwork', function () {
-      it('wraps keyPair.getNetwork', sinon.test(function () {
+      it('wraps keyPair.getNetwork', sinonTest(function () {
         this.mock(keyPair).expects('getNetwork')
           .once().withArgs().returns('network')
 
@@ -140,7 +141,7 @@ describe('HDNode', function () {
     })
 
     describe('getPublicKeyBuffer', function () {
-      it('wraps keyPair.getPublicKeyBuffer', sinon.test(function () {
+      it('wraps keyPair.getPublicKeyBuffer', sinonTest(function () {
         this.mock(keyPair).expects('getPublicKeyBuffer')
           .once().withArgs().returns('pubKeyBuffer')
 
@@ -149,7 +150,7 @@ describe('HDNode', function () {
     })
 
     describe('sign', function () {
-      it('wraps keyPair.sign', sinon.test(function () {
+      it('wraps keyPair.sign', sinonTest(function () {
         this.mock(keyPair).expects('sign')
           .once().withArgs(hash).returns('signed')
 
@@ -164,7 +165,7 @@ describe('HDNode', function () {
         signature = hd.sign(hash)
       })
 
-      it('wraps keyPair.verify', sinon.test(function () {
+      it('wraps keyPair.verify', sinonTest(function () {
         this.mock(keyPair).expects('verify')
           .once().withArgs(hash, signature).returns('verified')
 

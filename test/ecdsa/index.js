@@ -2,6 +2,7 @@ var assert = require('assert')
 var bcrypto = require('../../lib/crypto')
 var ecdsa = require('../../lib/ecdsa')
 var sinon = require('sinon')
+var sinonTest = require('sinon-test')(sinon)
 
 var BigInteger = require('bigi')
 var ECSignature = require('../../lib/ecsignature')
@@ -26,7 +27,7 @@ describe('ecdsa', function () {
       })
     })
 
-    it('loops until an appropriate k value is found', sinon.test(function () {
+    it('loops until an appropriate k value is found', sinonTest(function () {
       this.mock(BigInteger).expects('fromBuffer')
         .exactly(3)
         .onCall(0).returns(new BigInteger('0')) // < 1
@@ -40,7 +41,7 @@ describe('ecdsa', function () {
       assert.strictEqual(k.toString(), '42')
     }))
 
-    it('loops until a suitable signature is found', sinon.test(function () {
+    it('loops until a suitable signature is found', sinonTest(function () {
       this.mock(BigInteger).expects('fromBuffer')
         .exactly(4)
         .onCall(0).returns(new BigInteger('0')) // < 1

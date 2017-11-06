@@ -18,9 +18,7 @@ const ark = {
 
 // extra aliases for bitcoinlib-js compatibility
 const libCrypto = require('./lib/crypto.js')
-for (const method in libCrypto) {
-	ark.crypto[method] = libCrypto[method]
-}
+Object.assign(ark.crypto, libCrypto)
 
 /** The arkjs exported object. */
 module.exports = ark;

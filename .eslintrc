@@ -17,6 +17,8 @@
     "no-useless-rename": "error",
     "object-shorthand": "warn",
     "prefer-spread": "error",
-    "prefer-template":  "error"
+    "prefer-template":  "error",
+    "no-var": "error",
+    "prefer-const": "warn"
   }
 }

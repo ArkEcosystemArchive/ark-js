@@ -1,17 +1,17 @@
 /* eslint-disable max-len */
 
 require("should");
-var Buffer = require("buffer/").Buffer;
-var ark = require("../../index.js");
-var ECPair = require('../../lib/ecpair');
+const Buffer = require("buffer/").Buffer;
+const ark = require("../../index.js");
+const ECPair = require('../../lib/ecpair');
 
-var ecdsa = require('../../lib/ecdsa')
-var ecurve = require('ecurve')
-var curve = ecdsa.__curve
+const ecdsa = require('../../lib/ecdsa')
+const ecurve = require('ecurve')
+const curve = ecdsa.__curve
 
 describe("crypto.js", function () {
 
-  var crypto = ark.crypto;
+  const crypto = ark.crypto;
 
   it("should be ok", function () {
     (crypto).should.be.ok;
@@ -22,7 +22,7 @@ describe("crypto.js", function () {
   });
 
   it("should has properties", function () {
-    var properties = [
+    const properties = [
       "getBytes", "getHash", "getId", "getFee", "sign", "secondSign",
       "getKeys", "getAddress", "verify", "verifySecondSignature", "fixedPoint"
     ];
@@ -32,8 +32,8 @@ describe("crypto.js", function () {
   });
 
   describe("#getBytes", function () {
-    var getBytes = crypto.getBytes;
-    var bytes = null;
+    const getBytes = crypto.getBytes;
+    let bytes = null;
 
     it("should be ok", function () {
       (getBytes).should.be.ok;
@@ -44,7 +44,7 @@ describe("crypto.js", function () {
     });
 
     it("should return Buffer of simply transaction and buffer must be 202 length", function () {
-      var transaction = {
+      const transaction = {
         type: 0,
         amount: 1000,
         fee: 2000,
@@ -63,7 +63,7 @@ describe("crypto.js", function () {
     });
 
     it("should return Buffer of transaction with second signature and buffer must be 266 length", function () {
-      var transaction = {
+      const transaction = {
         type: 0,
         amount: 1000,
         fee: 2000,
@@ -84,7 +84,7 @@ describe("crypto.js", function () {
   });
 
   describe("#getHash", function () {
-    var getHash = crypto.getHash;
+    const getHash = crypto.getHash;
 
     it("should be ok", function () {
       (getHash).should.be.ok;
@@ -95,7 +95,7 @@ describe("crypto.js", function () {
     })
 
     it("should return Buffer and Buffer most be 32 bytes length", function () {
-      var transaction = {
+      const transaction = {
         type: 0,
         amount: 1000,
         fee: 2000,
@@ -106,7 +106,7 @@ describe("crypto.js", function () {
         signature: "618a54975212ead93df8c881655c625544bce8ed7ccdfe6f08a42eecfb1adebd051307be5014bb051617baf7815d50f62129e70918190361e5d4dd4796541b0a",
       };
 
-      var result = getHash(transaction);
+      const result = getHash(transaction);
       (result).should.be.ok;
       (result).should.be.type("object");
       (result.length).should.be.equal(32);
@@ -114,7 +114,7 @@ describe("crypto.js", function () {
   });
 
   describe("#getId", function () {
-    var getId = crypto.getId;
+    const getId = crypto.getId;
 
     it("should be ok", function () {
       (getId).should.be.ok;
@@ -125,7 +125,7 @@ describe("crypto.js", function () {
     });
 
     it("should return string id and be equal to 619fd7971db6f317fdee3675c862291c976d072a0a1782410e3a6f5309022491", function () {
-      var transaction = {
+      const transaction = {
         type: 0,
         amount: 1000,
         fee: 2000,
@@ -136,13 +136,13 @@ describe("crypto.js", function () {
         signature: "618a54975212ead93df8c881655c625544bce8ed7ccdfe6f08a42eecfb1adebd051307be5014bb051617baf7815d50f62129e70918190361e5d4dd4796541b0a"
       };
 
-      var id = getId(transaction);
+      const id = getId(transaction);
       (id).should.be.type("string").and.equal("952e33b66c35a3805015657c008e73a0dee1efefd9af8c41adb59fe79745ccea");
     });
   });
 
   describe("#getFee", function () {
-    var getFee = crypto.getFee;
+    const getFee = crypto.getFee;
 
     it("should be ok", function () {
       (getFee).should.be.ok;
@@ -153,34 +153,34 @@ describe("crypto.js", function () {
     });
 
     it("should return number", function () {
-      var fee = getFee({amount: 100000, type: 0});
+      const fee = getFee({amount: 100000, type: 0});
       (fee).should.be.type("number");
       (fee).should.be.not.NaN;
     });
 
     it("should return 10000000", function () {
-      var fee = getFee({amount: 100000, type: 0});
+      const fee = getFee({amount: 100000, type: 0});
       (fee).should.be.type("number").and.equal(10000000);
     });
 
     it("should return 10000000000", function () {
-      var fee = getFee({type: 1});
+      const fee = getFee({type: 1});
       (fee).should.be.type("number").and.equal(10000000000);
     });
 
     it("should be equal 1000000000000", function () {
-      var fee = getFee({type: 2});
+      const fee = getFee({type: 2});
       (fee).should.be.type("number").and.equal(1000000000000);
     });
 
     it("should be equal 100000000", function () {
-      var fee = getFee({type: 3});
+      const fee = getFee({type: 3});
       (fee).should.be.type("number").and.equal(100000000);
     });
   });
 
   describe("fixedPoint", function () {
-    var fixedPoint = crypto.fixedPoint;
+    const fixedPoint = crypto.fixedPoint;
 
     it("should be ok", function () {
       (fixedPoint).should.be.ok;
@@ -196,7 +196,7 @@ describe("crypto.js", function () {
   });
 
   describe("#sign", function () {
-    var sign = crypto.sign;
+    const sign = crypto.sign;
 
     it("should be ok", function () {
       (sign).should.be.ok;
@@ -208,7 +208,7 @@ describe("crypto.js", function () {
   });
 
   describe("#secondSign", function () {
-    var secondSign = crypto.secondSign;
+    const secondSign = crypto.secondSign;
 
     it("should be ok", function () {
       (secondSign).should.be.ok;
@@ -220,7 +220,7 @@ describe("crypto.js", function () {
   });
 
   describe("#getKeys", function () {
-    var getKeys = crypto.getKeys;
+    const getKeys = crypto.getKeys;
 
     it("should be ok", function () {
       (getKeys).should.be.ok;
@@ -231,7 +231,7 @@ describe("crypto.js", function () {
     });
 
     it("should return two keys in hex", function () {
-      var keys = getKeys("secret");
+      const keys = getKeys("secret");
 
       (keys).should.be.ok;
       (keys).should.be.type("object");
@@ -259,7 +259,7 @@ describe("crypto.js", function () {
   });
 
   describe("#getAddress", function () {
-    var getAddress = crypto.getAddress;
+    const getAddress = crypto.getAddress;
 
     it("should be ok", function () {
       (getAddress).should.be.ok;
@@ -270,8 +270,8 @@ describe("crypto.js", function () {
     });
 
     it("should generate address by publicKey", function () {
-      var keys = crypto.getKeys("secret");
-      var address = getAddress(keys.publicKey);
+      const keys = crypto.getKeys("secret");
+      const address = getAddress(keys.publicKey);
 
       (address).should.be.ok;
       (address).should.be.type("string");
@@ -279,8 +279,8 @@ describe("crypto.js", function () {
     });
 
     it("should generate address by publicKey - second test", function () {
-      var keys = crypto.getKeys("secret second test to be sure it works correctly");
-      var address = getAddress(keys.publicKey);
+      const keys = crypto.getKeys("secret second test to be sure it works correctly");
+      const address = getAddress(keys.publicKey);
 
       (address).should.be.ok;
       (address).should.be.type("string");
@@ -288,18 +288,18 @@ describe("crypto.js", function () {
     });
 
     it("should generate the same address as ECPair.getAddress()", function () {
-      var keys = crypto.getKeys("secret second test to be sure it works correctly");
-      var address = getAddress(keys.publicKey);
+      const keys = crypto.getKeys("secret second test to be sure it works correctly");
+      const address = getAddress(keys.publicKey);
 
-      var Q = ecurve.Point.decodeFrom(curve, new Buffer(keys.publicKey, 'hex'))
-      var keyPair = new ECPair(null, Q);
+      const Q = ecurve.Point.decodeFrom(curve, new Buffer(keys.publicKey, 'hex'))
+      const keyPair = new ECPair(null, Q);
 
       (address).should.be.equal(keyPair.getAddress());
     });
   });
 
   describe("#verify", function () {
-    var verify = crypto.verify;
+    const verify = crypto.verify;
 
     it("should be ok", function () {
       (verify).should.be.ok;
@@ -311,7 +311,7 @@ describe("crypto.js", function () {
   });
 
   describe("#verifySecondSignature", function () {
-    var verifySecondSignature = crypto.verifySecondSignature;
+    const verifySecondSignature = crypto.verifySecondSignature;
 
     it("should be ok", function () {
       (verifySecondSignature).should.be.ok;
@@ -328,7 +328,7 @@ describe("different networks", function () {
   it("validate address on tesnet should be ok", function () {
     ark.crypto.setNetworkVersion(0x52);
     ark.crypto.getNetworkVersion().should.equal(0x52);
-    var validate = ark.crypto.validateAddress("a6fpb1BJZq4otWiVsBcuLG1ZGs5WsqqQtH");
+    const validate = ark.crypto.validateAddress("a6fpb1BJZq4otWiVsBcuLG1ZGs5WsqqQtH");
     (validate).should.equal(true);
     ark.crypto.setNetworkVersion(0x17);
     ark.crypto.getNetworkVersion().should.equal(0x17);
@@ -336,7 +336,7 @@ describe("different networks", function () {
 });
 
 describe("delegate.js", function () {
-  var delegate = ark.delegate;
+  const delegate = ark.delegate;
 
   it("should be ok", function () {
     (delegate).should.be.ok;
@@ -351,8 +351,8 @@ describe("delegate.js", function () {
   });
 
   describe("#createDelegate", function () {
-    var createDelegate = delegate.createDelegate;
-    var trs = null;
+    const createDelegate = delegate.createDelegate;
+    let trs = null;
 
     it("should be ok", function () {
       (createDelegate).should.be.ok;
@@ -367,10 +367,10 @@ describe("delegate.js", function () {
     });
 
     it("should be deserialised correctly", function () {
-      var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(trs).toString("hex"));
+      const deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(trs).toString("hex"));
       delete deserialisedTx.vendorFieldHex;
-      var keys = Object.keys(deserialisedTx)
-      for(var key in keys){
+      const keys = Object.keys(deserialisedTx)
+      for(const key in keys){
         if(keys[key] == "asset"){
           deserialisedTx.asset.delegate.username.should.equal(trs.asset.delegate.username);
         }
@@ -381,8 +381,8 @@ describe("delegate.js", function () {
     });
 
     describe("returned delegate", function () {
-      var keys = ark.crypto.getKeys("secret");
-      var secondKeys = ark.crypto.getKeys("secret 2");
+      const keys = ark.crypto.getKeys("secret");
+      const secondKeys = ark.crypto.getKeys("secret 2");
 
       it("should be ok", function () {
         (trs).should.be.ok;
@@ -454,24 +454,24 @@ describe("delegate.js", function () {
       })
 
       it("should be signed correctly", function () {
-        var result = ark.crypto.verify(trs);
+        const result = ark.crypto.verify(trs);
         (result).should.be.ok;
       });
 
       it("should be second signed correctly", function () {
-        var result = ark.crypto.verifySecondSignature(trs, secondKeys.publicKey);
+        const result = ark.crypto.verifySecondSignature(trs, secondKeys.publicKey);
         (result).should.be.ok;
       });
 
       it("should not be signed correctly now", function () {
         trs.amount = 100;
-        var result = ark.crypto.verify(trs);
+        const result = ark.crypto.verify(trs);
         (result).should.be.not.ok;
       });
 
       it("should not be second signed correctly now", function () {
         trs.amount = 100;
-        var result = ark.crypto.verifySecondSignature(trs, secondKeys.publicKey);
+        const result = ark.crypto.verifySecondSignature(trs, secondKeys.publicKey);
         (result).should.be.not.ok;
       });
 

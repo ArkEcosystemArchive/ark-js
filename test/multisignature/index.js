@@ -1,8 +1,8 @@
-var ark = require("../../index.js");
+const ark = require("../../index.js");
 
 describe("multisignature.js", function () {
 
-  var multisignature = ark.multisignature;
+  const multisignature = ark.multisignature;
 
   it("should be ok", function () {
     (multisignature).should.be.ok;
@@ -17,8 +17,8 @@ describe("multisignature.js", function () {
   });
 
   describe("#createMultisignature", function () {
-    var createMultisignature = multisignature.createMultisignature;
-    var sgn = null;
+    const createMultisignature = multisignature.createMultisignature;
+    let sgn = null;
 
     it("should be function", function () {
       (createMultisignature).should.be.type("function");
@@ -39,10 +39,10 @@ describe("multisignature.js", function () {
     });
 
     it("should create multisignature transaction from keys", function () {
-      var secretKey = ark.ECPair.fromSeed("secret");
+      const secretKey = ark.ECPair.fromSeed("secret");
       secretKey.publicKey = secretKey.getPublicKeyBuffer().toString("hex");
 
-      var secondSecretKey = ark.ECPair.fromSeed("second secret");
+      const secondSecretKey = ark.ECPair.fromSeed("second secret");
       secondSecretKey.publicKey = secondSecretKey.getPublicKeyBuffer().toString("hex");
 
       sgn = createMultisignature(secretKey, secondSecretKey,[
@@ -55,10 +55,10 @@ describe("multisignature.js", function () {
     });
 
     it("should be deserialised correctly", function () {
-      var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(sgn).toString("hex"));
+      const deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(sgn).toString("hex"));
       delete deserialisedTx.vendorFieldHex;
-      var keys = Object.keys(deserialisedTx)
-      for(var key in keys){
+      const keys = Object.keys(deserialisedTx)
+      for(const key in keys){
         if(keys[key] == "asset"){
           deserialisedTx.asset.multisignature.min.should.equal(sgn.asset.multisignature.min);
           deserialisedTx.asset.multisignature.lifetime.should.equal(sgn.asset.multisignature.lifetime);

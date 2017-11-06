@@ -1,12 +1,12 @@
 /* eslint-disable max-len */
 
 require("should");
-var Buffer = require("buffer/").Buffer;
-var ark = require("../../index.js");
+const Buffer = require("buffer/").Buffer;
+const ark = require("../../index.js");
 
 describe("ipfs.js", function () {
 
-  var ipfs = ark.ipfs;
+  const ipfs = ark.ipfs;
 
   it("should be ok", function () {
     (ipfs).should.be.ok;
@@ -21,18 +21,18 @@ describe("ipfs.js", function () {
   });
 
   it("should create transaction with hashid & deserialise correctly", function () {
-    var trs = ipfs.createHashRegistration("QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg", "secret");
+    const trs = ipfs.createHashRegistration("QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg", "secret");
     (trs).should.be.ok;
 
-    var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(trs).toString("hex"));
-    var keys = Object.keys(deserialisedTx);
-    for(var key in keys){
+    const deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(trs).toString("hex"));
+    const keys = Object.keys(deserialisedTx);
+    for(const key in keys){
       deserialisedTx[keys[key]].should.equal(trs[keys[key]]);
     }
   });
 
   describe("returned transaction", function () {
-    var trs
+    let trs
 
     before(function () {
       trs = ipfs.createHashRegistration("QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg", "secret");
@@ -100,19 +100,19 @@ describe("ipfs.js", function () {
     });
 
     it("should be signed correctly", function () {
-      var result = ark.crypto.verify(trs);
+      const result = ark.crypto.verify(trs);
       (result).should.be.ok;
     });
 
     it("should not be signed correctly now (changed amount)", function () {
       trs.amount = 10000;
-      var result = ark.crypto.verify(trs);
+      const result = ark.crypto.verify(trs);
       (result).should.be.not.ok;
     });
 
     it("should not be signed correctly now (changed vendorField)", function () {
       trs.vendorField = "bouloup";
-      var result = ark.crypto.verify(trs);
+      const result = ark.crypto.verify(trs);
       (result).should.be.not.ok;
     });
   });

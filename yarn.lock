@@ -500,6 +500,10 @@ end-of-stream@^1.0.0, end-of-stream@^1.1.0:
   dependencies:
     once "^1.4.0"
 
+es6-object-assign@^1.0.3:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/es6-object-assign/-/es6-object-assign-1.1.0.tgz#c2c3582656247c39ea107cb1e6652b6f9f24523c"
+
 escape-string-regexp@1.0.5, escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5, escape-string-regexp@~1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
@@ -676,7 +680,7 @@ github-from-package@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/github-from-package/-/github-from-package-0.0.0.tgz#97fb5d96bfde8973313f20e8288ef9a167fa64ce"
 
-glob@7.1.2, glob@^7.0.3, glob@^7.0.5, glob@^7.1.2:
+glob@7.1.2, glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@^7.1.2:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.2.tgz#c19c9df9a028702d678612384a6552404c636d15"
   dependencies:
@@ -805,6 +809,10 @@ inquirer@^3.0.6:
     string-width "^2.1.0"
     strip-ansi "^4.0.0"
     through "^2.3.6"
+
+interpret@^1.0.0:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.0.4.tgz#820cdd588b868ffb191a809506d6c9c8f212b1b0"
 
 is-fullwidth-code-point@^1.0.0:
   version "1.0.0"
@@ -1131,6 +1139,10 @@ path-is-inside@^1.0.1, path-is-inside@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/path-is-inside/-/path-is-inside-1.0.2.tgz#365417dede44430d1c11af61027facf074bdfc53"
 
+path-parse@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.5.tgz#3c1adf871ea9cd6c9431b6ea2bd74a0ff055c4c1"
+
 path-to-regexp@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-1.7.0.tgz#59fde0f435badacba103a84e9d3bc64e96b9937d"
@@ -1259,6 +1271,12 @@ readable-stream@^2.0.0, readable-stream@^2.0.5, readable-stream@^2.0.6, readable
     string_decoder "~1.0.3"
     util-deprecate "~1.0.1"
 
+rechoir@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/rechoir/-/rechoir-0.6.2.tgz#85204b54dba82d5742e28c96756ef43af50e3384"
+  dependencies:
+    resolve "^1.1.6"
+
 require-uncached@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/require-uncached/-/require-uncached-1.0.3.tgz#4e0d56d6c9662fd31e43011c4b95aa49955421d3"
@@ -1275,6 +1293,12 @@ requizzle@~0.2.1:
 resolve-from@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/resolve-from/-/resolve-from-1.0.1.tgz#26cbfe935d1aeeeabb29bc3fe5aeb01e93d44226"
+
+resolve@^1.1.6:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.5.0.tgz#1f09acce796c9a762579f31b2c1cc4c3cddf9f36"
+  dependencies:
+    path-parse "^1.0.5"
 
 resolve@~1.1.7:
   version "1.1.7"
@@ -1363,6 +1387,14 @@ shebang-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
 
+shelljs@^0.7.3:
+  version "0.7.8"
+  resolved "https://registry.yarnpkg.com/shelljs/-/shelljs-0.7.8.tgz#decbcf874b0d1e5fb72e14b164a9683048e9acb3"
+  dependencies:
+    glob "^7.0.0"
+    interpret "^1.0.0"
+    rechoir "^0.6.2"
+
 should-equal@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/should-equal/-/should-equal-2.0.0.tgz#6072cf83047360867e68e98b09d71143d04ee0c3"
@@ -1400,6 +1432,14 @@ should@^13.1.3:
     should-type "^1.4.0"
     should-type-adaptors "^1.0.1"
     should-util "^1.0.0"
+
+shx@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/shx/-/shx-0.2.2.tgz#0a304d020b0edf1306ad81570e80f0346df58a39"
+  dependencies:
+    es6-object-assign "^1.0.3"
+    minimist "^1.2.0"
+    shelljs "^0.7.3"
 
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"

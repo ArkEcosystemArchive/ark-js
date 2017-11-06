@@ -7,12 +7,15 @@
     "node": ">=4"
   },
   "scripts": {
+    "build": "npm run build:docs",
     "build:docs": "jsdoc -c jsdoc.json",
-    "clean": "shx rm -r ./docs",
+    "clean": "npm run clean:docs",
+    "clean:docs": "shx --silent rm -r ./doc",
     "lint": "eslint .",
     "test": "mocha test/ark.js test/*/*"
   },
   "directories": {
+    "doc": "./doc",
     "lib": "./lib",
     "test": "./test"
   },
@@ -63,6 +66,7 @@
     "mocha": "^4.0.1",
     "proxyquire": "^1.8.0",
     "should": "^13.1.3",
+    "shx": "^0.2.2",
     "sinon": "^4.1.1",
     "sinon-test": "^2.1.2"
   }

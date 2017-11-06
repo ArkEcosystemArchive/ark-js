@@ -1,10 +1,14 @@
 {
   "plugins": ["plugins/markdown"],
   "source": {
-    "include": ["README.md", "index.js"]
+    "include": ["index.js", "lib"],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
   },
   "opts": {
     "destination": "./doc",
+    "package": "package.json",
+    "readme": "README.md",
     "recurse": true
   }
 }

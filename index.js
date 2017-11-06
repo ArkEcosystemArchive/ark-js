@@ -1,5 +1,3 @@
-/** @module arkjs */
-
 const ark = {
 	crypto : require("./lib/transactions/crypto.js"),
 	delegate : require("./lib/transactions/delegate.js"),

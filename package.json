@@ -9,8 +9,8 @@
   "scripts": {
     "build": "npm run build:docs",
     "build:docs": "jsdoc -c jsdoc.json",
-    "clean": "npm run clean:docs",
-    "clean:docs": "shx --silent rm -r ./doc",
+    "clean": "npm run clean:doc",
+    "clean:doc": "shx --silent rm -r ./doc",
     "lint": "eslint .",
     "test": "mocha --use_strict test/ark.js test/*/*"
   },

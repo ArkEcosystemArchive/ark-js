@@ -18,7 +18,7 @@ describe('ecdsa', function () {
     }
 
     fixtures.valid.ecdsa.forEach(function (f) {
-      it(`for "${f.message  }"`, function () {
+      it(`for "${f.message}"`, function () {
         const x = BigInteger.fromHex(f.d).toBuffer(32)
         const h1 = bcrypto.sha256(f.message)
 

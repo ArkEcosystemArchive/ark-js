@@ -1,6 +1,6 @@
 /** @module arkjs */
 
-ark = {
+var ark = {
 	crypto : require("./lib/transactions/crypto.js"),
 	delegate : require("./lib/transactions/delegate.js"),
 	signature : require("./lib/transactions/signature.js"),
@@ -23,4 +23,4 @@ for (var method in libCrypto) {
 }
 
 /** The arkjs exported object. */
-module.exports = ark;
+module.exports = ark

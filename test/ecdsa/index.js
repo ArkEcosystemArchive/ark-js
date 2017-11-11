@@ -1,5 +1,3 @@
-/* global describe, it */
-
 var assert = require('assert')
 var bcrypto = require('../../lib/crypto')
 var ecdsa = require('../../lib/ecdsa')

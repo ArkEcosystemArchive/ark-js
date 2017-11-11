@@ -1,5 +1,3 @@
-/* global describe, it */
-
 var assert = require('assert')
 
 var BigInteger = require('bigi')

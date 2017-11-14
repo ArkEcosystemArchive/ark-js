@@ -47,7 +47,7 @@ Returning:
 
 ```js
 {
-  publicKey: "5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
+  publicKey: "5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09"
 }
 ```
 

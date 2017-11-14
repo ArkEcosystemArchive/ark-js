@@ -26,7 +26,7 @@ Tests written using mocha + schedule.js.
 On the client:
 
 ```html
-<script src="node_modules/arkjs/app.js"></script>
+<script src="node_modules/arkjs/index.js"></script>
 ```
 
 On the server:

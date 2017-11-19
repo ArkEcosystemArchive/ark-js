@@ -1,5 +1,3 @@
-/* global describe, it */
-
 var assert = require('assert')
 var bigi = require('bigi')
 var ark = require('../../')

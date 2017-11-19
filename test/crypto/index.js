@@ -1,5 +1,7 @@
+/* eslint-disable max-len */
+
+require("should");
 var Buffer = require("buffer/").Buffer;
-var should = require("should");
 var ark = require("../../index.js");
 var ECPair = require('../../lib/ecpair');
 
@@ -20,7 +22,10 @@ describe("crypto.js", function () {
   });
 
   it("should has properties", function () {
-    var properties = ["getBytes", "getHash", "getId", "getFee", "sign", "secondSign", "getKeys", "getAddress", "verify", "verifySecondSignature", "fixedPoint"];
+    var properties = [
+      "getBytes", "getHash", "getId", "getFee", "sign", "secondSign",
+      "getKeys", "getAddress", "verify", "verifySecondSignature", "fixedPoint"
+    ];
     properties.forEach(function (property) {
       (crypto).should.have.property(property);
     });
@@ -365,8 +370,8 @@ describe("delegate.js", function () {
       var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(trs).toString("hex"));
       delete deserialisedTx.vendorFieldHex;
       var keys = Object.keys(deserialisedTx)
-      for(key in keys){
-        if(keys[key] == "asset"){
+      for (var key in keys){
+        if (keys[key] == "asset"){
           deserialisedTx.asset.delegate.username.should.equal(trs.asset.delegate.username);
         }
         else {

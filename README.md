@@ -47,10 +47,22 @@ Returning:
 
 ```js
 {
-  publicKey: "5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
-  privateKey: "2bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a2…44491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09"
+  publicKey: "02e012f0a7cac12a74bdc17d844cbc9f637177b470019c32a53cef94c7a56e2ea9",
+  privateKey: ""
 }
 ```
+
+To get the private key:
+
+```js
+keys.d.toBuffer().toString('hex')
+```
+
+Returning:
+```js
+1e089e3c5323ad80a90767bdd5907297b4138163f027097fd3bdbeab528d2d68
+```
+
 
 ### Generating an address
 

@@ -1,8 +1,11 @@
-# Ark JS
+![ARK JavaScript](https://i.imgur.com/ywwE2uF.png)
+
 
 [![Build Status](https://travis-ci.org/ArkEcosystem/ark-js.svg?branch=master)](https://travis-ci.org/ArkEcosystem/ark-js)
 
-Ark JS is a JavaScript library for sending Ark transactions. It's main benefit is that it does not require a locally installed Ark node, and instead utilizes the existing peers on the network. It can be used from the client as a [browserify](http://browserify.org/) compiled module, or on the server as a standard Node.js module.
+# Ark JS
+
+Ark JS is a JavaScript library for sending ARK transactions. It's main benefit is that it does not require a locally installed ARK node, and instead utilizes the existing peers on the network. It can be used from the client as a [browserify](http://browserify.org/) compiled module, or on the server as a standard Node.js module.
 
 ## Installation
 
@@ -65,7 +68,7 @@ AGihocTkwDygiFvmg6aG8jThYTic47GzU9
 
 ### Creating a transaction
 
-To create a signed transaction object, which can then be posted onto the network:
+To create a signed transaction object, which can then be broadcasted onto the network:
 
 ```js
 var amount      = 1000 * Math.pow(10, 8); // 100000000000
@@ -91,7 +94,7 @@ Returning:
 
 ### Network identification with Nethash
 
-You need to obtain the nethash in order to be sure you are posting to the right network (testnet, mainnet or others). The nethash is simply the payload hash from the genesisBlock. If no nethash or wrong nethash is provided in the headers, the request will be rejected returning the expected nethash.
+You need to obtain the nethash in order to be sure you are broadcasting to the right network (testnet, mainnet or others). The nethash is simply the payload hash from the genesisBlock. If no nethash or wrong nethash is provided in the headers, the request will be rejected returning the expected nethash.
 
 ```json
 { "success": false, "message": "Request is made on the wrong network", "expected":"e2f8f69ec6ab4b12550a314bd867c46e64e429961bb427514a3a534c602ff467", "received":"wrong-nethash" }
@@ -263,7 +266,7 @@ var transaction = ark.vote.createVote("secret", ["+58199578191950019299181920120
 
 The MIT License (MIT)
 
-Copyright (c) 2016 Ark<br />
+Copyright (c) 2016-2017 ARK.io<br />
 Copyright (c) 2016 Lisk<br />
 Copyright (c) 2015 Crypti
 

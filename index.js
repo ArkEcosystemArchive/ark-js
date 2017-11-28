@@ -1,4 +1,9 @@
-ark = {
+/**
+ * The arkjs exported object.
+ *
+ * @module arkjs
+ */
+module.exports = {
 	crypto : require("./lib/transactions/crypto.js"),
 	delegate : require("./lib/transactions/delegate.js"),
 	signature : require("./lib/transactions/signature.js"),
@@ -17,7 +22,7 @@ ark = {
 // extra aliases for bitcoinlib-js compatibility
 var libCrypto = require('./lib/crypto.js')
 for (var method in libCrypto) {
-	ark.crypto[method] = libCrypto[method]
+	module.exports.crypto[method] = libCrypto[method]
 }
 
 /**
@@ -26,5 +31,18 @@ for (var method in libCrypto) {
  * @property {number} y
  */
 
-/** The arkjs exported object. */
-module.exports = ark;
+ /**
+ * @typedef Transaction
+ * @property {number} amount
+ * @property {object} asset
+ * @property {string} id
+ * @property {number} fee
+ * @property {string} recipientId
+ * @property {*} senderPublicKey
+ * @property {string} signature
+ * @property {string} [signSignature]
+ * @property {number} timestamp
+ * @property {number} type
+ * @property {string} [vendorField]
+ */
+

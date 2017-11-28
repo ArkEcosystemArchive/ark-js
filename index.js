@@ -1,5 +1,3 @@
-/** @module arkjs */
-
 ark = {
 	crypto : require("./lib/transactions/crypto.js"),
 	delegate : require("./lib/transactions/delegate.js"),
@@ -21,6 +19,12 @@ var libCrypto = require('./lib/crypto.js')
 for (var method in libCrypto) {
 	ark.crypto[method] = libCrypto[method]
 }
+
+/**
+ * @typedef ECPoint
+ * @property {number} x
+ * @property {number} y
+ */
 
 /** The arkjs exported object. */
 module.exports = ark;

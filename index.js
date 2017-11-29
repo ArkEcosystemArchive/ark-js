@@ -31,7 +31,17 @@ for (var method in libCrypto) {
  * @property {number} y
  */
 
- /**
+/**
+ * @typedef Network
+ * @property {string} messagePrefix
+ * @property {object} bip32
+ * @property {number} bip32.public
+ * @property {number} bip32.private
+ * @property {number} pubKeyHash
+ * @property {number} wif
+ */
+
+/**
  * @typedef Transaction
  * @property {number} amount
  * @property {object} asset

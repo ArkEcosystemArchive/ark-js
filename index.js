@@ -1,21 +1,33 @@
 /**
- * The arkjs exported object.
- *
  * @module arkjs
+ * @license MIT
  */
+
 module.exports = {
-	crypto : require("./lib/transactions/crypto.js"),
+	/** @see module:crypto */
+	crypto: require("./lib/transactions/crypto.js"),
+	/** @see module:delegate */
 	delegate : require("./lib/transactions/delegate.js"),
+	/** @see module:signature */
 	signature : require("./lib/transactions/signature.js"),
+	/** @see module:multisignature */
 	multisignature : require("./lib/transactions/multisignature.js"),
+	/** @see module:transaction */
 	transaction : require("./lib/transactions/transaction.js"),
+	/** @see module:vote */
 	vote : require("./lib/transactions/vote.js"),
+	/** @see module:ipfs */
 	ipfs : require("./lib/transactions/ipfs.js"),
+	/** @see module:networks */
 	networks : require("./lib/networks.js"),
+	/** @see module:slots */
 	slots : require("./lib/time/slots.js"),
 
+	/** @see ECPair */
 	ECPair : require("./lib/ecpair.js"),
+	/** @see HDNode */
 	HDNode : require("./lib/hdnode.js"),
+	/** @see ECSignature */
 	ECSignature : require("./lib/ecsignature.js"),
 }
 

@@ -12,7 +12,7 @@
     "build:docs": "jsdoc -c jsdoc.json",
     "clean": "npm-run-all clean:*",
     "clean:browserify": "shx rm app.js",
-    "clean:doc": "shx --silent rm -r ./docs",
+    "clean:doc": "shx --silent rm -r ./doc",
     "lint": "eslint .",
     "test": "mocha --use_strict test/ark.js test/*/*"
   },

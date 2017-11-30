@@ -6,7 +6,7 @@
     "excludePattern": "(^|\\/|\\\\)_"
   },
   "opts": {
-    "destination": "./docs",
+    "destination": "./doc",
     "recurse": true
   },
   "tags": {

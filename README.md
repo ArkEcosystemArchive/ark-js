@@ -11,6 +11,20 @@ Ark JS is a JavaScript library for sending ARK transactions. It's main benefit i
 
 [![npm package](https://nodei.co/npm/arkjs.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/arkjs/)
 
+## Building
+
+Build the browserify module for client use:
+
+```sh
+npm build:browserify
+```
+
+Clean:
+
+```sh
+npm clean:browserify
+```
+
 ## Tests
 
 ```
@@ -26,13 +40,13 @@ Tests written using mocha + schedule.js.
 On the client:
 
 ```html
-<script src="node_modules/arkjs/app.js"></script>
+<script src="node_modules/arkjs/bundle.min.js"></script>
 ```
 
 On the server:
 
 ```js
-var ark = require('arkjs');
+var ark = require("arkjs");
 ```
 
 ### Generating a key pair
@@ -47,10 +61,22 @@ Returning:
 
 ```js
 {
-  publicKey: "5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
-  privateKey: "2bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a2…44491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09"
+  publicKey: "02e012f0a7cac12a74bdc17d844cbc9f637177b470019c32a53cef94c7a56e2ea9",
+  privateKey: ""
 }
 ```
+
+To get the private key:
+
+```js
+keys.d.toBuffer().toString("hex");
+```
+
+Returning:
+```
+1e089e3c5323ad80a90767bdd5907297b4138163f027097fd3bdbeab528d2d68
+```
+
 
 ### Generating an address
 
@@ -113,16 +139,16 @@ On the client using [jQuery](https://jquery.com/):
 ```js
 var nethash;
 $.ajax({
-  url: 'https://api.arknode.net/peer/transactions/',
+  url: "https://api.arknode.net/peer/transactions/",
   data: JSON.stringify({}),
-  dataType: 'json',
-  method: 'POST',
+  dataType: "json",
+  method: "POST",
   headers: {
-    'Content-Type': 'application/json',
-    'os': 'linux3.2.0-4-amd64',
-    'version': '0.3.0',
-    'port': 1,
-    'nethash': "wrong-nethash"
+    "Content-Type": "application/json",
+    "os": "linux3.2.0-4-amd64",
+    "version": "0.3.0",
+    "port": 1,
+    "nethash": "wrong-nethash"
   },
   success: function(data) {
     nethash = data.body.expected;
@@ -135,15 +161,15 @@ From a server using [Request](https://github.com/request/request):
 ```js
 var nethash;
 request({
-  url: 'https://api.arknode.net/peer/transactions',
+  url: "https://api.arknode.net/peer/transactions",
   json: { },
-  method: 'POST',
+  method: "POST",
   headers: {
-    'Content-Type': 'application/json',
-    'os': 'linux3.2.0-4-amd64',
-    'version': '0.3.0',
-    'port': 1,
-    'nethash': "wrong-nethash"
+    "Content-Type": "application/json",
+    "os": "linux3.2.0-4-amd64",
+    "version": "0.3.0",
+    "port": 1,
+    "nethash": "wrong-nethash"
   }
 }, function(error, response, body) {
     nethash = body.expected;
@@ -177,16 +203,16 @@ var success = function(data) {
 };
 
 $.ajax({
-  url: 'https://api.arknode.net/peer/transactions',
+  url: "https://api.arknode.net/peer/transactions",
   data: JSON.stringify({ transactions: [transaction] }),
-  dataType: 'json',
-  method: 'POST',
+  dataType: "json",
+  method: "POST",
   headers: {
-    'Content-Type': 'application/json',
-    'os': 'linux3.2.0-4-amd64',
-    'version': '0.3.0',
-    'port': 1,
-    'nethash':nethash
+    "Content-Type": "application/json",
+    "os": "linux3.2.0-4-amd64",
+    "version": "0.3.0",
+    "port": 1,
+    "nethash":nethash
   },
   success: success
 });
@@ -198,22 +224,22 @@ Using [Request](https://github.com/request/request):
 
 
 ```js
-var request = require('request');
+var request = require("request");
 
 var callback = function(error, response, body) {
   console.log(error || body);
 };
 
 request({
-  url: 'https://api.arknode.net/peer/transactions',
+  url: "https://api.arknode.net/peer/transactions",
   json: { transactions: [transaction] },
-  method: 'POST',
+  method: "POST",
   headers: {
-    'Content-Type': 'application/json',
-    'os': 'linux3.2.0-4-amd64',
-    'version': '0.3.0',
-    'port': 1,
-    'nethash': nethash
+    "Content-Type": "application/json",
+    "os": "linux3.2.0-4-amd64",
+    "version": "0.3.0",
+    "port": 1,
+    "nethash": nethash
   }
 }, callback);
 ```

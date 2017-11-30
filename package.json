@@ -7,7 +7,8 @@
     "node": ">=4"
   },
   "scripts": {
-    "build": "npm run build:docs",
+    "build:browserify": "browserify index.js -o app.js",
+    "clean:browserify": "shx rm app.js",
     "build:docs": "jsdoc -c jsdoc.json",
     "clean": "npm run clean:doc",
     "clean:doc": "shx --silent rm -r ./doc",
@@ -62,6 +63,7 @@
   },
   "devDependencies": {
     "eslint": "^4.10.0",
+    "browserify": "^14.4.0",
     "jsdoc": "^3.5.5",
     "mocha": "^4.0.1",
     "proxyquire": "^1.8.0",

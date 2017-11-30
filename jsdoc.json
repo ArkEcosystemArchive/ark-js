@@ -1,7 +1,7 @@
 {
   "plugins": ["plugins/markdown"],
   "source": {
-    "include": ["index.js", "lib"],
+    "include": ["README.md", "index.js", "lib/"],
     "includePattern": ".+\\.js(doc|x)?$",
     "excludePattern": "(^|\\/|\\\\)_"
   },
@@ -10,5 +10,8 @@
     "package": "package.json",
     "readme": "README.md",
     "recurse": true
+  },
+  "tags": {
+    "dictionaries": ["jsdoc", "closure"]
   }
 }

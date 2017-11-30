@@ -6,9 +6,7 @@
     "excludePattern": "(^|\\/|\\\\)_"
   },
   "opts": {
-    "destination": "./doc",
-    "package": "package.json",
-    "readme": "README.md",
+    "destination": "./docs",
     "recurse": true
   },
   "tags": {

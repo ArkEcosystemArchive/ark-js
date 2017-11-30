@@ -1,6 +1,4 @@
-var Buffer = require("buffer/").Buffer;
-var should = require("should");
-var ark = require("../../index.js");
+require("should");
 
 describe("slots.js", function () {
 

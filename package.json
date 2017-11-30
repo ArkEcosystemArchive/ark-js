@@ -7,10 +7,12 @@
     "node": ">=4"
   },
   "scripts": {
+    "build": "npm-run-all build:*",
     "build:browserify": "browserify index.js -o app.js",
-    "clean:browserify": "shx rm app.js",
     "build:docs": "jsdoc -c jsdoc.json",
-    "clean:docs": "shx rm -r ./docs",
+    "clean": "npm-run-all clean:*",
+    "clean:browserify": "shx rm app.js",
+    "clean:docs": "shx rm -r ./doc",
     "lint": "eslint .",
     "test": "mocha test/ark.js test/*/*"
   },

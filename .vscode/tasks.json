@@ -12,12 +12,12 @@
         },
         {
             "type": "npm",
-            "script": "build:docs",
+            "script": "build",
+            "problemMatcher": [],
             "group": {
                 "kind": "build",
                 "isDefault": true
-            },
-            "problemMatcher": []
+            }
         }
     ]
 }

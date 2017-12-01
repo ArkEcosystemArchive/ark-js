@@ -1,4 +1,4 @@
-var Buffer = require("buffer/").Buffer;
+var Buffer = require('safe-buffer').Buffer
 var should = require("should");
 var ark = require("../../index.js");
 var ECPair = require('../../lib/ecpair');

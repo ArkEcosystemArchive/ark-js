@@ -58,6 +58,7 @@
     "ecurve": "^1.0.5",
     "js-nacl": "^1.2.2",
     "randombytes": "^2.0.5",
+    "safe-buffer": "^5.1.1",
     "secp256k1": "^3.3.0",
     "typeforce": "^1.11.7",
     "wif": "^2.0.6"

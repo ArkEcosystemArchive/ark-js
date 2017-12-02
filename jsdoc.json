@@ -4,7 +4,7 @@
     "include": ["README.md", "index.js", "lib/"]
   },
   "opts": {
-    "destination": "./docs",
+    "destination": "./doc",
     "recurse": true,
     "tutorials": "./tutorials"
   },

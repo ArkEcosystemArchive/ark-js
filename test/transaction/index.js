@@ -1,4 +1,4 @@
-var Buffer = require("buffer/").Buffer;
+var Buffer = require("safe-buffer").Buffer
 var should = require("should");
 var ark = require("../../index.js");
 
@@ -80,7 +80,7 @@ describe("transaction.js", function () {
       it("should have senderPublicKey as hex string", function () {
         (trs.senderPublicKey).should.be.type("string").and.match(function () {
           try {
-            new Buffer(trs.senderPublicKey, "hex")
+            Buffer.from(trs.senderPublicKey, "hex")
           } catch (e) {
             return false;
           }
@@ -108,7 +108,7 @@ describe("transaction.js", function () {
       it("should have signature as hex string", function () {
         (trs.signature).should.be.type("string").and.match(function () {
           try {
-            new Buffer(trs.signature, "hex")
+            Buffer.from(trs.signature, "hex")
           } catch (e) {
             return false;
           }
@@ -124,7 +124,7 @@ describe("transaction.js", function () {
 
       it("should be deserialised correctly", function () {
         var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(trs).toString("hex"));
-        deserialisedTx.vendorField = new Buffer(deserialisedTx.vendorFieldHex, "hex").toString("utf8")
+        deserialisedTx.vendorField = Buffer.from(deserialisedTx.vendorFieldHex, "hex").toString("utf8")
         delete deserialisedTx.vendorFieldHex;
         var keys = Object.keys(deserialisedTx)
         for(key in keys){
@@ -153,7 +153,7 @@ describe("transaction.js", function () {
       function BIP66_encode (r, s) {
         var lenR = r.length;
         var lenS = s.length;
-        var signature = new Buffer(6 + lenR + lenS);
+        var signature = Buffer.alloc(6 + lenR + lenS);
 
         // 0x30 [total-length] 0x02 [R-length] [R] 0x02 [S-length] [S]
         signature[0] = 0x30;
@@ -254,7 +254,7 @@ describe("transaction.js", function () {
       it("should have senderPublicKey as hex string", function () {
         (trs.senderPublicKey).should.be.type("string").and.match(function () {
           try {
-            new Buffer(trs.senderPublicKey, "hex")
+            Buffer.from(trs.senderPublicKey, "hex")
           } catch (e) {
             return false;
           }
@@ -282,7 +282,7 @@ describe("transaction.js", function () {
       it("should have signature as hex string", function () {
         (trs.signature).should.be.type("string").and.match(function () {
           try {
-            new Buffer(trs.signature, "hex")
+            Buffer.from(trs.signature, "hex")
           } catch (e) {
             return false;
           }
@@ -294,7 +294,7 @@ describe("transaction.js", function () {
       it("should have signSignature as hex string", function () {
         (trs.signSignature).should.be.type("string").and.match(function () {
           try {
-            new Buffer(trs.signSignature, "hex");
+            Buffer.from(trs.signSignature, "hex");
           } catch (e) {
             return false;
           }

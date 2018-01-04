@@ -1,4 +1,3 @@
-var Buffer = require("buffer/").Buffer;
 var should = require("should");
 var ark = require("../index.js");
 

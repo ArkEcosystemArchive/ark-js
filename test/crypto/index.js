@@ -1,4 +1,4 @@
-var Buffer = require("buffer/").Buffer;
+var Buffer = require('safe-buffer').Buffer
 var should = require("should");
 var ark = require("../../index.js");
 var ECPair = require('../../lib/ecpair');
@@ -234,7 +234,7 @@ describe("crypto.js", function () {
       (keys).should.have.property("privateKey");
       (keys.publicKey).should.be.type("string").and.match(function () {
         try {
-          new Buffer(keys.publicKey, "hex");
+          Buffer.from(keys.publicKey, "hex");
         } catch (e) {
           return false;
         }
@@ -243,7 +243,7 @@ describe("crypto.js", function () {
       });
       (keys.privateKey).should.be.type("string").and.match(function () {
         try {
-          new Buffer(keys.privateKey, "hex");
+          Buffer.from(keys.privateKey, "hex");
         } catch (e) {
           return false;
         }
@@ -286,7 +286,7 @@ describe("crypto.js", function () {
       var keys = crypto.getKeys("secret second test to be sure it works correctly");
       var address = getAddress(keys.publicKey);
 
-      var Q = ecurve.Point.decodeFrom(curve, new Buffer(keys.publicKey, 'hex'))
+      var Q = ecurve.Point.decodeFrom(curve, Buffer.from(keys.publicKey, 'hex'))
       var keyPair = new ECPair(null, Q);
 
       (address).should.be.equal(keyPair.getAddress());
@@ -410,7 +410,7 @@ describe("delegate.js", function () {
       it("should have senderPublicKey in hex", function () {
         (trs).should.have.property("senderPublicKey").and.type("string").and.match(function () {
           try {
-            new Buffer(trs.senderPublicKey, "hex");
+            Buffer.from(trs.senderPublicKey, "hex");
           } catch (e) {
             return false;
           }
@@ -422,7 +422,7 @@ describe("delegate.js", function () {
       it("should have signature in hex", function () {
         (trs).should.have.property("signature").and.type("string").and.match(function () {
           try {
-            new Buffer(trs.signature, "hex");
+            Buffer.from(trs.signature, "hex");
           } catch (e) {
             return false;
           }
@@ -434,7 +434,7 @@ describe("delegate.js", function () {
       it("should have second signature in hex", function () {
         (trs).should.have.property("signSignature").and.type("string").and.match(function () {
           try {
-            new Buffer(trs.signSignature, "hex");
+            Buffer.from(trs.signSignature, "hex");
           } catch (e) {
             return false;
           }

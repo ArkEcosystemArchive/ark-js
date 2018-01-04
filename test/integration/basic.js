@@ -2,12 +2,13 @@
 
 var assert = require('assert')
 var bigi = require('bigi')
+var Buffer = require('safe-buffer').Buffer
 var ark = require('../../')
 
 describe('ark-js (basic)', function () {
   it('can generate a random ark address', function () {
     // for testing only
-    function rng () { return new Buffer('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz') }
+    function rng () { return Buffer.from('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz') }
 
     // generate random keyPair
     var keyPair = ark.ECPair.makeRandom({ rng: rng })
@@ -28,7 +29,7 @@ describe('ark-js (basic)', function () {
 
   it('can generate a random keypair for alternative networks', function () {
     // for testing only
-    function rng () { return new Buffer('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz') }
+    function rng () { return Buffer.from('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz') }
 
     var bitcoin = ark.networks.bitcoin
 

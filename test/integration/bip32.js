@@ -2,6 +2,7 @@
 
 var assert = require('assert')
 var bigi = require('bigi')
+var Buffer = require('safe-buffer').Buffer
 var ark = require('../../')
 var crypto = require('crypto')
 
@@ -52,7 +53,7 @@ describe('ark-js (BIP32)', function () {
 
       var d1 = child.keyPair.d
       var d2
-      var data = new Buffer(37)
+      var data = Buffer.alloc(37)
       serQP.copy(data, 0)
 
       // search index space until we find it

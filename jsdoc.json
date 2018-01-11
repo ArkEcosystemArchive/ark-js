@@ -5,7 +5,8 @@
   },
   "opts": {
     "destination": "./doc",
-    "recurse": true
+    "recurse": true,
+    "tutorials": "./tutorials"
   },
   "tags": {
     "dictionaries": ["jsdoc", "closure"]

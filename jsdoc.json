@@ -1,7 +1,9 @@
 {
   "plugins": ["plugins/markdown"],
   "source": {
-    "include": ["README.md", "index.js", "lib/"]
+    "include": ["README.md", "index.js", "lib/"],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
   },
   "opts": {
     "destination": "./doc",

@@ -1,12 +1,12 @@
-var Buffer = require("buffer/").Buffer;
-var should = require("should");
-var ark = require("../../index.js");
+require("should");
+const Buffer = require("buffer/").Buffer;
+const ark = require("../../index.js");
 
-var NETWORKS = require('../../lib/networks');
+const NETWORKS = require('../../lib/networks');
 
 describe("vote.js", function () {
 
-  var vote = ark.vote;
+  const vote = ark.vote;
 
   it("should be ok", function () {
     (vote).should.be.ok;
@@ -21,10 +21,10 @@ describe("vote.js", function () {
   });
 
   describe("#createVote", function () {
-    var createVote = vote.createVote,
-      vt = null,
-      publicKey = ark.crypto.getKeys("secret").publicKey,
-      publicKeys = ["+" + publicKey];
+    const createVote = vote.createVote
+    const publicKey = ark.crypto.getKeys("secret").publicKey
+    const publicKeys = [`+${publicKey}`]
+    let vt = null
 
     it("should be ok", function () {
       (createVote).should.be.ok;
@@ -39,30 +39,30 @@ describe("vote.js", function () {
     });
 
     it("should create vote from ecpair", function () {
-      var secretKey = ark.ECPair.fromSeed("secret");
+      const secretKey = ark.ECPair.fromSeed("secret");
       secretKey.publicKey = secretKey.getPublicKeyBuffer().toString("hex");
 
-      var secondSecretKey = ark.ECPair.fromSeed("second secret");
+      const secondSecretKey = ark.ECPair.fromSeed("second secret");
       secondSecretKey.publicKey = secondSecretKey.getPublicKeyBuffer().toString("hex");
 
       vt = createVote(secretKey, publicKeys, secondSecretKey);
     });
 
     it("should create vote from wif", function () {
-      var secretKey = ark.ECPair.fromWIF("SB3iDxYmKgjkhfDZSKgLaBrp3Ynzd3yd3ZZF2ujVBK7vLpv6hWKK", NETWORKS.ark);
+      const secretKey = ark.ECPair.fromWIF("SB3iDxYmKgjkhfDZSKgLaBrp3Ynzd3yd3ZZF2ujVBK7vLpv6hWKK", NETWORKS.ark);
       secretKey.publicKey = secretKey.getPublicKeyBuffer().toString("hex");
 
-      var tx = createVote(secretKey, publicKeys);
+      const tx = createVote(secretKey, publicKeys);
       (tx).should.be.ok;
       (tx).should.be.type("object");
       (tx).should.have.property("recipientId").and.be.type("string").and.be.equal("AL9uJWA5nd6RWn8VSUzGN7spWeZGHeudg9");
     });
 
     it("should be deserialised correctly", function () {
-      var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(vt).toString("hex"));
+      const deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(vt).toString("hex"));
       delete deserialisedTx.vendorFieldHex;
-      var keys = Object.keys(deserialisedTx)
-      for(key in keys){
+      const keys = Object.keys(deserialisedTx)
+      for(const key in keys){
         if(keys[key] == "asset"){
           deserialisedTx.asset.votes[0].should.equal(vt.asset.votes[0]);
         }
@@ -135,24 +135,24 @@ describe("vote.js", function () {
       });
 
       it("should be signed correctly", function () {
-        var result = ark.crypto.verify(vt);
+        const result = ark.crypto.verify(vt);
         (result).should.be.ok;
       });
 
       it("should be second signed correctly", function () {
-        var result = ark.crypto.verifySecondSignature(vt, ark.crypto.getKeys("second secret").publicKey);
+        const result = ark.crypto.verifySecondSignature(vt, ark.crypto.getKeys("second secret").publicKey);
         (result).should.be.ok;
       });
 
       it("should not be signed correctly now", function () {
         vt.amount = 100;
-        var result = ark.crypto.verify(vt);
+        const result = ark.crypto.verify(vt);
         (result).should.be.not.ok;
       });
 
       it("should not be second signed correctly now", function () {
         vt.amount = 100;
-        var result = ark.crypto.verifySecondSignature(vt, ark.crypto.getKeys("second secret").publicKey);
+        const result = ark.crypto.verifySecondSignature(vt, ark.crypto.getKeys("second secret").publicKey);
         (result).should.be.not.ok;
       });
 
@@ -192,7 +192,7 @@ describe("vote.js", function () {
         });
 
         it("should be equal to sender public key", function () {
-          var v = vt.asset.votes[0];
+          const v = vt.asset.votes[0];
           (v.substring(1, v.length)).should.be.equal(publicKey);
         });
       })

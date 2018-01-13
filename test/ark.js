@@ -1,6 +1,5 @@
-var Buffer = require("buffer/").Buffer;
-var should = require("should");
-var ark = require("../index.js");
+require("should");
+const ark = require("../index.js");
 
 describe("Ark JS", function () {
 
@@ -13,7 +12,7 @@ describe("Ark JS", function () {
 	});
 
 	it("should have properties", function () {
-		var properties = ["transaction", "signature", "vote", "delegate", "crypto"];
+		const properties = ["transaction", "signature", "vote", "delegate", "crypto"];
 
 		properties.forEach(function (property) {
 			(ark).should.have.property(property);

@@ -1,14 +1,24 @@
 {
   "env": {
     "browser": true,
-    "mocha": true,
     "node": true
   },
   "extends": [
-    "eslint:recommended",
+    "eslint:recommended"
   ],
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
   "rules": {
     "func-names": ["error", "never"],
-    "max-len": ["error", 140, { "ignoreComments": true }]
+    "max-len": ["error", 140, { "ignoreComments": true }],
+    "no-duplicate-imports": "error",
+    "no-useless-computed-key": "error",
+    "no-useless-rename": "error",
+    "object-shorthand": "warn",
+    "prefer-spread": "error",
+    "prefer-template":  "error",
+    "no-var": "error",
+    "prefer-const": "warn"
   }
 }

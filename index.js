@@ -32,10 +32,8 @@ module.exports = {
 }
 
 // extra aliases for bitcoinlib-js compatibility
-var libCrypto = require('./lib/crypto.js')
-for (var method in libCrypto) {
-	module.exports.crypto[method] = libCrypto[method]
-}
+const libCrypto = require('./lib/crypto.js')
+Object.assign(module.exports.crypto, libCrypto)
 
 /**
  * @typedef ECPoint

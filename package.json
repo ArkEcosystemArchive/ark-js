@@ -61,9 +61,10 @@
     "wif": "^2.0.6"
   },
   "devDependencies": {
-    "eslint": "^4.10.0",
     "browserify": "^14.4.0",
+    "eslint": "^4.10.0",
     "jsdoc": "^3.5.5",
+    "marked": "^0.3.12",
     "mocha": "^4.0.1",
     "proxyquire": "^1.8.0",
     "should": "^13.1.3",

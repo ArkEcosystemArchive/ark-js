@@ -1,6 +1,7 @@
 var Buffer = require("buffer/").Buffer;
 var should = require("should");
 var ark = require("../../index.js");
+var constants = require("../../lib/constants.js");
 
 describe("multisignature.js", function () {
 
@@ -21,13 +22,14 @@ describe("multisignature.js", function () {
   describe("#createMultisignature", function () {
     var createMultisignature = multisignature.createMultisignature;
     var sgn = null;
+    var keysgroup = ["+03a02b9d5fdd1307c2ee4652ba54d492d1fd11a7d1bb3f3a44c4a05e79f19de933", "+13a02b9d5fdd1307c2ee4652ba54d492d1fd11a7d1bb3f3a44c4a05e79f19de933", "+23a02b9d5fdd1307c2ee4652ba54d492d1fd11a7d1bb3f3a44c4a05e79f19de933"];
 
     it("should be function", function () {
       (createMultisignature).should.be.type("function");
     });
 
     it("should create multisignature transaction", function () {
-      sgn = createMultisignature("secret", "second secret",["03a02b9d5fdd1307c2ee4652ba54d492d1fd11a7d1bb3f3a44c4a05e79f19de933","13a02b9d5fdd1307c2ee4652ba54d492d1fd11a7d1bb3f3a44c4a05e79f19de933","23a02b9d5fdd1307c2ee4652ba54d492d1fd11a7d1bb3f3a44c4a05e79f19de933"], 255, 2);
+      sgn = createMultisignature("secret", "second secret", keysgroup, 255, 2);
       (sgn).should.be.ok;
       (sgn).should.be.type("object");
     });
@@ -39,12 +41,18 @@ describe("multisignature.js", function () {
       var secondSecretKey = ark.ECPair.fromSeed("second secret");
       secondSecretKey.publicKey = secondSecretKey.getPublicKeyBuffer().toString("hex");
 
-      sgn = createMultisignature(secretKey, secondSecretKey,["03a02b9d5fdd1307c2ee4652ba54d492d1fd11a7d1bb3f3a44c4a05e79f19de933","13a02b9d5fdd1307c2ee4652ba54d492d1fd11a7d1bb3f3a44c4a05e79f19de933","23a02b9d5fdd1307c2ee4652ba54d492d1fd11a7d1bb3f3a44c4a05e79f19de933"], 255, 2);
+      sgn = createMultisignature(secretKey, secondSecretKey, keysgroup, 255, 2);
       (sgn).should.be.ok;
       (sgn).should.be.type("object");
     });
 
+    it ("should have the correct multisignature fee", function () {
+      sgn = createMultisignature('secret', 'second secret', keysgroup, 255, 2);
+      sgn['fee'].should.equal((keysgroup.length + 1) * constants.fees.multisignature);
+    });
+
     it("should be deserialised correctly", function () {
+      sgn = createMultisignature('secret key', 'second secret key', keysgroup, 255, 2);
       var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(sgn).toString("hex"));
       delete deserialisedTx.vendorFieldHex;
       var keys = Object.keys(deserialisedTx)

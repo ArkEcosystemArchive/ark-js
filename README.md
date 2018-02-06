@@ -271,7 +271,7 @@ var transaction = ark.delegate.createDelegate("secret", "username", "secondSecre
 #### Creating a second signature transaction
 
 ```js
-var transaction = ark.signature.createTransaction("secret", "secondSecret");
+var transaction = ark.signature.createSignature("secret", "secondSecret");
 ```
 
 #### Creating a vote transaction

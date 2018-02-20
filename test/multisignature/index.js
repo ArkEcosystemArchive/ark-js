@@ -51,6 +51,23 @@ describe("multisignature.js", function () {
       sgn['fee'].should.equal((keysgroup.length + 1) * constants.fees.multisignature);
     });
 
+    it("should create transaction with fee override", function () {
+      const feeOverride = 1000000
+      trs = createMultisignature('secret', 'second secret', keysgroup, 255, 2, feeOverride);
+      (trs).should.be.ok;
+      (trs.fee).should.equal((keysgroup.length + 1) * feeOverride)
+    });
+
+    it("should fail to create transaction with invalid fee override", function (done) {
+      const feeOverride = '1000000'
+      try {
+        trs = createMultisignature('secret', 'second secret', keysgroup, 255, 2, feeOverride);
+        should.fail()
+      } catch (error) {
+        done()
+      }
+    });
+
     it("should be deserialised correctly", function () {
       sgn = createMultisignature('secret key', 'second secret key', keysgroup, 255, 2);
       var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(sgn).toString("hex"));

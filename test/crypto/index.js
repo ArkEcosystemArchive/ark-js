@@ -361,6 +361,23 @@ describe("delegate.js", function () {
       trs = createDelegate("secret", "delegate", "secret 2");
     });
 
+    it("should create transaction with fee override", function () {
+      const feeOverride = 1000000
+      trs = createDelegate('secret', 'delegate', 'second secret', feeOverride);
+      (trs).should.be.ok;
+      (trs.fee).should.equal(feeOverride)
+    });
+
+    it("should fail to create transaction with invalid fee override", function (done) {
+      const feeOverride = '1000000'
+      try {
+        trs = createDelegate('secret', 'delegate', 'second secret', feeOverride);
+        should.fail()
+      } catch (error) {
+        done()
+      }
+    });
+
     it("should be deserialised correctly", function () {
       var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(trs).toString("hex"));
       delete deserialisedTx.vendorFieldHex;

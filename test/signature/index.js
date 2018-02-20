@@ -41,6 +41,23 @@ describe("signature.js", function () {
       (sgn).should.be.type("object");
     });
 
+    it("should create transaction with fee override", function () {
+      const feeOverride = 1000000
+      trs = createSignature('secret', 'second secret', feeOverride);
+      (trs).should.be.ok;
+      (trs.fee).should.equal(feeOverride)
+    });
+
+    it("should fail to create transaction with invalid fee override", function (done) {
+      const feeOverride = '1000000'
+      try {
+        trs = createSignature('secret', 'second secret', feeOverride);
+        should.fail()
+      } catch (error) {
+        done()
+      }
+    });
+
     it("should be deserialised correctly", function () {
       var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(sgn).toString("hex"));
       delete deserialisedTx.vendorFieldHex;

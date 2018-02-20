@@ -18,6 +18,23 @@ describe("ipfs.js", function () {
     (ipfs).should.have.property("createHashRegistration");
   });
 
+  it("should create transaction with fee override", function () {
+    const feeOverride = 1000000
+    trs = ipfs.createHashRegistration("QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg", "secret", undefined, feeOverride);
+    (trs).should.be.ok;
+    (trs.fee).should.equal(feeOverride)
+  });
+
+  it("should fail to create transaction with invalid fee override", function (done) {
+    const feeOverride = '1000000'
+    try {
+      trs = ipfs.createHashRegistration("QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg", "secret", undefined, feeOverride);
+      should.fail()
+    } catch (error) {
+      done()
+    }
+  });
+
   it("should create transaction with hashid", function () {
     trs = ipfs.createHashRegistration("QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg", "secret");
     (trs).should.be.ok;

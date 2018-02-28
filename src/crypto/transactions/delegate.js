@@ -1,8 +1,8 @@
 /** @module delegate */
 
-var crypto = require('./crypto.js'),
-  constants = require('../constants.js'),
-  slots = require('../time/slots.js')
+const crypto = require('./crypto.js')
+const constants = require('../constants.js')
+const slots = require('../time/slots.js')
 
 /**
  * @static
@@ -11,10 +11,10 @@ var crypto = require('./crypto.js'),
  * @param {ECPair|string} [secondSecret]
  * @param {number} [feeOverride]
  */
-function createDelegate (secret, username, secondSecret, feeOverride) {
+exports.createDelegate = (secret, username, secondSecret, feeOverride) => {
   if (!secret || !username) return false
 
-  var keys = secret
+  const keys = secret
 
   if (!crypto.isECPair(secret)) {
     keys = crypto.getKeys(secret)
@@ -28,7 +28,7 @@ function createDelegate (secret, username, secondSecret, feeOverride) {
     throw new Error('Not a valid fee')
   }
 
-  var transaction = {
+  let transaction = {
     type: 2,
     amount: 0,
     fee: feeOverride || constants.fees.delegate,
@@ -46,17 +46,16 @@ function createDelegate (secret, username, secondSecret, feeOverride) {
   crypto.sign(transaction, keys)
 
   if (secondSecret) {
-    var secondKeys = secondSecret
+    let secondKeys = secondSecret
+
     if (!crypto.isECPair(secondSecret)) {
       secondKeys = crypto.getKeys(secondSecret)
     }
+
     crypto.secondSign(transaction, secondKeys)
   }
 
   transaction.id = crypto.getId(transaction)
-  return transaction
-}
 
-module.exports = {
-  createDelegate: createDelegate
+  return transaction
 }

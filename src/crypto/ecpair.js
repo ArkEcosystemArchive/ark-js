@@ -1,19 +1,21 @@
-var base58check = require('bs58check')
-var bcrypto = require('./crypto')
-var ecdsa = require('./ecdsa')
-var ECSignature = require('./ecsignature')
-var randomBytes = require('randombytes')
-var typeforce = require('typeforce')
-var types = require('./types')
-var wif = require('wif')
+// TODO: turn this into an es6 class (currently prototype)
 
-var NETWORKS = require('./networks')
-var BigInteger = require('bigi')
+const base58check = require('bs58check')
+const bcrypto = require('./crypto')
+const ecdsa = require('./ecdsa')
+const ECSignature = require('./ecsignature')
+const randomBytes = require('randombytes')
+const typeforce = require('typeforce')
+const types = require('./types')
+const wif = require('wif')
 
-var ecurve = require('ecurve')
-var secp256k1 = ecurve.getCurveByName('secp256k1')
+const NETWORKS = require('./networks')
+const BigInteger = require('bigi')
 
-var secp256k1native = require('secp256k1')
+const ecurve = require('ecurve')
+const secp256k1 = ecurve.getCurveByName('secp256k1')
+
+const secp256k1native = require('secp256k1')
 
 /**
  * Provide either `d` or `Q` but not both.
@@ -25,7 +27,7 @@ var secp256k1native = require('secp256k1')
  * @param {boolean} [options.compressed=true]
  * @param {Network} [options.network=networks.ark]
  */
-function ECPair (d, Q, options) {
+exports.ECPair = (d, Q, options) => {
   if (options) {
     typeforce({
       compressed: types.maybe(types.Boolean),
@@ -66,7 +68,7 @@ Object.defineProperty(ECPair.prototype, 'Q', {
  * @param {Network} [network=networks.ark]
  * @returns {ECPair}
  */
-ECPair.fromPublicKeyBuffer = function (buffer, network) {
+ECPair.fromPublicKeyBuffer = (buffer, network) => {
   var Q = ecurve.Point.decodeFrom(secp256k1, buffer)
 
   return new ECPair(null, Q, {
@@ -80,7 +82,7 @@ ECPair.fromPublicKeyBuffer = function (buffer, network) {
  * @param {Network[]|Network} network
  * @returns {ECPair}
  */
-ECPair.fromWIF = function (string, network) {
+ECPair.fromWIF = (string, network) => {
   var decoded = wif.decode(string)
   var version = decoded.version
 
@@ -113,7 +115,7 @@ ECPair.fromWIF = function (string, network) {
  * @param {boolean} [options.compressed=true]
  * @param {Network} [options.network=networks.ark]
  */
-ECPair.makeRandom = function (options) {
+ECPair.makeRandom = (options) => {
   options = options || {}
 
   var rng = options.rng || randomBytes
@@ -136,7 +138,7 @@ ECPair.makeRandom = function (options) {
  * @param {Network} [options.network=networks.ark]
  * @returns {ECPair}
  */
-ECPair.fromSeed = function (seed, options) {
+ECPair.fromSeed = (seed, options) => {
   var hash = bcrypto.sha256(new Buffer(seed, 'utf-8'))
   var d = BigInteger.fromBuffer(hash)
   if (d.signum() <= 0 || d.compareTo(secp256k1.n) >= 0) {
@@ -149,7 +151,7 @@ ECPair.fromSeed = function (seed, options) {
 /**
  * @returns {string}
  */
-ECPair.prototype.getAddress = function () {
+ECPair.prototype.getAddress = () => {
   var payload = new Buffer(21)
   var hash = bcrypto.ripemd160(this.getPublicKeyBuffer())
   var version = this.getNetwork().pubKeyHash
@@ -162,11 +164,11 @@ ECPair.prototype.getAddress = function () {
 /**
  * @returns {Network}
  */
-ECPair.prototype.getNetwork = function () {
+ECPair.prototype.getNetwork = () => {
   return this.network
 }
 
-ECPair.prototype.getPublicKeyBuffer = function () {
+ECPair.prototype.getPublicKeyBuffer = () => {
   return this.Q.getEncoded(this.compressed)
 }
 
@@ -176,7 +178,7 @@ ECPair.prototype.getPublicKeyBuffer = function () {
  * @param {Buffer} hash
  * @returns {ECSignature}
  */
-ECPair.prototype.sign = function (hash) {
+ECPair.prototype.sign = (hash) => {
   if (!this.d) throw new Error('Missing private key')
   var native = secp256k1native.sign(hash, this.d.toBuffer(32))
   return ECSignature.parseNativeSecp256k1(native).signature
@@ -187,7 +189,7 @@ ECPair.prototype.sign = function (hash) {
  *
  * @returns {string}
  */
-ECPair.prototype.toWIF = function () {
+ECPair.prototype.toWIF = () => {
   if (!this.d) throw new Error('Missing private key')
 
   return wif.encode(this.network.wif, this.d.toBuffer(32), this.compressed)
@@ -197,7 +199,7 @@ ECPair.prototype.toWIF = function () {
  * @param {Buffer} hash
  * @returns {boolean}
  */
-ECPair.prototype.verify = function (hash, signature) {
+ECPair.prototype.verify = (hash, signature) => {
   return secp256k1native.verify(hash, signature.toNativeSecp256k1(), this.Q.getEncoded(this.compressed))
 }
 

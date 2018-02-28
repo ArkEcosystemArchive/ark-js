@@ -1,8 +1,8 @@
 /** @module vote */
 
-var crypto = require('./crypto.js'),
-  constants = require('../constants.js'),
-  slots = require('../time/slots.js')
+const crypto = require('./crypto.js')
+const constants = require('../constants.js')
+const slots = require('../time/slots.js')
 
 /**
  * @static
@@ -12,10 +12,10 @@ var crypto = require('./crypto.js'),
  * @param {number} [feeOverride]
  * @returns {Transaction}
  */
-function createVote (secret, delegates, secondSecret, feeOverride) {
+exports.createVote = (secret, delegates, secondSecret, feeOverride) => {
   if (!secret || !Array.isArray(delegates)) return
 
-  var keys = secret
+  let keys = secret
 
   if (!crypto.isECPair(secret)) {
     keys = crypto.getKeys(secret)
@@ -29,7 +29,7 @@ function createVote (secret, delegates, secondSecret, feeOverride) {
     throw new Error('Not a valid fee')
   }
 
-  var transaction = {
+  let transaction = {
     type: 3,
     amount: 0,
     fee: feeOverride || constants.fees.vote,
@@ -44,7 +44,7 @@ function createVote (secret, delegates, secondSecret, feeOverride) {
   crypto.sign(transaction, keys)
 
   if (secondSecret) {
-    var secondKeys = secondSecret
+    let secondKeys = secondSecret
     if (!crypto.isECPair(secondSecret)) {
       secondKeys = crypto.getKeys(secondSecret)
     }
@@ -54,8 +54,4 @@ function createVote (secret, delegates, secondSecret, feeOverride) {
   transaction.id = crypto.getId(transaction)
 
   return transaction
-}
-
-module.exports = {
-  createVote: createVote
 }

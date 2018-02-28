@@ -1,21 +1,17 @@
 /** @module signature */
 
-var crypto = require('./crypto.js'),
-  constants = require('../constants.js'),
-  slots = require('../time/slots.js')
+const crypto = require('./crypto.js')
+const constants = require('../constants.js')
+const slots = require('../time/slots.js')
 
 /**
  * @param {string} secondSecret
  * @returns {{publicKey: ECPair}}
  */
-function newSignature (secondSecret) {
-  var keys = crypto.getKeys(secondSecret)
+exports.newSignature = (secondSecret) => {
+  let keys = crypto.getKeys(secondSecret)
 
-  var signature = {
-    publicKey: keys.publicKey
-  }
-
-  return signature
+  return { publicKey: keys.publicKey }
 }
 
 /**
@@ -25,10 +21,10 @@ function newSignature (secondSecret) {
  * @param {number} [feeOverride]
  * @returns {Transaction}
  */
-function createSignature (secret, secondSecret, feeOverride) {
+exports.createSignature = (secret, secondSecret, feeOverride) => {
   if (!secret || !secondSecret) return false
 
-  var keys = secret
+  let keys = secret
 
   if (!crypto.isECPair(secret)) {
     keys = crypto.getKeys(secret)
@@ -42,8 +38,8 @@ function createSignature (secret, secondSecret, feeOverride) {
     throw new Error('Not a valid fee')
   }
 
-  var signature = newSignature(secondSecret)
-  var transaction = {
+  let signature = newSignature(secondSecret)
+  let transaction = {
     type: 1,
     amount: 0,
     fee: feeOverride || constants.fees.secondsignature,
@@ -59,8 +55,4 @@ function createSignature (secret, secondSecret, feeOverride) {
   transaction.id = crypto.getId(transaction)
 
   return transaction
-}
-
-module.exports = {
-  createSignature: createSignature
 }

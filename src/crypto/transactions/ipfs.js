@@ -1,8 +1,8 @@
 /** @module ipfs */
 
-var crypto = require('./crypto.js'),
-  constants = require('../constants.js'),
-  slots = require('../time/slots.js')
+const crypto = require('./crypto.js')
+const constants = require('../constants.js')
+const slots = require('../time/slots.js')
 
 /**
  * @static
@@ -11,14 +11,14 @@ var crypto = require('./crypto.js'),
  * @param {ECPair|string} [secondSecret]
  * @param {number} [feeOverride]
  */
-function createHashRegistration (ipfshash, secret, secondSecret, feeOverride) {
+exports.createHashRegistration = (ipfshash, secret, secondSecret, feeOverride) => {
   if (!ipfshash || !secret) return false
 
   if (feeOverride && !Number.isInteger(feeOverride)) {
     throw new Error('Not a valid fee')
   }
 
-  var transaction = {
+  let transaction = {
     type: 5,
     amount: 0,
     fee: feeOverride || constants.fees.send,
@@ -32,7 +32,7 @@ function createHashRegistration (ipfshash, secret, secondSecret, feeOverride) {
     transaction.vendorFieldHex = '00' + transaction.vendorFieldHex
   }
 
-  var keys = secret
+  let keys = secret
 
   if (!crypto.isECPair(secret)) {
     keys = crypto.getKeys(secret)
@@ -47,7 +47,7 @@ function createHashRegistration (ipfshash, secret, secondSecret, feeOverride) {
   crypto.sign(transaction, keys)
 
   if (secondSecret) {
-    var secondKeys = secondSecret
+    let secondKeys = secondSecret
     if (!crypto.isECPair(secondSecret)) {
       secondKeys = crypto.getKeys(secondSecret)
     }
@@ -56,8 +56,4 @@ function createHashRegistration (ipfshash, secret, secondSecret, feeOverride) {
 
   transaction.id = crypto.getId(transaction)
   return transaction
-}
-
-module.exports = {
-  createHashRegistration: createHashRegistration
 }

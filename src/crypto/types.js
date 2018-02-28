@@ -1,6 +1,6 @@
-var typeforce = require('typeforce')
+const typeforce = require('typeforce')
 
-var UINT31_MAX = Math.pow(2, 31) - 1
+const UINT31_MAX = Math.pow(2, 31) - 1
 function UInt31 (value) {
   return typeforce.UInt32(value) && value <= UINT31_MAX
 }
@@ -10,18 +10,18 @@ function BIP32Path (value) {
 }
 BIP32Path.toJSON = function () { return 'BIP32 derivation path' }
 
-var SATOSHI_MAX = 21 * 1e14
+const SATOSHI_MAX = 21 * 1e14
 function Satoshi (value) {
   return typeforce.UInt53(value) && value <= SATOSHI_MAX
 }
 
 // external dependent types
-var BigInt = typeforce.quacksLike('BigInteger')
-var ECPoint = typeforce.quacksLike('Point')
+const BigInt = typeforce.quacksLike('BigInteger')
+const ECPoint = typeforce.quacksLike('Point')
 
 // exposed, external API
-var ECSignature = typeforce.compile({ r: BigInt, s: BigInt })
-var Network = typeforce.compile({
+const ECSignature = typeforce.compile({ r: BigInt, s: BigInt })
+const Network = typeforce.compile({
   messagePrefix: typeforce.oneOf(typeforce.Buffer, typeforce.String),
   bip32: {
     public: typeforce.UInt32,
@@ -32,7 +32,7 @@ var Network = typeforce.compile({
 })
 
 // extend typeforce types with ours
-var types = {
+let types = {
   BigInt: BigInt,
   BIP32Path: BIP32Path,
   Buffer256bit: typeforce.BufferN(32),
@@ -45,7 +45,7 @@ var types = {
   UInt31: UInt31
 }
 
-for (var typeName in typeforce) {
+for (const typeName in typeforce) {
   types[typeName] = typeforce[typeName]
 }
 

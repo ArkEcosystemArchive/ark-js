@@ -1,23 +1,23 @@
-var crypto = require('crypto')
-var crypto_utils = require('../../crypto.js')
-var ECPair = require('../../ecpair.js')
-var ECSignature = require('../../ecsignature.js')
-var networks = require('../../networks.js')
+const crypto = require('crypto')
+const crypto_utils = require('../../crypto.js')
+const ECPair = require('../../ecpair.js')
+const ECSignature = require('../../ecsignature.js')
+const networks = require('../../networks.js')
 
-var bs58check = require('bs58check')
+const bs58check = require('bs58check')
 
 if (typeof Buffer === 'undefined') {
   Buffer = require('buffer/').Buffer
 }
 
-var ByteBuffer = require('bytebuffer')
+const ByteBuffer = require('bytebuffer')
 
-var fixedPoint = Math.pow(10, 8)
+const fixedPoint = Math.pow(10, 8)
 // default is ark mainnet
-var networkVersion = 0x17
+let networkVersion = 0x17
 
-function getBytes (transaction) {
-  var bb = new ByteBuffer(512, true)
+exports.getBytes = (transaction) => {
+  const bb = new ByteBuffer(512, true)
   bb.writeByte(0xff) // fill, to disambiguate from v1
   bb.writeByte(transaction.version) // version 2
   bb.writeByte(transaction.network) // ark = 0x17, devnet = 0x30
@@ -44,13 +44,13 @@ function getBytes (transaction) {
       break
 
     case 2: // Delegate
-      var delegateBytes = new Buffer(transaction.asset.delegate.username, 'utf8')
+      const delegateBytes = new Buffer(transaction.asset.delegate.username, 'utf8')
       bb.writeByte(delegateBytes.length / 2)
       bb.append(delegateBytes, 'hex')
       break
 
     case 3: // Vote
-      var voteBytes = transaction.asset.votes.map(function (vote) {
+      const voteBytes = transaction.asset.votes.map(function (vote) {
         return (vote[0] == '+' ? '01' : '00') + vote.slice(1)
       }).join('')
       bb.writeByte(transaction.asset.votes.length)
@@ -58,7 +58,7 @@ function getBytes (transaction) {
       break
 
     case 4: // Multi-Signature
-      var keysgroupBuffer = new Buffer(transaction.asset.multisignature.keysgroup.join(''), 'hex')
+      const keysgroupBuffer = new Buffer(transaction.asset.multisignature.keysgroup.join(''), 'hex')
       bb.writeByte(transaction.asset.multisignature.min)
       bb.writeByte(transaction.asset.multisignature.keysgroup.length)
       bb.writeByte(transaction.asset.multisignature.lifetime)
@@ -93,20 +93,20 @@ function getBytes (transaction) {
 }
 
 function fromBytes (hexString) {
-  var tx = {}
-  var buf = new Buffer(hexString, 'hex')
+  let tx = {}
+  const buf = new Buffer(hexString, 'hex')
   tx.version = buf.readInt8(1) & 0xff
   tx.network = buf.readInt8(2) & 0xff
   tx.type = buf.readInt8(3) & 0xff
   tx.timestamp = buf.readUInt32LE(4)
   tx.senderPublicKey = hexString.substring(16, 16 + 33 * 2)
   tx.fee = buf.readUInt32LE(41)
-  var vflength = buf.readInt8(41 + 8) & 0xff
+  const vflength = buf.readInt8(41 + 8) & 0xff
   if (vflength > 0) {
     tx.vendorFieldHex = hexString.substring((41 + 8 + 1) * 2, (41 + 8 + 1) * 2 + vflength * 2)
   }
 
-  var assetOffset = (41 + 8 + 1) * 2 + vflength * 2
+  const assetOffset = (41 + 8 + 1) * 2 + vflength * 2
 
   if (tx.type == 0) { // transfer
     tx.amount = buf.readUInt32LE(assetOffset / 2)
@@ -121,7 +121,7 @@ function fromBytes (hexString) {
     }
     parseSignatures(hexString, tx, assetOffset + 66)
   } else if (tx.type == 2) { // delegate registration
-    var usernamelength = buf.readInt8(assetOffset / 2) & 0xff
+    const usernamelength = buf.readInt8(assetOffset / 2) & 0xff
 
     tx.asset = {
       delegate: {
@@ -130,10 +130,10 @@ function fromBytes (hexString) {
     }
     parseSignatures(hexString, tx, assetOffset + (usernamelength + 1) * 2)
   } else if (tx.type == 3) { // vote
-    var votelength = buf.readInt8(assetOffset / 2) & 0xff
+    const votelength = buf.readInt8(assetOffset / 2) & 0xff
     tx.asset = {votes: []}
-    var vote
-    for (var i = 0; i < votelength; i++) {
+    let vote
+    for (const i = 0; i < votelength; i++) {
       vote = hexString.substring(assetOffset + 2 + i * 2 * 34, assetOffset + 2 + (i + 1) * 2 * 34)
       vote = (vote[1] == '1' ? '+' : '-') + vote.slice(2)
       tx.asset.votes.push(vote)
@@ -144,16 +144,16 @@ function fromBytes (hexString) {
       multisignature: {}
     }
     tx.asset.multisignature.min = buffer.readInt8(assetOffset / 2) & 0xff
-    var num = buffer.readInt8(assetOffset / 2 + 1) & 0xff
+    const num = buffer.readInt8(assetOffset / 2 + 1) & 0xff
     tx.asset.multisignature.lifetime = buffer.readInt8(assetOffset / 2 + 2) & 0xff
     tx.asset.multisignature.keysgroup = []
-    for (var index = 0; index < num; index++) {
-      var key = hexString.slice(assetOffset + 6 + index * 66, assetOffset + 6 + (index + 1) * 66)
+    for (const index = 0; index < num; index++) {
+      let key = hexString.slice(assetOffset + 6 + index * 66, assetOffset + 6 + (index + 1) * 66)
     }
     parseSignatures(hexString, tx, assetOffset + 6 + num * 66)
   } else if (tx.type == 5) { // ipfs
     tx.asset = {}
-    var l = buf.readInt8(assetOffset / 2) & 0xff
+    const l = buf.readInt8(assetOffset / 2) & 0xff
     tx.asset.dag = hexString.substring(assetOffset + 2, assetOffset + 2 + l * 2)
     parseSignatures(hexString, tx, assetOffset + 2 + l * 2)
   } else if (tx.type == 6) { // timelock
@@ -166,10 +166,10 @@ function fromBytes (hexString) {
     tx.asset = {
       payments: []
     }
-    var total = buffer.readInt8(assetOffset / 2) & 0xff
-    var offset = assetOffset / 2 + 1
-    for (var i = 0; i < total; i++) {
-      var payment = {}
+    const total = buffer.readInt8(assetOffset / 2) & 0xff
+    let offset = assetOffset / 2 + 1
+    for (const i = 0; i < total; i++) {
+      let payment = {}
       payment.amount = buf.readUInt32LE(offset)
       payment.recipientId = bs58check.encode(buf.slice(offset + 1, offset + 1 + 21))
       tx.asset.payments.push(payment)
@@ -182,26 +182,27 @@ function fromBytes (hexString) {
   return tx
 }
 
-function parseSignatures (hexString, tx, startOffset) {
+exports.parseSignatures = (hexString, tx, startOffset) => {
   tx.signature = hexString.substring(startOffset)
   if (tx.signature.length == 0) delete tx.signature
   else {
-    var length = parseInt('0x' + tx.signature.substring(2, 4), 16) + 2
+    const length = parseInt('0x' + tx.signature.substring(2, 4), 16) + 2
     tx.signature = hexString.substring(startOffset, startOffset + length * 2)
     tx.secondSignature = hexString.substring(startOffset + length * 2)
     if (tx.secondSignature.length == 0) delete tx.secondSignature
   }
 }
 
-function getId (transaction) {
+exports.getId = (transaction) => {
   return getHash(transaction).toString('hex')
 }
 
-function getHash (transaction) {
+exports.getHash = (transaction) => {
   return crypto.createHash('sha256').update(getBytes(transaction)).digest()
 }
 
-function getFee (transaction) {
+// TODO: replace this with object literals
+exports.getFee = (transaction) => {
   switch (transaction.type) {
     case 0: // Normal
       return 0.1 * fixedPoint
@@ -221,86 +222,85 @@ function getFee (transaction) {
   }
 }
 
-function sign (transaction, keys) {
-  var hash = getHash(transaction)
-
-  var signature = keys.sign(hash).toDER().toString('hex')
+exports.sign = (transaction, keys) => {
+  const hash = getHash(transaction)
+  const signature = keys.sign(hash).toDER().toString('hex')
 
   if (!transaction.signature) {
     transaction.signature = signature
   }
+
   return signature
 }
 
-function secondSign (transaction, keys) {
-  var hash = getHash(transaction)
-
-  var signature = keys.sign(hash).toDER().toString('hex')
+exports.secondSign = (transaction, keys) => {
+  const hash = getHash(transaction)
+  const signature = keys.sign(hash).toDER().toString('hex')
 
   if (!transaction.secondSignature) {
     transaction.secondSignature = signature
   }
+
   return signature
 }
 
-function verify (transaction, network) {
+exports.verify = (transaction, network) => {
   network = network || networks.ark
 
-  var hash = getHash(transaction)
+  const hash = getHash(transaction)
 
-  var signatureBuffer = new Buffer(transaction.signature, 'hex')
-  var senderPublicKeyBuffer = new Buffer(transaction.senderPublicKey, 'hex')
-  var ecpair = ECPair.fromPublicKeyBuffer(senderPublicKeyBuffer, network)
-  var ecsignature = ECSignature.fromDER(signatureBuffer)
-  var res = ecpair.verify(hash, ecsignature)
+  const signatureBuffer = new Buffer(transaction.signature, 'hex')
+  const senderPublicKeyBuffer = new Buffer(transaction.senderPublicKey, 'hex')
+  const ecpair = ECPair.fromPublicKeyBuffer(senderPublicKeyBuffer, network)
+  const ecsignature = ECSignature.fromDER(signatureBuffer)
 
-  return res
+  return ecpair.verify(hash, ecsignature)
 }
 
-function verifySecondSignature (transaction, publicKey, network) {
+exports.verifySecondSignature = (transaction, publicKey, network) => {
   network = network || networks.ark
 
-  var hash = getHash(transaction)
+  const hash = getHash(transaction)
 
-  var secondSignatureBuffer = new Buffer(transaction.secondSignature, 'hex')
-  var publicKeyBuffer = new Buffer(publicKey, 'hex')
-  var ecpair = ECPair.fromPublicKeyBuffer(publicKeyBuffer, network)
-  var ecsignature = ECSignature.fromDER(secondSignatureBuffer)
-  var res = ecpair.verify(hash, ecsignature)
+  const secondSignatureBuffer = new Buffer(transaction.secondSignature, 'hex')
+  const publicKeyBuffer = new Buffer(publicKey, 'hex')
+  const ecpair = ECPair.fromPublicKeyBuffer(publicKeyBuffer, network)
+  const ecsignature = ECSignature.fromDER(secondSignatureBuffer)
 
-  return res
+  return ecpair.verify(hash, ecsignature)
 }
 
-function getKeys (secret, network) {
-  var ecpair = ECPair.fromSeed(secret, network || networks.ark)
+exports.getKeys = (secret, network) => {
+  const ecpair = ECPair.fromSeed(secret, network || networks.ark)
   ecpair.publicKey = ecpair.getPublicKeyBuffer().toString('hex')
   ecpair.privateKey = ''
 
   return ecpair
 }
 
-function getAddress (publicKey, version) {
+exports.getAddress = (publicKey, version) => {
   if (!version) {
     version = networkVersion
   }
-  var buffer = crypto_utils.ripemd160(new Buffer(publicKey, 'hex'))
 
-  var payload = new Buffer(21)
+  const buffer = crypto_utils.ripemd160(new Buffer(publicKey, 'hex'))
+  const payload = new Buffer(21)
+
   payload.writeUInt8(version, 0)
   buffer.copy(payload, 1)
 
   return bs58check.encode(payload)
 }
 
-function setNetworkVersion (version) {
+exports.setNetworkVersion = (version) => {
   networkVersion = version
 }
 
-function getNetworkVersion () {
+exports.getNetworkVersion = () => {
   return networkVersion
 }
 
-function validateAddress (address, version) {
+exports.validateAddress = (address, version) => {
   if (!version) {
     version = networkVersion
   }
@@ -310,22 +310,4 @@ function validateAddress (address, version) {
   } catch (e) {
     return false
   }
-}
-
-module.exports = {
-  getBytes: getBytes,
-  fromBytes: fromBytes,
-  getHash: getHash,
-  getId: getId,
-  getFee: getFee,
-  sign: sign,
-  secondSign: secondSign,
-  getKeys: getKeys,
-  getAddress: getAddress,
-  validateAddress: validateAddress,
-  verify: verify,
-  verifySecondSignature: verifySecondSignature,
-  fixedPoint: fixedPoint,
-  setNetworkVersion: setNetworkVersion,
-  getNetworkVersion: getNetworkVersion
 }

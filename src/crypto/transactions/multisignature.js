@@ -1,24 +1,24 @@
 /** @module multisignature */
 
-var crypto = require('./crypto.js'),
-  constants = require('../constants.js'),
-  slots = require('../time/slots.js')
+const crypto = require('./crypto.js')
+const constants = require('../constants.js')
+const slots = require('../time/slots.js')
 
 /**
  * @static
  * @param {Transaction} trs
  * @param {string} secret
  */
-function signTransaction (trs, secret) {
+exports.signTransaction = (trs, secret) => {
   if (!trs || !secret) return false
 
-  var keys = secret
+  let keys = secret
 
   if (!crypto.isECPair(secret)) {
     keys = crypto.getKeys(secret)
   }
 
-  var signature = crypto.sign(trs, keys)
+  let signature = crypto.sign(trs, keys)
 
   return signature
 }
@@ -32,10 +32,10 @@ function signTransaction (trs, secret) {
  * @param {*} min
  * @param {number} [feeOverride]
  */
-function createMultisignature (secret, secondSecret, keysgroup, lifetime, min, feeOverride) {
+exports.createMultisignature = (secret, secondSecret, keysgroup, lifetime, min, feeOverride) => {
   if (!secret || !keysgroup || !lifetime || !min) return false
 
-  var keys = secret
+  let keys = secret
 
   if (!crypto.isECPair(secret)) {
     keys = crypto.getKeys(secret)
@@ -45,7 +45,7 @@ function createMultisignature (secret, secondSecret, keysgroup, lifetime, min, f
     throw new Error('Not a valid fee')
   }
 
-  var transaction = {
+  let transaction = {
     type: 4,
     amount: 0,
     fee: (keysgroup.length + 1) * (feeOverride || constants.fees.multisignature),
@@ -64,7 +64,7 @@ function createMultisignature (secret, secondSecret, keysgroup, lifetime, min, f
   crypto.sign(transaction, keys)
 
   if (secondSecret) {
-    var secondKeys = secondSecret
+    let secondKeys = secondSecret
     if (!crypto.isECPair(secondSecret)) {
       secondKeys = crypto.getKeys(secondSecret)
     }
@@ -73,9 +73,4 @@ function createMultisignature (secret, secondSecret, keysgroup, lifetime, min, f
 
   transaction.id = crypto.getId(transaction)
   return transaction
-}
-
-module.exports = {
-  createMultisignature: createMultisignature,
-  signTransaction: signTransaction
 }

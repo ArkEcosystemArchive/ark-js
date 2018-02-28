@@ -1,6 +1,8 @@
-var crypto = require('./crypto.js'),
-  constants = require('../../constants.js'),
-  slots = require('../../time/slots.js')
+// TODO: turn this into an es6 class (currently prototype)
+
+const crypto = require('./crypto.js')
+const constants = require('../../constants.js')
+const slots = require('../../time/slots.js')
 
 function Transfer (feeOverride) {
   if (feeOverride && !Number.isInteger(feeOverride)) {
@@ -34,7 +36,7 @@ Transfer.prototype.setVendorField = function (data, type) {
 }
 
 Transfer.prototype.sign = function (passphrase) {
-  var keys = crypto.getKeys(passphrase)
+  const keys = crypto.getKeys(passphrase)
   this.senderPublicKey = keys.publicKey
   this.signature = crypto.sign(this, keys)
   return this
@@ -45,7 +47,7 @@ Transfer.prototype.verify = function () {
 }
 
 Transfer.prototype.secondSign = function (passphrase) {
-  var keys = crypto.getKeys(passphrase)
+  const keys = crypto.getKeys(passphrase)
   this.secondSignature = crypto.secondSign(transaction, keys)
   return this
 }

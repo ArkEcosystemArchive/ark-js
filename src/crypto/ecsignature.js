@@ -1,8 +1,7 @@
-var bip66 = require('bip66')
-var typeforce = require('typeforce')
-var types = require('./types')
-
-var BigInteger = require('bigi')
+const bip66 = require('bip66')
+const typeforce = require('typeforce')
+const types = require('./types')
+const BigInteger = require('bigi')
 
 /**
  * Creates a new ECSignature.
@@ -29,14 +28,14 @@ function ECSignature (r, s) {
  * @param {*} native
  * @returns {SignatureParseResult}
  */
-ECSignature.parseNativeSecp256k1 = function (native) {
+ECSignature.parseNativeSecp256k1 = (native) => {
   if (native.signature.length !== 64) throw new Error('Invalid signature length')
 
-  var compressed = 0
-  var recoveryParam = native.recovery
+  const compressed = 0
+  const recoveryParam = native.recovery
 
-  var r = BigInteger.fromBuffer(native.signature.slice(0, 32))
-  var s = BigInteger.fromBuffer(native.signature.slice(32))
+  const r = BigInteger.fromBuffer(native.signature.slice(0, 32))
+  const s = BigInteger.fromBuffer(native.signature.slice(32))
 
   return {
     compressed: compressed,
@@ -48,8 +47,8 @@ ECSignature.parseNativeSecp256k1 = function (native) {
 /**
  * @returns {Buffer}
  */
-ECSignature.prototype.toNativeSecp256k1 = function () {
-  var buffer = new Buffer(64)
+ECSignature.prototype.toNativeSecp256k1 = () => {
+  const buffer = new Buffer(64)
   if (this.r.toBuffer().length > 32 || this.s.toBuffer().length > 32) {
     return buffer
   }
@@ -64,17 +63,17 @@ ECSignature.prototype.toNativeSecp256k1 = function () {
  * @param {Buffer} buffer
  * @returns {SignatureParseResult}
  */
-ECSignature.parseCompact = function (buffer) {
+ECSignature.parseCompact = (buffer) => {
   if (buffer.length !== 65) throw new Error('Invalid signature length')
 
-  var flagByte = buffer.readUInt8(0) - 27
+  const flagByte = buffer.readUInt8(0) - 27
   if (flagByte !== (flagByte & 7)) throw new Error('Invalid signature parameter')
 
-  var compressed = !!(flagByte & 4)
-  var recoveryParam = flagByte & 3
+  const compressed = !!(flagByte & 4)
+  const recoveryParam = flagByte & 3
 
-  var r = BigInteger.fromBuffer(buffer.slice(1, 33))
-  var s = BigInteger.fromBuffer(buffer.slice(33))
+  const r = BigInteger.fromBuffer(buffer.slice(1, 33))
+  const s = BigInteger.fromBuffer(buffer.slice(33))
 
   return {
     compressed: compressed,
@@ -87,10 +86,10 @@ ECSignature.parseCompact = function (buffer) {
  * @param {Buffer}
  * @returns {ECSignature}
  */
-ECSignature.fromDER = function (buffer) {
-  var decode = bip66.decode(buffer)
-  var r = BigInteger.fromDERInteger(decode.r)
-  var s = BigInteger.fromDERInteger(decode.s)
+ECSignature.fromDER = (buffer) => {
+  const decode = bip66.decode(buffer)
+  const r = BigInteger.fromDERInteger(decode.r)
+  const s = BigInteger.fromDERInteger(decode.s)
 
   return new ECSignature(r, s)
 }
@@ -100,9 +99,9 @@ ECSignature.fromDER = function (buffer) {
  *
  * @param {Buffer} buffer
  */
-ECSignature.parseScriptSignature = function (buffer) {
-  var hashType = buffer.readUInt8(buffer.length - 1)
-  var hashTypeMod = hashType & ~0x80
+ECSignature.parseScriptSignature = (buffer) => {
+  const hashType = buffer.readUInt8(buffer.length - 1)
+  const hashTypeMod = hashType & ~0x80
 
   if (hashTypeMod <= 0x00 || hashTypeMod >= 0x04) throw new Error('Invalid hashType ' + hashType)
 
@@ -117,14 +116,14 @@ ECSignature.parseScriptSignature = function (buffer) {
  * @param {boolean} [compressed=false]
  * @returns {Buffer}
  */
-ECSignature.prototype.toCompact = function (i, compressed) {
+ECSignature.prototype.toCompact = (i, compressed) => {
   if (compressed) {
     i += 4
   }
 
   i += 27
 
-  var buffer = new Buffer(65)
+  const buffer = new Buffer(65)
   buffer.writeUInt8(i, 0)
 
   this.r.toBuffer(32).copy(buffer, 1)
@@ -136,9 +135,9 @@ ECSignature.prototype.toCompact = function (i, compressed) {
 /**
  * @return {Buffer}
  */
-ECSignature.prototype.toDER = function () {
-  var r = new Buffer(this.r.toDERInteger())
-  var s = new Buffer(this.s.toDERInteger())
+ECSignature.prototype.toDER = () => {
+  const r = new Buffer(this.r.toDERInteger())
+  const s = new Buffer(this.s.toDERInteger())
 
   return bip66.encode(r, s)
 }
@@ -147,11 +146,11 @@ ECSignature.prototype.toDER = function () {
  * @param {number} hashType
  * @returns {Buffer}
  */
-ECSignature.prototype.toScriptSignature = function (hashType) {
-  var hashTypeMod = hashType & ~0x80
+ECSignature.prototype.toScriptSignature = (hashType) => {
+  const hashTypeMod = hashType & ~0x80
   if (hashTypeMod <= 0 || hashTypeMod >= 4) throw new Error('Invalid hashType ' + hashType)
 
-  var hashTypeBuffer = new Buffer(1)
+  const hashTypeBuffer = new Buffer(1)
   hashTypeBuffer.writeUInt8(hashType, 0)
 
   return Buffer.concat([this.toDER(), hashTypeBuffer])

@@ -1,8 +1,8 @@
 /** @module transaction */
 
-var crypto = require('./crypto.js'),
-  constants = require('../constants.js'),
-  slots = require('../time/slots.js')
+const crypto = require('./crypto.js')
+const constants = require('../constants.js')
+const slots = require('../time/slots.js')
 
 /**
  * @static
@@ -15,14 +15,14 @@ var crypto = require('./crypto.js'),
  * @param {number} [feeOverride]
  * @returns {Transaction}
  */
-function createTransaction (recipientId, amount, vendorField, secret, secondSecret, version, feeOverride) {
+exports.createTransaction = (recipientId, amount, vendorField, secret, secondSecret, version, feeOverride) => {
   if (!recipientId || !amount || !secret) return false
 
   if (!crypto.validateAddress(recipientId, version)) {
     throw new Error('Wrong recipientId')
   }
 
-  var keys = secret
+  let keys = secret
 
   if (!crypto.isECPair(secret)) {
     keys = crypto.getKeys(secret)
@@ -36,7 +36,7 @@ function createTransaction (recipientId, amount, vendorField, secret, secondSecr
     throw new Error('Not a valid fee')
   }
 
-  var transaction = {
+  let transaction = {
     type: 0,
     amount: amount,
     fee: feeOverride || constants.fees.send,
@@ -57,7 +57,7 @@ function createTransaction (recipientId, amount, vendorField, secret, secondSecr
   crypto.sign(transaction, keys)
 
   if (secondSecret) {
-    var secondKeys = secondSecret
+    let secondKeys = secondSecret
     if (!crypto.isECPair(secondSecret)) {
       secondKeys = crypto.getKeys(secondSecret)
     }
@@ -66,8 +66,4 @@ function createTransaction (recipientId, amount, vendorField, secret, secondSecr
 
   transaction.id = crypto.getId(transaction)
   return transaction
-}
-
-module.exports = {
-  createTransaction: createTransaction
 }

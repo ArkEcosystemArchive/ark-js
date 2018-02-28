@@ -1,13 +1,15 @@
-const path = require('path');
-const webpack = require('webpack');
-const merge = require('webpack-merge');
+const path = require('path')
+const webpack = require('webpack')
+const merge = require('webpack-merge')
 
 module.exports = merge(require('./webpack.base'), {
+  mode: 'production',
+
   context: __dirname,
 
   entry: {
     'index': './src/index.js',
-    'index.min': './src/index.js',
+    // 'index.min': './src/index.min.js',
   },
 
   output: {
@@ -17,12 +19,5 @@ module.exports = merge(require('./webpack.base'), {
     libraryTarget: 'umd',
   },
 
-  externals: ['axios'],
-
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      include: /\.min\.js$/,
-      minimize: true,
-    }),
-  ],
-});
+  externals: ['axios']
+})

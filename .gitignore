@@ -43,3 +43,6 @@ doc
 .DS_Store
 .tags
 bundle.min.js
+
+# Build
+dist

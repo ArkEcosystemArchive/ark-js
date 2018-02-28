@@ -19,8 +19,24 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "bigi": "^1.4.2",
+    "bignum": "^0.12.5",
+    "bignumber.js": "^6.0.0",
+    "bip66": "^1.1.5",
+    "bs58check": "^2.1.1",
+    "buffer": "^5.1.0",
+    "bytebuffer": "^5.0.1",
+    "create-hash": "^1.1.3",
+    "create-hmac": "^1.1.6",
+    "ecdsa": "^0.7.0",
+    "ecurve": "^1.0.6",
+    "js-nacl": "^1.2.2",
+    "randombytes": "^2.0.6",
+    "secp256k1": "^3.5.0",
+    "typeforce": "^1.12.0",
     "webpack": "^3.10.0",
-    "webpack-merge": "^4.1.1"
+    "webpack-merge": "^4.1.1",
+    "wif": "^2.0.6"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

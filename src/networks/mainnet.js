@@ -15,6 +15,13 @@ module.exports = {
     ip: 'node1.arknet.cloud',
     port: 4001
   },
+  fees: {
+    send: 10000000,
+    vote: 100000000,
+    delegate: 2500000000,
+    secondsignature: 500000000,
+    multisignature: 500000000
+  },
   peers: [{
     ip: '5.39.9.240',
     port: 4001

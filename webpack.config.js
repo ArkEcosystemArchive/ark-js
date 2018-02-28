@@ -9,7 +9,7 @@ module.exports = merge(require('./webpack.base'), {
 
   entry: {
     'index': './src/index.js',
-    // 'index.min': './src/index.min.js',
+    'index.min': './src/index.js',
   },
 
   output: {

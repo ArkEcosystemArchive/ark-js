@@ -1,0 +1,174 @@
+{
+  "valid": [
+    {
+      "d": "1",
+      "Q": "0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798",
+      "compressed": true,
+      "network": "ark",
+      "address": "AcMiVQNHjggC1PyfVSvCcdWZKMisMKj8eo",
+      "WIF": "S9aCCSFvm8kNeyFb1t6pLb5oJs9tv96ag6uA8Du6UM7zsmsNHQiz"
+    },
+    {
+      "d": "1",
+      "Q": "0479be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8",
+      "compressed": false,
+      "network": "ark",
+      "address": "AXTte1XMqsiihEqTkdJwzC9q3S4MqFHWKi",
+      "WIF": "6hTYzRJRsKyVvTnu7YWs9WvegPh5WiFrmf3JUTwPzQ8vtvPwoBG"
+    },
+    {
+      "d": "19898843618908353587043383062236220484949425084007183071220218307100305431102",
+      "Q": "02b80011a883a0fd621ad46dfc405df1e74bf075cbaf700fd4aebef6e96f848340",
+      "compressed": true,
+      "network": "ark",
+      "address": "AL9uJWA5nd6RWn8VSUzGN7spWeZGHeudg9",
+      "WIF": "SB3iDxYmKgjkhfDZSKgLaBrp3Ynzd3yd3ZZF2ujVBK7vLpv6hWKK"
+    },
+    {
+      "d": "48968302285117906840285529799176770990048954789747953886390402978935544927851",
+      "Q": "024289801366bcee6172b771cf5a7f13aaecd237a0b9a1ff9d769cabc2e6b70a34",
+      "compressed": true,
+      "network": "ark",
+      "address": "AHXTCefovyiq4TSAnwmszRNSXQXPbgWMiV",
+      "WIF": "SDCe8styqokHi4pSe5jVRiYVV63Mef2TGsE1D4HhtGAL1DytHLtd"
+    },
+    {
+      "d": "48968302285117906840285529799176770990048954789747953886390402978935544927851",
+      "Q": "044289801366bcee6172b771cf5a7f13aaecd237a0b9a1ff9d769cabc2e6b70a34cec320a0565fb7caf11b1ca2f445f9b7b012dda5718b3cface369ee3a034ded6",
+      "compressed": false,
+      "network": "ark",
+      "address": "Ad1JqGpoWxW1EU7azNMKh3qzBbq1HGxK2M",
+      "WIF": "6iHEQ5jbB9n9meZxCaFAAE39ii1zEyCCquca8GFCyvjSc1UFLp2"
+    },
+
+
+
+    {
+      "d": "1",
+      "Q": "0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798",
+      "compressed": true,
+      "network": "ark",
+      "address": "AcMiVQNHjggC1PyfVSvCcdWZKMisMKj8eo",
+      "WIF": "S9aCCSFvm8kNeyFb1t6pLb5oJs9tv96ag6uA8Du6UM7zsmsNHQiz"
+    },
+    {
+      "d": "1",
+      "Q": "0479be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8",
+      "compressed": false,
+      "network": "ark",
+      "address": "AXTte1XMqsiihEqTkdJwzC9q3S4MqFHWKi",
+      "WIF": "6hTYzRJRsKyVvTnu7YWs9WvegPh5WiFrmf3JUTwPzQ8vtvPwoBG"
+    },
+    {
+      "d": "19898843618908353587043383062236220484949425084007183071220218307100305431102",
+      "Q": "02b80011a883a0fd621ad46dfc405df1e74bf075cbaf700fd4aebef6e96f848340",
+      "compressed": true,
+      "network": "ark",
+      "address": "AL9uJWA5nd6RWn8VSUzGN7spWeZGHeudg9",
+      "WIF": "SB3iDxYmKgjkhfDZSKgLaBrp3Ynzd3yd3ZZF2ujVBK7vLpv6hWKK"
+    },
+    {
+      "d": "48968302285117906840285529799176770990048954789747953886390402978935544927851",
+      "Q": "024289801366bcee6172b771cf5a7f13aaecd237a0b9a1ff9d769cabc2e6b70a34",
+      "compressed": true,
+      "network": "ark",
+      "address": "AHXTCefovyiq4TSAnwmszRNSXQXPbgWMiV",
+      "WIF": "SDCe8styqokHi4pSe5jVRiYVV63Mef2TGsE1D4HhtGAL1DytHLtd"
+    },
+    {
+      "d": "48968302285117906840285529799176770990048954789747953886390402978935544927851",
+      "Q": "044289801366bcee6172b771cf5a7f13aaecd237a0b9a1ff9d769cabc2e6b70a34cec320a0565fb7caf11b1ca2f445f9b7b012dda5718b3cface369ee3a034ded6",
+      "compressed": false,
+      "network": "ark",
+      "address": "Ad1JqGpoWxW1EU7azNMKh3qzBbq1HGxK2M",
+      "WIF": "6iHEQ5jbB9n9meZxCaFAAE39ii1zEyCCquca8GFCyvjSc1UFLp2"
+    },
+    {
+      "d": "48968302285117906840285529799176770990048954789747953886390402978935544927851",
+      "Q": "024289801366bcee6172b771cf5a7f13aaecd237a0b9a1ff9d769cabc2e6b70a34",
+      "compressed": true,
+      "network": "testnet",
+      "address": "a2U3J4Fopd4XK2fHEhRgbpRrfAj3XjRYWm",
+      "WIF": "UaUjHTfNeGQVJM2jVJ3nAW4HU3Fo1MN5swC6AKqDjvDiWXAunqqY"
+    },
+    {
+      "d": "48968302285117906840285529799176770990048954789747953886390402978935544927851",
+      "Q": "044289801366bcee6172b771cf5a7f13aaecd237a0b9a1ff9d769cabc2e6b70a34cec320a0565fb7caf11b1ca2f445f9b7b012dda5718b3cface369ee3a034ded6",
+      "compressed": false,
+      "network": "testnet",
+      "address": "aMwtvgQoQbqhV3LhS818JSuQKN2fCAdqGx",
+      "WIF": "7FP9Dnv6oxbmvmsEhrB9RMdYNXsUeEgDS8kJ2fFYtQqeVxBZpAC"
+    },
+    {
+      "d": "115792089237316195423570985008687907852837564279074904382605163141518161494336",
+      "Q": "0379be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798",
+      "compressed": true,
+      "network": "ark",
+      "address": "AeiYjhgFV9Gx3Hn2mRB3BZbKYxehR4GimK",
+      "WIF": "SJ9pmbcpwHfWdVGMZxVi8mAwZ45Gsdq4BeR8y6poSyje5EthYKP9"
+    }
+  ],
+  "invalid": {
+    "constructor": [
+      {
+        "exception": "Private key must be greater than 0",
+        "d": "-1"
+      },
+      {
+        "exception": "Private key must be greater than 0",
+        "d": "0"
+      },
+      {
+        "exception": "Private key must be less than the curve order",
+        "d": "115792089237316195423570985008687907852837564279074904382605163141518161494337"
+      },
+      {
+        "exception": "Private key must be less than the curve order",
+        "d": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+      },
+      {
+        "exception": "Expected property \"compressed\" of type \\?Boolean, got Number 2",
+        "d": "1",
+        "options": {
+          "compressed": 2
+        }
+      },
+      {
+        "exception": "Unexpected publicKey parameter",
+        "d": "1",
+        "Q": "0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798"
+      },
+      {
+        "exception": "Expected property \"network.messagePrefix\" of type Buffer|String, got undefined",
+        "d": "1",
+        "options": {
+          "network": {}
+        }
+      }
+
+    ],
+    "fromWIF": [
+      {
+        "exception": "Invalid network version",
+        "network": "ark",
+        "WIF": "7FP9Dnv6oxbmvmsEhrB9RMdYNXsUeEgDS8kJ2fFYtQqeVxBZpAC"
+      },
+      {
+        "exception": "Unknown network version",
+        "WIF": "brQnSed3Fia1w9VcbbS6ZGDgJ6ENkgwuQY2LS7pEC5bKHD1fMF"
+      },
+      {
+        "exception": "Invalid compression flag",
+        "WIF": "KwDiBf89QgGbjEhKnhXJuH7LrciVrZi3qYjgd9M7rFU73sfZr2ym"
+      },
+      {
+        "exception": "Invalid WIF length",
+        "WIF": "3tq8Vmhh9SN5XhjTGSWgx8iKk59XbKG6UH4oqpejRuJhfYD"
+      },
+      {
+        "exception": "Invalid WIF length",
+        "WIF": "38uMpGARR2BJy5p4dNFKYg9UsWNoBtkpbdrXDjmfvz8krCtw3T1W92ZDSR"
+      }
+    ]
+  }
+}

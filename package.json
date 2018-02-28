@@ -5,14 +5,16 @@
   "main": "src/index.js",
   "repository": "https://github.com/ArkEcosystem/ark-js",
   "contributors": [
-    "François-Xavier Thoorens <fx@ark.io>"
+    "François-Xavier Thoorens <fx@ark.io>",
     "Brian Faust <brian@ark.io>",
     "Lúcio Rubens <lucio@ark.io>",
-    "Alex Barnsley <alex@ark.io>",
+    "Alex Barnsley <alex@ark.io>"
   ],
   "license": "MIT",
   "scripts": {
-    "build": "rm -rf dist && NODE_ENV=production webpack"
+    "build": "rm -rf dist && NODE_ENV=production webpack",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix"
   },
   "dependencies": {
     "axios": "^0.17.1",
@@ -23,5 +25,14 @@
     "babel-preset-env": "^1.6.1",
     "webpack": "^3.10.0",
     "webpack-merge": "^4.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.18.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "jest": "^22.4.2"
   }
 }

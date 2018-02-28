@@ -1,11 +1,11 @@
 {
   "env": {
     "browser": true,
-    "mocha": true,
+    "jest": true,
     "node": true
   },
   "extends": [
-    "eslint:recommended",
+    "standard",
   ],
   "rules": {
     "func-names": ["error", "never"],

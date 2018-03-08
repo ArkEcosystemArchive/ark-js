@@ -2,6 +2,8 @@
 
 
 [![Build Status](https://travis-ci.org/ArkEcosystem/ark-js.svg?branch=master)](https://travis-ci.org/ArkEcosystem/ark-js)
+[![npm version](https://badge.fury.io/js/arkjs.svg)](https://badge.fury.io/js/arkjs)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://blog.ark.io/ark-github-development-bounty-113806ae9ffe)
 
 # Ark JS
 

@@ -1,64 +1,57 @@
-// TODO: turn this into an es6 class (currently prototype)
-
 const crypto = require('./crypto.js')
 const constants = require('../../constants.js')
 const slots = require('../../time/slots.js')
 
-function Transfer (feeOverride) {
-  if (feeOverride && !Number.isInteger(feeOverride)) {
-    throw new Error('Not a valid fee')
+module.exports = class Transfer  {
+  constructor (config, feeOverride) {
+    if (feeOverride && !Number.isInteger(feeOverride)) {
+      throw new Error('Not a valid fee')
+    }
+
+    this.id = null
+    this.amount = 0
+    this.fee = feeOverride || constants.fees.send
+    this.timestamp = slots.getTime()
+    this.type = 0
+    this.expiration = 15 // 15 blocks, 120s
+    this.version = 0x02
+    this.network = config.network
   }
 
-  this.id = null
-  this.amount = 0
-  this.fee = feeOverride || constants.fees.send
-  this.timestamp = slots.getTime()
-  this.type = 0
-  this.expiration = 15 // 15 blocks, 120s
-  this.version = 0x02
-  this.network = 0x17
-}
+  create (recipientId, amount) {
+    this.amount = amount
+    this.recipientId = recipientId
+    return this
+  }
 
-Transfer.prototype.setNetwork = function (network) {
-  this.network = network
-  return this
-}
+  setVendorField (data, type) {
+    this.vendorFieldHex = new Buffer(data, type).toString('hex')
+    return this
+  }
 
-Transfer.prototype.create = function (recipientId, amount) {
-  this.amount = amount
-  this.recipientId = recipientId
-  return this
-}
+  sign (passphrase) {
+    const keys = crypto.getKeys(passphrase)
+    this.senderPublicKey = keys.publicKey
+    this.signature = crypto.sign(this, keys)
+    return this
+  }
 
-Transfer.prototype.setVendorField = function (data, type) {
-  this.vendorFieldHex = new Buffer(data, type).toString('hex')
-  return this
-}
+  verify () {
+    return crypto.verify(this)
+  }
 
-Transfer.prototype.sign = function (passphrase) {
-  const keys = crypto.getKeys(passphrase)
-  this.senderPublicKey = keys.publicKey
-  this.signature = crypto.sign(this, keys)
-  return this
-}
+  secondSign (passphrase) {
+    const keys = crypto.getKeys(passphrase)
+    this.secondSignature = crypto.secondSign(transaction, keys)
+    return this
+  }
 
-Transfer.prototype.verify = function () {
-  return crypto.verify(this)
-}
-
-Transfer.prototype.secondSign = function (passphrase) {
-  const keys = crypto.getKeys(passphrase)
-  this.secondSignature = crypto.secondSign(transaction, keys)
-  return this
-}
-
-Transfer.prototype.serialise = function () {
-  return {
-    hex: crypto.getBytes(this).toString('hex'),
-    id: crypto.getId(this),
-    signature: this.signature,
-    secondSignature: this.secondSignature
+  serialise () {
+    return {
+      hex: crypto.getBytes(this).toString('hex'),
+      id: crypto.getId(this),
+      signature: this.signature,
+      secondSignature: this.secondSignature
+    }
   }
 }
-
-module.exports = Transfer

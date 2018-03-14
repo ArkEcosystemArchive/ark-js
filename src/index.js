@@ -10,11 +10,11 @@ export default class Ark {
     this.config = config
   }
 
-  getCrypto (ip, port) {
+  getCrypto () {
     return new Crypto(this.config)
   }
 
-  getClient (ip, port) {
+  getClient () {
     return new ApiClient(this.config)
   }
 }

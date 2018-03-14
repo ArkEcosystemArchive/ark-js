@@ -49,8 +49,10 @@ exports.ECPair = (d, Q, options) => {
     this.__Q = Q
   }
 
-  /** @type {boolean} */ this.compressed = options.compressed === undefined ? true : options.compressed
-  /** @type {Network} */ this.network = options.network || NETWORKS.ark
+  /** @type {boolean} */
+  this.compressed = options.compressed === undefined ? true : options.compressed
+  /** @type {Network} */
+  this.network = options.network || NETWORKS.ark
 }
 
 Object.defineProperty(ECPair.prototype, 'Q', {
@@ -94,7 +96,7 @@ ECPair.fromWIF = (string, network) => {
 
     if (!network) throw new Error('Unknown network version')
 
-  // network
+    // network
   } else {
     network = network || NETWORKS.ark
 

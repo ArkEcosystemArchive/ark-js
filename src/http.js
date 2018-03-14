@@ -25,7 +25,7 @@ export default class Http {
     return this.sendRequest('delete', path, payload)
   }
 
-  sendRequest (method, path, payload) {
+  async sendRequest (method, path, payload) {
     const client = axios.create({
       baseURL: `http://${this.ip}:${this.port}`,
       headers: {
@@ -41,14 +41,10 @@ export default class Http {
       }
     }
 
-    return client[method](path, payload).then(response => {
-      if (!response.data.success) {
-        throw response.data.error
-      }
-
-      return response
-    }).catch(error => {
+    try {
+      return await client[method](path, payload)
+    } catch (error) {
       throw error
-    })
+    }
   }
 }

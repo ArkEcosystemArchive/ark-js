@@ -1,5 +1,3 @@
-/** @module ipfs */
-
 const crypto = require('./crypto.js')
 const constants = require('../constants.js')
 const slots = require('../time/slots.js')

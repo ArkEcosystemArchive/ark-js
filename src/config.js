@@ -1,11 +1,11 @@
 class Config {
-  setConfig(config) {
+  setConfig (config) {
     for (const [key, value] in config) {
       this[key] = value
     }
   }
 
-  get(key) {
+  get (key) {
     return this[key]
   }
 }

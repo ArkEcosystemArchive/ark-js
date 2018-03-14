@@ -2,7 +2,7 @@ import Config from '@/config'
 import crypto from './crypto'
 import slots from '@/crypto/time/slots'
 
-export function (secret, secondSecret, keysgroup, lifetime, min, feeOverride) {
+export default function (secret, secondSecret, keysgroup, lifetime, min, feeOverride) {
   if (!secret || !keysgroup || !lifetime || !min) return false
 
   let keys = secret

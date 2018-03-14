@@ -10,8 +10,8 @@ const BigInteger = require('bigi')
  * @param {BigInteger} r
  * @param {BigInteger} s
  */
-export default class ECSignature {
-  constructor(r, s) {
+class ECSignature {
+  constructor (r, s) {
     typeforce(types.tuple(types.BigInt, types.BigInt), arguments)
 
     /** @type {BigInteger} */
@@ -31,7 +31,7 @@ export default class ECSignature {
    * @param {*} native
    * @returns {SignatureParseResult}
    */
-  parseNativeSecp256k1(native) {
+  parseNativeSecp256k1 (native) {
     if (native.signature.length !== 64) throw new Error('Invalid signature length')
 
     const compressed = 0
@@ -50,9 +50,9 @@ export default class ECSignature {
   /**
    * @returns {Buffer}
    */
-  toNativeSecp256k1() {
-    const buffer = new Buffer(64)
-    if (this.r.toBuffer().length > 32 ||  this.s.toBuffer().length > 32) {
+  toNativeSecp256k1 () {
+    const buffer = Buffer.alloc(64)
+    if (this.r.toBuffer().length > 32 || this.s.toBuffer().length > 32) {
       return buffer
     }
 
@@ -66,7 +66,7 @@ export default class ECSignature {
    * @param {Buffer} buffer
    * @returns {SignatureParseResult}
    */
-  parseCompact = (buffer) => {
+  parseCompact (buffer) {
     if (buffer.length !== 65) throw new Error('Invalid signature length')
 
     const flagByte = buffer.readUInt8(0) - 27
@@ -89,7 +89,7 @@ export default class ECSignature {
    * @param {Buffer}
    * @returns {ECSignature}
    */
-  fromDER = (buffer) => {
+  fromDER (buffer) {
     const decode = bip66.decode(buffer)
     const r = BigInteger.fromDERInteger(decode.r)
     const s = BigInteger.fromDERInteger(decode.s)
@@ -102,7 +102,7 @@ export default class ECSignature {
    *
    * @param {Buffer} buffer
    */
-  parseScriptSignature = (buffer) => {
+  parseScriptSignature (buffer) {
     const hashType = buffer.readUInt8(buffer.length - 1)
     const hashTypeMod = hashType & ~0x80
 
@@ -119,14 +119,14 @@ export default class ECSignature {
    * @param {boolean} [compressed=false]
    * @returns {Buffer}
    */
-  toCompact(i, compressed) {
+  toCompact (i, compressed) {
     if (compressed) {
       i += 4
     }
 
     i += 27
 
-    const buffer = new Buffer(65)
+    const buffer = Buffer.alloc(65)
     buffer.writeUInt8(i, 0)
 
     this.r.toBuffer(32).copy(buffer, 1)
@@ -138,9 +138,9 @@ export default class ECSignature {
   /**
    * @return {Buffer}
    */
-  toDER() {
-    const r = new Buffer(this.r.toDERInteger())
-    const s = new Buffer(this.s.toDERInteger())
+  toDER () {
+    const r = Buffer.alloc(this.r.toDERInteger())
+    const s = Buffer.alloc(this.s.toDERInteger())
 
     return bip66.encode(r, s)
   }
@@ -149,13 +149,15 @@ export default class ECSignature {
    * @param {number} hashType
    * @returns {Buffer}
    */
-  toScriptSignature(hashType) {
+  toScriptSignature (hashType) {
     const hashTypeMod = hashType & ~0x80
     if (hashTypeMod <= 0 || hashTypeMod >= 4) throw new Error('Invalid hashType ' + hashType)
 
-    const hashTypeBuffer = new Buffer(1)
+    const hashTypeBuffer = Buffer.alloc(1)
     hashTypeBuffer.writeUInt8(hashType, 0)
 
     return Buffer.concat([this.toDER(), hashTypeBuffer])
   }
 }
+
+export default new ECSignature()

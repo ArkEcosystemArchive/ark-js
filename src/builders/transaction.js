@@ -2,7 +2,7 @@ import Config from '@/config'
 import crypto from './crypto'
 import slots from '@/crypto/time/slots'
 
-export function (recipientId, amount, vendorField, secret, secondSecret, version, feeOverride) {
+export default function (recipientId, amount, vendorField, secret, secondSecret, version, feeOverride) {
   if (!recipientId || !amount || !secret) return false
 
   if (!crypto.validateAddress(recipientId, version)) {

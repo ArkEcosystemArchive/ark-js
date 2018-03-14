@@ -2,7 +2,7 @@ import Config from '@/config'
 import crypto from './crypto'
 import slots from '@/crypto/time/slots'
 
-export function (secret, delegates, secondSecret, feeOverride) {
+export default function (secret, delegates, secondSecret, feeOverride) {
   if (!secret || !Array.isArray(delegates)) return
 
   let keys = secret

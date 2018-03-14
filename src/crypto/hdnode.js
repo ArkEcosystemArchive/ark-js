@@ -17,7 +17,7 @@ export default class HDNode {
    * @param {ECPair} keyPair
    * @param {Buffer} chainCode
    */
-  constructor(keyPair, chainCode) {
+  constructor (keyPair, chainCode) {
     typeforce(types.tuple('ECPair', types.Buffer256bit), arguments)
 
     if (!keyPair.compressed) throw new TypeError('BIP32 only allows compressed keyPairs')
@@ -26,17 +26,16 @@ export default class HDNode {
     this.keyPair = keyPair
     /** @type {Buffer} */
     this.chainCode = chainCode
-      /** @type {number} */
+    /** @type {number} */
     this.depth = 0
-      /** @type {number} */
+    /** @type {number} */
     this.index = 0
-      /** @type {number} */
+    /** @type {number} */
     this.parentFingerprint = 0x00000000
-
 
     this.HIGHEST_BIT = 0x80000000
     this.LENGTH = 78
-    this.MASTER_SECRET = new Buffer('Bitcoin seed')
+    this.MASTER_SECRET = Buffer.from('Bitcoin seed')
   }
 
   /**
@@ -44,7 +43,7 @@ export default class HDNode {
    * @param {Network} [network]
    * @returns {HDNode}
    */
-  fromSeedBuffer(seed, network) {
+  fromSeedBuffer (seed, network) {
     typeforce(types.tuple(types.Buffer, types.maybe(types.Network)), arguments)
 
     if (seed.length < 16) throw new TypeError('Seed should be at least 128 bits')
@@ -68,15 +67,15 @@ export default class HDNode {
    * @param {string} hex
    * @returns {HDNode}
    */
-  fromSeedHex(hex, network) {
-    return HDNode.fromSeedBuffer(new Buffer(hex, 'hex'), network)
+  fromSeedHex (hex, network) {
+    return HDNode.fromSeedBuffer(Buffer.from(hex, 'hex'), network)
   }
 
   /**
    * @param {Buffer|string} string
    * @returns {HDNode}
    */
-  fromBase58(string, networks) {
+  fromBase58 (string, networks) {
     const buffer = base58check.decode(string)
     if (buffer.length !== 78) throw new Error('Invalid buffer length')
 
@@ -86,7 +85,7 @@ export default class HDNode {
 
     // list of networks?
     if (Array.isArray(networks)) {
-      network = networks.filter(function(network) {
+      network = networks.filter(function (network) {
         return version === network.bip32.private ||
           version === network.bip32.public
       }).pop()
@@ -131,7 +130,7 @@ export default class HDNode {
       // 33 bytes: public key data (0x02 + X or 0x03 + X)
     } else {
       const Q = ecurve.Point.decodeFrom(curve, buffer.slice(45, 78))
-        // Q.compressed is assumed, if somehow this assumption is broken, `new HDNode` will throw
+      // Q.compressed is assumed, if somehow this assumption is broken, `new HDNode` will throw
 
       // Verify that the X coordinate in the public point corresponds to a point on the curve.
       // If not, the extended public key is invalid.
@@ -153,42 +152,42 @@ export default class HDNode {
   /**
    * @returns {string}
    */
-  getAddress() {
+  getAddress () {
     return this.keyPair.getAddress()
   }
 
   /**
    * @returns {Buffer}
    */
-  getIdentifier() {
+  getIdentifier () {
     return bcrypto.hash160(this.keyPair.getPublicKeyBuffer())
   }
 
   /**
    * @returns {Buffer}
    */
-  getFingerprint() {
+  getFingerprint () {
     return this.getIdentifier().slice(0, 4)
   }
 
   /**
    * @returns {Network}
    */
-  getNetwork() {
+  getNetwork () {
     return this.keyPair.getNetwork()
   }
 
   /**
    * @returns {Buffer}
    */
-  getPublicKeyBuffer() {
+  getPublicKeyBuffer () {
     return this.keyPair.getPublicKeyBuffer()
   }
 
   /**
    * @returns {HDNode}
    */
-  neutered() {
+  neutered () {
     const neuteredKeyPair = new ECPair(null, this.keyPair.Q, {
       network: this.keyPair.network
     })
@@ -205,7 +204,7 @@ export default class HDNode {
    * @param {Buffer} hash
    * @returns {ECSignature}
    */
-  sign(hash) {
+  sign (hash) {
     return this.keyPair.sign(hash)
   }
 
@@ -213,18 +212,18 @@ export default class HDNode {
    * @param {Buffer} hash
    * @returns {boolean}
    */
-  verify(hash, signature) {
+  verify (hash, signature) {
     return this.keyPair.verify(hash, signature)
   }
 
   /**
    * @returns {string}
    */
-  toBase58() {
+  toBase58 () {
     // Version
     const network = this.keyPair.network
     const version = (!this.isNeutered()) ? network.bip32.private : network.bip32.public
-    const buffer = new Buffer(78)
+    const buffer = Buffer.alloc(78)
 
     // 4 bytes: version bytes
     buffer.writeUInt32BE(version, 0)
@@ -263,11 +262,11 @@ export default class HDNode {
    * @param {number} index UInt32
    * @returns {HDNode}
    */
-  derive(index) {
+  derive (index) {
     typeforce(types.UInt32, index)
 
     const isHardened = index >= this.HIGHEST_BIT
-    const data = new Buffer(37)
+    const data = Buffer.alloc(37)
 
     // Hardened child
     if (isHardened) {
@@ -298,12 +297,12 @@ export default class HDNode {
     }
 
     // Private parent key -> private child key
-    const derivedKeyPair
+    let derivedKeyPair
     if (!this.isNeutered()) {
       // ki = parse256(IL) + kpar (mod n)
       const ki = pIL.add(this.keyPair.d).mod(curve.n)
 
-      // In case ki == 0, proceed with the next value for i
+      // In case ki === 0, proceed with the next value for i
       if (ki.signum() === 0) {
         return this.derive(index + 1)
       }
@@ -340,7 +339,7 @@ export default class HDNode {
    * @param {number} index
    * @returns {HDNode}
    */
-  deriveHardened(index) {
+  deriveHardened (index) {
     typeforce(types.UInt31, index)
 
     // Only derives hardened private keys by default
@@ -353,7 +352,7 @@ export default class HDNode {
    *
    * @returns {boolean}
    */
-  isNeutered() {
+  isNeutered () {
     return !(this.keyPair.d)
   }
 
@@ -361,7 +360,7 @@ export default class HDNode {
    * @param {string} path
    * @returns {HDNode}
    */
-  derivePath(path) {
+  derivePath (path) {
     typeforce(types.BIP32Path, path)
 
     let splitPath = path.split('/')

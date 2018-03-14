@@ -1,10 +1,10 @@
 import Config from '@/config'
 
-export default class Slots {
+class Slots {
   getEpochTime (time) {
     if (time === undefined) time = (new Date()).getTime()
 
-    const start = beginEpochTime().getTime()
+    const start = this.beginEpochTime().getTime()
 
     return Math.floor((time - start) / 1000)
   }
@@ -14,19 +14,19 @@ export default class Slots {
   }
 
   getTime (time) {
-    return getEpochTime(time)
+    return this.getEpochTime(time)
   }
 
   getRealTime (epochTime) {
-    if (epochTime === undefined) epochTime = getTime()
+    if (epochTime === undefined) epochTime = this.getTime()
 
-    const start = Math.floor(beginEpochTime().getTime() / 1000) * 1000
+    const start = Math.floor(this.beginEpochTime().getTime() / 1000) * 1000
 
     return start + epochTime * 1000
   }
 
   getSlotNumber (epochTime) {
-    if (epochTime === undefined) epochTime = getTime()
+    if (epochTime === undefined) epochTime = this.getTime()
 
     return Math.floor(epochTime / Config.get('interval'))
   }
@@ -36,10 +36,12 @@ export default class Slots {
   }
 
   getNextSlot () {
-    return getSlotNumber() + 1
+    return this.getSlotNumber() + 1
   }
 
   getLastSlot (nextSlot) {
     return nextSlot + Config.get('delegates')
   }
 }
+
+export default new Slot()

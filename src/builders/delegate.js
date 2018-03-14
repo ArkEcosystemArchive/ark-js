@@ -2,10 +2,10 @@ import Config from '@/config'
 import crypto from './crypto'
 import slots from '@/crypto/time/slots'
 
-export function (secret, username, secondSecret, feeOverride) {
+export default function (secret, username, secondSecret, feeOverride) {
   if (!secret || !username) return false
 
-  const keys = secret
+  let keys = secret
 
   if (!crypto.isECPair(secret)) {
     keys = crypto.getKeys(secret)

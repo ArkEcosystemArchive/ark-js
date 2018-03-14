@@ -2,7 +2,7 @@ import Config from '@/config'
 import crypto from './crypto'
 import slots from '@/crypto/time/slots'
 
-export function (ipfshash, secret, secondSecret, feeOverride) {
+export default function (ipfshash, secret, secondSecret, feeOverride) {
   if (!ipfshash || !secret) return false
 
   if (feeOverride && !Number.isInteger(feeOverride)) {
@@ -17,7 +17,7 @@ export function (ipfshash, secret, secondSecret, feeOverride) {
     asset: {}
   }
 
-  transaction.vendorFieldHex = new Buffer(ipfshash, 'utf8').toString('hex')
+  transaction.vendorFieldHex = Buffer.from(ipfshash, 'utf8').toString('hex')
   // filling with 0x00
   while (transaction.vendorFieldHex.length < 128) {
     transaction.vendorFieldHex = '00' + transaction.vendorFieldHex

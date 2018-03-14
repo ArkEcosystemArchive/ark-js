@@ -7,9 +7,7 @@ import bs58check from 'bs58check'
 import ByteBuffer 'bytebuffer'
 import bignum 'browserify-bignum'
 
-if (typeof Buffer === 'undefined') {
-  Buffer = require('buffer/').Buffer
-}
+if (typeof Buffer === 'undefined') Buffer = require('buffer/').Buffer
 
 const fixedPoint = Math.pow(10, 8)
 
@@ -399,7 +397,7 @@ export default class Crypto {
 
     const signatureBuffer = new Buffer(transaction.signature, 'hex')
     const senderPublicKeyBuffer = new Buffer(transaction.senderPublicKey, 'hex')
-    const ecpair = ECPair.fromPublicKeyBuffer(senderPublicKeyBuffer, network || this.config.network)
+    const ecpair = ECPair.fromPublicKeyBuffer(senderPublicKeyBuffer, network || Config.get('network'))
     const ecsignature = ECSignature.fromDER(signatureBuffer)
 
     return ecpair.verify(hash, ecsignature)
@@ -416,7 +414,7 @@ export default class Crypto {
 
     const signSignatureBuffer = new Buffer(transaction.signSignature, 'hex')
     const publicKeyBuffer = new Buffer(publicKey, 'hex')
-    const ecpair = ECPair.fromPublicKeyBuffer(publicKeyBuffer, network || this.config.network)
+    const ecpair = ECPair.fromPublicKeyBuffer(publicKeyBuffer, network || Config.get('network'))
     const ecsignature = ECSignature.fromDER(signSignatureBuffer)
 
     return ecpair.verify(hash, ecsignature)
@@ -429,7 +427,7 @@ export default class Crypto {
    * @returns {ECPair}
    */
   getKeys (secret, network) {
-    let ecpair = ECPair.fromSeed(secret, network || this.config.network)
+    let ecpair = ECPair.fromSeed(secret, network || Config.get('network'))
 
     ecpair.publicKey = ecpair.getPublicKeyBuffer().toString('hex')
     ecpair.privateKey = ''

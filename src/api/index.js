@@ -13,10 +13,6 @@ import Transport from './transport'
 import Vote from './vote'
 
 export default class ApiClient {
-  constructor (config) {
-    this.config = config
-  }
-
   accounts () {
     return new Account(this.http)
   }
@@ -62,6 +58,6 @@ export default class ApiClient {
   }
 
   getBuilder () {
-    return new Builder(this.config)
+    return new Builder()
   }
 }

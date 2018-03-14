@@ -1,7 +1,4 @@
 // TODO: add methods to access underlying crypto methods with proper config
+import Config from '@/config'
 
-export default class Crypto {
-  constructor (config) {
-    this.config = config
-  }
-}
+export default class Crypto {}

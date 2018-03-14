@@ -1,24 +1,16 @@
-const crypto = require('crypto')
-const crypto_utils = require('../../crypto.js')
-const ECPair = require('../../ecpair.js')
-const ECSignature = require('../../ecsignature.js')
-const networks = require('../../networks.js')
+import Config from '@/config'
+import crypto from 'crypto'
+import crypto_utils from '@/crypto/crypto'
+import ECPair from '@/crypto/ecpair'
+import ECSignature from '@/crypto/ecsignature'
+import bs58check from 'bs58check'
+import ByteBuffer from 'bytebuffer'
 
-const bs58check = require('bs58check')
-
-if (typeof Buffer === 'undefined') {
-  Buffer = require('buffer/').Buffer
-}
-
-const ByteBuffer = require('bytebuffer')
+if (typeof Buffer === 'undefined') Buffer = require('buffer/').Buffer
 
 const fixedPoint = Math.pow(10, 8)
 
 export default class Crypto {
-  constructor(config) {
-    this.config = config
-  }
-
   getBytes(transaction) {
     const bb = new ByteBuffer(512, true)
     bb.writeByte(0xff) // fill, to disambiguate from v1
@@ -254,7 +246,7 @@ export default class Crypto {
 
     const signatureBuffer = new Buffer(transaction.signature, 'hex')
     const senderPublicKeyBuffer = new Buffer(transaction.senderPublicKey, 'hex')
-    const ecpair = ECPair.fromPublicKeyBuffer(senderPublicKeyBuffer, network || this.config.network)
+    const ecpair = ECPair.fromPublicKeyBuffer(senderPublicKeyBuffer, network || Config.get('network'))
     const ecsignature = ECSignature.fromDER(signatureBuffer)
 
     return ecpair.verify(hash, ecsignature)
@@ -265,14 +257,14 @@ export default class Crypto {
 
     const secondSignatureBuffer = new Buffer(transaction.secondSignature, 'hex')
     const publicKeyBuffer = new Buffer(publicKey, 'hex')
-    const ecpair = ECPair.fromPublicKeyBuffer(publicKeyBuffer, network || this.config.network)
+    const ecpair = ECPair.fromPublicKeyBuffer(publicKeyBuffer, network || Config.get('network'))
     const ecsignature = ECSignature.fromDER(secondSignatureBuffer)
 
     return ecpair.verify(hash, ecsignature)
   }
 
   getKeys(secret, network) {
-    const ecpair = ECPair.fromSeed(secret, network || this.config.network)
+    const ecpair = ECPair.fromSeed(secret, network || Config.get('network'))
     ecpair.publicKey = ecpair.getPublicKeyBuffer().toString('hex')
     ecpair.privateKey = ''
 
@@ -281,7 +273,7 @@ export default class Crypto {
 
   getAddress(publicKey, version) {
     if (!version) {
-      version = this.config.networkVersion
+      version = Config.get('networkVersion')
     }
 
     const buffer = crypto_utils.ripemd160(new Buffer(publicKey, 'hex'))
@@ -295,7 +287,7 @@ export default class Crypto {
 
   validateAddress(address, version) {
     if (!version) {
-      version = this.config.networkVersion
+      version = Config.get('networkVersion')
     }
     try {
       var decode = bs58check.decode(address)

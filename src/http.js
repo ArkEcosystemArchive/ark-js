@@ -1,10 +1,7 @@
+import Config from '@/config'
 import axios from 'axios'
 
 export default class Http {
-  constructor (config) {
-    this.config = config
-  }
-
   get (path, payload = {}) {
     return this.sendRequest('get', path, payload)
   }
@@ -29,8 +26,8 @@ export default class Http {
     const client = axios.create({
       baseURL: `http://${this.ip}:${this.port}`,
       headers: {
-        'nethash': this.config.nethash,
-        'version': this.config.version,
+        'nethash': Config.get('nethash'),
+        'version': Config.get('version'),
         'port': '1'
       }
     })

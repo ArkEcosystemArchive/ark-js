@@ -38,7 +38,7 @@ const secp256k1native = require('secp256k1')
  * @param {Network} [options.network=networks.ark]
  */
 module.exports = class ECPair {
-  constructor(d, Q, options) {
+  constructor(privateKey, publicKey, options) {
     if (options) {
       typeforce({
         compressed: types.maybe(types.Boolean),
@@ -48,21 +48,21 @@ module.exports = class ECPair {
 
     options = options || {}
 
-    if (d) {
-      if (d.signum() <= 0) throw new Error('Private key must be greater than 0')
-      if (d.compareTo(secp256k1.n) >= 0) throw new Error('Private key must be less than the curve order')
-      if (Q) throw new TypeError('Unexpected publicKey parameter')
+    if (privateKey) {
+      if (privateKey.signum() <= 0) throw new Error('Private key must be greater than 0')
+      if (privateKey.compareTo(secp256k1.n) >= 0) throw new Error('Private key must be less than the curve order')
+      if (publicKey) throw new TypeError('Unexpected publicKey parameter')
 
-      this.d = d
+      this.d = privateKey
     } else {
-      typeforce(types.ECPoint, Q)
+      typeforce(types.ECPoint, publicKey)
 
-      this.__Q = Q
+      this.__Q = publicKey
     }
 
     /** @type {boolean} */
     this.compressed = options.compressed === undefined ? true : options.compressed
-      /** @type {Network} */
+    /** @type {Network} */
     this.network = options.network || NETWORKS.ark
   }
 

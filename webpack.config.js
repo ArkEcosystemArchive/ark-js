@@ -2,7 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 
-module.exports = merge(require('./webpack.base'), {
+export default merge(require('./webpack.base'), {
   mode: 'production',
 
   context: __dirname,

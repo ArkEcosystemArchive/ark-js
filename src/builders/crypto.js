@@ -1,25 +1,19 @@
-const crypto = require('crypto')
-const crypto_utils = require('../crypto.js')
-const ECPair = require('../ecpair.js')
-const ECSignature = require('../ecsignature.js')
-const networks = require('../networks.js')
-
-const bs58check = require('bs58check')
+import Config from '@/config'
+import crypto from 'crypto'
+import crypto_utils from '@/crypto/crypto'
+import ECPair from '@/crypto/ecpair'
+import ECSignature from '@/crypto/ecsignature'
+import bs58check from 'bs58check'
+import ByteBuffer 'bytebuffer'
+import bignum 'browserify-bignum'
 
 if (typeof Buffer === 'undefined') {
   Buffer = require('buffer/').Buffer
 }
 
-const ByteBuffer = require('bytebuffer')
-const bignum = require('browserify-bignum')
-
 const fixedPoint = Math.pow(10, 8)
 
-module.exports = class Crypto {
-  constructor (config) {
-    this.config
-  }
-
+export default class Crypto {
   /**
    * @static
    * @param {*} obj

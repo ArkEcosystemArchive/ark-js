@@ -2,7 +2,7 @@ const crypto = require('./crypto.js')
 const constants = require('../../constants.js')
 const slots = require('../../time/slots.js')
 
-module.exports = class Transfer  {
+export default class Transfer  {
   constructor (config, feeOverride) {
     if (feeOverride && !Number.isInteger(feeOverride)) {
       throw new Error('Not a valid fee')

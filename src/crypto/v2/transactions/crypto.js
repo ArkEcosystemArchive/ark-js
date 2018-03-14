@@ -14,7 +14,7 @@ const ByteBuffer = require('bytebuffer')
 
 const fixedPoint = Math.pow(10, 8)
 
-module.exports = class Crypto {
+export default class Crypto {
   constructor(config) {
     this.config = config
   }

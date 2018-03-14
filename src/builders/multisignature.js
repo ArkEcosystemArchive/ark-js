@@ -1,25 +1,14 @@
-const crypto = require('./crypto.js')
-const constants = require('../constants.js')
-const slots = require('../time/slots.js')
+import Config from '@/config'
+import crypto from './crypto'
+import slots from '@/crypto/time/slots'
 
-/**
- * @static
- * @param {string} secret
- * @param {string} username
- * @param {ECPair|string} [secondSecret]
- * @param {number} [feeOverride]
- */
-exports.createDelegate = (secret, username, secondSecret, feeOverride) => {
-  if (!secret || !username) return false
+export function (secret, secondSecret, keysgroup, lifetime, min, feeOverride) {
+  if (!secret || !keysgroup || !lifetime || !min) return false
 
-  const keys = secret
+  let keys = secret
 
   if (!crypto.isECPair(secret)) {
     keys = crypto.getKeys(secret)
-  }
-
-  if (!keys.publicKey) {
-    throw new Error('Invalid public key')
   }
 
   if (feeOverride && !Number.isInteger(feeOverride)) {
@@ -27,16 +16,17 @@ exports.createDelegate = (secret, username, secondSecret, feeOverride) => {
   }
 
   let transaction = {
-    type: 2,
+    type: 4,
     amount: 0,
-    fee: feeOverride || constants.fees.delegate,
+    fee: (keysgroup.length + 1) * (feeOverride || constants.fees.multisignature),
     recipientId: null,
     senderPublicKey: keys.publicKey,
     timestamp: slots.getTime(),
     asset: {
-      delegate: {
-        username: username,
-        publicKey: keys.publicKey
+      multisignature: {
+        min: min,
+        lifetime: lifetime,
+        keysgroup: keysgroup
       }
     }
   }
@@ -45,15 +35,12 @@ exports.createDelegate = (secret, username, secondSecret, feeOverride) => {
 
   if (secondSecret) {
     let secondKeys = secondSecret
-
     if (!crypto.isECPair(secondSecret)) {
       secondKeys = crypto.getKeys(secondSecret)
     }
-
     crypto.secondSign(transaction, secondKeys)
   }
 
   transaction.id = crypto.getId(transaction)
-
   return transaction
 }

@@ -1,19 +1,8 @@
-const crypto = require('./crypto.js')
-const constants = require('../constants.js')
-const slots = require('../time/slots.js')
+import Config from '@/config'
+import crypto from './crypto'
+import slots from '@/crypto/time/slots'
 
-/**
- * @static
- * @param {string} recipientId
- * @param {number} amount
- * @param {string|null} vendorField
- * @param {ECPair|string} secret
- * @param {ECPair|string} [secondSecret]
- * @param {number} [version]
- * @param {number} [feeOverride]
- * @returns {Transaction}
- */
-exports.createTransaction = (recipientId, amount, vendorField, secret, secondSecret, version, feeOverride) => {
+export function (recipientId, amount, vendorField, secret, secondSecret, version, feeOverride) {
   if (!recipientId || !amount || !secret) return false
 
   if (!crypto.validateAddress(recipientId, version)) {

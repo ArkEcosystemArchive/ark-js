@@ -1,25 +1,8 @@
-const crypto = require('./crypto.js')
-const constants = require('../constants.js')
-const slots = require('../time/slots.js')
+import Config from '@/config'
+import crypto from './crypto'
+import slots from '@/crypto/time/slots'
 
-/**
- * @param {string} secondSecret
- * @returns {{publicKey: ECPair}}
- */
-exports.newSignature = (secondSecret) => {
-  let keys = crypto.getKeys(secondSecret)
-
-  return { publicKey: keys.publicKey }
-}
-
-/**
- * @static
- * @param {ECPair|string} secret
- * @param {string} secondSecret
- * @param {number} [feeOverride]
- * @returns {Transaction}
- */
-exports.createSignature = (secret, secondSecret, feeOverride) => {
+export function (secret, secondSecret, feeOverride) {
   if (!secret || !secondSecret) return false
 
   let keys = secret
@@ -36,7 +19,7 @@ exports.createSignature = (secret, secondSecret, feeOverride) => {
     throw new Error('Not a valid fee')
   }
 
-  let signature = newSignature(secondSecret)
+  let signature = { publicKey: crypto.getKeys(secondSecret).publicKey }
   let transaction = {
     type: 1,
     amount: 0,

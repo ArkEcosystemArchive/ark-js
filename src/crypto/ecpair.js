@@ -19,11 +19,11 @@ const secp256k1native = require('secp256k1')
 
 // Object.defineProperty(ECPair.prototype, 'Q', {
 //   get: function () {
-//     if (!this.__Q && this.d) {
-//       this.__Q = secp256k1.G.multiply(this.d)
+//     if (!this.publicKey && this.privateKey) {
+//       this.publicKey = secp256k1.G.multiply(this.privateKey)
 //     }
 
-//     return this.__Q
+//     return this.publicKey
 //   }
 // })
 
@@ -37,7 +37,7 @@ const secp256k1native = require('secp256k1')
  * @param {boolean} [options.compressed=true]
  * @param {Network} [options.network=networks.ark]
  */
-module.exports = class ECPair {
+export default class ECPair {
   constructor(privateKey, publicKey, options) {
     if (options) {
       typeforce({
@@ -53,11 +53,11 @@ module.exports = class ECPair {
       if (privateKey.compareTo(secp256k1.n) >= 0) throw new Error('Private key must be less than the curve order')
       if (publicKey) throw new TypeError('Unexpected publicKey parameter')
 
-      this.d = privateKey
+      this.privateKey = privateKey
     } else {
       typeforce(types.ECPoint, publicKey)
 
-      this.__Q = publicKey
+      this.publicKey = publicKey
     }
 
     /** @type {boolean} */
@@ -182,8 +182,8 @@ module.exports = class ECPair {
    * @returns {ECSignature}
    */
   sign(hash) {
-    if (!this.d) throw new Error('Missing private key')
-    var native = secp256k1native.sign(hash, this.d.toBuffer(32))
+    if (!this.privateKey) throw new Error('Missing private key')
+    var native = secp256k1native.sign(hash, this.privateKey.toBuffer(32))
     return ECSignature.parseNativeSecp256k1(native).signature
   }
 
@@ -193,9 +193,9 @@ module.exports = class ECPair {
    * @returns {string}
    */
   toWIF() {
-    if (!this.d) throw new Error('Missing private key')
+    if (!this.privateKey) throw new Error('Missing private key')
 
-    return wif.encode(this.network.wif, this.d.toBuffer(32), this.compressed)
+    return wif.encode(this.network.wif, this.privateKey.toBuffer(32), this.compressed)
   }
 
   /**

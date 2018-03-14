@@ -10,7 +10,7 @@ const BigInteger = require('bigi')
  * @param {BigInteger} r
  * @param {BigInteger} s
  */
-module.exports = class ECSignature {
+export default class ECSignature {
   constructor(r, s) {
     typeforce(types.tuple(types.BigInt, types.BigInt), arguments)
 

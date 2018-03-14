@@ -1,5 +1,5 @@
-import Builder from '../builder'
-import HttpClient from '../http'
+import Builder from '@/builder'
+import HttpClient from '@/http'
 
 import Account from './account'
 import Block from './block'

@@ -1,17 +1,12 @@
-module.exports = class Slots {
-  constructor (config) {
-    this.config = config
-  }
+import Config from '@/config'
 
+export default class Slots {
   getEpochTime (time) {
-    if (time === undefined) {
-      time = (new Date()).getTime()
-    }
+    if (time === undefined) time = (new Date()).getTime()
 
-    const d = beginEpochTime()
-    const t = d.getTime()
+    const start = beginEpochTime().getTime()
 
-    return Math.floor((time - t) / 1000)
+    return Math.floor((time - start) / 1000)
   }
 
   beginEpochTime () {
@@ -23,26 +18,21 @@ module.exports = class Slots {
   }
 
   getRealTime (epochTime) {
-    if (epochTime === undefined) {
-      epochTime = getTime()
-    }
+    if (epochTime === undefined) epochTime = getTime()
 
-    const d = beginEpochTime()
-    const t = Math.floor(d.getTime() / 1000) * 1000
+    const start = Math.floor(beginEpochTime().getTime() / 1000) * 1000
 
-    return t + epochTime * 1000
+    return start + epochTime * 1000
   }
 
   getSlotNumber (epochTime) {
-    if (epochTime === undefined) {
-      epochTime = getTime()
-    }
+    if (epochTime === undefined) epochTime = getTime()
 
-    return Math.floor(epochTime / this.config.interval)
+    return Math.floor(epochTime / Config.get('interval'))
   }
 
   getSlotTime (slot) {
-    return slot * this.config.interval
+    return slot * Config.get('interval')
   }
 
   getNextSlot () {
@@ -50,6 +40,6 @@ module.exports = class Slots {
   }
 
   getLastSlot (nextSlot) {
-    return nextSlot + this.config.delegates
+    return nextSlot + Config.get('delegates')
   }
 }

@@ -11,7 +11,7 @@ const ECPair = require('./ecpair')
 const ecurve = require('ecurve')
 const curve = ecurve.getCurveByName('secp256k1')
 
-module.exports = class HDNode {
+export default class HDNode {
   /**
    * @constructor
    * @param {ECPair} keyPair

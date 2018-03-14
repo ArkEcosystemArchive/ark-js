@@ -56,4 +56,4 @@ for (const typeName in typeforce) {
   types[typeName] = typeforce[typeName]
 }
 
-module.exports = types
+export default types

@@ -1,16 +1,8 @@
-const crypto = require('./crypto.js')
-const constants = require('../constants.js')
-const slots = require('../time/slots.js')
+import Config from '@/config'
+import crypto from './crypto'
+import slots from '@/crypto/time/slots'
 
-/**
- * @static
- * @param {ECPair|string} secret
- * @param {Array} delegates
- * @param {ECPair|string} [secondSecret]
- * @param {number} [feeOverride]
- * @returns {Transaction}
- */
-exports.createVote = (secret, delegates, secondSecret, feeOverride) => {
+export function (secret, delegates, secondSecret, feeOverride) {
   if (!secret || !Array.isArray(delegates)) return
 
   let keys = secret

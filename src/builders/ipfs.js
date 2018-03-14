@@ -1,15 +1,8 @@
-const crypto = require('./crypto.js')
-const constants = require('../constants.js')
-const slots = require('../time/slots.js')
+import Config from '@/config'
+import crypto from './crypto'
+import slots from '@/crypto/time/slots'
 
-/**
- * @static
- * @param {string} ipfshash
- * @param {ECPair|string} secret
- * @param {ECPair|string} [secondSecret]
- * @param {number} [feeOverride]
- */
-exports.createHashRegistration = (ipfshash, secret, secondSecret, feeOverride) => {
+export function (ipfshash, secret, secondSecret, feeOverride) {
   if (!ipfshash || !secret) return false
 
   if (feeOverride && !Number.isInteger(feeOverride)) {

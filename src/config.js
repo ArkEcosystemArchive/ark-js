@@ -1,7 +1,13 @@
-// TODO: add getter/setter methods for fees, nethash, etc.
+class Config {
+  setConfig(config) {
+    for (const [key, value] in config) {
+      this[key] = value
+    }
+  }
 
-export default class Config {
-  constructor (config) {
-    this.config = config
+  get(key) {
+    return this[key]
   }
 }
+
+export default new Config()

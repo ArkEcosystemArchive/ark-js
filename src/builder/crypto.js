@@ -5,7 +5,10 @@ import ECPair from '@/crypto/ecpair'
 import ECSignature from '@/crypto/ecsignature'
 import bs58check from 'bs58check'
 import ByteBuffer from 'bytebuffer'
-import { ARKTOSHI, TRANSACTION_TYPES } from '@/constants'
+import {
+  ARKTOSHI,
+  TRANSACTION_TYPES
+} from '@/constants'
 
 if (typeof Buffer === 'undefined') Buffer = require('buffer/').Buffer // eslint-disable-line no-global-assign
 
@@ -30,26 +33,22 @@ export default class Crypto {
     let assetSize = 0
     let assetBytes = null
 
-    // TOOD: replace this with object literals
-    switch (transaction.type) {
-      case TRANSACTION_TYPES.SECOND_SIGNATURE: // Signature
+    const actions = {
+      [TRANSACTION_TYPES.SECOND_SIGNATURE]: () => {
         assetBytes = this.getSignatureBytes(transaction.asset.signature)
         assetSize = assetBytes.length
-        break
-
-      case TRANSACTION_TYPES.DELEGATE: // Delegate
+      },
+      [TRANSACTION_TYPES.DELEGATE]: () => {
         assetBytes = Buffer.from(transaction.asset.delegate.username, 'utf8')
         assetSize = assetBytes.length
-        break
-
-      case TRANSACTION_TYPES.VOTE: // Vote
+      },
+      [TRANSACTION_TYPES.VOTE]: () => {
         if (transaction.asset.votes !== null) {
           assetBytes = Buffer.from(transaction.asset.votes.join(''), 'utf8')
           assetSize = assetBytes.length
         }
-        break
-
-      case TRANSACTION_TYPES.MULTI_SIGNATURE: // Multi-Signature
+      },
+      [TRANSACTION_TYPES.MULTI_SIGNATURE]: () => {
         const keysgroupBuffer = Buffer.from(transaction.asset.multisignature.keysgroup.join(''), 'utf8')
         const bb = new ByteBuffer(1 + 1 + keysgroupBuffer.length, true)
 
@@ -64,8 +63,10 @@ export default class Crypto {
 
         assetBytes = bb.toBuffer()
         assetSize = assetBytes.length
-        break
+      }
     }
+
+    actions[transaction.type]()
 
     const bb = new ByteBuffer(1 + 4 + 32 + 8 + 8 + 21 + 64 + 64 + 64 + assetSize, true)
     bb.writeByte(transaction.type)

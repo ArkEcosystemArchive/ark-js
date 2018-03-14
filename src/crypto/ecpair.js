@@ -1,5 +1,3 @@
-// TODO: turn this into an es6 class (currently prototype)
-
 const base58check = require('bs58check')
 const bcrypto = require('./crypto')
 const ECSignature = require('./ecsignature')

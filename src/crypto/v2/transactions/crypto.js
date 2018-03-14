@@ -5,7 +5,10 @@ import ECPair from '@/crypto/ecpair'
 import ECSignature from '@/crypto/ecsignature'
 import bs58check from 'bs58check'
 import ByteBuffer from 'bytebuffer'
-import { ARKTOSHI, TRANSACTION_TYPES } from '@/constants'
+import {
+  ARKTOSHI,
+  TRANSACTION_TYPES
+} from '@/constants'
 
 if (typeof Buffer === 'undefined') Buffer = require('buffer/').Buffer // eslint-disable-line no-global-assign
 
@@ -26,63 +29,56 @@ export default class Crypto {
       bb.writeByte(0x00)
     }
 
-    // TOOD: replace this with object literals
-    switch (transaction.type) {
-      case TRANSACTION_TYPES.TRANSFER:
+    const actions = {
+      [TRANSACTION_TYPES.TRANSFER]: () => {
         bb.writeLong(transaction.amount)
         bb.writeInt(transaction.expiration)
         bb.append(bs58check.decode(transaction.recipientId))
-        break
-
-      case TRANSACTION_TYPES.SECOND_SIGNATURE:
+      },
+      [TRANSACTION_TYPES.SECOND_SIGNATURE]: () => {
         bb.append(transaction.asset.signature.publicKey, 'hex')
-        break
-
-      case TRANSACTION_TYPES.DELEGATE:
+      },
+      [TRANSACTION_TYPES.DELEGATE]: () => {
         const delegateBytes = Buffer.from(transaction.asset.delegate.username, 'utf8')
         bb.writeByte(delegateBytes.length / 2)
         bb.append(delegateBytes, 'hex')
-        break
-
-      case TRANSACTION_TYPES.VOTE:
+      },
+      [TRANSACTION_TYPES.VOTE]: () => {
         const voteBytes = transaction.asset.votes.map(function (vote) {
           return (vote[0] === '+' ? '01' : '00') + vote.slice(1)
         }).join('')
         bb.writeByte(transaction.asset.votes.length)
         bb.append(voteBytes, 'hex')
-        break
-
-      case TRANSACTION_TYPES.MULTI_SIGNATURE:
+      },
+      [TRANSACTION_TYPES.MULTI_SIGNATURE]: () => {
         const keysgroupBuffer = Buffer.from(transaction.asset.multisignature.keysgroup.join(''), 'hex')
         bb.writeByte(transaction.asset.multisignature.min)
         bb.writeByte(transaction.asset.multisignature.keysgroup.length)
         bb.writeByte(transaction.asset.multisignature.lifetime)
         bb.append(keysgroupBuffer, 'hex')
-        break
-
-      case TRANSACTION_TYPES.IPFS:
+      },
+      [TRANSACTION_TYPES.IPFS]: () => {
         bb.writeByte(transaction.asset.ipfs.dag.length / 2)
         bb.append(transaction.asset.ipfs.dag, 'hex')
-        break
-
-      case TRANSACTION_TYPES.TIMELOCK_TRANSFER:
+      },
+      [TRANSACTION_TYPES.TIMELOCK_TRANSFER]: () => {
         bb.writeLong(transaction.amount)
         bb.writeByte(transaction.timelocktype)
         bb.writeInt(transaction.timelock)
         bb.append(bs58check.decode(transaction.recipientId))
-        break
-
-      case TRANSACTION_TYPES.MULTI_PAYMENT:
+      },
+      [TRANSACTION_TYPES.MULTI_PAYMENT]: () => {
         bb.writeInt(transaction.asset.payments.length)
         transaction.asset.payments.forEach(function (p) {
           bb.writeLong(p.amount)
           bb.append(bs58check.decode(p.recipientId))
         })
-        break
-
-      case TRANSACTION_TYPES.DELEGATE_RESIGNATION:
-        break
+      },
+      [TRANSACTION_TYPES.DELEGATE_RESIGNATION]: () => {}
     }
+
+    actions[transaction.type]()
+
     bb.flip()
     return bb.toBuffer()
   }

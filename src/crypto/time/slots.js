@@ -44,4 +44,4 @@ class Slots {
   }
 }
 
-export default new Slot()
+export default new Slots()

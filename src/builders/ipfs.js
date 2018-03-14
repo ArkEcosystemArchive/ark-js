@@ -12,7 +12,7 @@ export function (ipfshash, secret, secondSecret, feeOverride) {
   let transaction = {
     type: 5,
     amount: 0,
-    fee: feeOverride || constants.fees.send,
+    fee: feeOverride || Config.get('constants')[0].fees.send,
     timestamp: slots.getTime(),
     asset: {}
   }

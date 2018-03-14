@@ -1,6 +1,6 @@
-const crypto = require('./crypto.js')
-const constants = require('../../constants.js')
-const slots = require('../../time/slots.js')
+import Config from '@/config'
+import crypto from './crypto'
+import slots from '@/crypto/time/slots'
 
 export default class Transfer  {
   constructor (config, feeOverride) {
@@ -10,7 +10,7 @@ export default class Transfer  {
 
     this.id = null
     this.amount = 0
-    this.fee = feeOverride || constants.fees.send
+    this.fee = feeOverride || Config.get('constants')[0].fees.send
     this.timestamp = slots.getTime()
     this.type = 0
     this.expiration = 15 // 15 blocks, 120s

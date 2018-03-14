@@ -26,7 +26,7 @@ export function (recipientId, amount, vendorField, secret, secondSecret, version
   let transaction = {
     type: 0,
     amount: amount,
-    fee: feeOverride || constants.fees.send,
+    fee: feeOverride || Config.get('constants')[0].fees.send,
     recipientId: recipientId,
     timestamp: slots.getTime(),
     asset: {}

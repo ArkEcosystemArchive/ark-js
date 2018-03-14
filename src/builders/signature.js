@@ -23,7 +23,7 @@ export function (secret, secondSecret, feeOverride) {
   let transaction = {
     type: 1,
     amount: 0,
-    fee: feeOverride || constants.fees.secondsignature,
+    fee: feeOverride || Config.get('constants')[0].fees.secondsignature,
     recipientId: null,
     senderPublicKey: keys.publicKey,
     timestamp: slots.getTime(),

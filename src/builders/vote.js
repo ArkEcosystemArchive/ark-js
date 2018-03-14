@@ -22,7 +22,7 @@ export function (secret, delegates, secondSecret, feeOverride) {
   let transaction = {
     type: 3,
     amount: 0,
-    fee: feeOverride || constants.fees.vote,
+    fee: feeOverride || Config.get('constants')[0].fees.vote,
     recipientId: crypto.getAddress(keys.publicKey),
     senderPublicKey: keys.publicKey,
     timestamp: slots.getTime(),

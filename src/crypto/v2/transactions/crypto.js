@@ -273,7 +273,7 @@ export default class Crypto {
 
   getAddress(publicKey, version) {
     if (!version) {
-      version = Config.get('networkVersion')
+      version = Config.get('pubKeyHash')
     }
 
     const buffer = crypto_utils.ripemd160(new Buffer(publicKey, 'hex'))
@@ -287,7 +287,7 @@ export default class Crypto {
 
   validateAddress(address, version) {
     if (!version) {
-      version = Config.get('networkVersion')
+      version = Config.get('pubKeyHash')
     }
     try {
       var decode = bs58check.decode(address)

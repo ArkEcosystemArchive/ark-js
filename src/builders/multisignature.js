@@ -18,7 +18,7 @@ export function (secret, secondSecret, keysgroup, lifetime, min, feeOverride) {
   let transaction = {
     type: 4,
     amount: 0,
-    fee: (keysgroup.length + 1) * (feeOverride || constants.fees.multisignature),
+    fee: (keysgroup.length + 1) * (feeOverride || Config.get('constants')[0].fees.multisignature),
     recipientId: null,
     senderPublicKey: keys.publicKey,
     timestamp: slots.getTime(),

@@ -1,35 +1,35 @@
-import Base from './base'
+import Base from '../base'
 
 export default class Wallets extends Base {
-  all() {
+  all () {
     return this.http.get('wallets')
   }
 
-  top() {
+  top () {
     return this.http.get('wallets/top')
   }
 
-  get(id) {
+  get (id) {
     return this.http.get(`wallets/${id}`)
   }
 
-  transactions(id) {
+  transactions (id) {
     return this.http.get(`wallets/${id}/transactions`)
   }
 
-  transactionsSent(id) {
+  transactionsSent (id) {
     return this.http.get(`wallets/${id}/transactions/sent`)
   }
 
-  transactionsReceived(id) {
+  transactionsReceived (id) {
     return this.http.get(`wallets/${id}/transactions/received`)
   }
 
-  votes(id) {
+  votes (id) {
     return this.http.get(`wallets/${id}/votes`)
   }
 
-  search(payload) {
+  search (payload) {
     return this.http.post('wallets/search', payload)
   }
 }

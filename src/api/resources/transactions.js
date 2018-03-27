@@ -1,31 +1,31 @@
-import Base from './base'
+import Base from '../base'
 
 export default class Transactions extends Base {
-  all() {
+  all () {
     return this.http.get('transactions')
   }
 
-  create(payload) {
+  create (payload) {
     return this.http.post('transactions', payload)
   }
 
-  get(id) {
+  get (id) {
     return this.http.get(`transactions/${id}`)
   }
 
-  allUnconfirmed() {
+  allUnconfirmed () {
     return this.http.get('transactions/unconfirmed')
   }
 
-  getUnconfirmed(id) {
+  getUnconfirmed (id) {
     return this.http.get(`transactions/unconfirmed/${id}`)
   }
 
-  search(payload) {
+  search (payload) {
     return this.http.post('transactions/search', payload)
   }
 
-  types() {
+  types () {
     return this.http.get('transactions/types')
   }
 }

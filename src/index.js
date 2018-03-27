@@ -15,7 +15,10 @@ export default class Ark {
     return new Crypto()
   }
 
-  getClient () {
-    return new ApiClient()
+  getClient (config) {
+    const client = new ApiClient()
+    client.setConnection(config.ip, config.port, config.nethash, config.version)
+
+    return client
   }
 }

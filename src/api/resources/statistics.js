@@ -1,23 +1,23 @@
-import Base from './base'
+import Base from '../base'
 
 export default class Statistics extends Base {
-  blockchain() {
+  blockchain () {
     return this.http.get('statistics/blockchain')
   }
 
-  transactions() {
+  transactions () {
     return this.http.get('statistics/transactions')
   }
 
-  blocks() {
+  blocks () {
     return this.http.get('statistics/blocks')
   }
 
-  votes() {
+  votes () {
     return this.http.get('statistics/votes')
   }
 
-  unvotes() {
+  unvotes () {
     return this.http.get('statistics/unvotes')
   }
 }

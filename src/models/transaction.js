@@ -5,7 +5,7 @@ const { TRANSACTION_TYPES } = require('../constants')
 const Crypto = require('../builder/crypto')
 
 export default class Transaction {
-  constructor(transaction) {
+  constructor (transaction) {
     this.serialized = Transaction.serialize(transaction)
     this.data = Transaction.deserialize(this.serialized.toString('hex'))
     if (this.data.version === 1) {
@@ -17,16 +17,16 @@ export default class Transaction {
     }, this)
   }
 
-  static fromBytes(hexString) {
+  static fromBytes (hexString) {
     return new Transaction(Transaction.deserialize(hexString))
   }
 
-  verify() {
+  verify () {
     if (!this.verified) return false
     return true
   }
 
-  static serialize(transaction) {
+  static serialize (transaction) {
     const bb = new ByteBuffer(512, true)
     bb.writeByte(0xff) // fill, to disambiguate from v1
     bb.writeByte(transaction.version || 0x01) // version
@@ -104,7 +104,7 @@ export default class Transaction {
     return bb.toBuffer()
   }
 
-  static deserialize(hexString) {
+  static deserialize (hexString) {
     const tx = {}
     const buf = ByteBuffer.fromHex(hexString, true)
     tx.version = buf.readInt8(1)
@@ -206,7 +206,7 @@ export default class Transaction {
       }
     }
 
-    actions[transaction.type]()
+    actions[tx.type]()
 
     if (!tx.amount) {
       tx.amount = 0
@@ -238,7 +238,7 @@ export default class Transaction {
   }
 
   // TODO support multisignatures
-  static parseSignatures(hexString, tx, startOffset) {
+  static parseSignatures (hexString, tx, startOffset) {
     tx.signature = hexString.substring(startOffset)
 
     let multioffset = 0

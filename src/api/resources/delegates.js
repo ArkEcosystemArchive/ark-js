@@ -1,19 +1,19 @@
-import Base from './base'
+import Base from '../base'
 
 export default class Delegates extends Base {
-  all() {
+  all () {
     return this.http.get('delegates')
   }
 
-  get(id) {
+  get (id) {
     return this.http.get(`delegates/${id}`)
   }
 
-  blocks(id) {
+  blocks (id) {
     return this.http.get(`delegates/${id}/blocks`)
   }
 
-  voters(id) {
+  voters (id) {
     return this.http.get(`delegates/${id}/voters`)
   }
 }

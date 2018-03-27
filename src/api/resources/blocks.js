@@ -1,19 +1,19 @@
-import Base from './base'
+import Base from '../base'
 
 export default class Blocks extends Base {
-  all() {
+  all () {
     return this.http.get('blocks')
   }
 
-  get(id) {
+  get (id) {
     return this.http.get(`blocks/${id}`)
   }
 
-  transactions(id) {
+  transactions (id) {
     return this.http.get(`blocks/${id}/transactions`)
   }
 
-  search(payload) {
+  search (payload) {
     return this.http.post('blocks/search', payload)
   }
 }

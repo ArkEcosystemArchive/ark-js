@@ -1,15 +1,15 @@
-import Base from './base'
+import Base from '../base'
 
 export default class Loader extends Base {
-  status() {
+  status () {
     return this.http.get('loader/status')
   }
 
-  syncing() {
+  syncing () {
     return this.http.get('loader/syncing')
   }
 
-  configuration() {
+  configuration () {
     return this.http.get('loader/configuration')
   }
 }

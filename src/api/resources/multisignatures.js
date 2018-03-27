@@ -1,15 +1,15 @@
-import Base from './base'
+import Base from '../base'
 
 export default class MultiSignatures extends Base {
-  all() {
+  all () {
     return this.http.get('multisignatures')
   }
 
-  pending() {
+  pending () {
     return this.http.get('multisignatures/pending')
   }
 
-  wallets() {
+  wallets () {
     return this.http.get('multisignatures/wallets')
   }
 }

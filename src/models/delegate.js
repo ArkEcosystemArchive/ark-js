@@ -48,7 +48,7 @@ export default class Delegate {
 
   decryptKeysWithOtp () {
     let wifKey = this.decryptData(this.encryptedKeys, this.otp)
-    this.keys = arkjs.ECPair.fromWIF(wifKey, this.network)
+    this.keys = ECPair.fromWIF(wifKey, this.network)
     this.keys.publicKey = this.keys.getPublicKeyBuffer().toString('hex')
     this.otp = null
     this.encryptedKeys = null
@@ -57,7 +57,7 @@ export default class Delegate {
   decrypt (passphrase, network, password) {
     const decryptedWif = bip38.decrypt(passphrase, password)
     const wifKey = wif.encode(network.wif, decryptedWif.privateKey, decryptedWif.compressed)
-    let keys = arkjs.ECPair.fromWIF(wifKey, network)
+    let keys = ECPair.fromWIF(wifKey, network)
     keys.publicKey = keys.getPublicKeyBuffer().toString('hex')
 
     return keys

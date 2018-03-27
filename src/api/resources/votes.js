@@ -1,11 +1,11 @@
-import Base from './base'
+import Base from '../base'
 
 export default class Votes extends Base {
-  all() {
+  all () {
     return this.http.get('votes')
   }
 
-  get(id) {
+  get (id) {
     return this.http.get(`votes/${id}`)
   }
 }

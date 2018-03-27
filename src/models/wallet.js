@@ -2,7 +2,6 @@ const config = require('../config')
 const { ARKTOSHI, TRANSACTION_TYPES } = require('../constants')
 const ECPair = require('../crypto/ecpair')
 const ECSignature = require('../crypto/ecsignature')
-const Slots = require('../crypto/time/slots')
 const Crypto = require('../builder/crypto')
 
 export default class Wallet {
@@ -165,8 +164,8 @@ export default class Wallet {
     const hash = Crypto.getHash(transaction)
     const signSignatureBuffer = Buffer.from(signature, 'hex')
     const publicKeyBuffer = Buffer.from(publicKey, 'hex')
-    const ecpair = arkjs.ECPair.fromPublicKeyBuffer(publicKeyBuffer, config.network)
-    const ecsignature = arkjs.ECSignature.fromDER(signSignatureBuffer)
+    const ecpair = ECPair.fromPublicKeyBuffer(publicKeyBuffer, config.network)
+    const ecsignature = ECSignature.fromDER(signSignatureBuffer)
     return ecpair.verify(hash, ecsignature)
   }
 

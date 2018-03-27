@@ -1,27 +1,27 @@
-import Base from './base'
+import Base from '../base'
 
 export default class Webhooks extends Base {
-  all() {
+  all () {
     return this.http.get('webhooks')
   }
 
-  create() {
+  create () {
     return this.http.post('webhooks')
   }
 
-  get(id) {
+  get (id) {
     return this.http.get(`webhooks/${id}`)
   }
 
-  update(id) {
+  update (id) {
     return this.http.put(`webhooks/${id}`)
   }
 
-  delete(id) {
+  delete (id) {
     return this.http.delete(`webhooks/${id}`)
   }
 
-  events() {
+  events () {
     return this.http.get('webhooks/events')
   }
 }

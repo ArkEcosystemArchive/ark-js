@@ -1,34 +1,31 @@
-export default class Transaction {
-  constructor (http, builder) {
-    this.http = http
-    this.builder = builder
+import Base from './base'
+
+export default class Transactions extends Base {
+  all() {
+    return this.http.get('transactions')
   }
 
-  transaction (id) {
-    return this.http.get('api/transactions/get', {
-      'id': id
-    })
+  create(payload) {
+    return this.http.post('transactions', payload)
   }
 
-  transactions (parameters = {}) {
-    return this.http.get('api/transactions', parameters)
+  get(id) {
+    return this.http.get(`transactions/${id}`)
   }
 
-  unconfirmedTransaction (id) {
-    return this.http.get('api/transactions/unconfirmed/get', {
-      'id': id
-    })
+  allUnconfirmed() {
+    return this.http.get('transactions/unconfirmed')
   }
 
-  unconfirmedTransactions (parameters = {}) {
-    return this.http.get('api/transactions/unconfirmed', parameters)
+  getUnconfirmed(id) {
+    return this.http.get(`transactions/unconfirmed/${id}`)
   }
 
-  create (recipientId, amount, vendorField, secret, secondSecret = null) {
-    let transaction = this.builder.transaction(recipientId, amount, vendorField, secret)
+  search(payload) {
+    return this.http.post('transactions/search', payload)
+  }
 
-    return this.http.post('peer/transactions', {
-      'transactions': [transaction]
-    })
+  types() {
+    return this.http.get('transactions/types')
   }
 }

@@ -7,6 +7,8 @@ describe('Constants', () => {
   })
 
   test('transaction types are defined', () => {
+    expect(constants.TRANSACTION_TYPES).toBeDefined()
+
     expect(constants.TRANSACTION_TYPES.TRANSFER).toBeDefined()
     expect(constants.TRANSACTION_TYPES.TRANSFER).toBe(0)
 

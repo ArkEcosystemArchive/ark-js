@@ -1,8 +1,8 @@
-import createDelegate from './delegate'
-import createMultisignature from './multisignature'
-import createSignature from './signature'
-import createTransaction from './transaction'
-import createVote from './vote'
+import createDelegate from './transactions/delegate'
+import createMultisignature from './transactions/multisignature'
+import createSignature from './transactions/signature'
+import createTransaction from './transactions/transaction'
+import createVote from './transactions/vote'
 
 export default class Builder {
   delegate (secret, username, secondSecret) {

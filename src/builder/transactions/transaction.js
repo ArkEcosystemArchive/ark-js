@@ -1,6 +1,6 @@
-import Config from '../config'
-import crypto from './crypto'
-import slots from '../crypto/time/slots'
+import Config from '../../config'
+import crypto from '../crypto'
+import slots from '../../crypto/time/slots'
 
 export default function (recipientId, amount, vendorField, secret, secondSecret, version, feeOverride) {
   if (!recipientId || !amount || !secret) return false

@@ -1,9 +1,9 @@
-import Config from '../config'
-import crypto from './crypto'
-import slots from '../crypto/time/slots'
+import Config from '../../config'
+import crypto from '../crypto'
+import slots from '../../crypto/time/slots'
 
-export default function (secret, delegates, secondSecret, feeOverride) {
-  if (!secret || !Array.isArray(delegates)) return
+export default function (secret, username, secondSecret, feeOverride) {
+  if (!secret || !username) return false
 
   let keys = secret
 
@@ -20,14 +20,17 @@ export default function (secret, delegates, secondSecret, feeOverride) {
   }
 
   let transaction = {
-    type: 3,
+    type: 2,
     amount: 0,
-    fee: feeOverride || Config.get('constants')[0].fees.vote,
-    recipientId: crypto.getAddress(keys.publicKey),
+    fee: feeOverride || Config.get('constants')[0].fees.delegate,
+    recipientId: null,
     senderPublicKey: keys.publicKey,
     timestamp: slots.getTime(),
     asset: {
-      votes: delegates
+      delegate: {
+        username: username,
+        publicKey: keys.publicKey
+      }
     }
   }
 
@@ -35,9 +38,11 @@ export default function (secret, delegates, secondSecret, feeOverride) {
 
   if (secondSecret) {
     let secondKeys = secondSecret
+
     if (!crypto.isECPair(secondSecret)) {
       secondKeys = crypto.getKeys(secondSecret)
     }
+
     crypto.secondSign(transaction, secondKeys)
   }
 

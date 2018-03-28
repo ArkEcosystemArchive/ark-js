@@ -1,9 +1,9 @@
-import Config from '../config'
-import crypto from './crypto'
-import slots from '../crypto/time/slots'
+import Config from '../../config'
+import crypto from '../crypto'
+import slots from '../../crypto/time/slots'
 
-export default function (secret, secondSecret, keysgroup, lifetime, min, feeOverride) {
-  if (!secret || !keysgroup || !lifetime || !min) return false
+export default function (secret, delegates, secondSecret, feeOverride) {
+  if (!secret || !Array.isArray(delegates)) return
 
   let keys = secret
 
@@ -11,23 +11,23 @@ export default function (secret, secondSecret, keysgroup, lifetime, min, feeOver
     keys = crypto.getKeys(secret)
   }
 
+  if (!keys.publicKey) {
+    throw new Error('Invalid public key')
+  }
+
   if (feeOverride && !Number.isInteger(feeOverride)) {
     throw new Error('Not a valid fee')
   }
 
   let transaction = {
-    type: 4,
+    type: 3,
     amount: 0,
-    fee: (keysgroup.length + 1) * (feeOverride || Config.get('constants')[0].fees.multisignature),
-    recipientId: null,
+    fee: feeOverride || Config.get('constants')[0].fees.vote,
+    recipientId: crypto.getAddress(keys.publicKey),
     senderPublicKey: keys.publicKey,
     timestamp: slots.getTime(),
     asset: {
-      multisignature: {
-        min: min,
-        lifetime: lifetime,
-        keysgroup: keysgroup
-      }
+      votes: delegates
     }
   }
 
@@ -42,5 +42,6 @@ export default function (secret, secondSecret, keysgroup, lifetime, min, feeOver
   }
 
   transaction.id = crypto.getId(transaction)
+
   return transaction
 }

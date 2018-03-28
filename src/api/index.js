@@ -1,12 +1,18 @@
-import Builder from '@/builder'
-import HttpClient from '@/http'
+import Builder from '../builder'
+import HttpClient from './http'
 
 export default class ApiClient {
-  api (resource) {
-    return new (require(`./resources/${resource}`)(this.http, new Builder()))()
+  constructor (host) {
+    this.setConnection(host)
   }
 
-  setConnection (ip, port, nethash, version) {
-    this.http = new HttpClient(ip, port, nethash, version)
+  setConnection (host) {
+    this.http = new HttpClient(host)
+  }
+
+  resource (name) {
+    const Resource = require(`./resources/${name}`).default
+
+    return new Resource(this.http, new Builder())
   }
 }

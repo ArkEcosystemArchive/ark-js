@@ -12,7 +12,8 @@ const BigInteger = require('bigi')
  */
 class ECSignature {
   constructor (r, s) {
-    typeforce(types.tuple(types.BigInt, types.BigInt), arguments)
+    // FIX: TypeError: types.tuple is not a function
+    // typeforce(types.tuple(types.BigInt, types.BigInt), arguments)
 
     /** @type {BigInteger} */
     this.r = r

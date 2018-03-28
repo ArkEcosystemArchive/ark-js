@@ -11,12 +11,16 @@ class Config {
     this.buildConstants()
   }
 
+  all () {
+    return this.config
+  }
+
   get (key) {
     return this.config[key]
   }
 
   buildConstants () {
-    this.constants = this.network.constants.sort((a, b) => a.height - b.height)
+    this.constants = this.config.constants.sort((a, b) => a.height - b.height)
     this.constant = {
       index: 0,
       data: this.constants[0]

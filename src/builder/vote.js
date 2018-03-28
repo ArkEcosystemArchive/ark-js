@@ -1,6 +1,6 @@
-import Config from '@/config'
+import Config from '../config'
 import crypto from './crypto'
-import slots from '@/crypto/time/slots'
+import slots from '../crypto/time/slots'
 
 export default function (secret, delegates, secondSecret, feeOverride) {
   if (!secret || !Array.isArray(delegates)) return

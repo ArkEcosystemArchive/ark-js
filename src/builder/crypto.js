@@ -1,17 +1,17 @@
-import Config from '@/config'
+import Config from '../config'
 import crypto from 'crypto'
-import cryptoUtils from '@/crypto/crypto'
-import ECPair from '@/crypto/ecpair'
-import ECSignature from '@/crypto/ecsignature'
+import cryptoUtils from '../crypto/crypto'
+import ECPair from '../crypto/ecpair'
+import ECSignature from '../crypto/ecsignature'
 import bs58check from 'bs58check'
 import ByteBuffer from 'bytebuffer'
-import {
-  ARKTOSHI,
-  TRANSACTION_TYPES
-} from '@/constants'
+import { ARKTOSHI, TRANSACTION_TYPES } from '../constants'
 
-if (typeof Buffer === 'undefined') Buffer = require('buffer/').Buffer // eslint-disable-line no-global-assign
+// if (typeof Buffer === 'undefined') {
+//     Buffer = require('buffer/').Buffer // eslint-disable-line no-global-assign
+// }
 
+// console.log(Config.get('nethash'))
 export default class Crypto {
   isECPair (obj) {
     return obj instanceof ECPair

@@ -1,9 +1,9 @@
+const Config = require('../config')
 const base58check = require('bs58check')
 const bcrypto = require('./crypto')
 const createHmac = require('create-hmac')
 const typeforce = require('typeforce')
 const types = require('./types')
-const NETWORKS = require('./networks')
 
 const BigInteger = require('bigi')
 const ECPair = require('./ecpair')
@@ -94,7 +94,7 @@ export default class HDNode {
 
       // otherwise, assume a network object (or default to ark)
     } else {
-      network = networks || NETWORKS.ark
+      network = networks || Config.all()
     }
 
     if (version !== network.bip32.private &&

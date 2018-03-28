@@ -1,45 +1,39 @@
-import Config from '@/config'
+import Config from '../config'
 import axios from 'axios'
 
 export default class Http {
-  get (path, payload = {}) {
-    return this.sendRequest('get', path, payload)
+  get (path, params = {}) {
+    return this.sendRequest('get', path, params)
   }
 
-  post (path, payload = {}) {
-    return this.sendRequest('post', path, payload)
+  post (path, data = {}) {
+    return this.sendRequest('post', path, data)
   }
 
-  put (path, payload = {}) {
-    return this.sendRequest('put', path, payload)
+  put (path, data = {}) {
+    return this.sendRequest('put', path, data)
   }
 
-  patch (path, payload = {}) {
-    return this.sendRequest('patch', path, payload)
+  patch (path, data = {}) {
+    return this.sendRequest('patch', path, data)
   }
 
-  delete (path, payload = {}) {
-    return this.sendRequest('delete', path, payload)
+  delete (path, params = {}) {
+    return this.sendRequest('delete', path, params)
   }
 
-  async sendRequest (method, path, payload) {
+  sendRequest (method, path, payload) {
     const client = axios.create({
-      baseURL: `http://${this.ip}:${this.port}`,
+      baseURL: this.host,
       headers: {
-        'nethash': Config.get('nethash'),
-        'version': Config.get('version'),
-        'port': '1'
+        nethash: Config.get('nethash'),
+        version: Config.get('version'),
+        port: '1'
       }
     })
 
-    if (['get', 'delete'].includes(method)) {
-      payload = {
-        params: payload
-      }
-    }
-
     try {
-      return await client[method](path, payload)
+      return client[method](path, payload)
     } catch (error) {
       throw error
     }

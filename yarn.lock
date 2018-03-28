@@ -1723,6 +1723,10 @@ deep-is@~0.1.3:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/deep-is/-/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
 
+deepmerge@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-2.1.0.tgz#511a54fff405fc346f0240bb270a3e9533a31102"
+
 default-require-extensions@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/default-require-extensions/-/default-require-extensions-1.0.0.tgz#f37ea15d3e13ffd9b437d33e1a75b5fb97874cb8"
@@ -3454,6 +3458,16 @@ jest-message-util@^22.4.0:
     micromatch "^2.3.11"
     slash "^1.0.0"
     stack-utils "^1.0.1"
+
+jest-mock-axios@^1.0.21:
+  version "1.0.21"
+  resolved "https://registry.yarnpkg.com/jest-mock-axios/-/jest-mock-axios-1.0.21.tgz#9a530f6b2a17f03121ba77c39fea0bb4b421b2a2"
+  dependencies:
+    jest-mock-promise "^1.0.20"
+
+jest-mock-promise@^1.0.20:
+  version "1.0.22"
+  resolved "https://registry.yarnpkg.com/jest-mock-promise/-/jest-mock-promise-1.0.22.tgz#a1b152d0a1982c0807825322710513b6dcc6686a"
 
 jest-mock@^22.2.0:
   version "22.2.0"

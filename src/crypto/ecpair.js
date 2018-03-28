@@ -1,3 +1,4 @@
+const Config = require('../config')
 const base58check = require('bs58check')
 const bcrypto = require('./crypto')
 const ECSignature = require('./ecsignature')
@@ -6,7 +7,6 @@ const typeforce = require('typeforce')
 const types = require('./types')
 const wif = require('wif')
 
-const NETWORKS = require('./networks')
 const BigInteger = require('bigi')
 
 const ecurve = require('ecurve')
@@ -60,7 +60,7 @@ export default class ECPair {
     /** @type {boolean} */
     this.compressed = options.compressed === undefined ? true : options.compressed
     /** @type {Network} */
-    this.network = options.network || NETWORKS.ark
+    this.network = options.network || Config.all()
   }
 
   /**
@@ -96,7 +96,7 @@ export default class ECPair {
 
       // network
     } else {
-      network = network || NETWORKS.ark
+      network = network || Config.all()
 
       if (version !== network.wif) throw new Error('Invalid network version')
     }

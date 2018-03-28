@@ -15,6 +15,10 @@ class Config {
     return this.config
   }
 
+  set (key, value) {
+    this.config[key] = value
+  }
+
   get (key) {
     return this.config[key]
   }

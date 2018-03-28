@@ -10,6 +10,10 @@ export default class ApiClient {
     this.http = new HttpClient(host)
   }
 
+  getConnection () {
+    return this.http
+  }
+
   resource (name) {
     const Resource = require(`./resources/${name}`).default
 

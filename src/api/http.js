@@ -2,6 +2,10 @@ import Config from '../config'
 import axios from 'axios'
 
 export default class Http {
+  constructor (host) {
+    this.host = host
+  }
+
   get (path, params = {}) {
     return this.sendRequest('get', path, params)
   }

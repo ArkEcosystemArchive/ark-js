@@ -90,7 +90,7 @@ test('ECPair', function () {
         var keyPair = ECPair.fromWIF(f.WIF, network)
 
         assert.strictEqual(keyPair.d.toString(), f.d)
-        assert.strictEqual(keyPair.getPublicKeyBuffer().toString("hex"), f.Q)
+        assert.strictEqual(keyPair.getPublicKeyBuffer().toString('hex'), f.Q)
         assert.strictEqual(keyPair.compressed, f.compressed)
         assert.strictEqual(keyPair.network, network)
       })
@@ -101,7 +101,7 @@ test('ECPair', function () {
         var keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
 
         assert.strictEqual(keyPair.d.toString(), f.d)
-        assert.strictEqual(keyPair.getPublicKeyBuffer().toString("hex"), f.Q)
+        assert.strictEqual(keyPair.getPublicKeyBuffer().toString('hex'), f.Q)
         assert.strictEqual(keyPair.compressed, f.compressed)
         assert.strictEqual(keyPair.network, NETWORKS[f.network])
       })
@@ -221,7 +221,7 @@ test('ECPair', function () {
       //  it('wraps ecdsa.sign', sinonTest(function () {
       //    this.mock(ecdsa).expects('sign')
       //      .once().withArgs(hash, keyPair.d)
-       //
+      //
       //    keyPair.sign(hash)
       //  }))
 

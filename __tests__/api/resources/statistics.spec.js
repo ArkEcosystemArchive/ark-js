@@ -1,6 +1,6 @@
-import Ark from '../../src'
-import network from '../../src/networks/mainnet'
-import ApiResource from '../../src/api/resources/statistics'
+import Ark from '../../../src'
+import network from '../../../src/networks/mainnet'
+import ApiResource from '../../../src/api/resources/statistics'
 
 let resource
 

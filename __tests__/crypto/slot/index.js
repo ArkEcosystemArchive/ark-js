@@ -1,156 +1,154 @@
-var Buffer = require("buffer/").Buffer;
-var should = require("should");
-var ark = require("../../index.js");
+var Buffer = require('buffer/').Buffer
+var should = require('should')
+var ark = require('../../index.js')
 
-test("slots.js", function () {
+test('slots.js', function () {
+  var slots = require('../../lib/time/slots.js')
 
-  var slots = require("../../lib/time/slots.js");
+  it('should be ok', function () {
+    (slots).should.be.ok
+  })
 
-  it("should be ok", function () {
-    (slots).should.be.ok;
-  });
+  it('should be object', function () {
+    (slots).should.be.type('object')
+  })
 
-  it("should be object", function () {
-    (slots).should.be.type("object");
-  });
-
-  it("should have properties", function () {
-    var properties = ["interval", "delegates", "getTime", "getRealTime", "getSlotNumber", "getSlotTime", "getNextSlot", "getLastSlot"];
+  it('should have properties', function () {
+    var properties = ['interval', 'delegates', 'getTime', 'getRealTime', 'getSlotNumber', 'getSlotTime', 'getNextSlot', 'getLastSlot']
     properties.forEach(function (property) {
-      (slots).should.have.property(property);
-    });
-  });
+      (slots).should.have.property(property)
+    })
+  })
 
-  test(".interval", function () {
-    var interval = slots.interval;
+  test('.interval', function () {
+    var interval = slots.interval
 
-    it("should be ok", function () {
-      (interval).should.be.ok;
-    });
+    it('should be ok', function () {
+      (interval).should.be.ok
+    })
 
-    it("should be number and not NaN", function () {
-      (interval).should.be.type("number").and.not.NaN;
-    });
-  });
+    it('should be number and not NaN', function () {
+      (interval).should.be.type('number').and.not.NaN
+    })
+  })
 
-  test(".delegates", function () {
-    var delegates = slots.delegates;
+  test('.delegates', function () {
+    var delegates = slots.delegates
 
-    it("should be ok", function () {
-      (delegates).should.be.ok;
-    });
+    it('should be ok', function () {
+      (delegates).should.be.ok
+    })
 
-    it("should be number and not NaN", function () {
-      (delegates).should.be.type("number").and.not.NaN;
-    });
-  });
+    it('should be number and not NaN', function () {
+      (delegates).should.be.type('number').and.not.NaN
+    })
+  })
 
-  test("#getTime", function () {
-    var getTime = slots.getTime;
+  test('#getTime', function () {
+    var getTime = slots.getTime
 
-    it("should be ok", function () {
-      (getTime).should.be.ok;
-    });
+    it('should be ok', function () {
+      (getTime).should.be.ok
+    })
 
-    it("should be a function", function () {
-      (getTime).should.be.type("function");
-    });
+    it('should be a function', function () {
+      (getTime).should.be.type('function')
+    })
 
-    it("should return epoch time as number, equal to 10", function () {
-      var d = 1490101210000;
+    it('should return epoch time as number, equal to 10', function () {
+      var d = 1490101210000
       var time = getTime(d);
-      (time).should.be.type("number").and.equal(10);
-    });
-  });
+      (time).should.be.type('number').and.equal(10)
+    })
+  })
 
-  test("#getRealTime", function () {
-    var getRealTime = slots.getRealTime;
+  test('#getRealTime', function () {
+    var getRealTime = slots.getRealTime
 
-    it("should be ok", function () {
-      (getRealTime).should.be.ok;
-    });
+    it('should be ok', function () {
+      (getRealTime).should.be.ok
+    })
 
-    it("should be a function", function () {
-      (getRealTime).should.be.type("function");
-    });
+    it('should be a function', function () {
+      (getRealTime).should.be.type('function')
+    })
 
-    it("should return return real time, convert 10 to 1490101210000", function () {
-      var d = 10;
+    it('should return return real time, convert 10 to 1490101210000', function () {
+      var d = 10
       var real = getRealTime(d);
       (real).should.be.ok;
-      (real).should.be.type("number").and.equal(1490101210000);
-    });
-  });
+      (real).should.be.type('number').and.equal(1490101210000)
+    })
+  })
 
-  test("#getSlotNumber", function () {
-    var getSlotNumber = slots.getSlotNumber;
+  test('#getSlotNumber', function () {
+    var getSlotNumber = slots.getSlotNumber
 
-    it("should be ok", function () {
-      (getSlotNumber).should.be.ok;
-    });
+    it('should be ok', function () {
+      (getSlotNumber).should.be.ok
+    })
 
-    it("should be a function", function () {
-      (getSlotNumber).should.be.type("function");
-    });
+    it('should be a function', function () {
+      (getSlotNumber).should.be.type('function')
+    })
 
-    it("should return slot number, equal to 1", function () {
+    it('should return slot number, equal to 1', function () {
       var slot = getSlotNumber(10);
-      (slot).should.be.type("number").and.equal(1);
-    });
-  });
+      (slot).should.be.type('number').and.equal(1)
+    })
+  })
 
-  test("#getSlotTime", function () {
-    var getSlotTime = slots.getSlotTime;
+  test('#getSlotTime', function () {
+    var getSlotTime = slots.getSlotTime
 
-    it("should be ok", function () {
-      (getSlotTime).should.be.ok;
-    });
+    it('should be ok', function () {
+      (getSlotTime).should.be.ok
+    })
 
-    it("should be function", function () {
-      (getSlotTime).should.be.type("function");
-    });
+    it('should be function', function () {
+      (getSlotTime).should.be.type('function')
+    })
 
-    it("should return slot time number, equal to ", function () {
+    it('should return slot time number, equal to ', function () {
       var slotTime = getSlotTime(19614);
       (slotTime).should.be.ok;
-      (slotTime).should.be.type("number").and.equal(156912);
-    });
-  });
+      (slotTime).should.be.type('number').and.equal(156912)
+    })
+  })
 
-  test("#getNextSlot", function () {
-    var getNextSlot = slots.getNextSlot;
+  test('#getNextSlot', function () {
+    var getNextSlot = slots.getNextSlot
 
-    it("should be ok", function () {
-      (getNextSlot).should.be.ok;
-    });
+    it('should be ok', function () {
+      (getNextSlot).should.be.ok
+    })
 
-    it("should be function", function () {
-      (getNextSlot).should.be.type("function");
-    });
+    it('should be function', function () {
+      (getNextSlot).should.be.type('function')
+    })
 
-    it("should return next slot number", function () {
+    it('should return next slot number', function () {
       var nextSlot = getNextSlot();
       (nextSlot).should.be.ok;
-      (nextSlot).should.be.type("number").and.not.NaN;
-    });
-  });
+      (nextSlot).should.be.type('number').and.not.NaN
+    })
+  })
 
-  test("#getLastSlot", function () {
-    var getLastSlot = slots.getLastSlot;
+  test('#getLastSlot', function () {
+    var getLastSlot = slots.getLastSlot
 
-    it("should be ok", function () {
-      (getLastSlot).should.be.ok;
-    });
+    it('should be ok', function () {
+      (getLastSlot).should.be.ok
+    })
 
-    it("should be function", function () {
-      (getLastSlot).should.be.type("function");
-    });
+    it('should be function', function () {
+      (getLastSlot).should.be.type('function')
+    })
 
-    it("should return last slot number", function () {
+    it('should return last slot number', function () {
       var lastSlot = getLastSlot(slots.getNextSlot());
       (lastSlot).should.be.ok;
-      (lastSlot).should.be.type("number").and.not.NaN;
-    });
-  });
-
-});
+      (lastSlot).should.be.type('number').and.not.NaN
+    })
+  })
+})

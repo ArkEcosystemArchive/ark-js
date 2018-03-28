@@ -46,5 +46,4 @@ test('ark-js (basic)', function () {
 
     assert.strictEqual(address, 'AcMiVQNHjggC1PyfVSvCcdWZKMisMKj8eo')
   })
-
 })

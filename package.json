@@ -53,6 +53,7 @@
     "eslint-plugin-standard": "^3.0.1",
     "jest": "^22.4.2",
     "regenerator-runtime": "^0.11.1",
+    "sinon": "^4.4.10",
     "webpack": "^4.0.1",
     "webpack-cli": "^2.0.9",
     "webpack-merge": "^4.1.2"

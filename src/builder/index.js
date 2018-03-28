@@ -4,7 +4,7 @@ import createSignature from './transactions/signature'
 import createTransaction from './transactions/transaction'
 import createVote from './transactions/vote'
 
-export default class Builder {
+class Builder {
   delegate (secret, username, secondSecret) {
     return secondSecret
       ? createDelegate(secret, username, secondSecret)
@@ -37,3 +37,5 @@ export default class Builder {
       : createVote(secret, ['-' + delegate])
   }
 }
+
+export default new Builder()

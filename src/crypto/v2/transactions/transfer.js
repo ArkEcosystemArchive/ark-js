@@ -1,6 +1,6 @@
-import Config from '@/config'
+import Config from '../../config'
 import crypto from './crypto'
-import slots from '@/crypto/time/slots'
+import slots from '../../crypto/time/slots'
 
 export default class Transfer {
   constructor (config, feeOverride) {

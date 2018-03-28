@@ -10,21 +10,23 @@ beforeEach(() => {
   resource = ark.getClient('https://localhost:4003/').resource('multisignatures')
 })
 
-test('multisignatures resource can be instantiated', () => {
-  expect(resource).toBeInstanceOf(ApiResource)
-})
+describe('API - Resources - MultiSignatures', () => {
+  test('should be instantiated', () => {
+    expect(resource).toBeInstanceOf(ApiResource)
+  })
 
-test('multisignatures resource can call "all" method', async () => {
-  const response = await resource.all()
-  await expect(response.status).toBe(200)
-})
+  test('should call "all" method', async () => {
+    const response = await resource.all()
+    await expect(response.status).toBe(200)
+  })
 
-test('multisignatures resource can call "pending" method', async () => {
-  const response = await resource.pending()
-  await expect(response.status).toBe(200)
-})
+  test('should call "pending" method', async () => {
+    const response = await resource.pending()
+    await expect(response.status).toBe(200)
+  })
 
-test('multisignatures resource can call "wallets" method', async () => {
-  const response = await resource.wallets()
-  await expect(response.status).toBe(200)
+  test('should call "wallets" method', async () => {
+    const response = await resource.wallets()
+    await expect(response.status).toBe(200)
+  })
 })

@@ -11,14 +11,16 @@ beforeEach(() => {
   client = ark.getClient('https://localhost:4003/')
 })
 
-test('client can be instantiated', () => {
-  expect(client).toBeInstanceOf(ApiClient)
-})
+describe('API - Client', () => {
+  test('should be instantiated', () => {
+    expect(client).toBeInstanceOf(ApiClient)
+  })
 
-test('client can set connection', () => {
-  expect(client.http).toBeInstanceOf(HttpClient)
-})
+  test('should set connection', () => {
+    expect(client.http).toBeInstanceOf(HttpClient)
+  })
 
-test('client returns resource', () => {
-  expect(client.resource('transactions')).toBeInstanceOf(ApiResource)
+  test('returns resource', () => {
+    expect(client.resource('transactions')).toBeInstanceOf(ApiResource)
+  })
 })

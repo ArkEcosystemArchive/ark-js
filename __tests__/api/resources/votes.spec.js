@@ -10,16 +10,18 @@ beforeEach(() => {
   resource = ark.getClient('https://localhost:4003/').resource('votes')
 })
 
-test('votes resource can be instantiated', () => {
-  expect(resource).toBeInstanceOf(ApiResource)
-})
+describe('API - Resources - Voters', () => {
+  test('should be instantiated', () => {
+    expect(resource).toBeInstanceOf(ApiResource)
+  })
 
-test('votes resource can call "all" method', async () => {
-  const response = await resource.all()
-  await expect(response.status).toBe(200)
-})
+  test('should call "all" method', async () => {
+    const response = await resource.all()
+    await expect(response.status).toBe(200)
+  })
 
-test('votes resource can call "get" method', async () => {
-  const response = await resource.get('123')
-  await expect(response.status).toBe(200)
+  test('should call "get" method', async () => {
+    const response = await resource.get('123')
+    await expect(response.status).toBe(200)
+  })
 })

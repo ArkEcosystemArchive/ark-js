@@ -10,21 +10,23 @@ beforeEach(() => {
   resource = ark.getClient('https://localhost:4003/').resource('loader')
 })
 
-test('loader resource can be instantiated', () => {
-  expect(resource).toBeInstanceOf(ApiResource)
-})
+describe('API - Resources - Loader', () => {
+  test('should be instantiated', () => {
+    expect(resource).toBeInstanceOf(ApiResource)
+  })
 
-test('loader resource can call "status" method', async () => {
-  const response = await resource.status()
-  await expect(response.status).toBe(200)
-})
+  test('should call "status" method', async () => {
+    const response = await resource.status()
+    await expect(response.status).toBe(200)
+  })
 
-test('loader resource can call "syncing" method', async () => {
-  const response = await resource.syncing()
-  await expect(response.status).toBe(200)
-})
+  test('should call "syncing" method', async () => {
+    const response = await resource.syncing()
+    await expect(response.status).toBe(200)
+  })
 
-test('loader resource can call "configuration" method', async () => {
-  const response = await resource.configuration()
-  await expect(response.status).toBe(200)
+  test('should call "configuration" method', async () => {
+    const response = await resource.configuration()
+    await expect(response.status).toBe(200)
+  })
 })

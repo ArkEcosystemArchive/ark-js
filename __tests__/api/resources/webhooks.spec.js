@@ -10,36 +10,38 @@ beforeEach(() => {
   resource = ark.getClient('https://localhost:4003/').resource('webhooks')
 })
 
-test('webhooks resource can be instantiated', () => {
-  expect(resource).toBeInstanceOf(ApiResource)
-})
+describe('API - Resources - Blocks', () => {
+  test('should be instantiated', () => {
+    expect(resource).toBeInstanceOf(ApiResource)
+  })
 
-test('webhooks resource can call "all" method', async () => {
-  const response = await resource.all()
-  await expect(response.status).toBe(200)
-})
+  test('should call "all" method', async () => {
+    const response = await resource.all()
+    await expect(response.status).toBe(200)
+  })
 
-test('webhooks resource can call "create" method', async () => {
-  const response = await resource.create()
-  await expect(response.status).toBe(200)
-})
+  test('should call "create" method', async () => {
+    const response = await resource.create()
+    await expect(response.status).toBe(200)
+  })
 
-test('webhooks resource can call "get" method', async () => {
-  const response = await resource.get('123')
-  await expect(response.status).toBe(200)
-})
+  test('should call "get" method', async () => {
+    const response = await resource.get('123')
+    await expect(response.status).toBe(200)
+  })
 
-test('webhooks resource can call "update" method', async () => {
-  const response = await resource.update('123')
-  await expect(response.status).toBe(200)
-})
+  test('should call "update" method', async () => {
+    const response = await resource.update('123')
+    await expect(response.status).toBe(200)
+  })
 
-test('webhooks resource can call "delete" method', async () => {
-  const response = await resource.delete('123')
-  await expect(response.status).toBe(200)
-})
+  test('should call "delete" method', async () => {
+    const response = await resource.delete('123')
+    await expect(response.status).toBe(200)
+  })
 
-test('webhooks resource can call "events" method', async () => {
-  const response = await resource.events()
-  await expect(response.status).toBe(200)
+  test('should call "events" method', async () => {
+    const response = await resource.events()
+    await expect(response.status).toBe(200)
+  })
 })

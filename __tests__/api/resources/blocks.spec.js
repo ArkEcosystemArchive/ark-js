@@ -10,26 +10,28 @@ beforeEach(() => {
   resource = ark.getClient('https://localhost:4003/').resource('blocks')
 })
 
-test('blocks resource can be instantiated', () => {
-  expect(resource).toBeInstanceOf(ApiResource)
-})
+describe('API - Resources - Blocks', () => {
+  test('should be instantiated', () => {
+    expect(resource).toBeInstanceOf(ApiResource)
+  })
 
-test('blocks resource can call "all" method', async () => {
-  const response = await resource.all()
-  await expect(response.status).toBe(200)
-})
+  test('should call "all" method', async () => {
+    const response = await resource.all()
+    await expect(response.status).toBe(200)
+  })
 
-test('blocks resource can call "get" method', async () => {
-  const response = await resource.get('123')
-  await expect(response.status).toBe(200)
-})
+  test('should call "get" method', async () => {
+    const response = await resource.get('123')
+    await expect(response.status).toBe(200)
+  })
 
-test('blocks resource can call "transactions" method', async () => {
-  const response = await resource.transactions('123')
-  await expect(response.status).toBe(200)
-})
+  test('should call "transactions" method', async () => {
+    const response = await resource.transactions('123')
+    await expect(response.status).toBe(200)
+  })
 
-test('blocks resource can call "search" method', async () => {
-  const response = await resource.search({})
-  await expect(response.status).toBe(200)
+  test('should call "search" method', async () => {
+    const response = await resource.search({})
+    await expect(response.status).toBe(200)
+  })
 })

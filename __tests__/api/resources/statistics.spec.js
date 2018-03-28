@@ -1,7 +1,7 @@
 import Ark from '../../../src'
 import network from '../../../src/networks/mainnet'
 import ApiResource from '../../../src/api/resources/statistics'
-import Server from './utils/server'
+require('./mock')
 
 let resource
 

@@ -1,8 +1,5 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-
-const mock = new MockAdapter(axios)
-
 import Blocks from './blocks'
 import Delegates from './delegates'
 import Loader from './loader'
@@ -14,6 +11,8 @@ import Transactions from './transactions'
 import Votes from './votes'
 import Wallets from './wallets'
 import Webhooks from './webhooks'
+
+const mock = new MockAdapter(axios)
 
 Blocks(mock)
 Delegates(mock)

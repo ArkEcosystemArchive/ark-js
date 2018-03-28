@@ -1,6 +1,7 @@
 import Ark from '../../../src'
 import network from '../../../src/networks/mainnet'
 import ApiResource from '../../../src/api/resources/loader'
+import Server from './utils/server'
 
 let resource
 
@@ -13,14 +14,17 @@ test('loader resource can be instantiated', () => {
   expect(resource).toBeInstanceOf(ApiResource)
 })
 
-test('loader resource can call "status" method', () => {
-  expect(resource.status()).toBeInstanceOf(Promise)
+test('loader resource can call "status" method', async () => {
+  const response = await resource.status()
+  await expect(response.status).toBe(200)
 })
 
-test('loader resource can call "syncing" method', () => {
-  expect(resource.syncing()).toBeInstanceOf(Promise)
+test('loader resource can call "syncing" method', async () => {
+  const response = await resource.syncing()
+  await expect(response.status).toBe(200)
 })
 
-test('loader resource can call "configuration" method', () => {
-  expect(resource.configuration()).toBeInstanceOf(Promise)
+test('loader resource can call "configuration" method', async () => {
+  const response = await resource.configuration()
+  await expect(response.status).toBe(200)
 })

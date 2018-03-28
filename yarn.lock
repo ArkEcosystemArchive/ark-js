@@ -282,6 +282,12 @@ aws4@^1.2.1, aws4@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.6.0.tgz#83ef5ca860b2b32e4a0deedee8c771b9db57471e"
 
+axios-mock-adapter@^1.14.1:
+  version "1.14.1"
+  resolved "https://registry.yarnpkg.com/axios-mock-adapter/-/axios-mock-adapter-1.14.1.tgz#c8e0ee1134955267538d566d7ae068be20467158"
+  dependencies:
+    deep-equal "^1.0.1"
+
 axios@^0.17.1:
   version "0.17.1"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.17.1.tgz#2d8e3e5d0bdbd7327f91bc814f5c57660f81824d"
@@ -1714,6 +1720,10 @@ decompress-response@^3.2.0:
   resolved "https://registry.yarnpkg.com/decompress-response/-/decompress-response-3.3.0.tgz#80a4dd323748384bfa248083622aedec982adff3"
   dependencies:
     mimic-response "^1.0.0"
+
+deep-equal@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-1.0.1.tgz#f5d260292b660e084eff4cdbc9f08ad3247448b5"
 
 deep-extend@^0.4.0, deep-extend@~0.4.0:
   version "0.4.2"
@@ -3458,16 +3468,6 @@ jest-message-util@^22.4.0:
     micromatch "^2.3.11"
     slash "^1.0.0"
     stack-utils "^1.0.1"
-
-jest-mock-axios@^1.0.21:
-  version "1.0.21"
-  resolved "https://registry.yarnpkg.com/jest-mock-axios/-/jest-mock-axios-1.0.21.tgz#9a530f6b2a17f03121ba77c39fea0bb4b421b2a2"
-  dependencies:
-    jest-mock-promise "^1.0.20"
-
-jest-mock-promise@^1.0.20:
-  version "1.0.22"
-  resolved "https://registry.yarnpkg.com/jest-mock-promise/-/jest-mock-promise-1.0.22.tgz#a1b152d0a1982c0807825322710513b6dcc6686a"
 
 jest-mock@^22.2.0:
   version "22.2.0"

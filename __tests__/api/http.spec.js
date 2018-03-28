@@ -13,22 +13,27 @@ test('http client can be instantiated', () => {
   expect(client).toBeInstanceOf(HttpClient)
 })
 
-test('http client can send GET request', () => {
-  expect(client.get('get')).toBeInstanceOf(Promise)
+test('http client can send GET request', async () => {
+  const response = await client.get('get')
+  await expect(response.status).toBe(200)
 })
 
-test('http client can send POST request', () => {
-  expect(client.post('post')).toBeInstanceOf(Promise)
+test('http client can send POST request', async () => {
+  const response = await client.post('post')
+  await expect(response.status).toBe(200)
 })
 
-test('http client can send PUT request', () => {
-  expect(client.put('put')).toBeInstanceOf(Promise)
+test('http client can send PUT request', async () => {
+  const response = await client.put('put')
+  await expect(response.status).toBe(200)
 })
 
-test('http client can send PATCH request', () => {
-  expect(client.patch('patch')).toBeInstanceOf(Promise)
+test('http client can send PATCH request', async () => {
+  const response = await client.patch('patch')
+  await expect(response.status).toBe(200)
 })
 
-test('http client can send DELETE request', () => {
-  expect(client.delete('delete')).toBeInstanceOf(Promise)
+test('http client can send DELETE request', async () => {
+  const response = await client.delete('delete')
+  await expect(response.status).toBe(200)
 })

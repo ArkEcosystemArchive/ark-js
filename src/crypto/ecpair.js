@@ -68,13 +68,31 @@ export default class ECPair {
    * @param {Network} [network=networks.ark]
    * @returns {ECPair}
    */
-  fromPublicKeyBuffer (buffer, network) {
-    var Q = ecurve.Point.decodeFrom(secp256k1, buffer)
+  static fromPublicKeyBuffer (buffer, network) {
+    const Q = ecurve.Point.decodeFrom(secp256k1, buffer)
 
     return new ECPair(null, Q, {
       compressed: Q.compressed,
-      network: network
+      network
     })
+  }
+
+  /**
+   * @param {string} seed
+   * @param {object} [options]
+   * @param {boolean} [options.compressed=true]
+   * @param {Network} [options.network=networks.ark]
+   * @returns {ECPair}
+   */
+  static fromSeed (seed, options) {
+    const hash = bcrypto.sha256(Buffer.from(seed, 'utf-8'))
+    const d = BigInteger.fromBuffer(hash)
+
+    if (d.signum() <= 0 || d.compareTo(secp256k1.n) >= 0) {
+      throw new Error('seed cannot resolve to a compatible private key')
+    } else {
+      return new ECPair(d, null, options)
+    }
   }
 
   /**
@@ -82,9 +100,9 @@ export default class ECPair {
    * @param {Network[]|Network} network
    * @returns {ECPair}
    */
-  fromWIF (string, network) {
-    var decoded = wif.decode(string)
-    var version = decoded.version
+  static fromWIF (string, network) {
+    const decoded = wif.decode(string)
+    const version = decoded.version
 
     // [network, ...]
     if (types.Array(network)) {
@@ -115,37 +133,20 @@ export default class ECPair {
    * @param {boolean} [options.compressed=true]
    * @param {Network} [options.network=networks.ark]
    */
-  makeRandom (options) {
+  static makeRandom (options) {
     options = options || {}
 
-    var rng = options.rng || randomBytes
+    const rng = options.rng || randomBytes
 
-    var d
+    let d
     do {
-      var buffer = rng(32)
+      const buffer = rng(32)
       typeforce(types.Buffer256bit, buffer)
 
       d = BigInteger.fromBuffer(buffer)
     } while (d.signum() <= 0 || d.compareTo(secp256k1.n) >= 0)
 
     return new ECPair(d, null, options)
-  }
-
-  /**
-   * @param {string} seed
-   * @param {object} [options]
-   * @param {boolean} [options.compressed=true]
-   * @param {Network} [options.network=networks.ark]
-   * @returns {ECPair}
-   */
-  fromSeed (seed, options) {
-    var hash = bcrypto.sha256(Buffer.from(seed, 'utf-8'))
-    var d = BigInteger.fromBuffer(hash)
-    if (d.signum() <= 0 || d.compareTo(secp256k1.n) >= 0) {
-      throw new Error('seed cannot resolve to a compatible private key')
-    } else {
-      return new ECPair(d, null, options)
-    }
   }
 
   /**

@@ -1,5 +1,5 @@
 import Ark from '@/'
-import network from '@/networks/mainnet'
+import network from '@/networks/devnet'
 import ApiClient from '@/api'
 import HttpClient from '@/api/http'
 import ApiResource from '@/api/resources/transactions'

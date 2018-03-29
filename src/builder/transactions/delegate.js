@@ -5,9 +5,11 @@ import Transaction from '../transaction'
 
 export default class Delegate extends Transaction {
   constructor () {
+    super()
+
     this.id = null
     this.type = 2
-    this.fee = Config.getConstants(height).fees.delegate
+    this.fee = Config.getConstants(1).fees.delegate // TODO: replace 1 with the actual height
     this.amount = 0
     this.timestamp = slots.getTime()
     this.recipientId = null

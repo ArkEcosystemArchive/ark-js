@@ -5,6 +5,8 @@ import Transaction from '../transaction'
 
 export default class MultiPayment extends Transaction {
   constructor () {
+    super()
+
     this.id = null
     this.type = 0
     this.fee = 0

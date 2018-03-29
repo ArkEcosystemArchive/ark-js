@@ -5,6 +5,8 @@ import Transaction from '../transaction'
 
 export default class MultiSignature extends Transaction {
   constructor () {
+    super()
+
     this.id = null
     this.type = 4
     this.fee = 0
@@ -26,7 +28,7 @@ export default class MultiSignature extends Transaction {
   }
 
   setFee (keysgroup) {
-    this.fee = (keysgroup.length + 1) * Config.getConstants(height).fees.multisignature
+    this.fee = (keysgroup.length + 1) * Config.getConstants(1).fees.multisignature // TODO: replace 1 with the actual height
     return this
   }
 

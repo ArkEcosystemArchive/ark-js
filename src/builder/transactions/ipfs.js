@@ -5,9 +5,11 @@ import Transaction from '../transaction'
 
 export default class IPFS extends Transaction {
   constructor () {
+    super()
+
     this.id = null
     this.type = 5
-    this.fee = Config.getConstants(height).fees.ipfs
+    this.fee = Config.getConstants(1).fees.ipfs // TODO: replace 1 with the actual height
     this.amount = 0
     this.timestamp = slots.getTime()
     this.vendorFieldHex = null

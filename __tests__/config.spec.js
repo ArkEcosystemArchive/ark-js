@@ -1,6 +1,6 @@
 import Config from '@/config'
-import network from '@/networks/mainnet'
-import networkDevnet from '@/networks/devnet'
+import network from '@/networks/devnet'
+import networkMainnet from '@/networks/mainnet'
 
 beforeEach(() => Config.setConfig(network))
 
@@ -10,9 +10,9 @@ describe('Configuration', () => {
   })
 
   test('should be set on runtime', () => {
-    Config.setConfig(networkDevnet)
+    Config.setConfig(networkMainnet)
 
-    expect(Config.all()).toEqual(networkDevnet)
+    expect(Config.all()).toEqual(networkMainnet)
   })
 
   test('key should be "set"', () => {
@@ -22,7 +22,7 @@ describe('Configuration', () => {
   })
 
   test('key should be "get"', () => {
-    expect(Config.get('nethash')).toBe('6e84d08bd299ed97c212c886c98a57e36545c8f5d645ca7eeae63a8bd62d8988')
+    expect(Config.get('nethash')).toBe('578e820911f24e039733b45e4882b73e301f813a0d2c31330dafda84534ffa23')
   })
 
   test('should build constants', () => {

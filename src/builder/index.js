@@ -36,6 +36,6 @@ export default class Builder {
   }
 
   getTransaction (transaction) {
-    return require(`./transactions/${transaction}`)
+    return new (require(`./transactions/${transaction}`).default)
   }
 }

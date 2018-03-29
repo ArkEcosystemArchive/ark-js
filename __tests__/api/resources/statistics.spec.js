@@ -1,5 +1,5 @@
 import Ark from '@/'
-import network from '@/networks/mainnet'
+import network from '@/networks/devnet'
 import ApiResource from '@/api/resources/statistics'
 require('../mocks')
 

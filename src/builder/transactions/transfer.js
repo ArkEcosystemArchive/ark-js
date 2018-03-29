@@ -5,9 +5,11 @@ import Transaction from '../transaction'
 
 export default class Transfer extends Transaction {
   constructor () {
+    super()
+
     this.id = null
     this.type = 0
-    this.fee = Config.getConstants(height).fees.send
+    this.fee = Config.getConstants(1).fees.send // TODO: replace 1 with the actual height
     this.amount = 0
     this.timestamp = slots.getTime()
     this.recipientId = null

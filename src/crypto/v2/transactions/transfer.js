@@ -3,19 +3,16 @@ import crypto from '../crypto'
 import slots from '../../crypto/slots'
 
 export default class Transfer {
-  constructor (config, feeOverride) {
-    if (feeOverride && !Number.isInteger(feeOverride)) {
-      throw new Error('Not a valid fee')
-    }
-
+  constructor () {
     this.id = null
-    this.amount = 0
-    this.fee = feeOverride || Config.get('constants')[0].fees.send
-    this.timestamp = slots.getTime()
     this.type = 0
-    this.expiration = 15 // 15 blocks, 120s
+    this.fee = Config.getConstants(height).fees.send
+    this.amount = 0
+    this.timestamp = slots.getTime()
+    this.recipientId = null
+    this.senderPublicKey = null
     this.version = 0x02
-    this.network = config.network
+    this.network = Config.all()
   }
 
   create (recipientId, amount) {
@@ -29,10 +26,16 @@ export default class Transfer {
     return this
   }
 
+  setPublicKeys (keys) {
+    this.senderPublicKey = keys.publicKey
+    return this
+  }
+
   sign (passphrase) {
     const keys = crypto.getKeys(passphrase)
     this.senderPublicKey = keys.publicKey
     this.signature = crypto.sign(this, keys)
+    this.setPublicKeys(keys)
     return this
   }
 
@@ -43,6 +46,7 @@ export default class Transfer {
   secondSign (transaction, passphrase) {
     const keys = crypto.getKeys(passphrase)
     this.secondSignature = crypto.secondSign(transaction, keys)
+    this.setPublicKeys(keys)
     return this
   }
 
@@ -51,7 +55,15 @@ export default class Transfer {
       hex: crypto.getBytes(this).toString('hex'),
       id: crypto.getId(this),
       signature: this.signature,
-      secondSignature: this.secondSignature
+      secondSignature: this.secondSignature,
+
+      type: this.type,
+      amount: this.amount,
+      fee: this.fee,
+      recipientId: this.recipientId,
+      senderPublicKey: this.senderPublicKey,
+      timestamp: this.timestamp,
+      asset: this.asset
     }
   }
 }

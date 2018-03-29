@@ -96,16 +96,16 @@ export default class ECPair {
 
       // network
     } else {
-      network = network || ConfigManager.all()
+      network = network || configManager.all()
 
       if (version !== network.wif) throw new Error('Invalid network version')
     }
 
-    var d = BigInteger.fromBuffer(decoded.privateKey)
+    const d = BigInteger.fromBuffer(decoded.privateKey)
 
     return new ECPair(d, null, {
       compressed: decoded.compressed,
-      network: network
+      network
     })
   }
 
@@ -152,9 +152,9 @@ export default class ECPair {
    * @returns {string}
    */
   getAddress () {
-    var payload = Buffer.alloc(21)
-    var hash = bcrypto.ripemd160(this.getPublicKeyBuffer())
-    var version = this.getNetwork().pubKeyHash
+    const payload = Buffer.alloc(21)
+    const hash = bcrypto.ripemd160(this.getPublicKeyBuffer())
+    const version = this.getNetwork().pubKeyHash
     payload.writeUInt8(version, 0)
     hash.copy(payload, 1)
 
@@ -180,7 +180,8 @@ export default class ECPair {
    */
   sign (hash) {
     if (!this.privateKey) throw new Error('Missing private key')
-    var native = secp256k1native.sign(hash, this.privateKey.toBuffer(32))
+
+    const native = secp256k1native.sign(hash, this.privateKey.toBuffer(32))
     return ECSignature.parseNativeSecp256k1(native).signature
   }
 

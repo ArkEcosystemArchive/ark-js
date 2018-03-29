@@ -43,21 +43,21 @@ class ConfigManager {
       height = 1
     }
 
-    while ((this.constant.index < this.constants.length - 1) && height >= this.constants[this.constant.index + 1].height) {
-      this.constant.index++
-      this.constant.data = this.constants[this.constant.index]
+    while ((this.current.index < this.constants.length - 1) && height >= this.constants[this.current.index + 1].height) {
+      this.current.index++
+      this.current.data = this.constants[this.current.index]
     }
-    while (height < this.constants[this.constant.index].height) {
-      this.constant.index--
-      this.constant.data = this.constants[this.constant.index]
+    while (height < this.constants[this.current.index].height) {
+      this.current.index--
+      this.current.data = this.constants[this.current.index]
     }
 
-    return this.constant.data
+    return this.current.data
   }
 
   _buildConstants () {
     this.constants = this.config.constants.sort((a, b) => a.height - b.height)
-    this.constant = {
+    this.current = {
       index: 0,
       data: this.constants[0]
     }

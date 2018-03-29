@@ -35,8 +35,8 @@ class Builder {
     return this.getTransaction('vote')
   }
 
-  getTransaction (transaction) {
-    return new (require(`./transactions/${transaction}`).default)()
+  getTransaction (transactionType) {
+    return new (require(`./transactions/${transactionType}`).default)()
   }
 }
 

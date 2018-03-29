@@ -123,20 +123,30 @@ export default class Wallet {
     const actions = {
       [TRANSACTION_TYPES.TRANSFER]: () => (true), // transfer
       [TRANSACTION_TYPES.SECOND_SIGNATURE]: () => (!this.secondPublicKey), // second signature registration
-      [TRANSACTION_TYPES.DELEGATE]: () => {
+      [TRANSACTION_TYPES.DELEGATE] () {
         const username = transaction.asset.delegate.username
         return !this.username && username && username === username.toLowerCase()
       },
-      [TRANSACTION_TYPES.VOTE]: () => {
+      [TRANSACTION_TYPES.VOTE] () {
         if (transaction.asset.votes[0].startsWith('-') && this.vote) return true
         if (transaction.asset.votes[0].startsWith('+') && !this.vote) return true
 
         return false
       },
-      [TRANSACTION_TYPES.MULTI_SIGNATURE]: () => (!this.multisignature && transaction.asset.multisignature.keysgroup.length >= transaction.asset.multisignature.min - 1 && transaction.asset.multisignature.keysgroup.length === transaction.signatures.length && this.verifySignatures(transaction, transaction.asset.multisignature)),
+      [TRANSACTION_TYPES.MULTI_SIGNATURE] () {
+        const keysgroup = transaction.asset.multisignature.keysgroup
+
+        return !this.multisignature
+          && keysgroup.length >= transaction.asset.multisignature.min - 1
+          && keysgroup.length === transaction.signatures.length
+          && this.verifySignatures(transaction, transaction.asset.multisignature)
+      },
       [TRANSACTION_TYPES.IPFS]: () => (true),
       [TRANSACTION_TYPES.TIMELOCK_TRANSFER]: () => (true),
-      [TRANSACTION_TYPES.MULTI_PAYMENT]: () => (this.balance - transaction.asset.payments.reduce((a, p) => (a += p.amount), 0) - transaction.fee > -1), // multipayment
+      [TRANSACTION_TYPES.MULTI_PAYMENT] () {
+        const amount = transaction.asset.payments.reduce((a, p) => (a += p.amount), 0)
+        return this.balance - amount - transaction.fee > -1
+      },
       [TRANSACTION_TYPES.DELEGATE_RESIGNATION]: () => (!!this.username), // delegate resignation
       'default': () => (false)
     }

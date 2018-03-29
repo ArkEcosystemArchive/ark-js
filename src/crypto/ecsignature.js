@@ -42,7 +42,7 @@ class ECSignature {
     const s = BigInteger.fromBuffer(native.signature.slice(32))
 
     return {
-      compressed: compressed,
+      compressed,
       i: recoveryParam,
       signature: new ECSignature(r, s)
     }
@@ -80,7 +80,7 @@ class ECSignature {
     const s = BigInteger.fromBuffer(buffer.slice(33))
 
     return {
-      compressed: compressed,
+      compressed,
       i: recoveryParam,
       signature: new ECSignature(r, s)
     }
@@ -111,7 +111,7 @@ class ECSignature {
 
     return {
       signature: this.fromDER(buffer.slice(0, -1)),
-      hashType: hashType
+      hashType
     }
   }
 

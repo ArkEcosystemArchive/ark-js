@@ -10,7 +10,7 @@ export default class Transfer extends Transaction {
 
     this.id = null
     this.type = TRANSACTION_TYPES.TRANSFER
-    this.fee = ConfigManager.getConstants().fees.send
+    this.fee = FeeManager.get(TRANSACTION_TYPES.TRANSFER)
     this.amount = 0
     this.timestamp = slots.getTime()
     this.recipientId = null

@@ -10,7 +10,7 @@ export default class SecondSignature extends Transaction {
 
     this.id = null
     this.type = TRANSACTION_TYPES.SECOND_SIGNATURE
-    this.fee = ConfigManager.getConstants().fees.secondsignature
+    this.fee = FeeManager.get(TRANSACTION_TYPES.SECOND_SIGNATURE)
     this.amount = 0
     this.timestamp = slots.getTime()
     this.recipientId = null

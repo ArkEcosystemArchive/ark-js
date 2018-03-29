@@ -10,7 +10,7 @@ export default class IPFS extends Transaction {
 
     this.id = null
     this.type = TRANSACTION_TYPES.IPFS
-    this.fee = ConfigManager.getConstants().fees.ipfs
+    this.fee = FeeManager.get(TRANSACTION_TYPES.IPFS)
     this.amount = 0
     this.timestamp = slots.getTime()
     this.vendorFieldHex = null

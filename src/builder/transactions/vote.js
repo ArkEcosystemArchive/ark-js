@@ -10,7 +10,7 @@ export default class Vote extends Transaction {
 
     this.id = null
     this.type = TRANSACTION_TYPES.VOTE
-    this.fee = ConfigManager.getConstants().fees.vote
+    this.fee = FeeManager.get(TRANSACTION_TYPES.VOTE)
     this.amount = 0
     this.timestamp = slots.getTime()
     this.recipientId = null

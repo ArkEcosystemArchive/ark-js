@@ -24,7 +24,7 @@ export default class MultiSignature extends Transaction {
     this.asset.multisignature.keysgroup = keysgroup
     this.asset.multisignature.lifetime = lifetime
     this.asset.multisignature.min = min
-    this.fee = (keysgroup.length + 1) * ConfigManager.getConstants().fees.multisignature
+    this.fee = (keysgroup.length + 1) * FeeManager.get(TRANSACTION_TYPES.MULTI_SIGNATURE)
     return this
   }
 

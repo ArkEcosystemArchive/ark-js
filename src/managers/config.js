@@ -2,7 +2,7 @@ import deepmerge from 'deepmerge'
 import FeeManager from './fee'
 import { ARKTOSHI, TRANSACTION_TYPES } from '../constants'
 
-class Config {
+class ConfigManager {
   setConfig (config) {
     this.config = {}
 
@@ -84,4 +84,4 @@ class Config {
   }
 }
 
-export default new Config()
+export default new ConfigManager()

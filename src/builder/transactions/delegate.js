@@ -10,7 +10,7 @@ export default class Delegate extends Transaction {
 
     this.id = null
     this.type = TRANSACTION_TYPES.DELEGATE
-    this.fee = ConfigManager.getConstants().fees.delegate
+    this.fee = FeeManager.get(TRANSACTION_TYPES.DELEGATE)
     this.amount = 0
     this.timestamp = slots.getTime()
     this.recipientId = null

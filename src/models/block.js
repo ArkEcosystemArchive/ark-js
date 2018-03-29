@@ -5,7 +5,7 @@ const Transaction = require('./transaction')
 const config = require('../config')
 const ECPair = require('../crypto/ecpair')
 const ECSignature = require('../crypto/ecsignature')
-const Slots = require('../crypto/time/slots')
+const Slots = require('../crypto/slots')
 
 const applyV1Fix = (data) => {
   // START Fix for v1 api

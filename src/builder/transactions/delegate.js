@@ -1,6 +1,6 @@
 import Config from '../../config'
 import crypto from '../crypto'
-import slots from '../../crypto/time/slots'
+import slots from '../../crypto/slots'
 
 export default function (secret, username, secondSecret, feeOverride) {
   if (!secret || !username) return false

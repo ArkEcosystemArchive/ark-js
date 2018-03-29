@@ -1,5 +1,5 @@
 import Config from '../../config'
-import crypto from './crypto'
+import crypto from '../crypto'
 import slots from '../../crypto/slots'
 
 export default class Transfer {

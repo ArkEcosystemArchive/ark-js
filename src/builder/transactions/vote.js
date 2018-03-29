@@ -2,46 +2,64 @@ import Config from '../../config'
 import crypto from '../crypto'
 import slots from '../../crypto/slots'
 
-export default function (secret, delegates, secondSecret, feeOverride) {
-  if (!secret || !Array.isArray(delegates)) return
-
-  let keys = secret
-
-  if (!crypto.isECPair(secret)) {
-    keys = crypto.getKeys(secret)
+export default class Vote {
+  constructor () {
+    this.id = null
+    this.type = 3
+    this.fee = Config.getConstants(height).fees.vote
+    this.amount = 0
+    this.timestamp = slots.getTime()
+    this.recipientId = null
+    this.senderPublicKey = null
+    this.asset = { votes: {} }
+    this.version = 0x02
+    this.network = Config.all()
   }
 
-  if (!keys.publicKey) {
-    throw new Error('Invalid public key')
+  create (delegates) {
+    this.asset.votes = delegates
+    return this
   }
 
-  if (feeOverride && !Number.isInteger(feeOverride)) {
-    throw new Error('Not a valid fee')
+  setRecipientAndSender (keys) {
+    this.recipientId = crypto.getAddress(keys.publicKey)
+    this.senderPublicKey = keys.publicKey
+    return this
   }
 
-  let transaction = {
-    type: 3,
-    amount: 0,
-    fee: feeOverride || Config.get('constants')[0].fees.vote,
-    recipientId: crypto.getAddress(keys.publicKey),
-    senderPublicKey: keys.publicKey,
-    timestamp: slots.getTime(),
-    asset: {
-      votes: delegates
+  sign (passphrase) {
+    const keys = crypto.getKeys(passphrase)
+    this.senderPublicKey = keys.publicKey
+    this.signature = crypto.sign(this, keys)
+    this.setRecipientAndSender(keys)
+    return this
+  }
+
+  secondSign (transaction, passphrase) {
+    const keys = crypto.getKeys(passphrase)
+    this.secondSignature = crypto.secondSign(transaction, keys)
+    this.setRecipientAndSender(keys)
+    return this
+  }
+
+  verify () {
+    return crypto.verify(this)
+  }
+
+  serialise () {
+    return {
+      hex: crypto.getBytes(this).toString('hex'),
+      id: crypto.getId(this),
+      signature: this.signature,
+      secondSignature: this.secondSignature,
+
+      type: this.type,
+      amount: this.amount,
+      fee: this.fee,
+      recipientId: this.recipientId,
+      senderPublicKey: this.senderPublicKey,
+      timestamp: this.timestamp,
+      asset: this.asset
     }
   }
-
-  crypto.sign(transaction, keys)
-
-  if (secondSecret) {
-    let secondKeys = secondSecret
-    if (!crypto.isECPair(secondSecret)) {
-      secondKeys = crypto.getKeys(secondSecret)
-    }
-    crypto.secondSign(transaction, secondKeys)
-  }
-
-  transaction.id = crypto.getId(transaction)
-
-  return transaction
 }

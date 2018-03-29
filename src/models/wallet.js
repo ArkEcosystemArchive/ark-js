@@ -1,8 +1,8 @@
-const config = require('../managers/config')
-const { ARKTOSHI, TRANSACTION_TYPES } = require('../constants')
-const ECPair = require('../crypto/ecpair')
-const ECSignature = require('../crypto/ecsignature')
-const Crypto = require('../builder/crypto')
+import config from '@/managers/config'
+import { ARKTOSHI, TRANSACTION_TYPES } from '@/constants'
+import ECPair from '@/crypto/ecpair'
+import ECSignature from '@/crypto/ecsignature'
+import cryptoBuilder from '@/builder/crypto'
 
 export default class Wallet {
   constructor (address) {
@@ -21,7 +21,7 @@ export default class Wallet {
   }
 
   applyTransactionToSender (transaction) {
-    if (transaction.senderPublicKey === this.publicKey || Crypto.getAddress(transaction.senderPublicKey) === this.address) {
+    if (transaction.senderPublicKey === this.publicKey || cryptoBuilder.getAddress(transaction.senderPublicKey) === this.address) {
       this.balance -= transaction.amount + transaction.fee
 
       const actions = {
@@ -46,7 +46,7 @@ export default class Wallet {
   }
 
   undoTransactionToSender (transaction) {
-    if (transaction.senderPublicKey === this.publicKey || Crypto.getAddress(transaction.senderPublicKey) === this.address) {
+    if (transaction.senderPublicKey === this.publicKey || cryptoBuilder.getAddress(transaction.senderPublicKey) === this.address) {
       this.balance += transaction.amount + transaction.fee
 
       const actions = {
@@ -87,7 +87,7 @@ export default class Wallet {
   }
 
   applyBlock (block) {
-    if (block.generatorPublicKey === this.publicKey || Crypto.getAddress(block.generatorPublicKey) === this.address) {
+    if (block.generatorPublicKey === this.publicKey || cryptoBuilder.getAddress(block.generatorPublicKey) === this.address) {
       this.balance += block.reward + block.totalFee
       this.producedBlocks++
       this.lastBlock = block
@@ -96,7 +96,7 @@ export default class Wallet {
   }
 
   undoBlock (block) {
-    if (block.generatorPublicKey === this.publicKey || Crypto.getAddress(block.generatorPublicKey) === this.address) {
+    if (block.generatorPublicKey === this.publicKey || cryptoBuilder.getAddress(block.generatorPublicKey) === this.address) {
       this.balance -= block.reward + block.totalFee
       this.producedBlocks--
       // TODO: get it back from database?
@@ -113,7 +113,7 @@ export default class Wallet {
     } else {
       check = check && (transaction.senderPublicKey === this.publicKey) && (this.balance - transaction.amount - transaction.fee > -1)
       // TODO: this can blow up if 2nd phrase and other tx are in the wrong order
-      check = check && (!this.secondPublicKey || Crypto.verifySecondSignature(transaction, this.secondPublicKey, config.network))
+      check = check && (!this.secondPublicKey || cryptoBuilder.verifySecondSignature(transaction, this.secondPublicKey, config.network))
     }
 
     if (!check) {
@@ -161,7 +161,7 @@ export default class Wallet {
   }
 
   verify (transaction, signature, publicKey) {
-    const hash = Crypto.getHash(transaction)
+    const hash = cryptoBuilder.getHash(transaction)
     const signSignatureBuffer = Buffer.from(signature, 'hex')
     const publicKeyBuffer = Buffer.from(publicKey, 'hex')
     const ecpair = ECPair.fromPublicKeyBuffer(publicKeyBuffer, config.network)

@@ -1,4 +1,4 @@
-export default class Builder {
+class Builder {
   delegateResignation () {
     return this.getTransaction('delegate-resignation')
   }
@@ -39,3 +39,5 @@ export default class Builder {
     return new (require(`./transactions/${transaction}`).default)()
   }
 }
+
+export default new Builder()

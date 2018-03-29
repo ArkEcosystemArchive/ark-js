@@ -1,9 +1,8 @@
-import ConfigManager from '../../managers/config'
-import FeeManager from '../../managers/fee'
-import crypto from '../crypto'
-import slots from '../../crypto/slots'
-import Transaction from '../transaction'
-import { TRANSACTION_TYPES } from '../../constants'
+import FeeManager from '@/managers/fee'
+import crypto from '@/builder/crypto'
+import slots from '@/crypto/slots'
+import Transaction from '@/builder/transaction'
+import { TRANSACTION_TYPES } from '@/constants'
 
 export default class Transfer extends Transaction {
   constructor () {

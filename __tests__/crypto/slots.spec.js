@@ -1,9 +1,9 @@
 import getType from 'jest-get-type'
-import ConfigManager from '@/managers/config'
+import configManager from '@/managers/config'
 import network from '@/networks/devnet'
 import slots from '@/crypto/slots'
 
-beforeEach(() => ConfigManager.setConfig(network))
+beforeEach(() => configManager.setConfig(network))
 
 describe('Slots', () => {
   describe('getEpochTime', () => {

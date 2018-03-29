@@ -1,18 +1,18 @@
-const Config = require('../managers/config')
-const base58check = require('bs58check')
-const bcrypto = require('./crypto')
-const ECSignature = require('./ecsignature')
-const randomBytes = require('randombytes')
-const typeforce = require('typeforce')
-const types = require('./types')
-const wif = require('wif')
+import configManager from '@/managers/config'
+import base58check from 'bs58check'
+import bcrypto from '@/crypto/crypto'
+import ECSignature from '@/crypto/ecsignature'
+import randomBytes from 'randombytes'
+import typeforce from 'typeforce'
+import types from '@/crypto/types'
+import wif from 'wif'
 
-const BigInteger = require('bigi')
+import BigInteger from 'bigi'
 
-const ecurve = require('ecurve')
+import ecurve from 'ecurve'
+import secp256k1native from 'secp256k1'
+
 const secp256k1 = ecurve.getCurveByName('secp256k1')
-
-const secp256k1native = require('secp256k1')
 
 // Object.defineProperty(ECPair.prototype, 'Q', {
 //   get: function () {
@@ -60,7 +60,7 @@ export default class ECPair {
     /** @type {boolean} */
     this.compressed = options.compressed === undefined ? true : options.compressed
     /** @type {Network} */
-    this.network = options.network || ConfigManager.all()
+    this.network = options.network || configManager.all()
   }
 
   /**

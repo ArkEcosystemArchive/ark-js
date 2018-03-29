@@ -1,15 +1,15 @@
-const bs58check = require('bs58check')
-const ByteBuffer = require('bytebuffer')
-const config = require('../managers/config')
-const { TRANSACTION_TYPES } = require('../constants')
-const Crypto = require('../builder/crypto')
+import bs58check from 'bs58check'
+import ByteBuffer from 'bytebuffer'
+import configManager from '@/managers/config'
+import { TRANSACTION_TYPES } from '@/constants'
+import cryptoBuilder from '@/builder/crypto'
 
 export default class Transaction {
   constructor (transaction) {
     this.serialized = Transaction.serialize(transaction)
     this.data = Transaction.deserialize(this.serialized.toString('hex'))
     if (this.data.version === 1) {
-      this.verified = Crypto.verify(this.data)
+      this.verified = cryptoBuilder.verify(this.data)
     }
     // if (this.data.amount !== transaction.amount) console.error('bang', transaction, this.data);
     ['id', 'version', 'timestamp', 'senderPublicKey', 'recipientId', 'type', 'vendorFieldHex', 'amount', 'fee', 'blockId', 'signature', 'secondSignature'].forEach((key) => {
@@ -30,7 +30,7 @@ export default class Transaction {
     const bb = new ByteBuffer(512, true)
     bb.writeByte(0xff) // fill, to disambiguate from v1
     bb.writeByte(transaction.version || 0x01) // version
-    bb.writeByte(transaction.network || config.network.pubKeyHash) // ark = 0x17, devnet = 0x30
+    bb.writeByte(transaction.network || configManager.get('pubKeyHash')) // ark = 0x17, devnet = 0x30
     bb.writeByte(transaction.type)
     bb.writeUInt32(transaction.timestamp)
     bb.append(transaction.senderPublicKey, 'hex')
@@ -218,7 +218,7 @@ export default class Transaction {
       }
 
       if (!tx.recipientId && tx.type === TRANSACTION_TYPES.VOTE) {
-        tx.recipientId = Crypto.getAddress(tx.senderPublicKey, tx.network)
+        tx.recipientId = cryptoBuilder.getAddress(tx.senderPublicKey, tx.network)
       }
 
       if (tx.vendorFieldHex) {
@@ -227,11 +227,11 @@ export default class Transaction {
 
       if (tx.type === TRANSACTION_TYPES.MULTI_SIGNATURE) {
         tx.asset.multisignature.keysgroup = tx.asset.multisignature.keysgroup.map((k) => '+' + k)
-        tx.recipientId = Crypto.getAddress(tx.senderPublicKey, tx.network)
+        tx.recipientId = cryptoBuilder.getAddress(tx.senderPublicKey, tx.network)
       }
 
       if (!tx.id) {
-        tx.id = Crypto.getId(tx)
+        tx.id = cryptoBuilder.getId(tx)
       }
     }
     return tx

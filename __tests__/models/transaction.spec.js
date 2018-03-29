@@ -1,7 +1,10 @@
-const Transaction = require('@/models/transaction')
-const builder = require('@/builder')
-const Crypto = require('@/builder/crypto')
-const txdata = require('./fixtures/transaction')
+import Transaction from '@/models/transaction'
+import builder from '@/builder'
+import cryptoBuilder from '@/builder/crypto'
+import txData from './fixtures/transaction'
+
+import configManager from '@/managers/config'
+import network from '@/networks/devnet'
 
 const createRandomTx = type => {
   switch (type) {

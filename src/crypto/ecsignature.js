@@ -1,7 +1,7 @@
-const bip66 = require('bip66')
-const typeforce = require('typeforce')
-const types = require('./types')
-const BigInteger = require('bigi')
+import bip66 from 'bip66'
+import typeforce from 'typeforce'
+import types from '@/crypto/types'
+import BigInteger from 'bigi'
 
 /**
  * Creates a new ECSignature.

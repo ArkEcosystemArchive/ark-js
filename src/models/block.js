@@ -1,13 +1,13 @@
-const crypto = require('crypto')
-const bignum = require('bignum')
-const ByteBuffer = require('bytebuffer')
-const Transaction = require('./transaction')
-const config = require('../managers/config')
-const ECPair = require('../crypto/ecpair')
-const ECSignature = require('../crypto/ecsignature')
-const Slots = require('../crypto/slots')
+import crypto from 'crypto'
+import bignum from 'bignum'
+import ByteBuffer from 'bytebuffer'
+import Transaction from '@/models/transaction'
+import configManager from '@/managers/config'
+import ECPair from '@/crypto/ecpair'
+import ECSignature from '@/crypto/ecsignature'
+import slots from '@/crypto/slots'
 
-const applyV1Fix = (data) => {
+const applyV1Fix = data => {
   // START Fix for v1 api
   data.totalAmount = parseInt(data.totalAmount)
   data.totalFee = parseInt(data.totalFee)
@@ -82,7 +82,7 @@ export default class Block {
       errors: []
     }
 
-    const constants = config.getConstants(block.height)
+    const constants = configManager.getConstants(block.height)
 
     // let previousBlock = null
 
@@ -106,7 +106,7 @@ export default class Block {
       result.errors.push('Invalid block version')
     }
 
-    if (Slots.getSlotNumber(block.timestamp) > Slots.getSlotNumber()) {
+    if (slots.getSlotNumber(block.timestamp) > slots.getSlotNumber()) {
       result.errors.push('Invalid block timestamp')
     }
 

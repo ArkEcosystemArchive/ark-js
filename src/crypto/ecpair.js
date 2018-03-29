@@ -1,18 +1,18 @@
-const Config = require('../managers/config')
-const base58check = require('bs58check')
-const bcrypto = require('./crypto')
-const ECSignature = require('./ecsignature')
-const randomBytes = require('randombytes')
-const typeforce = require('typeforce')
-const types = require('./types')
-const wif = require('wif')
+import configManager from '@/managers/config'
+import base58check from 'bs58check'
+import bcrypto from '@/crypto/crypto'
+import ECSignature from '@/crypto/ecsignature'
+import randomBytes from 'randombytes'
+import typeforce from 'typeforce'
+import types from '@/crypto/types'
+import wif from 'wif'
 
-const BigInteger = require('bigi')
+import BigInteger from 'bigi'
 
-const ecurve = require('ecurve')
+import ecurve from 'ecurve'
+import secp256k1native from 'secp256k1'
+
 const secp256k1 = ecurve.getCurveByName('secp256k1')
-
-const secp256k1native = require('secp256k1')
 
 // Object.defineProperty(ECPair.prototype, 'Q', {
 //   get: function () {
@@ -60,7 +60,7 @@ export default class ECPair {
     /** @type {boolean} */
     this.compressed = options.compressed === undefined ? true : options.compressed
     /** @type {Network} */
-    this.network = options.network || ConfigManager.all()
+    this.network = options.network || configManager.all()
   }
 
   /**
@@ -68,13 +68,31 @@ export default class ECPair {
    * @param {Network} [network=networks.ark]
    * @returns {ECPair}
    */
-  fromPublicKeyBuffer (buffer, network) {
-    var Q = ecurve.Point.decodeFrom(secp256k1, buffer)
+  static fromPublicKeyBuffer (buffer, network) {
+    const Q = ecurve.Point.decodeFrom(secp256k1, buffer)
 
     return new ECPair(null, Q, {
       compressed: Q.compressed,
-      network: network
+      network
     })
+  }
+
+  /**
+   * @param {string} seed
+   * @param {object} [options]
+   * @param {boolean} [options.compressed=true]
+   * @param {Network} [options.network=networks.ark]
+   * @returns {ECPair}
+   */
+  static fromSeed (seed, options) {
+    const hash = bcrypto.sha256(Buffer.from(seed, 'utf-8'))
+    const d = BigInteger.fromBuffer(hash)
+
+    if (d.signum() <= 0 || d.compareTo(secp256k1.n) >= 0) {
+      throw new Error('seed cannot resolve to a compatible private key')
+    } else {
+      return new ECPair(d, null, options)
+    }
   }
 
   /**
@@ -82,9 +100,9 @@ export default class ECPair {
    * @param {Network[]|Network} network
    * @returns {ECPair}
    */
-  fromWIF (string, network) {
-    var decoded = wif.decode(string)
-    var version = decoded.version
+  static fromWIF (string, network) {
+    const decoded = wif.decode(string)
+    const version = decoded.version
 
     // [network, ...]
     if (types.Array(network)) {
@@ -96,16 +114,16 @@ export default class ECPair {
 
       // network
     } else {
-      network = network || ConfigManager.all()
+      network = network || configManager.all()
 
       if (version !== network.wif) throw new Error('Invalid network version')
     }
 
-    var d = BigInteger.fromBuffer(decoded.privateKey)
+    const d = BigInteger.fromBuffer(decoded.privateKey)
 
     return new ECPair(d, null, {
       compressed: decoded.compressed,
-      network: network
+      network
     })
   }
 
@@ -115,14 +133,14 @@ export default class ECPair {
    * @param {boolean} [options.compressed=true]
    * @param {Network} [options.network=networks.ark]
    */
-  makeRandom (options) {
+  static makeRandom (options) {
     options = options || {}
 
-    var rng = options.rng || randomBytes
+    const rng = options.rng || randomBytes
 
-    var d
+    let d
     do {
-      var buffer = rng(32)
+      const buffer = rng(32)
       typeforce(types.Buffer256bit, buffer)
 
       d = BigInteger.fromBuffer(buffer)
@@ -132,29 +150,12 @@ export default class ECPair {
   }
 
   /**
-   * @param {string} seed
-   * @param {object} [options]
-   * @param {boolean} [options.compressed=true]
-   * @param {Network} [options.network=networks.ark]
-   * @returns {ECPair}
-   */
-  fromSeed (seed, options) {
-    var hash = bcrypto.sha256(Buffer.from(seed, 'utf-8'))
-    var d = BigInteger.fromBuffer(hash)
-    if (d.signum() <= 0 || d.compareTo(secp256k1.n) >= 0) {
-      throw new Error('seed cannot resolve to a compatible private key')
-    } else {
-      return new ECPair(d, null, options)
-    }
-  }
-
-  /**
    * @returns {string}
    */
   getAddress () {
-    var payload = Buffer.alloc(21)
-    var hash = bcrypto.ripemd160(this.getPublicKeyBuffer())
-    var version = this.getNetwork().pubKeyHash
+    const payload = Buffer.alloc(21)
+    const hash = bcrypto.ripemd160(this.getPublicKeyBuffer())
+    const version = this.getNetwork().pubKeyHash
     payload.writeUInt8(version, 0)
     hash.copy(payload, 1)
 
@@ -169,7 +170,7 @@ export default class ECPair {
   }
 
   getPublicKeyBuffer () {
-    return this.Q.getEncoded(this.compressed)
+    return this.publicKey.getEncoded(this.compressed)
   }
 
   /**
@@ -180,7 +181,8 @@ export default class ECPair {
    */
   sign (hash) {
     if (!this.privateKey) throw new Error('Missing private key')
-    var native = secp256k1native.sign(hash, this.privateKey.toBuffer(32))
+
+    const native = secp256k1native.sign(hash, this.privateKey.toBuffer(32))
     return ECSignature.parseNativeSecp256k1(native).signature
   }
 
@@ -200,6 +202,6 @@ export default class ECPair {
    * @returns {boolean}
    */
   verify (hash, signature) {
-    return secp256k1native.verify(hash, signature.toNativeSecp256k1(), this.Q.getEncoded(this.compressed))
+    return secp256k1native.verify(hash, signature.toNativeSecp256k1(), this.publicKey.getEncoded(this.compressed))
   }
 }

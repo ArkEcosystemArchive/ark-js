@@ -1,11 +1,11 @@
-const bip38 = require('bip38')
-const wif = require('wif')
-const crypto = require('crypto')
-const otplib = require('otplib')
-const Block = require('./block')
-const forge = require('node-forge')
-const ECPair = require('../crypto/ecpair')
-const Crypto = require('../builder/crypto')
+import bip38 from 'bip38'
+import wif from 'wif'
+import crypto from 'crypto'
+import otplib from 'otplib'
+import Block from '@/models/block'
+import forge from 'node-forge'
+import ECPair from '@/crypto/ecpair'
+import cryptoBuilder from '@/builder/crypto'
 
 export default class Delegate {
   constructor (passphrase, network, password) {
@@ -26,14 +26,14 @@ export default class Delegate {
         this.address = null
       }
     } else {
-      this.keys = Crypto.getKeys(passphrase)
+      this.keys = cryptoBuilder.getKeys(passphrase)
       this.publicKey = this.keys.publicKey
       this.address = this.keys.getAddress(network.pubKeyHash)
     }
   }
 
   static encrypt (passphrase, network, password) {
-    const keys = Crypto.getKeys(passphrase, network)
+    const keys = cryptoBuilder.getKeys(passphrase, network)
     const wifKey = keys.toWIF()
     const decoded = wif.decode(wifKey)
 

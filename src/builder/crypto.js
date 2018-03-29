@@ -1,15 +1,15 @@
-import ConfigManager from '../managers/config'
+import configManager from '@/managers/config'
 import crypto from 'crypto'
-import cryptoUtils from '../crypto/crypto'
-import ECPair from '../crypto/ecpair'
-import ECSignature from '../crypto/ecsignature'
+import cryptoUtils from '@/crypto/crypto'
+import ECPair from '@/crypto/ecpair'
+import ECSignature from '@/crypto/ecsignature'
 import bs58check from 'bs58check'
 import { Buffer } from 'buffer/'
 import ByteBuffer from 'bytebuffer'
-import { ARKTOSHI, TRANSACTION_TYPES } from '../constants'
-import FeeManager from '../managers/fee'
+import { ARKTOSHI, TRANSACTION_TYPES } from '@/constants'
+import FeeManager from '@/managers/fee'
 
-export default class Crypto {
+class CryptoBuilder {
   getBytes (transaction) {
     const bb = new ByteBuffer(512, true)
     bb.writeByte(0xff) // fill, to disambiguate from v1
@@ -235,7 +235,7 @@ export default class Crypto {
 
     const signatureBuffer = Buffer.from(transaction.signature, 'hex')
     const senderPublicKeyBuffer = Buffer.from(transaction.senderPublicKey, 'hex')
-    const ecpair = ECPair.fromPublicKeyBuffer(senderPublicKeyBuffer, network || ConfigManager.get('network'))
+    const ecpair = ECPair.fromPublicKeyBuffer(senderPublicKeyBuffer, network)
     const ecsignature = ECSignature.fromDER(signatureBuffer)
 
     return ecpair.verify(hash, ecsignature)
@@ -246,14 +246,14 @@ export default class Crypto {
 
     const secondSignatureBuffer = Buffer.from(transaction.secondSignature, 'hex')
     const publicKeyBuffer = Buffer.from(publicKey, 'hex')
-    const ecpair = ECPair.fromPublicKeyBuffer(publicKeyBuffer, network || ConfigManager.get('network'))
+    const ecpair = ECPair.fromPublicKeyBuffer(publicKeyBuffer, network)
     const ecsignature = ECSignature.fromDER(secondSignatureBuffer)
 
     return ecpair.verify(hash, ecsignature)
   }
 
   getKeys (secret, network) {
-    const ecpair = ECPair.fromSeed(secret, network || ConfigManager.get('network'))
+    const ecpair = ECPair.fromSeed(secret, { network })
     ecpair.publicKey = ecpair.getPublicKeyBuffer().toString('hex')
     ecpair.privateKey = ''
 
@@ -262,7 +262,7 @@ export default class Crypto {
 
   getAddress (publicKey, version) {
     if (!version) {
-      version = ConfigManager.get('pubKeyHash')
+      version = configManager.get('pubKeyHash')
     }
 
     const buffer = cryptoUtils.ripemd160(Buffer.from(publicKey, 'hex'))
@@ -276,7 +276,7 @@ export default class Crypto {
 
   validateAddress (address, version) {
     if (!version) {
-      version = ConfigManager.get('pubKeyHash')
+      version = configManager.get('pubKeyHash')
     }
     try {
       var decode = bs58check.decode(address)
@@ -286,3 +286,5 @@ export default class Crypto {
     }
   }
 }
+
+export default new CryptoBuilder()

@@ -1,8 +1,9 @@
 import Config from '../../config'
 import crypto from '../crypto'
 import slots from '../../crypto/slots'
+import Transaction from '../transaction'
 
-export default class IPFS {
+export default class IPFS extends Transaction {
   constructor () {
     this.id = null
     this.type = 5

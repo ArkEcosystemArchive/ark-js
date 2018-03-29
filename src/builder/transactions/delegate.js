@@ -1,8 +1,9 @@
 import Config from '../../config'
 import crypto from '../crypto'
 import slots from '../../crypto/slots'
+import Transaction from '../transaction'
 
-export default class Delegate {
+export default class Delegate extends Transaction {
   constructor () {
     this.id = null
     this.type = 2

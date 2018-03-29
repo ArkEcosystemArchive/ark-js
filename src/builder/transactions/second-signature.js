@@ -1,8 +1,9 @@
 import Config from '../../config'
 import crypto from '../crypto'
 import slots from '../../crypto/slots'
+import Transaction from '../transaction'
 
-export default class SecondSignature {
+export default class SecondSignature extends Transaction {
   constructor () {
     this.id = null
     this.type = 1

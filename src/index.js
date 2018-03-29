@@ -1,6 +1,6 @@
 import ApiClient from './api'
 import Builder from './builder'
-import ConfigManager from './config'
+import ConfigManager from './managers/config'
 
 export default class Ark {
   constructor (config) {

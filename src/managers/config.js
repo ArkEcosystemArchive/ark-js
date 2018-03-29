@@ -1,5 +1,6 @@
 import deepmerge from 'deepmerge'
 import FeeManager from './fee'
+import { ARKTOSHI, TRANSACTION_TYPES } from '../constants'
 
 class Config {
   setConfig (config) {
@@ -75,10 +76,10 @@ class Config {
     FeeManager.set(TRANSACTION_TYPES.SECOND_SIGNATURE, 100 * ARKTOSHI)
     FeeManager.set(TRANSACTION_TYPES.DELEGATE, 10000 * ARKTOSHI)
     FeeManager.set(TRANSACTION_TYPES.VOTE, 1 * ARKTOSHI)
-    FeeManager.set(TRANSACTION_TYPES.MULTI_SIGNATURE, 0,)
-    FeeManager.set(TRANSACTION_TYPES.IPFS, 0,)
-    FeeManager.set(TRANSACTION_TYPES.TIMELOCK_TRANSFER, 0,)
-    FeeManager.set(TRANSACTION_TYPES.MULTI_PAYMENT, 0,)
+    FeeManager.set(TRANSACTION_TYPES.MULTI_SIGNATURE, 0)
+    FeeManager.set(TRANSACTION_TYPES.IPFS, 0)
+    FeeManager.set(TRANSACTION_TYPES.TIMELOCK_TRANSFER, 0)
+    FeeManager.set(TRANSACTION_TYPES.MULTI_PAYMENT, 0)
     FeeManager.set(TRANSACTION_TYPES.DELEGATE_RESIGNATION, 0)
   }
 }

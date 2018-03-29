@@ -33,6 +33,7 @@
     "ecdsa": "^0.7.0",
     "ecurve": "^1.0.6",
     "js-nacl": "^1.2.2",
+    "moment": "^2.21.0",
     "randombytes": "^2.0.6",
     "secp256k1": "^3.5.0",
     "typeforce": "^1.12.0",

@@ -1,16 +1,17 @@
+import moment from 'moment'
 import Config from '../../config'
 
 class Slots {
   getEpochTime (time) {
-    if (time === undefined) time = (new Date()).getTime()
+    if (time === undefined) time = moment().valueOf()
 
-    const start = this.beginEpochTime().getTime()
+    const start = this.beginEpochTime().valueOf()
 
     return Math.floor((time - start) / 1000)
   }
 
   beginEpochTime () {
-    return new Date(Date.UTC(2017, 2, 21, 13, 0, 0, 0))
+    return moment(this.getConstant('epoch')).utc()
   }
 
   getTime (time) {
@@ -20,7 +21,7 @@ class Slots {
   getRealTime (epochTime) {
     if (epochTime === undefined) epochTime = this.getTime()
 
-    const start = Math.floor(this.beginEpochTime().getTime() / 1000) * 1000
+    const start = Math.floor(this.beginEpochTime().valueOf() / 1000) * 1000
 
     return start + epochTime * 1000
   }
@@ -28,11 +29,11 @@ class Slots {
   getSlotNumber (epochTime) {
     if (epochTime === undefined) epochTime = this.getTime()
 
-    return Math.floor(epochTime / Config.get('interval'))
+    return Math.floor(epochTime / this.getConstant('blocktime'))
   }
 
   getSlotTime (slot) {
-    return slot * Config.get('interval')
+    return slot * this.getConstant('blocktime')
   }
 
   getNextSlot () {
@@ -40,7 +41,11 @@ class Slots {
   }
 
   getLastSlot (nextSlot) {
-    return nextSlot + Config.get('delegates')
+    return nextSlot + this.getConstant('activeDelegates')
+  }
+
+  getConstant(key) {
+    return Config.getConstants(1)[key]
   }
 }
 

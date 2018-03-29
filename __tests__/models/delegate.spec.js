@@ -1,8 +1,8 @@
-const Wallet = require('../src/models/wallet')
-const sortTransactions = require('../src/utils/sort-transactions')
+const Wallet = require('@/models/wallet')
+const sortTransactions = require('@/utils/sort-transactions')
 
 describe('Models - Delegate', () => {
-  test('static sortTransactions', () => {
+  describe('static sortTransactions', () => {
     it('returns the transactions ordered by type and id', () => {
       const ordered = [
         { type: 1, id: 2 }, { type: 1, id: 8 },
@@ -14,8 +14,8 @@ describe('Models - Delegate', () => {
     })
   })
 
-  test('forge', () => {
-    it('without version option', () => {
+  describe('forge', () => {
+    describe('without version option', () => {
       it('doesn\'t sort the transactions', () => {
         const address = 'Abcde'
         const wallet = new Wallet(address)

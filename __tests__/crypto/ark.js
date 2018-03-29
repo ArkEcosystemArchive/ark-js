@@ -1,6 +1,6 @@
 var Buffer = require('buffer/').Buffer
 var should = require('should')
-var ark = require('../index.js')
+var ark = require('../index')
 
 test('Ark JS', function () {
   it('should be ok', function () {

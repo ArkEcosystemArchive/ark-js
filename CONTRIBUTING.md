@@ -8,7 +8,7 @@ ARK has a bounty program for all accepted PR (Pull Requests) for this repository
 
 More information can be found at https://blog.ark.io/ark-github-development-bounty-113806ae9ffe
 
-Before pushing PR, please [jump in our slack #development](https://ark.io/slack) channel in order to discuss your contributions or to connect with other ARK Delopers.
+Before pushing PR, please [jump in our slack #development](https://ark.io/slack) channel in order to discuss your contributions or to connect with other ARK developers.
 
 ### Guidelines
 
@@ -19,7 +19,7 @@ Before pushing PR, please [jump in our slack #development](https://ark.io/slack)
 ### Accepted PR
 
 - increase general code quality,
-- add meaningfull tests,
+- add meaningful tests,
 - correct bug,
 - add new features,
 - improve documentation,

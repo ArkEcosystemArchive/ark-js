@@ -1,8 +1,8 @@
-import Ark from '../../src'
-import network from '../../src/networks/mainnet'
-import ApiClient from '../../src/api'
-import HttpClient from '../../src/api/http'
-import ApiResource from '../../src/api/resources/transactions'
+import Ark from '@/'
+import network from '@/networks/mainnet'
+import ApiClient from '@/api'
+import HttpClient from '@/api/http'
+import ApiResource from '@/api/resources/transactions'
 
 let client
 

@@ -2,18 +2,18 @@
 /* eslint-disable no-new */
 
 var assert = require('assert')
-var ecdsa = require('../../lib/ecdsa')
+var ecdsa = require('@/crypto/ecdsa')
 var sinon = require('sinon')
 var sinonTest = require('sinon-test')(sinon)
 
 var BigInteger = require('bigi')
-var ECPair = require('../../lib/ecpair')
-var HDNode = require('../../lib/hdnode')
+var ECPair = require('@/crypto/ecpair')
+var HDNode = require('@/crypto/hdnode')
 
 var fixtures = require('./fixtures.json')
 var curve = ecdsa.__curve
 
-var NETWORKS = require('../../lib/networks')
+var NETWORKS = require('@/networks')
 var NETWORKS_LIST = [] // Object.values(NETWORKS)
 for (var networkName in NETWORKS) {
   NETWORKS_LIST.push(NETWORKS[networkName])

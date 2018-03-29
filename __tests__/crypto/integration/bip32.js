@@ -2,7 +2,7 @@
 
 var assert = require('assert')
 var bigi = require('bigi')
-var ark = require('../../')
+var ark = require('../ark')
 var crypto = require('crypto')
 
 var ecurve = require('ecurve')

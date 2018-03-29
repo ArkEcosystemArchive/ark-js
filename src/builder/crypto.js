@@ -235,7 +235,7 @@ class CryptoBuilder {
 
     const signatureBuffer = Buffer.from(transaction.signature, 'hex')
     const senderPublicKeyBuffer = Buffer.from(transaction.senderPublicKey, 'hex')
-    const ecpair = ECPair.fromPublicKeyBuffer(senderPublicKeyBuffer, network || ConfigManager.get('network'))
+    const ecpair = ECPair.fromPublicKeyBuffer(senderPublicKeyBuffer, network)
     const ecsignature = ECSignature.fromDER(signatureBuffer)
 
     return ecpair.verify(hash, ecsignature)
@@ -246,14 +246,14 @@ class CryptoBuilder {
 
     const secondSignatureBuffer = Buffer.from(transaction.secondSignature, 'hex')
     const publicKeyBuffer = Buffer.from(publicKey, 'hex')
-    const ecpair = ECPair.fromPublicKeyBuffer(publicKeyBuffer, network || ConfigManager.get('network'))
+    const ecpair = ECPair.fromPublicKeyBuffer(publicKeyBuffer, network)
     const ecsignature = ECSignature.fromDER(secondSignatureBuffer)
 
     return ecpair.verify(hash, ecsignature)
   }
 
   getKeys (secret, network) {
-    const ecpair = ECPair.fromSeed(secret, network || ConfigManager.get('network'))
+    const ecpair = ECPair.fromSeed(secret, { network })
     ecpair.publicKey = ecpair.getPublicKeyBuffer().toString('hex')
     ecpair.privateKey = ''
 

@@ -12,19 +12,19 @@ export default class Builder {
   }
 
   multiPayment () {
-    return this.getTransaction('multiPayment')
+    return this.getTransaction('multi-payment')
   }
 
   multiSignature () {
-    return this.getTransaction('multiSignature')
+    return this.getTransaction('multi-signature')
   }
 
   secondSignature () {
-    return this.getTransaction('secondSignature')
+    return this.getTransaction('second-signature')
   }
 
   timelockTransfer () {
-    return this.getTransaction('timelockTransfer')
+    return this.getTransaction('timelock-transfer')
   }
 
   transfer () {

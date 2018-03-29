@@ -23,11 +23,6 @@ export default class MultiSignature extends Transaction {
     this.asset.multisignature.keysgroup = keysgroup
     this.asset.multisignature.lifetime = lifetime
     this.asset.multisignature.min = min
-    this.setFee(keysgroup)
-    return this
-  }
-
-  setFee (keysgroup) {
     this.fee = (keysgroup.length + 1) * Config.getConstants(1).fees.multisignature // TODO: replace 1 with the actual height
     return this
   }

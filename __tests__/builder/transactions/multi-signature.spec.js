@@ -4,10 +4,39 @@ import Transaction from '@/builder/transactions/multi-signature'
 import network from '@/networks/devnet'
 
 let ark
-beforeEach(() => (ark = new Ark(network)))
+let tx
+
+beforeEach(() => {
+    ark = new Ark(network)
+    tx = ark.getBuilder().multiSignature()
+})
 
 describe('Multi Signature Transaction', () => {
-  test('should be instantiated', () => {
-    expect(ark.getBuilder().multiSignature()).toBeInstanceOf(Transaction)
+  it('should be instantiated', () => {
+    expect(tx).toBeInstanceOf(Transaction)
+  })
+
+  it('should set the fee', () => {
+    tx.setFee('fake')
+
+    expect(tx.fee).toBe('fake')
+  })
+
+  it('should set the amount', () => {
+    tx.setAmount('fake')
+
+    expect(tx.amount).toBe('fake')
+  })
+
+  it('should set the recipient id', () => {
+    tx.setRecipientId('fake')
+
+    expect(tx.recipientId).toBe('fake')
+  })
+
+  it('should set the sender public key', () => {
+    tx.setSenderPublicKey('fake')
+
+    expect(tx.senderPublicKey).toBe('fake')
   })
 })

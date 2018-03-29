@@ -1,4 +1,5 @@
 import ConfigManager from '../../managers/config'
+import FeeManager from '../../managers/fee'
 import crypto from '../crypto'
 import slots from '../../crypto/slots'
 import Transaction from '../transaction'
@@ -10,14 +11,20 @@ export default class MultiPayment extends Transaction {
 
     this.id = null
     this.type = TRANSACTION_TYPES.MULTI_PAYMENT
-    this.fee = 0
-    this.amount = 0
+    this.fee = FeeManager.get(TRANSACTION_TYPES.MULTI_PAYMENT)
     this.timestamp = slots.getTime()
+    this.recipients = []
+    this.amounts = []
     this.version = 0x02
-    this.network = ConfigManager.all()
   }
 
   create () {
+    return this
+  }
+
+  addPayment (address, amount) {
+    this.recipients.push(address)
+    this.amounts.push(address)
     return this
   }
 
@@ -39,11 +46,17 @@ export default class MultiPayment extends Transaction {
   }
 
   serialise () {
+    // TODO: merge this.recipients and this.amounts with N indices
     return {
       hex: crypto.getBytes(this).toString('hex'),
       id: crypto.getId(this),
       signature: this.signature,
-      secondSignature: this.secondSignature
+      secondSignature: this.secondSignature,
+      timestamp: this.timestamp
+
+      type: this.type,
+      fee: this.fee,
+      senderPublicKey: this.senderPublicKey
     }
   }
 }

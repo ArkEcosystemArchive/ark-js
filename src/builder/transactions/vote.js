@@ -1,4 +1,5 @@
 import ConfigManager from '../../managers/config'
+import FeeManager from '../../managers/fee'
 import crypto from '../crypto'
 import slots from '../../crypto/slots'
 import Transaction from '../transaction'
@@ -17,7 +18,6 @@ export default class Vote extends Transaction {
     this.senderPublicKey = null
     this.asset = { votes: {} }
     this.version = 0x02
-    this.network = ConfigManager.all()
   }
 
   create (delegates) {
@@ -25,24 +25,17 @@ export default class Vote extends Transaction {
     return this
   }
 
-  setRecipientAndSender (keys) {
-    this.recipientId = crypto.getAddress(keys.publicKey)
-    this.senderPublicKey = keys.publicKey
-    return this
-  }
-
   sign (passphrase) {
     const keys = crypto.getKeys(passphrase)
+    this.recipientId = crypto.getAddress(keys.publicKey)
     this.senderPublicKey = keys.publicKey
     this.signature = crypto.sign(this, keys)
-    this.setRecipientAndSender(keys)
     return this
   }
 
   secondSign (transaction, passphrase) {
     const keys = crypto.getKeys(passphrase)
     this.secondSignature = crypto.secondSign(transaction, keys)
-    this.setRecipientAndSender(keys)
     return this
   }
 
@@ -56,13 +49,13 @@ export default class Vote extends Transaction {
       id: crypto.getId(this),
       signature: this.signature,
       secondSignature: this.secondSignature,
+      timestamp: this.timestamp,
 
       type: this.type,
       amount: this.amount,
       fee: this.fee,
       recipientId: this.recipientId,
       senderPublicKey: this.senderPublicKey,
-      timestamp: this.timestamp,
       asset: this.asset
     }
   }

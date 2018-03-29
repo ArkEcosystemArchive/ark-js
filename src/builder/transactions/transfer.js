@@ -1,4 +1,5 @@
 import ConfigManager from '../../managers/config'
+import FeeManager from '../../managers/fee'
 import crypto from '../crypto'
 import slots from '../../crypto/slots'
 import Transaction from '../transaction'
@@ -16,7 +17,6 @@ export default class Transfer extends Transaction {
     this.recipientId = null
     this.senderPublicKey = null
     this.version = 0x02
-    this.network = ConfigManager.all()
   }
 
   create (recipientId, amount) {
@@ -30,16 +30,10 @@ export default class Transfer extends Transaction {
     return this
   }
 
-  setPublicKeys (keys) {
-    this.senderPublicKey = keys.publicKey
-    return this
-  }
-
   sign (passphrase) {
     const keys = crypto.getKeys(passphrase)
     this.senderPublicKey = keys.publicKey
     this.signature = crypto.sign(this, keys)
-    this.setPublicKeys(keys)
     return this
   }
 
@@ -50,7 +44,6 @@ export default class Transfer extends Transaction {
   secondSign (transaction, passphrase) {
     const keys = crypto.getKeys(passphrase)
     this.secondSignature = crypto.secondSign(transaction, keys)
-    this.setPublicKeys(keys)
     return this
   }
 
@@ -60,13 +53,13 @@ export default class Transfer extends Transaction {
       id: crypto.getId(this),
       signature: this.signature,
       secondSignature: this.secondSignature,
+      timestamp: this.timestamp,
 
       type: this.type,
       amount: this.amount,
       fee: this.fee,
       recipientId: this.recipientId,
       senderPublicKey: this.senderPublicKey,
-      timestamp: this.timestamp,
       asset: this.asset
     }
   }

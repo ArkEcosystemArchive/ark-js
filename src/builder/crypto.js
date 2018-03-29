@@ -204,6 +204,7 @@ export default class Crypto {
   }
 
   getFee (transaction) {
+    // TODO: grab those from the fee manager
     return {
       [TRANSACTION_TYPES.TRANSFER]: () => 0.1 * ARKTOSHI,
       [TRANSACTION_TYPES.SECOND_SIGNATURE]: () => 100 * ARKTOSHI,

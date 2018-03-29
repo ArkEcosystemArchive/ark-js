@@ -48,11 +48,11 @@ class Config {
 
   getConstants (height) {
     if (this.height) {
-        height = this.height
+      height = this.height
     }
 
     if (!height) {
-        height = 1
+      height = 1
     }
 
     while ((this.constant.index < this.constants.length - 1) && height >= this.constants[this.constant.index + 1].height) {

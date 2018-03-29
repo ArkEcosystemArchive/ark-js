@@ -5,7 +5,7 @@ import slots from '../../crypto/slots'
 export default class Delegate {
   constructor () {
     this.id = null
-    this.type = 0
+    this.type = 2
     this.fee = Config.getConstants(height).fees.delegate
     this.amount = 0
     this.timestamp = slots.getTime()

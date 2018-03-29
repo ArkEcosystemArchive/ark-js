@@ -1,4 +1,5 @@
 import ApiClient from './api'
+import Builder from './builder'
 import Config from './config'
 
 export default class Ark {
@@ -8,6 +9,10 @@ export default class Ark {
 
   setConfig (config) {
     Config.setConfig(config)
+  }
+
+  getBuilder () {
+    return new Builder()
   }
 
   getClient (host) {

@@ -1,41 +1,41 @@
-import createDelegate from './transactions/delegate'
-import createMultisignature from './transactions/multisignature'
-import createSignature from './transactions/signature'
-import createTransaction from './transactions/transaction'
-import createVote from './transactions/vote'
-
-class Builder {
-  delegate (secret, username, secondSecret) {
-    return secondSecret
-      ? createDelegate(secret, username, secondSecret)
-      : createDelegate(secret, username)
+export default class Builder {
+  delegateResignation () {
+    return this.getTransaction('delegate-resignation')
   }
 
-  multisignature (secret, secondSecret, keysgroup, lifetime, min) {
-    return createMultisignature(secret, secondSecret, keysgroup, lifetime, min)
+  delegate () {
+    return this.getTransaction('delegate')
   }
 
-  signature (secret, secondSecret) {
-    return createSignature(secret, secondSecret)
+  ipfs () {
+    return this.getTransaction('ipfs')
   }
 
-  transaction (recipientId, amount, vendorField, secret, secondSecret = null) {
-    return secondSecret
-      ? createTransaction(recipientId, amount, vendorField, secret, secondSecret)
-      : createTransaction(recipientId, amount, vendorField, secret)
+  multiPayment () {
+    return this.getTransaction('multiPayment')
   }
 
-  vote (secret, delegate, secondSecret = null) {
-    return secondSecret
-      ? createVote(secret, ['+' + delegate], secondSecret)
-      : createVote(secret, ['+' + delegate])
+  multiSignature () {
+    return this.getTransaction('multiSignature')
   }
 
-  unvote (secret, delegate, secondSecret = null) {
-    return secondSecret
-      ? createVote(secret, ['-' + delegate], secondSecret)
-      : createVote(secret, ['-' + delegate])
+  secondSignature () {
+    return this.getTransaction('secondSignature')
+  }
+
+  timelockTransfer () {
+    return this.getTransaction('timelockTransfer')
+  }
+
+  transfer () {
+    return this.getTransaction('transfer')
+  }
+
+  vote () {
+    return this.getTransaction('vote')
+  }
+
+  getTransaction (transaction) {
+    return require(`./transactions/${transaction}`)
   }
 }
-
-export default new Builder()

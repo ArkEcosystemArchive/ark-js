@@ -9,7 +9,7 @@ export default class Transfer extends Transaction {
 
     this.id = null
     this.type = 0
-    this.fee = Config.getConstants(1).fees.send // TODO: replace 1 with the actual height
+    this.fee = Config.getConstants().fees.send
     this.amount = 0
     this.timestamp = slots.getTime()
     this.recipientId = null

@@ -23,6 +23,14 @@ class Config {
     return this.config[key]
   }
 
+  setHeight (value) {
+    this.height = value
+  }
+
+  getHeight () {
+    return this.height
+  }
+
   buildConstants () {
     this.constants = this.config.constants.sort((a, b) => a.height - b.height)
     this.constant = {
@@ -39,6 +47,14 @@ class Config {
   }
 
   getConstants (height) {
+    if (this.height) {
+        height = this.height
+    }
+
+    if (!height) {
+        throw new Error('Height is not defined.');
+    }
+
     while ((this.constant.index < this.constants.length - 1) && height >= this.constants[this.constant.index + 1].height) {
       this.constant.index++
       this.constant.data = this.constants[this.constant.index]

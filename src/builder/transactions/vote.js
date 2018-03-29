@@ -9,7 +9,7 @@ export default class Vote extends Transaction {
 
     this.id = null
     this.type = 3
-    this.fee = Config.getConstants(1).fees.vote // TODO: replace 1 with the actual height
+    this.fee = Config.getConstants().fees.vote
     this.amount = 0
     this.timestamp = slots.getTime()
     this.recipientId = null

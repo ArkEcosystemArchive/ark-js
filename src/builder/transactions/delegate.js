@@ -9,7 +9,7 @@ export default class Delegate extends Transaction {
 
     this.id = null
     this.type = 2
-    this.fee = Config.getConstants(1).fees.delegate // TODO: replace 1 with the actual height
+    this.fee = Config.getConstants().fees.delegate
     this.amount = 0
     this.timestamp = slots.getTime()
     this.recipientId = null

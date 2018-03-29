@@ -9,7 +9,7 @@ export default class SecondSignature extends Transaction {
 
     this.id = null
     this.type = 1
-    this.fee = Config.getConstants(1).fees.secondsignature // TODO: replace 1 with the actual height
+    this.fee = Config.getConstants().fees.secondsignature
     this.amount = 0
     this.timestamp = slots.getTime()
     this.recipientId = null

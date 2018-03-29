@@ -9,7 +9,7 @@ export default class IPFS extends Transaction {
 
     this.id = null
     this.type = 5
-    this.fee = Config.getConstants(1).fees.ipfs // TODO: replace 1 with the actual height
+    this.fee = Config.getConstants().fees.ipfs
     this.amount = 0
     this.timestamp = slots.getTime()
     this.vendorFieldHex = null

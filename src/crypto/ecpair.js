@@ -170,7 +170,7 @@ export default class ECPair {
   }
 
   getPublicKeyBuffer () {
-    return this.Q.getEncoded(this.compressed)
+    return this.publicKey.getEncoded(this.compressed)
   }
 
   /**
@@ -202,6 +202,6 @@ export default class ECPair {
    * @returns {boolean}
    */
   verify (hash, signature) {
-    return secp256k1native.verify(hash, signature.toNativeSecp256k1(), this.Q.getEncoded(this.compressed))
+    return secp256k1native.verify(hash, signature.toNativeSecp256k1(), this.publicKey.getEncoded(this.compressed))
   }
 }

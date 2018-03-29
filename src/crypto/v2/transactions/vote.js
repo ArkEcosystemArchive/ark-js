@@ -21,6 +21,12 @@ export default class Vote {
     return this
   }
 
+  setRecipientAndSender (keys) {
+    this.recipientId = crypto.getAddress(keys.publicKey)
+    this.senderPublicKey = keys.publicKey
+    return this
+  }
+
   sign (passphrase) {
     const keys = crypto.getKeys(passphrase)
     this.senderPublicKey = keys.publicKey
@@ -33,12 +39,6 @@ export default class Vote {
     const keys = crypto.getKeys(passphrase)
     this.secondSignature = crypto.secondSign(transaction, keys)
     this.setRecipientAndSender(keys)
-    return this
-  }
-
-  setRecipientAndSender (keys) {
-    this.recipientId = crypto.getAddress(keys.publicKey)
-    this.senderPublicKey = keys.publicKey
     return this
   }
 

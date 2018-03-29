@@ -3,6 +3,16 @@ import crypto from '../crypto'
 import slots from '../../crypto/slots'
 
 export default class MultiPayment {
+  constructor () {
+    this.id = null
+    this.type = 0
+    this.fee = 0
+    this.amount = 0
+    this.timestamp = slots.getTime()
+    this.version = 0x02
+    this.network = Config.all()
+  }
+
   create () {
     return this
   }

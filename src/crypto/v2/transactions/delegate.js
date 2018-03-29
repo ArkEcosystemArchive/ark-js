@@ -21,24 +21,24 @@ export default class Delegate {
     return this
   }
 
+  setPublicKeys (keys) {
+    this.senderPublicKey = keys.publicKey
+    this.asset.delegate.publicKey = keys.publicKey
+    return this
+  }
+
   sign (passphrase) {
     const keys = crypto.getKeys(passphrase)
     this.senderPublicKey = keys.publicKey
     this.signature = crypto.sign(this, keys)
-    this.setPublicKey(keys)
+    this.setPublicKeys(keys)
     return this
   }
 
   secondSign (transaction, passphrase) {
     const keys = crypto.getKeys(passphrase)
     this.secondSignature = crypto.secondSign(transaction, keys)
-    this.setPublicKey(keys)
-    return this
-  }
-
-  setPublicKey (keys) {
-    this.senderPublicKey = keys.publicKey
-    this.asset.delegate.publicKey = keys.publicKey
+    this.setPublicKeys(keys)
     return this
   }
 

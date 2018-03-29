@@ -1,6 +1,6 @@
 const bs58check = require('bs58check')
 const ByteBuffer = require('bytebuffer')
-const config = require('../config')
+const config = require('../managers/config')
 const { TRANSACTION_TYPES } = require('../constants')
 const Crypto = require('../builder/crypto')
 

@@ -1,4 +1,4 @@
-const Config = require('../config')
+const Config = require('../managers/config')
 const base58check = require('bs58check')
 const bcrypto = require('./crypto')
 const ECSignature = require('./ecsignature')
@@ -60,7 +60,7 @@ export default class ECPair {
     /** @type {boolean} */
     this.compressed = options.compressed === undefined ? true : options.compressed
     /** @type {Network} */
-    this.network = options.network || Config.all()
+    this.network = options.network || ConfigManager.all()
   }
 
   /**
@@ -96,7 +96,7 @@ export default class ECPair {
 
       // network
     } else {
-      network = network || Config.all()
+      network = network || ConfigManager.all()
 
       if (version !== network.wif) throw new Error('Invalid network version')
     }

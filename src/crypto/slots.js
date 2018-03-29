@@ -1,5 +1,5 @@
 import moment from 'moment'
-import Config from '../config'
+import ConfigManager from '../managers/config'
 
 class Slots {
   getEpochTime (time) {
@@ -45,7 +45,7 @@ class Slots {
   }
 
   getConstant (key) {
-    return Config.getConstants(1)[key]
+    return ConfigManager.getConstants(1)[key]
   }
 }
 

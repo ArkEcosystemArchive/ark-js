@@ -7,8 +7,8 @@ let ark
 let tx
 
 beforeEach(() => {
-    ark = new Ark(network)
-    tx = ark.getBuilder().timelockTransfer()
+  ark = new Ark(network)
+  tx = ark.getBuilder().timelockTransfer()
 })
 
 describe('Timelock Transfer Transaction', () => {

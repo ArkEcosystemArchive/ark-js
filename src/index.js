@@ -1,6 +1,6 @@
 import ApiClient from './api'
 import Builder from './builder'
-import Config from './config'
+import ConfigManager from './config'
 
 export default class Ark {
   constructor (config) {
@@ -8,7 +8,7 @@ export default class Ark {
   }
 
   setConfig (config) {
-    Config.setConfig(config)
+    ConfigManager.setConfig(config)
   }
 
   getBuilder () {

@@ -7,8 +7,8 @@ let ark
 let tx
 
 beforeEach(() => {
-    ark = new Ark(network)
-    tx = ark.getBuilder().delegateResignation()
+  ark = new Ark(network)
+  tx = ark.getBuilder().delegateResignation()
 })
 
 describe('Delegate Resignation Transaction', () => {

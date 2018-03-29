@@ -1,4 +1,4 @@
-import Config from '../../config'
+import ConfigManager from '../../managers/config'
 import crypto from '../crypto'
 import slots from '../../crypto/slots'
 import Transaction from '../transaction'
@@ -17,14 +17,14 @@ export default class MultiSignature extends Transaction {
     this.senderPublicKey = null
     this.asset = { multisignature: {} }
     this.version = 0x02
-    this.network = Config.all()
+    this.network = ConfigManager.all()
   }
 
   create (keysgroup, lifetime, min) {
     this.asset.multisignature.keysgroup = keysgroup
     this.asset.multisignature.lifetime = lifetime
     this.asset.multisignature.min = min
-    this.fee = (keysgroup.length + 1) * Config.getConstants().fees.multisignature
+    this.fee = (keysgroup.length + 1) * ConfigManager.getConstants().fees.multisignature
     return this
   }
 

@@ -7,8 +7,8 @@ let ark
 let tx
 
 beforeEach(() => {
-    ark = new Ark(network)
-    tx = ark.getBuilder().secondSignature()
+  ark = new Ark(network)
+  tx = ark.getBuilder().secondSignature()
 })
 
 describe('Second Signature Transaction', () => {

@@ -7,8 +7,8 @@ let ark
 let tx
 
 beforeEach(() => {
-    ark = new Ark(network)
-    tx = ark.getBuilder().delegate()
+  ark = new Ark(network)
+  tx = ark.getBuilder().delegate()
 })
 
 describe('Delegate Transaction', () => {

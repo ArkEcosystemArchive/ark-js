@@ -1,4 +1,4 @@
-import Config from '../../config'
+import ConfigManager from '../../managers/config'
 import crypto from '../crypto'
 import slots from '../../crypto/slots'
 import Transaction from '../transaction'
@@ -14,7 +14,7 @@ export default class DelegateResignation extends Transaction {
     this.amount = 0
     this.timestamp = slots.getTime()
     this.version = 0x02
-    this.network = Config.all()
+    this.network = ConfigManager.all()
   }
 
   create () {

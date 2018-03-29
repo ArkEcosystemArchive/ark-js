@@ -7,8 +7,8 @@ let ark
 let tx
 
 beforeEach(() => {
-    ark = new Ark(network)
-    tx = ark.getBuilder().transfer()
+  ark = new Ark(network)
+  tx = ark.getBuilder().transfer()
 })
 
 describe('Transfer Transaction', () => {

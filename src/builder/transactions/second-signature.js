@@ -1,4 +1,4 @@
-import Config from '../../config'
+import ConfigManager from '../../managers/config'
 import crypto from '../crypto'
 import slots from '../../crypto/slots'
 import Transaction from '../transaction'
@@ -10,14 +10,14 @@ export default class SecondSignature extends Transaction {
 
     this.id = null
     this.type = TRANSACTION_TYPES.SECOND_SIGNATURE
-    this.fee = Config.getConstants().fees.secondsignature
+    this.fee = ConfigManager.getConstants().fees.secondsignature
     this.amount = 0
     this.timestamp = slots.getTime()
     this.recipientId = null
     this.senderPublicKey = null
     this.asset = { signature: {} }
     this.version = 0x02
-    this.network = Config.all()
+    this.network = ConfigManager.all()
   }
 
   create () {

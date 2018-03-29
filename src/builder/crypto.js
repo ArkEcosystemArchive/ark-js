@@ -1,4 +1,4 @@
-import Config from '../config'
+import ConfigManager from '../managers/config'
 import crypto from 'crypto'
 import cryptoUtils from '../crypto/crypto'
 import ECPair from '../crypto/ecpair'
@@ -7,6 +7,7 @@ import bs58check from 'bs58check'
 import { Buffer } from 'buffer/'
 import ByteBuffer from 'bytebuffer'
 import { ARKTOSHI, TRANSACTION_TYPES } from '../constants'
+import FeeManager from '../managers/fee'
 
 export default class Crypto {
   getBytes (transaction) {
@@ -204,18 +205,7 @@ export default class Crypto {
   }
 
   getFee (transaction) {
-    // TODO: grab those from the fee manager
-    return {
-      [TRANSACTION_TYPES.TRANSFER]: () => 0.1 * ARKTOSHI,
-      [TRANSACTION_TYPES.SECOND_SIGNATURE]: () => 100 * ARKTOSHI,
-      [TRANSACTION_TYPES.DELEGATE]: () => 10000 * ARKTOSHI,
-      [TRANSACTION_TYPES.VOTE]: () => 1 * ARKTOSHI,
-      [TRANSACTION_TYPES.MULTI_SIGNATURE]: () => 0,
-      [TRANSACTION_TYPES.IPFS]: () => 0,
-      [TRANSACTION_TYPES.TIMELOCK_TRANSFER]: () => 0,
-      [TRANSACTION_TYPES.MULTI_PAYMENT]: () => 0,
-      [TRANSACTION_TYPES.DELEGATE_RESIGNATION]: () => 0
-    }[transaction.type]()
+    return FeeManager.get(transaction.type) * ARKTOSHI
   }
 
   sign (transaction, keys) {
@@ -245,7 +235,7 @@ export default class Crypto {
 
     const signatureBuffer = Buffer.from(transaction.signature, 'hex')
     const senderPublicKeyBuffer = Buffer.from(transaction.senderPublicKey, 'hex')
-    const ecpair = ECPair.fromPublicKeyBuffer(senderPublicKeyBuffer, network || Config.get('network'))
+    const ecpair = ECPair.fromPublicKeyBuffer(senderPublicKeyBuffer, network || ConfigManager.get('network'))
     const ecsignature = ECSignature.fromDER(signatureBuffer)
 
     return ecpair.verify(hash, ecsignature)
@@ -256,14 +246,14 @@ export default class Crypto {
 
     const secondSignatureBuffer = Buffer.from(transaction.secondSignature, 'hex')
     const publicKeyBuffer = Buffer.from(publicKey, 'hex')
-    const ecpair = ECPair.fromPublicKeyBuffer(publicKeyBuffer, network || Config.get('network'))
+    const ecpair = ECPair.fromPublicKeyBuffer(publicKeyBuffer, network || ConfigManager.get('network'))
     const ecsignature = ECSignature.fromDER(secondSignatureBuffer)
 
     return ecpair.verify(hash, ecsignature)
   }
 
   getKeys (secret, network) {
-    const ecpair = ECPair.fromSeed(secret, network || Config.get('network'))
+    const ecpair = ECPair.fromSeed(secret, network || ConfigManager.get('network'))
     ecpair.publicKey = ecpair.getPublicKeyBuffer().toString('hex')
     ecpair.privateKey = ''
 
@@ -272,7 +262,7 @@ export default class Crypto {
 
   getAddress (publicKey, version) {
     if (!version) {
-      version = Config.get('pubKeyHash')
+      version = ConfigManager.get('pubKeyHash')
     }
 
     const buffer = cryptoUtils.ripemd160(Buffer.from(publicKey, 'hex'))
@@ -286,7 +276,7 @@ export default class Crypto {
 
   validateAddress (address, version) {
     if (!version) {
-      version = Config.get('pubKeyHash')
+      version = ConfigManager.get('pubKeyHash')
     }
     try {
       var decode = bs58check.decode(address)

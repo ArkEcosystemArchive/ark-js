@@ -7,8 +7,8 @@ let ark
 let tx
 
 beforeEach(() => {
-    ark = new Ark(network)
-    tx = ark.getBuilder().vote()
+  ark = new Ark(network)
+  tx = ark.getBuilder().vote()
 })
 
 describe('Vote Transaction', () => {

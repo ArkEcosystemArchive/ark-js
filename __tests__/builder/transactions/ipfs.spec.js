@@ -7,8 +7,8 @@ let ark
 let tx
 
 beforeEach(() => {
-    ark = new Ark(network)
-    tx = ark.getBuilder().ipfs()
+  ark = new Ark(network)
+  tx = ark.getBuilder().ipfs()
 })
 
 describe('IPFS Transaction', () => {

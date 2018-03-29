@@ -7,8 +7,8 @@ let ark
 let tx
 
 beforeEach(() => {
-    ark = new Ark(network)
-    tx = ark.getBuilder().multiPayment()
+  ark = new Ark(network)
+  tx = ark.getBuilder().multiPayment()
 })
 
 describe('Multi Payment Transaction', () => {

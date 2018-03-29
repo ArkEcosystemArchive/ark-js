@@ -1,4 +1,4 @@
-const config = require('../config')
+const config = require('../managers/config')
 const { ARKTOSHI, TRANSACTION_TYPES } = require('../constants')
 const ECPair = require('../crypto/ecpair')
 const ECSignature = require('../crypto/ecsignature')

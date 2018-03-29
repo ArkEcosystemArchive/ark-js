@@ -1,6 +1,6 @@
 var Buffer = require('buffer/').Buffer
 var should = require('should')
-var ark = require('../../index.js')
+var ark = require('../index.js')
 
 test('ipfs.js', function () {
   var ipfs = ark.ipfs

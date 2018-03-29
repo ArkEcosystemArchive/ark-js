@@ -1,8 +1,8 @@
 var Buffer = require('buffer/').Buffer
 var should = require('should')
-var ark = require('../../index.js')
+var ark = require('../ark')
 
-var NETWORKS = require('../../lib/networks')
+var NETWORKS = require('@/networks')
 
 test('vote.js', function () {
   var vote = ark.vote

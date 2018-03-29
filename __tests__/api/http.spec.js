@@ -1,6 +1,6 @@
-import Ark from '../../src'
-import network from '../../src/networks/mainnet'
-import HttpClient from '../../src/api/http'
+import Ark from '@/'
+import network from '@/networks/mainnet'
+import HttpClient from '@/api/http'
 
 let client
 

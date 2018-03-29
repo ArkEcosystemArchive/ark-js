@@ -1,4 +1,4 @@
-const Wallet = require('../src/app/models/wallet')
+const Wallet = require('@/models/wallet')
 
 const testWallet = new Wallet('D61xc3yoBQDitwjqUspMPx1ooET6r1XLt7')
 const data = {
@@ -16,7 +16,7 @@ const data = {
 Object.keys(data).forEach(k => (testWallet[k] = data[k]))
 
 describe('Models - Wallet', () => {
-  test('toString', () => {
+  describe('toString', () => {
     // TODO implementation is right?
     it('returns the address and the balance', () => {
       const address = 'Abcde'
@@ -28,7 +28,7 @@ describe('Models - Wallet', () => {
     })
   })
 
-  test('apply transaction', () => {
+  describe('apply transaction', () => {
     it('should be ok for a multitx', () => {
       const multitx = require('./fixtures/multi-transaction')
 

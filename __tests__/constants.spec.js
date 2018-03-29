@@ -1,4 +1,4 @@
-import constants from '../src/constants'
+import constants from '@/constants'
 
 describe('Constants', () => {
   test('arktoshi is valid', () => {

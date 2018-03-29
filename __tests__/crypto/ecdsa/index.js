@@ -1,13 +1,13 @@
 /* global describe, it */
 
 var assert = require('assert')
-var bcrypto = require('../../lib/crypto')
-var ecdsa = require('../../lib/ecdsa')
+var bcrypto = require('@/crypto/crypto')
+var ecdsa = require('@/crypto/ecdsa')
 var sinon = require('sinon')
 var sinonTest = require('sinon-test')(sinon)
 
 var BigInteger = require('bigi')
-var ECSignature = require('../../lib/ecsignature')
+var ECSignature = require('@/crypto/ecsignature')
 
 var curve = ecdsa.__curve
 

@@ -2,7 +2,7 @@
 
 var assert = require('assert')
 var bigi = require('bigi')
-var ark = require('../../')
+var ark = require('../ark')
 
 test('ark-js (basic)', function () {
   it('can generate a random ark address', function () {

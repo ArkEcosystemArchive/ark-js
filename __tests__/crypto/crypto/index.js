@@ -1,9 +1,9 @@
 var Buffer = require('buffer/').Buffer
 var should = require('should')
-var ark = require('../../index.js')
-var ECPair = require('../../lib/ecpair')
+var ark = require('../index')
+var ECPair = require('@/crypto/ecpair')
 
-var ecdsa = require('../../lib/ecdsa')
+var ecdsa = require('@/crypto/ecdsa')
 var ecurve = require('ecurve')
 var curve = ecdsa.__curve
 

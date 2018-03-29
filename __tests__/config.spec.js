@@ -1,6 +1,6 @@
-import Config from '../src/config'
-import network from '../src/networks/mainnet'
-import networkDevnet from '../src/networks/devnet'
+import Config from '@/config'
+import network from '@/networks/mainnet'
+import networkDevnet from '@/networks/devnet'
 
 beforeEach(() => Config.setConfig(network))
 

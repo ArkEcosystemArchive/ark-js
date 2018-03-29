@@ -3,7 +3,7 @@
 var assert = require('assert')
 
 var BigInteger = require('bigi')
-var ECSignature = require('../../lib/ecsignature')
+var ECSignature = require('@/crypto/ecsignature')
 
 var fixtures = require('./fixtures.json')
 

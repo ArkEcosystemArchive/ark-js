@@ -1,5 +1,5 @@
 const sinon = require('sinon')
-const Block = require('../src/models/block')
+const Block = require('@/models/block')
 
 describe('Models - Block', () => {
   const data = {
@@ -11,12 +11,12 @@ describe('Models - Block', () => {
     transactions: []
   }
 
-  test('constructor', () => {
+  describe('constructor', () => {
     it('stores the data', () => {})
     it('verifies the block', () => {})
   })
 
-  test('getHeader', () => {
+  describe('getHeader', () => {
     it('returns the block data without the transactions', () => {
       // Ignore the verification for testing purposes
       sinon.stub(Block.prototype, 'verify')

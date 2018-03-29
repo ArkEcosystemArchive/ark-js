@@ -24,6 +24,7 @@ If you discover a security vulnerability within this package, please send an e-m
 - [Brian Faust](https://github.com/faustbrian)
 - [Lúcio Rubens](https://github.com/luciorubeens)
 - [Alex Barnsley](https://github.com/alexbarnsley)
+- [Juan A. Martín](https://github.com/j-a-m-l)
 - [All Contributors](../../contributors)
 
 ## License

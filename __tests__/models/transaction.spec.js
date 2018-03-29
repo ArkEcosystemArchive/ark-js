@@ -1,6 +1,6 @@
-const Transaction = require('../src/models/transaction')
-const builder = require('../src/builder')
-const Crypto = require('../src/builder/crypto')
+const Transaction = require('@/models/transaction')
+const builder = require('@/builder')
+const Crypto = require('@/builder/crypto')
 const txdata = require('./fixtures/transaction')
 
 const createRandomTx = type => {
@@ -37,7 +37,7 @@ const createRandomTx = type => {
 }
 
 describe('Models - Transaction', () => {
-  test('static fromBytes', () => {
+  describe('static fromBytes', () => {
     it('returns a new transaction', () => {
       ;[0, 1, 2, 3, 4]
         .map(type => createRandomTx(type))

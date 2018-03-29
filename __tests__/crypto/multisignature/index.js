@@ -1,7 +1,7 @@
 var Buffer = require('buffer/').Buffer
 var should = require('should')
-var ark = require('../../index.js')
-var constants = require('../../lib/constants.js')
+var ark = require('../index')
+var constants = require('@/constants')
 
 test('multisignature.js', function () {
   var multisignature = ark.multisignature

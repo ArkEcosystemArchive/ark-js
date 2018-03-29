@@ -16,6 +16,19 @@ describe('Vote Transaction', () => {
     expect(tx).toBeInstanceOf(Transaction)
   })
 
+  it('should have all properties', () => {
+    expect(tx).toHaveProperty('id')
+    expect(tx).toHaveProperty('type')
+    expect(tx).toHaveProperty('fee')
+    expect(tx).toHaveProperty('amount')
+    expect(tx).toHaveProperty('timestamp')
+    expect(tx).toHaveProperty('recipientId')
+    expect(tx).toHaveProperty('senderPublicKey')
+    expect(tx).toHaveProperty('asset')
+    expect(tx).toHaveProperty('version')
+    expect(tx).toHaveProperty('network')
+  })
+
   it('should set the fee', () => {
     tx.setFee('fake')
 

@@ -2,13 +2,14 @@ import Config from '../../config'
 import crypto from '../crypto'
 import slots from '../../crypto/slots'
 import Transaction from '../transaction'
+import { TRANSACTION_TYPES } from '../../constants'
 
 export default class Transfer extends Transaction {
   constructor () {
     super()
 
     this.id = null
-    this.type = 0
+    this.type = TRANSACTION_TYPES.TRANSFER
     this.fee = Config.getConstants().fees.send
     this.amount = 0
     this.timestamp = slots.getTime()

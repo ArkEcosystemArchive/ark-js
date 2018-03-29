@@ -2,13 +2,14 @@ import Config from '../../config'
 import crypto from '../crypto'
 import slots from '../../crypto/slots'
 import Transaction from '../transaction'
+import { TRANSACTION_TYPES } from '../../constants'
 
 export default class Delegate extends Transaction {
   constructor () {
     super()
 
     this.id = null
-    this.type = 2
+    this.type = TRANSACTION_TYPES.DELEGATE
     this.fee = Config.getConstants().fees.delegate
     this.amount = 0
     this.timestamp = slots.getTime()

@@ -2,13 +2,14 @@ import Config from '../../config'
 import crypto from '../crypto'
 import slots from '../../crypto/slots'
 import Transaction from '../transaction'
+import { TRANSACTION_TYPES } from '../../constants'
 
 export default class SecondSignature extends Transaction {
   constructor () {
     super()
 
     this.id = null
-    this.type = 1
+    this.type = TRANSACTION_TYPES.SECOND_SIGNATURE
     this.fee = Config.getConstants().fees.secondsignature
     this.amount = 0
     this.timestamp = slots.getTime()

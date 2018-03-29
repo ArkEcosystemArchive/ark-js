@@ -52,7 +52,7 @@ class Config {
     }
 
     if (!height) {
-        throw new Error('Height is not defined.');
+        height = 1
     }
 
     while ((this.constant.index < this.constants.length - 1) && height >= this.constants[this.constant.index + 1].height) {

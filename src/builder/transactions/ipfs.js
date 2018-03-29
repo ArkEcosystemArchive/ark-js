@@ -2,13 +2,14 @@ import Config from '../../config'
 import crypto from '../crypto'
 import slots from '../../crypto/slots'
 import Transaction from '../transaction'
+import { TRANSACTION_TYPES } from '../../constants'
 
 export default class IPFS extends Transaction {
   constructor () {
     super()
 
     this.id = null
-    this.type = 5
+    this.type = TRANSACTION_TYPES.IPFS
     this.fee = Config.getConstants().fees.ipfs
     this.amount = 0
     this.timestamp = slots.getTime()

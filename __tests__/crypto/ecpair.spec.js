@@ -223,7 +223,7 @@ describe('ECPair', () => {
     })
 
     describe('signing', () => {
-      //  it('wraps ecdsa.sign', sinonTest(function () {
+      //  it('wraps ecdsa.sign', sinonTest(() => {
       //    this.mock(ecdsa).expects('sign')
       //      .once().withArgs(hash, keyPair.publicKey)
       //
@@ -246,7 +246,7 @@ describe('ECPair', () => {
         signature = keyPair.sign(hash)
       })
 
-      // it('wraps ecdsa.verify', sinonTest(function () {
+      // it('wraps ecdsa.verify', sinonTest(() => {
       //   this.mock(ecdsa).expects('verify')
       //     .once().withArgs(hash, signature, keyPair.Q)
       //

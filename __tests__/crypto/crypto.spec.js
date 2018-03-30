@@ -7,37 +7,37 @@ import ecurve from 'ecurve'
 
 const curve = ecdsa.__curve
 
-test('crypto.js', function () {
+test('crypto.js', () => {
   var crypto = ark.crypto
 
-  it('should be ok', function () {
+  it('should be ok', () => {
     (crypto).should.be.ok
   })
 
-  it('should be object', function () {
+  it('should be object', () => {
     (crypto).should.be.type('object')
   })
 
-  it('should has properties', function () {
+  it('should has properties', () => {
     var properties = ['getBytes', 'getHash', 'getId', 'getFee', 'sign', 'secondSign', 'getKeys', 'getAddress', 'verify', 'verifySecondSignature', 'fixedPoint']
     properties.forEach(function (property) {
       (crypto).should.have.property(property)
     })
   })
 
-  test('#getBytes', function () {
+  test('#getBytes', () => {
     var getBytes = crypto.getBytes
     var bytes = null
 
-    it('should be ok', function () {
+    it('should be ok', () => {
       (getBytes).should.be.ok
     })
 
-    it('should be a function', function () {
+    it('should be a function', () => {
       (getBytes).should.be.type('function')
     })
 
-    it('should return Buffer of simply transaction and buffer must be 202 length', function () {
+    it('should return Buffer of simply transaction and buffer must be 202 length', () => {
       var transaction = {
         type: 0,
         amount: 1000,
@@ -56,7 +56,7 @@ test('crypto.js', function () {
       (bytes.length).should.be.equal(202)
     })
 
-    it('should return Buffer of transaction with second signature and buffer must be 266 length', function () {
+    it('should return Buffer of transaction with second signature and buffer must be 266 length', () => {
       var transaction = {
         type: 0,
         amount: 1000,
@@ -77,18 +77,18 @@ test('crypto.js', function () {
     })
   })
 
-  test('#getHash', function () {
+  test('#getHash', () => {
     var getHash = crypto.getHash
 
-    it('should be ok', function () {
+    it('should be ok', () => {
       (getHash).should.be.ok
     })
 
-    it('should be a function', function () {
+    it('should be a function', () => {
       (getHash).should.be.type('function')
     })
 
-    it('should return Buffer and Buffer most be 32 bytes length', function () {
+    it('should return Buffer and Buffer most be 32 bytes length', () => {
       var transaction = {
         type: 0,
         amount: 1000,
@@ -107,18 +107,18 @@ test('crypto.js', function () {
     })
   })
 
-  test('#getId', function () {
+  test('#getId', () => {
     var getId = crypto.getId
 
-    it('should be ok', function () {
+    it('should be ok', () => {
       (getId).should.be.ok
     })
 
-    it('should be a function', function () {
+    it('should be a function', () => {
       (getId).should.be.type('function')
     })
 
-    it('should return string id and be equal to 619fd7971db6f317fdee3675c862291c976d072a0a1782410e3a6f5309022491', function () {
+    it('should return string id and be equal to 619fd7971db6f317fdee3675c862291c976d072a0a1782410e3a6f5309022491', () => {
       var transaction = {
         type: 0,
         amount: 1000,
@@ -135,103 +135,103 @@ test('crypto.js', function () {
     })
   })
 
-  test('#getFee', function () {
+  test('#getFee', () => {
     var getFee = crypto.getFee
 
-    it('should be ok', function () {
+    it('should be ok', () => {
       (getFee).should.be.ok
     })
 
-    it('should be a function', function () {
+    it('should be a function', () => {
       (getFee).should.be.type('function')
     })
 
-    it('should return number', function () {
+    it('should return number', () => {
       var fee = getFee({amount: 100000, type: 0});
       (fee).should.be.type('number');
       (fee).should.be.not.NaN
     })
 
-    it('should return 10000000', function () {
+    it('should return 10000000', () => {
       var fee = getFee({amount: 100000, type: 0});
       (fee).should.be.type('number').and.equal(10000000)
     })
 
-    it('should return 10000000000', function () {
+    it('should return 10000000000', () => {
       var fee = getFee({type: 1});
       (fee).should.be.type('number').and.equal(10000000000)
     })
 
-    it('should be equal 1000000000000', function () {
+    it('should be equal 1000000000000', () => {
       var fee = getFee({type: 2});
       (fee).should.be.type('number').and.equal(1000000000000)
     })
 
-    it('should be equal 100000000', function () {
+    it('should be equal 100000000', () => {
       var fee = getFee({type: 3});
       (fee).should.be.type('number').and.equal(100000000)
     })
   })
 
-  test('fixedPoint', function () {
+  test('fixedPoint', () => {
     var fixedPoint = crypto.fixedPoint
 
-    it('should be ok', function () {
+    it('should be ok', () => {
       (fixedPoint).should.be.ok
     })
 
-    it('should be number', function () {
+    it('should be number', () => {
       (fixedPoint).should.be.type('number').and.not.NaN
     })
 
-    it('should be equal 100000000', function () {
+    it('should be equal 100000000', () => {
       (fixedPoint).should.be.equal(100000000)
     })
   })
 
-  test('#sign', function () {
+  test('#sign', () => {
     var sign = crypto.sign
 
-    it('should be ok', function () {
+    it('should be ok', () => {
       (sign).should.be.ok
     })
 
-    it('should be a function', function () {
+    it('should be a function', () => {
       (sign).should.be.type('function')
     })
   })
 
-  test('#secondSign', function () {
+  test('#secondSign', () => {
     var secondSign = crypto.secondSign
 
-    it('should be ok', function () {
+    it('should be ok', () => {
       (secondSign).should.be.ok
     })
 
-    it('should be a function', function () {
+    it('should be a function', () => {
       (secondSign).should.be.type('function')
     })
   })
 
-  test('#getKeys', function () {
+  test('#getKeys', () => {
     var getKeys = crypto.getKeys
 
-    it('should be ok', function () {
+    it('should be ok', () => {
       (getKeys).should.be.ok
     })
 
-    it('should be a function', function () {
+    it('should be a function', () => {
       (getKeys).should.be.type('function')
     })
 
-    it('should return two keys in hex', function () {
+    it('should return two keys in hex', () => {
       var keys = getKeys('secret');
 
       (keys).should.be.ok;
       (keys).should.be.type('object');
       (keys).should.have.property('publicKey');
       (keys).should.have.property('privateKey');
-      (keys.publicKey).should.be.type('string').and.match(function () {
+      (keys.publicKey).should.be.type('string').and.match(() => {
         try {
           new Buffer(keys.publicKey, 'hex')
         } catch (e) {
@@ -240,7 +240,7 @@ test('crypto.js', function () {
 
         return true
       });
-      (keys.privateKey).should.be.type('string').and.match(function () {
+      (keys.privateKey).should.be.type('string').and.match(() => {
         try {
           new Buffer(keys.privateKey, 'hex')
         } catch (e) {
@@ -252,18 +252,18 @@ test('crypto.js', function () {
     })
   })
 
-  test('#getAddress', function () {
+  test('#getAddress', () => {
     var getAddress = crypto.getAddress
 
-    it('should be ok', function () {
+    it('should be ok', () => {
       (getAddress).should.be.ok
     })
 
-    it('should be a function', function () {
+    it('should be a function', () => {
       (getAddress).should.be.type('function')
     })
 
-    it('should generate address by publicKey', function () {
+    it('should generate address by publicKey', () => {
       var keys = crypto.getKeys('secret')
       var address = getAddress(keys.publicKey);
 
@@ -272,7 +272,7 @@ test('crypto.js', function () {
       (address).should.be.equal('AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff')
     })
 
-    it('should generate address by publicKey - second test', function () {
+    it('should generate address by publicKey - second test', () => {
       var keys = crypto.getKeys('secret second test to be sure it works correctly')
       var address = getAddress(keys.publicKey);
 
@@ -281,7 +281,7 @@ test('crypto.js', function () {
       (address).should.be.equal('AQSqYnjmwj1GBL5twD4K9EBXDaTHZognox')
     })
 
-    it('should generate the same address as ECPair.getAddress()', function () {
+    it('should generate the same address as ECPair.getAddress()', () => {
       var keys = crypto.getKeys('secret second test to be sure it works correctly')
       var address = getAddress(keys.publicKey)
 
@@ -292,33 +292,33 @@ test('crypto.js', function () {
     })
   })
 
-  test('#verify', function () {
+  test('#verify', () => {
     var verify = crypto.verify
 
-    it('should be ok', function () {
+    it('should be ok', () => {
       (verify).should.be.ok
     })
 
-    it('should be function', function () {
+    it('should be function', () => {
       (verify).should.be.type('function')
     })
   })
 
-  test('#verifySecondSignature', function () {
+  test('#verifySecondSignature', () => {
     var verifySecondSignature = crypto.verifySecondSignature
 
-    it('should be ok', function () {
+    it('should be ok', () => {
       (verifySecondSignature).should.be.ok
     })
 
-    it('should be function', function () {
+    it('should be function', () => {
       (verifySecondSignature).should.be.type('function')
     })
   })
 })
 
-test('different networks', function () {
-  it('validate address on tesnet should be ok', function () {
+test('different networks', () => {
+  it('validate address on tesnet should be ok', () => {
     ark.crypto.setNetworkVersion(0x52)
     ark.crypto.getNetworkVersion().should.equal(0x52)
     var validate = ark.crypto.validateAddress('a6fpb1BJZq4otWiVsBcuLG1ZGs5WsqqQtH');
@@ -328,38 +328,38 @@ test('different networks', function () {
   })
 })
 
-test('delegate.js', function () {
+test('delegate.js', () => {
   var delegate = ark.delegate
 
-  it('should be ok', function () {
+  it('should be ok', () => {
     (delegate).should.be.ok
   })
 
-  it('should be function', function () {
+  it('should be function', () => {
     (delegate).should.be.type('object')
   })
 
-  it('should have property createDelegate', function () {
+  it('should have property createDelegate', () => {
     (delegate).should.have.property('createDelegate')
   })
 
-  test('#createDelegate', function () {
+  test('#createDelegate', () => {
     var createDelegate = delegate.createDelegate
     var trs = null
 
-    it('should be ok', function () {
+    it('should be ok', () => {
       (createDelegate).should.be.ok
     })
 
-    it('should be function', function () {
+    it('should be function', () => {
       (createDelegate).should.be.type('function')
     })
 
-    it('should create delegate', function () {
+    it('should create delegate', () => {
       trs = createDelegate('secret', 'delegate', 'secret 2')
     })
 
-    it('should create transaction with fee override', function () {
+    it('should create transaction with fee override', () => {
       const feeOverride = 1000000
       trs = createDelegate('secret', 'delegate', 'second secret', feeOverride);
       (trs).should.be.ok;
@@ -376,7 +376,7 @@ test('delegate.js', function () {
       }
     })
 
-    it('should be deserialised correctly', function () {
+    it('should be deserialised correctly', () => {
       var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(trs).toString('hex'))
       delete deserialisedTx.vendorFieldHex
       var keys = Object.keys(deserialisedTx)
@@ -389,40 +389,40 @@ test('delegate.js', function () {
       }
     })
 
-    test('returned delegate', function () {
+    test('returned delegate', () => {
       var keys = ark.crypto.getKeys('secret')
       var secondKeys = ark.crypto.getKeys('secret 2')
 
-      it('should be ok', function () {
+      it('should be ok', () => {
         (trs).should.be.ok
       })
 
-      it('should be object', function () {
+      it('should be object', () => {
         (trs).should.be.type('object')
       })
 
-      it('should have recipientId equal null', function () {
+      it('should have recipientId equal null', () => {
         (trs).should.have.property('recipientId').and.type('object').and.be.empty
       })
 
-      it('shoud have amount equal 0', function () {
+      it('shoud have amount equal 0', () => {
         (trs).should.have.property('amount').and.type('number').and.equal(0)
       })
 
-      it('should have type equal 2', function () {
+      it('should have type equal 2', () => {
         (trs).should.have.property('type').and.type('number').and.equal(2)
       })
 
-      // it("should have id equal 11636400490162225218", function () {
+      // it("should have id equal 11636400490162225218", () => {
       // 	(trs).should.have.property("id").and.type("string").and.equal('11636400490162225218');
       // });
 
-      it('should have timestamp number', function () {
+      it('should have timestamp number', () => {
         (trs).should.have.property('timestamp').and.type('number')
       })
 
-      it('should have senderPublicKey in hex', function () {
-        (trs).should.have.property('senderPublicKey').and.type('string').and.match(function () {
+      it('should have senderPublicKey in hex', () => {
+        (trs).should.have.property('senderPublicKey').and.type('string').and.match(() => {
           try {
             new Buffer(trs.senderPublicKey, 'hex')
           } catch (e) {
@@ -433,8 +433,8 @@ test('delegate.js', function () {
         }).and.equal(keys.publicKey)
       })
 
-      it('should have signature in hex', function () {
-        (trs).should.have.property('signature').and.type('string').and.match(function () {
+      it('should have signature in hex', () => {
+        (trs).should.have.property('signature').and.type('string').and.match(() => {
           try {
             new Buffer(trs.signature, 'hex')
           } catch (e) {
@@ -445,8 +445,8 @@ test('delegate.js', function () {
         })
       })
 
-      it('should have second signature in hex', function () {
-        (trs).should.have.property('signSignature').and.type('string').and.match(function () {
+      it('should have second signature in hex', () => {
+        (trs).should.have.property('signSignature').and.type('string').and.match(() => {
           try {
             new Buffer(trs.signSignature, 'hex')
           } catch (e) {
@@ -457,43 +457,43 @@ test('delegate.js', function () {
         })
       })
 
-      it('should have delegate asset', function () {
+      it('should have delegate asset', () => {
         (trs).should.have.property('asset').and.type('object');
         (trs.asset).should.have.have.property('delegate')
       })
 
-      it('should be signed correctly', function () {
+      it('should be signed correctly', () => {
         var result = ark.crypto.verify(trs);
         (result).should.be.ok
       })
 
-      it('should be second signed correctly', function () {
+      it('should be second signed correctly', () => {
         var result = ark.crypto.verifySecondSignature(trs, secondKeys.publicKey);
         (result).should.be.ok
       })
 
-      it('should not be signed correctly now', function () {
+      it('should not be signed correctly now', () => {
         trs.amount = 100
         var result = ark.crypto.verify(trs);
         (result).should.be.not.ok
       })
 
-      it('should not be second signed correctly now', function () {
+      it('should not be second signed correctly now', () => {
         trs.amount = 100
         var result = ark.crypto.verifySecondSignature(trs, secondKeys.publicKey);
         (result).should.be.not.ok
       })
 
-      test('delegate asset', function () {
-        it('should be ok', function () {
+      test('delegate asset', () => {
+        it('should be ok', () => {
           (trs.asset.delegate).should.be.ok
         })
 
-        it('should be object', function () {
+        it('should be object', () => {
           (trs.asset.delegate).should.be.type('object')
         })
 
-        it('should be have property username', function () {
+        it('should be have property username', () => {
           (trs.asset.delegate).should.have.property('username').and.be.type('string').and.equal('delegate')
         })
       })

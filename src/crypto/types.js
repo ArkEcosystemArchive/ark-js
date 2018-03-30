@@ -9,7 +9,7 @@ function UInt31 (value) {
 function BIP32Path (value) {
   return typeforce.String(value) && value.match(/^(m\/)?(\d+'?\/)*\d+'?$/)
 }
-BIP32Path.toJSON = function () {
+BIP32Path.toJSON = () => {
   return 'BIP32 derivation path'
 }
 

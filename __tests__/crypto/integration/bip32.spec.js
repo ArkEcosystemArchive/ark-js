@@ -10,7 +10,7 @@ import network from '@/networks/ark/mainnet'
 beforeEach(() => configManager.setConfig(network))
 
 describe('ark-js (BIP32)', () => {
-  it('can create a BIP32 wallet external address', function () {
+  it('can create a BIP32 wallet external address', () => {
     const path = "m/0'/0/0"
     const root = HDNode.fromSeedHex('dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd')
 
@@ -23,7 +23,7 @@ describe('ark-js (BIP32)', () => {
     assert.equal(child2.getAddress(), 'AZXdSTRFGHPokX6yfXTfHcTzzHKncioj31')
   })
 
-  it('can create a BIP44, ark, account 0, external address', function () {
+  it('can create a BIP44, ark, account 0, external address', () => {
     var path = "m/44'/0'/0'/0/0"
     var root = HDNode.fromSeedHex('dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd')
 
@@ -40,7 +40,7 @@ describe('ark-js (BIP32)', () => {
     assert.equal(child2.getAddress(), 'AVbXc2KyxtXeAP9zQpp7ixsnaxEEQ6wZbq')
   })
 
-  it('can recover a BIP32 parent private key from the parent public key, and a derived, non-hardened child private key', function () {
+  it('can recover a BIP32 parent private key from the parent public key, and a derived, non-hardened child private key', () => {
     function recoverParent (master, child) {
       assert(!master.keyPair.d, 'You already have the parent private key')
       assert(child.keyPair.d, 'Missing child private key')

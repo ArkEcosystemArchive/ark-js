@@ -1,6 +1,6 @@
 import configManager from '@/managers/config'
 import crypto from 'crypto'
-import cryptoUtils from '@/crypto/crypto'
+import cryptoUtils from '@/crypto'
 import ECPair from '@/crypto/ecpair'
 import ECSignature from '@/crypto/ecsignature'
 import bs58check from 'bs58check'

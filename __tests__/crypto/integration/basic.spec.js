@@ -1,56 +1,42 @@
 import assert from 'assert'
 import bigi from 'bigi'
-import ark from '@/'
+import crypto from '@/crypto'
+import ECPair from '@/crypto/ecpair'
 
-test('ark-js (basic)', function() {
-  it('can generate a random ark address', function() {
-    // for testing only
-    function rng() {
-      return new Buffer('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')
-    }
+import configManager from '@/managers/config'
+import network from '@/networks/ark/mainnet'
 
-    // generate random keyPair
-    var keyPair = ark.ECPair.makeRandom({
-      rng: rng
+beforeEach(() => configManager.setConfig(network))
+
+describe('Basic Crypto', () => {
+  it('can generate a random ark address', () => {
+    const keyPair = ECPair.makeRandom({
+        rng: () => new Buffer('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')
     })
-    var address = keyPair.getAddress()
 
-    assert.strictEqual(address, 'ANoMWEJ9jSdE2FgohBLLXeLzci59BDFsP4')
+    assert.strictEqual(keyPair.getAddress(), 'ANoMWEJ9jSdE2FgohBLLXeLzci59BDFsP4')
   })
 
-  it('can generate an address from a SHA256 hash', function() {
-    var hash = ark.crypto.sha256('correct horse battery staple')
-    var d = bigi.fromBuffer(hash)
+  it('can generate an address from a SHA256 hash', () => {
+    const hash = crypto.sha256('correct horse battery staple')
+    const keyPair = new ECPair(bigi.fromBuffer(hash))
 
-    var keyPair = new ark.ECPair(d)
-    var address = keyPair.getAddress()
-
-    assert.strictEqual(address, 'AG5AtmiNbgv51eLwAWnRGvkMudVd7anYP2')
+    assert.strictEqual(keyPair.getAddress(), 'AG5AtmiNbgv51eLwAWnRGvkMudVd7anYP2')
   })
 
-  it('can generate a random keypair for alternative networks', function() {
-    // for testing only
-    function rng() {
-      return new Buffer('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')
-    }
-
-    var bitcoin = ark.networks.bitcoin
-
-    var keyPair = ark.ECPair.makeRandom({
-      network: bitcoin,
-      rng: rng
+  it('can generate a random keypair for alternative networks', () => {
+    const keyPair = ECPair.makeRandom({
+      network,
+      rng: () => new Buffer('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')
     })
-    var wif = keyPair.toWIF()
-    var address = keyPair.getAddress()
 
-    assert.strictEqual(address, '182UrjSXQHy5DHUp8Xg1Nm5u979SojJY2P')
-    assert.strictEqual(wif, 'L1Knwj9W3qK3qMKdTvmg3VfzUs3ij2LETTFhxza9LfD5dngnoLG1')
+    assert.strictEqual(keyPair.getAddress(), 'ANoMWEJ9jSdE2FgohBLLXeLzci59BDFsP4')
+    assert.strictEqual(keyPair.toWIF(), 'SDgGxWHHQHnpm5sth7MBUoeSw7V7nbimJ1RBU587xkryTh4qe9ov')
   })
 
-  it('can import an address via WIF', function() {
-    var keyPair = ark.ECPair.fromWIF('S9aCCSFvm8kNeyFb1t6pLb5oJs9tv96ag6uA8Du6UM7zsmsNHQiz')
-    var address = keyPair.getAddress()
+  it('can import an address via WIF', () => {
+    const keyPair = ECPair.fromWIF('SDgGxWHHQHnpm5sth7MBUoeSw7V7nbimJ1RBU587xkryTh4qe9ov')
 
-    assert.strictEqual(address, 'AcMiVQNHjggC1PyfVSvCcdWZKMisMKj8eo')
+    assert.strictEqual(keyPair.getAddress(), 'ANoMWEJ9jSdE2FgohBLLXeLzci59BDFsP4')
   })
 })

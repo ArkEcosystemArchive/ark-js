@@ -4,7 +4,7 @@ import sinonTest from 'sinon-test'
 import BigInteger from 'bigi'
 
 import ecdsa from '@/crypto/ecdsa'
-import bcrypto from '@/crypto/crypto'
+import bcrypto from '@/crypto'
 import ECSignature from '@/crypto/ecsignature'
 import fixtures from './fixtures/ecdsa.json'
 

@@ -3,21 +3,21 @@ import bigi from 'bigi'
 import ecurve from 'ecurve'
 import crypto from 'crypto'
 
-import ark from '@/'
+import HDNode from '@/crypto/hdnode'
+import configManager from '@/managers/config'
+import network from '@/networks/ark/mainnet'
 
-const secp256k1 = ecurve.getCurveByName('secp256k1')
+beforeEach(() => configManager.setConfig(network))
 
-test('ark-js (BIP32)', function () {
+describe('ark-js (BIP32)', () => {
   it('can create a BIP32 wallet external address', function () {
-    var path = "m/0'/0/0"
-    var root = ark.HDNode.fromSeedHex('dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd')
+    const path = "m/0'/0/0"
+    const root = HDNode.fromSeedHex('dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd')
 
-    var child1 = root.derivePath(path)
+    const child1 = root.derivePath(path)
 
     // option 2, manually
-    var child2 = root.deriveHardened(0)
-      .derive(0)
-      .derive(0)
+    const child2 = root.deriveHardened(0).derive(0).derive(0)
 
     assert.equal(child1.getAddress(), 'AZXdSTRFGHPokX6yfXTfHcTzzHKncioj31')
     assert.equal(child2.getAddress(), 'AZXdSTRFGHPokX6yfXTfHcTzzHKncioj31')
@@ -25,7 +25,7 @@ test('ark-js (BIP32)', function () {
 
   it('can create a BIP44, ark, account 0, external address', function () {
     var path = "m/44'/0'/0'/0/0"
-    var root = ark.HDNode.fromSeedHex('dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd')
+    var root = HDNode.fromSeedHex('dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd')
 
     var child1 = root.derivePath(path)
 
@@ -45,7 +45,7 @@ test('ark-js (BIP32)', function () {
       assert(!master.keyPair.d, 'You already have the parent private key')
       assert(child.keyPair.d, 'Missing child private key')
 
-      var curve = secp256k1
+      var curve = ecurve.getCurveByName('secp256k1')
       var QP = master.keyPair.Q
       var serQP = master.keyPair.getPublicKeyBuffer()
 
@@ -55,7 +55,7 @@ test('ark-js (BIP32)', function () {
       serQP.copy(data, 0)
 
       // search index space until we find it
-      for (var i = 0; i < ark.HDNode.HIGHEST_BIT; ++i) {
+      for (var i = 0; i < HDNode.HIGHEST_BIT; ++i) {
         data.writeUInt32BE(i, 33)
 
         // calculate I
@@ -70,7 +70,7 @@ test('ark-js (BIP32)', function () {
         if (Qp.equals(QP)) break
       }
 
-      var node = new ark.HDNode(new ark.ECPair(d2), master.chainCode, master.network)
+      var node = new HDNode(new ark.ECPair(d2), master.chainCode, master.network)
       node.depth = master.depth
       node.index = master.index
       node.masterFingerprint = master.masterFingerprint
@@ -78,7 +78,7 @@ test('ark-js (BIP32)', function () {
     }
 
     var seed = crypto.randomBytes(32)
-    var master = ark.HDNode.fromSeedBuffer(seed)
+    var master = HDNode.fromSeedBuffer(seed)
     var child = master.derive(6) // m/6
 
     // now for the recovery

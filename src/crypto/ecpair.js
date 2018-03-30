@@ -1,6 +1,6 @@
 import configManager from '@/managers/config'
 import base58check from 'bs58check'
-import bcrypto from '@/crypto/crypto'
+import bcrypto from '@/crypto'
 import ECSignature from '@/crypto/ecsignature'
 import randomBytes from 'randombytes'
 import typeforce from 'typeforce'
@@ -13,16 +13,6 @@ import ecurve from 'ecurve'
 import secp256k1native from 'secp256k1'
 
 const secp256k1 = ecurve.getCurveByName('secp256k1')
-
-// Object.defineProperty(ECPair.prototype, 'Q', {
-//   get: function () {
-//     if (!this.publicKey && this.privateKey) {
-//       this.publicKey = secp256k1.G.multiply(this.privateKey)
-//     }
-
-//     return this.publicKey
-//   }
-// })
 
 /**
  * Provide either `d` or `Q` but not both.
@@ -55,6 +45,10 @@ export default class ECPair {
       typeforce(types.ECPoint, publicKey)
 
       this.publicKey = publicKey
+    }
+
+    if (!this.publicKey && this.privateKey) {
+      this.publicKey = secp256k1.G.multiply(this.privateKey)
     }
 
     /** @type {boolean} */

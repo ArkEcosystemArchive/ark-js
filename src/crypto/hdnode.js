@@ -5,11 +5,15 @@ import ecurve from 'ecurve'
 import BigInteger from 'bigi'
 
 import configManager from '@/managers/config'
-import bcrypto from '@/crypto/crypto'
+import bcrypto from '@/crypto'
 import types from '@/crypto/types'
 import ECPair from '@/crypto/ecpair'
 
 const curve = ecurve.getCurveByName('secp256k1')
+
+export const HIGHEST_BIT = 0x80000000
+export const LENGTH = 78
+export const MASTER_SECRET = Buffer.from('Bitcoin seed')
 
 export default class HDNode {
   /**
@@ -32,10 +36,6 @@ export default class HDNode {
     this.index = 0
     /** @type {number} */
     this.parentFingerprint = 0x00000000
-
-    this.HIGHEST_BIT = 0x80000000
-    this.LENGTH = 78
-    this.MASTER_SECRET = Buffer.from('Bitcoin seed')
   }
 
   /**
@@ -43,13 +43,13 @@ export default class HDNode {
    * @param {Network} [network]
    * @returns {HDNode}
    */
-  fromSeedBuffer (seed, network) {
+  static fromSeedBuffer (seed, network) {
     typeforce(types.tuple(types.Buffer, types.maybe(types.Network)), arguments)
 
     if (seed.length < 16) throw new TypeError('Seed should be at least 128 bits')
     if (seed.length > 64) throw new TypeError('Seed should be at most 512 bits')
 
-    const I = createHmac('sha512', HDNode.MASTER_SECRET).update(seed).digest()
+    const I = createHmac('sha512', MASTER_SECRET).update(seed).digest()
     const IL = I.slice(0, 32)
     const IR = I.slice(32)
 
@@ -67,7 +67,7 @@ export default class HDNode {
    * @param {string} hex
    * @returns {HDNode}
    */
-  fromSeedHex (hex, network) {
+  static fromSeedHex (hex, network) {
     return HDNode.fromSeedBuffer(Buffer.from(hex, 'hex'), network)
   }
 
@@ -86,8 +86,7 @@ export default class HDNode {
     // list of networks?
     if (Array.isArray(networks)) {
       network = networks.filter(function (network) {
-        return version === network.bip32.private ||
-          version === network.bip32.public
+        return version === network.bip32.private || version === network.bip32.public
       }).pop()
 
       if (!network) throw new Error('Unknown network version')

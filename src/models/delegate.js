@@ -2,10 +2,12 @@ import bip38 from 'bip38'
 import wif from 'wif'
 import crypto from 'crypto'
 import otplib from 'otplib'
-import Block from '@/models/block'
 import forge from 'node-forge'
+
+import Block from '@/models/block'
 import ECPair from '@/crypto/ecpair'
 import cryptoBuilder from '@/builder/crypto'
+import sortTransactions from '@/utils/sort-transactions'
 
 export default class Delegate {
   constructor (passphrase, network, password) {
@@ -92,7 +94,7 @@ export default class Delegate {
         sha256: crypto.createHash('sha256')
       }
 
-      const txs = this.sortTransactions(transactions)
+      const txs = sortTransactions(transactions)
       txs.forEach(tx => {
         txstats.amount += tx.amount
         txstats.fee += tx.fee
@@ -124,19 +126,5 @@ export default class Delegate {
 
       return block
     }
-  }
-
-  sortTransactions (transactions) {
-    // Map to create a new array (sort is done in place)
-    // TODO does it matter modifying the order of the original array
-    return transactions.map(t => t).sort((a, b) => {
-      if (a.type < b.type) return -1
-      if (a.type > b.type) return 1
-
-      if (a.id < b.id) return -1
-      if (a.id > b.id) return 1
-
-      return 0
-    })
   }
 }

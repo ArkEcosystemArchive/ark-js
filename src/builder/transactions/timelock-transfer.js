@@ -14,16 +14,23 @@ export default class TimelockTransfer extends Transaction {
     this.fee = FeeManager.get(TRANSACTION_TYPES.TIMELOCK_TRANSFER)
     this.amount = 0
     this.timestamp = slots.getTime()
+    this.recipientId = null
+    this.senderPublicKey = null
     this.timelockType = 0x00
     this.timelock = null
-    this.recipientId = null
     this.version = 0x02
   }
 
-  create (recipientId, timelock, timelockType) {
+  create (recipientId, amount, timelock, timelockType) {
     this.recipientId = recipientId
+    this.amount = amount
     this.timelock = timelock
     this.timelockType = timelockType
+    return this
+  }
+
+  setVendorField (data, type) {
+    this.vendorFieldHex = Buffer.from(data, type).toString('hex')
     return this
   }
 
@@ -34,14 +41,14 @@ export default class TimelockTransfer extends Transaction {
     return this
   }
 
+  verify () {
+    return crypto.verify(this)
+  }
+
   secondSign (transaction, passphrase) {
     const keys = crypto.getKeys(passphrase)
     this.secondSignature = crypto.secondSign(transaction, keys)
     return this
-  }
-
-  verify () {
-    return crypto.verify(this)
   }
 
   serialise () {
@@ -53,13 +60,14 @@ export default class TimelockTransfer extends Transaction {
       timestamp: this.timestamp,
 
       type: this.type,
-      fee: this.fee,
       amount: this.amount,
+      fee: this.fee,
       recipientId: this.recipientId,
       senderPublicKey: this.senderPublicKey,
-
-      timelockType: this.timelockType,
+      vendorFieldHex: this.vendorFieldHex,
+      asset: this.asset,
       timelock: this.timelock,
+      timelockType: this.timelockType
     }
   }
 }

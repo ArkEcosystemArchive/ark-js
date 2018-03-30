@@ -1,6 +1,8 @@
 import configManager from '@/managers/config'
+import feeManager from '@/managers/fee'
 import network from '@/networks/devnet'
 import networkMainnet from '@/networks/mainnet'
+import { TRANSACTION_TYPES } from '@/constants'
 
 beforeEach(() => configManager.setConfig(network))
 
@@ -27,6 +29,20 @@ describe('Configuration', () => {
 
   it('should build constants', () => {
     expect(configManager.constants).toEqual(network.constants)
+  })
+
+  it('should build fees', () => {
+    const fees = network.constants[0].fees
+
+    expect(feeManager.get(TRANSACTION_TYPES.TRANSFER)).toEqual(fees.transfer)
+    expect(feeManager.get(TRANSACTION_TYPES.SECOND_SIGNATURE)).toEqual(fees.secondSignature)
+    expect(feeManager.get(TRANSACTION_TYPES.DELEGATE)).toEqual(fees.delegate)
+    expect(feeManager.get(TRANSACTION_TYPES.VOTE)).toEqual(fees.vote)
+    expect(feeManager.get(TRANSACTION_TYPES.MULTI_SIGNATURE)).toEqual(fees.multiSignature)
+    expect(feeManager.get(TRANSACTION_TYPES.IPFS)).toEqual(fees.ipfs)
+    expect(feeManager.get(TRANSACTION_TYPES.TIMELOCK_TRANSFER)).toEqual(fees.timelockTransfer)
+    expect(feeManager.get(TRANSACTION_TYPES.MULTI_PAYMENT)).toEqual(fees.multiPayment)
+    expect(feeManager.get(TRANSACTION_TYPES.DELEGATE_RESIGNATION)).toEqual(fees.delegateResignation)
   })
 
   it('should get constants for height', () => {

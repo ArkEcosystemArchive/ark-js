@@ -66,7 +66,6 @@ describe('Models - Transaction', () => {
         .map(tx => Transaction.serialize(tx).toString('hex'))
         .map(serialized => Transaction.fromBytes(serialized))
 
-
       const hex = Transaction.serialize(txData).toString('hex')
       const tx = Transaction.fromBytes(hex)
 

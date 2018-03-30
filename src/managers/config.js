@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import deepmerge from 'deepmerge'
 import feeManager from '@/managers/fee'
 import { ARKTOSHI, TRANSACTION_TYPES } from '@/constants'
@@ -32,6 +33,10 @@ class configManager {
 
   getHeight () {
     return this.height
+  }
+
+  getConstant (key) {
+    return this.getConstants()[key]
   }
 
   getConstants (height) {
@@ -71,16 +76,9 @@ class configManager {
   }
 
   _buildFees () {
-    // TODO: Loop over "TRANSACTION_TYPES" and grab base fees from "constants"
-    feeManager.set(TRANSACTION_TYPES.TRANSFER, 0.1 * ARKTOSHI)
-    feeManager.set(TRANSACTION_TYPES.SECOND_SIGNATURE, 100 * ARKTOSHI)
-    feeManager.set(TRANSACTION_TYPES.DELEGATE, 10000 * ARKTOSHI)
-    feeManager.set(TRANSACTION_TYPES.VOTE, 1 * ARKTOSHI)
-    feeManager.set(TRANSACTION_TYPES.MULTI_SIGNATURE, 0)
-    feeManager.set(TRANSACTION_TYPES.IPFS, 0)
-    feeManager.set(TRANSACTION_TYPES.TIMELOCK_TRANSFER, 0)
-    feeManager.set(TRANSACTION_TYPES.MULTI_PAYMENT, 0)
-    feeManager.set(TRANSACTION_TYPES.DELEGATE_RESIGNATION, 0)
+    Object
+        .keys(TRANSACTION_TYPES)
+        .forEach(type => feeManager.set(TRANSACTION_TYPES[type], this.getConstant('fees')[_.camelCase(type)]))
   }
 }
 

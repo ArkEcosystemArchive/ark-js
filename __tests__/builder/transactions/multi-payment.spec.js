@@ -30,12 +30,12 @@ describe('Multi Payment Transaction', () => {
     tx.addPayment('address', 'amount')
 
     expect(tx.payments).toEqual({
-        "address1": "address",
-        "address2": "address",
-        "address3": "address",
-        "amount1": "amount",
-        "amount2": "amount",
-        "amount3": "amount"
+      'address1': 'address',
+      'address2': 'address',
+      'address3': 'address',
+      'amount1': 'amount',
+      'amount2': 'amount',
+      'amount3': 'amount'
     })
   })
 

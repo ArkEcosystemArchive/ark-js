@@ -51,7 +51,6 @@ export default class MultiPayment extends Transaction {
   }
 
   serialise () {
-    // TODO: merge this.recipients and this.amounts with N indices
     const struct = {
       hex: crypto.getBytes(this).toString('hex'),
       id: crypto.getId(this),

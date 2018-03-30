@@ -72,7 +72,7 @@ describe('ECPair', () => {
       keyPair = new ECPair(BigInteger.ONE)
     })
 
-    it('wraps Q.getEncoded', sinonTest(() => {
+    it('wraps Q.getEncoded', sinonTest(function() {
       this.mock(keyPair.publicKey).expects('getEncoded')
         .once().withArgs(keyPair.compressed)
 
@@ -169,7 +169,7 @@ describe('ECPair', () => {
       expect(keyPair.network).toEqual(NETWORKS.devnet)
     })
 
-    it('loops until d is within interval [1, n - 1] : 1', sinonTest(() => {
+    it('loops until d is within interval [1, n - 1] : 1', sinonTest(function() {
       var rng = this.mock()
       rng.exactly(2)
       rng.onCall(0).returns(BigInteger.ZERO.toBuffer(32)) // invalid length
@@ -180,7 +180,7 @@ describe('ECPair', () => {
       })
     }))
 
-    it('loops until d is within interval [1, n - 1] : n - 1', sinonTest(() => {
+    it('loops until d is within interval [1, n - 1] : n - 1', sinonTest(function() {
       var rng = this.mock()
       rng.exactly(3)
       rng.onCall(0).returns(BigInteger.ZERO.toBuffer(32)) // < 1
@@ -223,7 +223,7 @@ describe('ECPair', () => {
     })
 
     describe('signing', () => {
-      it('wraps ecdsa.sign', sinonTest(() => {
+      it('wraps ecdsa.sign', sinonTest(function() {
         this.mock(ecdsa).expects('sign')
           .once().withArgs(hash, keyPair.publicKey)
 
@@ -246,7 +246,7 @@ describe('ECPair', () => {
         signature = keyPair.sign(hash)
       })
 
-      it('wraps ecdsa.verify', sinonTest(() => {
+      it('wraps ecdsa.verify', sinonTest(function() {
         this.mock(ecdsa).expects('verify')
           .once().withArgs(hash, signature, keyPair.publicKey)
 

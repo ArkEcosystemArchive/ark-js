@@ -34,7 +34,7 @@ describe('HDNode', () => {
       var d = BigInteger.ONE
 
       keyPair = new ECPair(d, null)
-      chainCode = new Buffer(32)
+      chainCode = Buffer.alloc(32)
       chainCode.fill(1)
     })
 
@@ -62,7 +62,7 @@ describe('HDNode', () => {
 
     it('throws when an invalid length chain code is given', () => {
       assert.throws(() => {
-        new HDNode(keyPair, new Buffer(20))
+        new HDNode(keyPair, Buffer.alloc(20))
       }, /Expected property "1" of type Buffer\(Length: 32\), got Buffer\(Length: 20\)/)
     })
   })
@@ -78,7 +78,7 @@ describe('HDNode', () => {
       })
     })
 
-    it('throws if IL is not within interval [1, n - 1] | IL === 0', sinonTest(() => {
+    it('throws if IL is not within interval [1, n - 1] | IL === 0', sinonTest(function() {
       this.mock(BigInteger).expects('fromBuffer')
         .once().returns(BigInteger.ZERO)
 
@@ -87,7 +87,7 @@ describe('HDNode', () => {
       }, /Private key must be greater than 0/)
     }))
 
-    it('throws if IL is not within interval [1, n - 1] | IL === n', sinonTest(() => {
+    it('throws if IL is not within interval [1, n - 1] | IL === n', sinonTest(function() {
       this.mock(BigInteger).expects('fromBuffer')
         .once().returns(curve.n)
 
@@ -114,14 +114,14 @@ describe('HDNode', () => {
 
     beforeEach(() => {
       keyPair = ECPair.makeRandom()
-      hash = new Buffer(32)
+      hash = Buffer.alloc(32)
 
-      var chainCode = new Buffer(32)
+      var chainCode = Buffer.alloc(32)
       hd = new HDNode(keyPair, chainCode)
     })
 
     describe('getAddress', () => {
-      it('wraps keyPair.getAddress', sinonTest(() => {
+      it('wraps keyPair.getAddress', sinonTest(function() {
         this.mock(keyPair).expects('getAddress')
           .once().withArgs().returns('foobar')
 
@@ -130,7 +130,7 @@ describe('HDNode', () => {
     })
 
     describe('getNetwork', () => {
-      it('wraps keyPair.getNetwork', sinonTest(() => {
+      it('wraps keyPair.getNetwork', sinonTest(function() {
         this.mock(keyPair).expects('getNetwork')
           .once().withArgs().returns('network')
 
@@ -139,7 +139,7 @@ describe('HDNode', () => {
     })
 
     describe('getPublicKeyBuffer', () => {
-      it('wraps keyPair.getPublicKeyBuffer', sinonTest(() => {
+      it('wraps keyPair.getPublicKeyBuffer', sinonTest(function() {
         this.mock(keyPair).expects('getPublicKeyBuffer')
           .once().withArgs().returns('pubKeyBuffer')
 
@@ -148,7 +148,7 @@ describe('HDNode', () => {
     })
 
     describe('sign', () => {
-      it('wraps keyPair.sign', sinonTest(() => {
+      it('wraps keyPair.sign', sinonTest(function() {
         this.mock(keyPair).expects('sign')
           .once().withArgs(hash).returns('signed')
 
@@ -163,7 +163,7 @@ describe('HDNode', () => {
         signature = hd.sign(hash)
       })
 
-      it('wraps keyPair.verify', sinonTest(() => {
+      it('wraps keyPair.verify', sinonTest(function() {
         this.mock(keyPair).expects('verify')
           .once().withArgs(hash, signature).returns('verified')
 

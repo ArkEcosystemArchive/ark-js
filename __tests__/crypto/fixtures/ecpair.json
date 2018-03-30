@@ -87,7 +87,7 @@
       "d": "48968302285117906840285529799176770990048954789747953886390402978935544927851",
       "Q": "024289801366bcee6172b771cf5a7f13aaecd237a0b9a1ff9d769cabc2e6b70a34",
       "compressed": true,
-      "network": "devnet",
+      "network": "testnet",
       "address": "a2U3J4Fopd4XK2fHEhRgbpRrfAj3XjRYWm",
       "WIF": "UaUjHTfNeGQVJM2jVJ3nAW4HU3Fo1MN5swC6AKqDjvDiWXAunqqY"
     },
@@ -95,7 +95,7 @@
       "d": "48968302285117906840285529799176770990048954789747953886390402978935544927851",
       "Q": "044289801366bcee6172b771cf5a7f13aaecd237a0b9a1ff9d769cabc2e6b70a34cec320a0565fb7caf11b1ca2f445f9b7b012dda5718b3cface369ee3a034ded6",
       "compressed": false,
-      "network": "devnet",
+      "network": "testnet",
       "address": "aMwtvgQoQbqhV3LhS818JSuQKN2fCAdqGx",
       "WIF": "7FP9Dnv6oxbmvmsEhrB9RMdYNXsUeEgDS8kJ2fFYtQqeVxBZpAC"
     },

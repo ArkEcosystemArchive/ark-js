@@ -1,4 +1,4 @@
-import Base from '../base'
+import Base from '@/api/base'
 
 export default class Statistics extends Base {
   blockchain () {

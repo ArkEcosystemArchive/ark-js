@@ -1,7 +1,7 @@
 import configManager from '../managers/config'
 import axios from 'axios'
 
-export default class Http {
+export default class HttpClient {
   constructor (host) {
     this.host = host
   }

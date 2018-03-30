@@ -1,14 +1,14 @@
-const configManager = require('../managers/config')
-const base58check = require('bs58check')
-const bcrypto = require('./crypto')
-const createHmac = require('create-hmac')
-const typeforce = require('typeforce')
-const types = require('./types')
+import base58check from 'bs58check'
+import createHmac from 'create-hmac'
+import typeforce from 'typeforce'
+import ecurve from 'ecurve'
+import BigInteger from 'bigi'
 
-const BigInteger = require('bigi')
-const ECPair = require('./ecpair')
+import configManager from '@/managers/config'
+import bcrypto from '@/crypto/crypto'
+import types from '@/crypto/types'
+import ECPair from '@/crypto/ecpair'
 
-const ecurve = require('ecurve')
 const curve = ecurve.getCurveByName('secp256k1')
 
 export default class HDNode {

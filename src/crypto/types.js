@@ -1,4 +1,4 @@
-const typeforce = require('typeforce')
+import typeforce from 'typeforce'
 
 const UINT31_MAX = Math.pow(2, 31) - 1
 

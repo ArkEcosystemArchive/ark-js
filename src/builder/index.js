@@ -1,4 +1,4 @@
-class Builder {
+class TransactionBuilder {
   delegateResignation () {
     return this.getTransaction('delegate-resignation')
   }
@@ -40,4 +40,4 @@ class Builder {
   }
 }
 
-export default new Builder()
+export default new TransactionBuilder()

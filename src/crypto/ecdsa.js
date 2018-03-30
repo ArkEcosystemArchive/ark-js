@@ -1,18 +1,14 @@
-/** @module ecdsa */
+import createHmac from 'create-hmac'
+import typeforce from 'typeforce'
+import ecurve from 'ecurve'
+import BigInteger from 'bigi'
 
-const createHmac = require('create-hmac')
-const typeforce = require('typeforce')
-const types = require('./types')
-
-const BigInteger = require('bigi')
-const ECSignature = require('./ecsignature')
+import types from '@/crypto/types'
+import ECSignature from '@/crypto/ecsignature'
 
 const ZERO = Buffer.alloc(0)
 const ONE = Buffer.alloc(1)
-
-const ecurve = require('ecurve')
 const secp256k1 = ecurve.getCurveByName('secp256k1')
-
 const N_OVER_TWO = secp256k1.n.shiftRight(1)
 
 class ECDSA {

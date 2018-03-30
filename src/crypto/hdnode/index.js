@@ -8,12 +8,9 @@ import configManager from '@/managers/config'
 import bcrypto from '@/crypto'
 import types from '@/crypto/types'
 import ECPair from '@/crypto/ecpair'
+import { HIGHEST_BIT, LENGTH, MASTER_SECRET } from '@/crypto/hdnode/constants'
 
 const curve = ecurve.getCurveByName('secp256k1')
-
-export const HIGHEST_BIT = 0x80000000
-export const LENGTH = 78
-export const MASTER_SECRET = Buffer.from('Bitcoin seed')
 
 export default class HDNode {
   /**
@@ -187,7 +184,7 @@ export default class HDNode {
    * @returns {HDNode}
    */
   neutered () {
-    const neuteredKeyPair = new ECPair(null, this.keyPair.Q, {
+    const neuteredKeyPair = new ECPair(null, this.keyPair.publicKey, {
       network: this.keyPair.network
     })
 
@@ -244,7 +241,7 @@ export default class HDNode {
     if (!this.isNeutered()) {
       // 0x00 + k for private keys
       buffer.writeUInt8(0, 45)
-      this.keyPair.d.toBuffer(32).copy(buffer, 46)
+      this.keyPair.privateKey.toBuffer(32).copy(buffer, 46)
 
       // 33 bytes: the public key
     } else {
@@ -264,7 +261,7 @@ export default class HDNode {
   derive (index) {
     typeforce(types.UInt32, index)
 
-    const isHardened = index >= this.HIGHEST_BIT
+    const isHardened = index >= HIGHEST_BIT
     const data = Buffer.alloc(37)
 
     // Hardened child
@@ -273,7 +270,7 @@ export default class HDNode {
 
       // data = 0x00 || ser256(kpar) || ser32(index)
       data[0] = 0x00
-      this.keyPair.d.toBuffer(32).copy(data, 1)
+      this.keyPair.privateKey.toBuffer(32).copy(data, 1)
       data.writeUInt32BE(index, 33)
 
       // Normal child
@@ -299,7 +296,7 @@ export default class HDNode {
     let derivedKeyPair
     if (!this.isNeutered()) {
       // ki = parse256(IL) + kpar (mod n)
-      const ki = pIL.add(this.keyPair.d).mod(curve.n)
+      const ki = pIL.add(this.keyPair.privateKey).mod(curve.n)
 
       // In case ki === 0, proceed with the next value for i
       if (ki.signum() === 0) {
@@ -314,7 +311,7 @@ export default class HDNode {
     } else {
       // Ki = point(parse256(IL)) + Kpar
       //    = G*IL + Kpar
-      const Ki = curve.G.multiply(pIL).add(this.keyPair.Q)
+      const Ki = curve.G.multiply(pIL).add(this.keyPair.publicKey)
 
       // In case Ki is the point at infinity, proceed with the next value for i
       if (curve.isInfinity(Ki)) {
@@ -342,7 +339,7 @@ export default class HDNode {
     typeforce(types.UInt31, index)
 
     // Only derives hardened private keys by default
-    return this.derive(index + this.HIGHEST_BIT)
+    return this.derive(index + HIGHEST_BIT)
   }
 
   /**
@@ -352,7 +349,7 @@ export default class HDNode {
    * @returns {boolean}
    */
   isNeutered () {
-    return !(this.keyPair.d)
+    return !(this.keyPair.privateKey)
   }
 
   /**

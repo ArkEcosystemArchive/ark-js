@@ -4,6 +4,7 @@ import ecurve from 'ecurve'
 import crypto from 'crypto'
 
 import HDNode from '@/crypto/hdnode'
+import { HIGHEST_BIT } from '@/crypto/hdnode/constants'
 import ECPair from '@/crypto/ecpair'
 import configManager from '@/managers/config'
 import network from '@/networks/ark/mainnet'
@@ -43,20 +44,20 @@ describe('ark-js (BIP32)', () => {
 
   it('can recover a BIP32 parent private key from the parent public key, and a derived, non-hardened child private key', () => {
     function recoverParent (master, child) {
-      assert(!master.keyPair.d, 'You already have the parent private key')
-      assert(child.keyPair.d, 'Missing child private key')
+      assert(!master.keyPair.privateKey, 'You already have the parent private key')
+      assert(child.keyPair.privateKey, 'Missing child private key')
 
       var curve = ecurve.getCurveByName('secp256k1')
-      var QP = master.keyPair.Q
+      var QP = master.keyPair.publicKey
       var serQP = master.keyPair.getPublicKeyBuffer()
 
-      var d1 = child.keyPair.d
+      var d1 = child.keyPair.privateKey
       var d2
       var data = Buffer.alloc(37)
       serQP.copy(data, 0)
 
       // search index space until we find it
-      for (var i = 0; i < HDNode.HIGHEST_BIT; ++i) {
+      for (var i = 0; i < HIGHEST_BIT; ++i) {
         data.writeUInt32BE(i, 33)
 
         // calculate I
@@ -67,7 +68,7 @@ describe('ark-js (BIP32)', () => {
         // See hdnode.js:273 to understand
         d2 = d1.subtract(pIL).mod(curve.n)
 
-        var Qp = new ECPair(d2).Q
+        var Qp = new ECPair(d2).publicKey
         if (Qp.equals(QP)) break
       }
 
@@ -85,6 +86,6 @@ describe('ark-js (BIP32)', () => {
     // now for the recovery
     var neuteredMaster = master.neutered()
     var recovered = recoverParent(neuteredMaster, child)
-    assert.strictEqual(recovered.toBase58(), master.toBase58())
+    expect(recovered.toBase58()).toBe(master.toBase58())
   })
 })

@@ -248,7 +248,7 @@ describe('ECPair', () => {
 
       it('wraps ecdsa.verify', sinonTest(() => {
         this.mock(ecdsa).expects('verify')
-          .once().withArgs(hash, signature, keyPair.Q)
+          .once().withArgs(hash, signature, keyPair.publicKey)
 
         keyPair.verify(hash, signature)
       }))

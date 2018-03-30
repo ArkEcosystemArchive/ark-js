@@ -30,7 +30,7 @@ export default class MultiPayment extends Transaction {
     const paymentsCount = Object.keys(this.payments).length / 2
 
     if (paymentsCount >= 2258) {
-        throw new Error('A maximum of 2259 outputs is allowed')
+      throw new Error('A maximum of 2259 outputs is allowed')
     }
 
     const key = paymentsCount + 1

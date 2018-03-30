@@ -6,13 +6,18 @@ import BigInteger from 'bigi'
 import types from '@/crypto/types'
 import ECSignature from '@/crypto/ecsignature'
 
-const ZERO = Buffer.alloc(0)
-const ONE = Buffer.alloc(1)
+const ZERO = Buffer.from([0])
+const ONE = Buffer.from([1])
+
 const secp256k1 = ecurve.getCurveByName('secp256k1')
 const N_OVER_TWO = secp256k1.n.shiftRight(1)
 
 class ECDSA {
-/**
+  constructor () {
+    this.__curve = secp256k1
+  }
+
+  /**
  * [Generation of k.](https://tools.ietf.org/html/rfc6979#section-3.2)
  *
  * @static

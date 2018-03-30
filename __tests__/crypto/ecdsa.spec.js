@@ -1,17 +1,19 @@
 import assert from 'assert'
 import sinon from 'sinon'
-import sinonTest from 'sinon-test'
+import sinonTestFactory from 'sinon-test'
 import BigInteger from 'bigi'
 
 import ecdsa from '@/crypto/ecdsa'
 import bcrypto from '@/crypto'
 import ECSignature from '@/crypto/ecsignature'
+
 import fixtures from './fixtures/ecdsa.json'
 
 const curve = ecdsa.__curve
+const sinonTest = sinonTestFactory(sinon)
 
-test('ecdsa', function() {
-  test('deterministicGenerateK', function() {
+describe('ecdsa', function() {
+  describe('deterministicGenerateK', function() {
     function checkSig() {
       return true
     }
@@ -79,7 +81,7 @@ test('ecdsa', function() {
     })
   })
 
-  test('sign', function() {
+  describe('sign', function() {
     fixtures.valid.ecdsa.forEach(function(f) {
       it('produces a deterministic signature for "' + f.message + '"', function() {
         var d = BigInteger.fromHex(f.d)
@@ -100,7 +102,7 @@ test('ecdsa', function() {
     })
   })
 
-  test('verify', function() {
+  describe('verify', function() {
     fixtures.valid.ecdsa.forEach(function(f) {
       it('verifies a valid signature for "' + f.message + '"', function() {
         var d = BigInteger.fromHex(f.d)

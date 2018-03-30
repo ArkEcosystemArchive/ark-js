@@ -77,8 +77,8 @@ class configManager {
 
   _buildFees () {
     Object
-        .keys(TRANSACTION_TYPES)
-        .forEach(type => feeManager.set(TRANSACTION_TYPES[type], this.getConstant('fees')[_.camelCase(type)]))
+      .keys(TRANSACTION_TYPES)
+      .forEach(type => feeManager.set(TRANSACTION_TYPES[type], this.getConstant('fees')[_.camelCase(type)]))
   }
 }
 

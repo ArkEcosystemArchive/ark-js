@@ -60,6 +60,7 @@ export default class Transfer extends Transaction {
       fee: this.fee,
       recipientId: this.recipientId,
       senderPublicKey: this.senderPublicKey,
+      vendorFieldHex: this.vendorFieldHex,
       asset: this.asset
     }
   }

@@ -1,6 +1,6 @@
 import getType from 'jest-get-type'
 import configManager from '@/managers/config'
-import network from '@/networks/devnet'
+import network from '@/networks/ark/devnet'
 import slots from '@/crypto/slots'
 
 beforeEach(() => configManager.setConfig(network))

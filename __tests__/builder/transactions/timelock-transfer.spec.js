@@ -1,7 +1,7 @@
 import Ark from '@/'
 import Builder from '@/builder'
 import Transaction from '@/builder/transactions/timelock-transfer'
-import network from '@/networks/devnet'
+import network from '@/networks/ark/devnet'
 
 let ark
 let tx

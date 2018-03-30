@@ -8,15 +8,9 @@ import BigInteger from 'bigi'
 import ECPair from '@crypto/ecpair'
 import ecdsa from '@/crypto/ecdsa'
 import fixtures from './fixtures.json'
+import networkList from '../../utils/network-list'
 
 const curve = ecdsa.__curve
-
-// TODO: fast-glob the config directory
-var NETWORKS = require('@crypto/networks')
-var NETWORKS_LIST = [] // Object.values(NETWORKS)
-for (var networkName in NETWORKS) {
-  NETWORKS_LIST.push(NETWORKS[networkName])
-}
 
 test('ECPair', function() {
   test('constructor', function() {
@@ -84,7 +78,7 @@ test('ECPair', function() {
   test('fromWIF', function() {
     fixtures.valid.forEach(function(f) {
       it('imports ' + f.WIF + ' (' + f.network + ')', function() {
-        var network = NETWORKS[f.network]
+        var network = networkList[f.network]
         var keyPair = ECPair.fromWIF(f.WIF, network)
 
         assert.strictEqual(keyPair.d.toString(), f.d)
@@ -96,19 +90,19 @@ test('ECPair', function() {
 
     fixtures.valid.forEach(function(f) {
       it('imports ' + f.WIF + ' (via list of networks)', function() {
-        var keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
+        var keyPair = ECPair.fromWIF(f.WIF, networkList)
 
         assert.strictEqual(keyPair.d.toString(), f.d)
         assert.strictEqual(keyPair.getPublicKeyBuffer().toString('hex'), f.Q)
         assert.strictEqual(keyPair.compressed, f.compressed)
-        assert.strictEqual(keyPair.network, NETWORKS[f.network])
+        assert.strictEqual(keyPair.network, networkList[f.network])
       })
     })
 
     fixtures.invalid.fromWIF.forEach(function(f) {
       it('throws on ' + f.WIF, function() {
         assert.throws(function() {
-          var networks = f.network ? NETWORKS[f.network] : NETWORKS_LIST
+          var networks = f.network ? networkList[f.network] : networkList
 
           ECPair.fromWIF(f.WIF, networks)
         }, new RegExp(f.exception))
@@ -119,7 +113,7 @@ test('ECPair', function() {
   test('toWIF', function() {
     fixtures.valid.forEach(function(f) {
       it('exports ' + f.WIF, function() {
-        var keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
+        var keyPair = ECPair.fromWIF(f.WIF, networkList)
         var result = keyPair.toWIF()
 
         assert.strictEqual(result, f.WIF)
@@ -199,7 +193,7 @@ test('ECPair', function() {
   test('getAddress', function() {
     fixtures.valid.forEach(function(f) {
       it('returns ' + f.address + ' for ' + f.WIF, function() {
-        var keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
+        var keyPair = ECPair.fromWIF(f.WIF, networkList)
 
         assert.strictEqual(keyPair.getAddress(), f.address)
       })
@@ -209,8 +203,8 @@ test('ECPair', function() {
   test('getNetwork', function() {
     fixtures.valid.forEach(function(f) {
       it('returns ' + f.network + ' for ' + f.WIF, function() {
-        var network = NETWORKS[f.network]
-        var keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
+        var network = networkList[f.network]
+        var keyPair = ECPair.fromWIF(f.WIF, networkList)
 
         assert.strictEqual(keyPair.getNetwork(), network)
       })

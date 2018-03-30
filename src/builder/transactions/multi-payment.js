@@ -15,10 +15,16 @@ export default class MultiPayment extends Transaction {
     this.timestamp = slots.getTime()
     this.recipients = []
     this.amounts = []
+    this.vendorFieldHex = null
     this.version = 0x02
   }
 
   create () {
+    return this
+  }
+
+  setVendorField (data, type) {
+    this.vendorFieldHex = Buffer.from(data, type).toString('hex')
     return this
   }
 
@@ -56,7 +62,8 @@ export default class MultiPayment extends Transaction {
 
       type: this.type,
       fee: this.fee,
-      senderPublicKey: this.senderPublicKey
+      senderPublicKey: this.senderPublicKey,
+      vendorFieldHex: this.vendorFieldHex
     }
   }
 }

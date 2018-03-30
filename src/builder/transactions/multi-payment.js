@@ -52,7 +52,7 @@ export default class MultiPayment extends Transaction {
 
   serialise () {
     // TODO: merge this.recipients and this.amounts with N indices
-    return {
+    const struct = {
       hex: crypto.getBytes(this).toString('hex'),
       id: crypto.getId(this),
       signature: this.signature,
@@ -64,5 +64,7 @@ export default class MultiPayment extends Transaction {
       senderPublicKey: this.senderPublicKey,
       vendorFieldHex: this.vendorFieldHex
     }
+
+    return {...struct, ...this.payments}
   }
 }

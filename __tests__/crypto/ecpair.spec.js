@@ -7,8 +7,8 @@ import BigInteger from 'bigi'
 
 import ECPair from '@crypto/ecpair'
 import ecdsa from '@/crypto/ecdsa'
-import fixtures from './fixtures.json'
-import networkList from '../../utils/network-list'
+import fixtures from './fixtures/ecpair.json'
+import networkList from '../utils/network-list'
 
 const curve = ecdsa.__curve
 

@@ -6,7 +6,7 @@ import BigInteger from 'bigi'
 import ecdsa from '@/crypto/ecdsa'
 import bcrypto from '@/crypto/crypto'
 import ECSignature from '@/crypto/ecsignature'
-import fixtures from './fixtures.json'
+import fixtures from './fixtures/ecdsa.json'
 
 const curve = ecdsa.__curve
 

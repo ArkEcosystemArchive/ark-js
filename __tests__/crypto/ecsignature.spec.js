@@ -2,7 +2,7 @@ import assert from 'assert'
 import BigInteger from 'bigi'
 
 import ECSignature from '@/crypto/ecsignature'
-import fixtures from './fixtures.json'
+import fixtures from './fixtures/ecsignature.json'
 
 test('ECSignature', function() {
   test('toCompact', function() {

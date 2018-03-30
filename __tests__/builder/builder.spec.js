@@ -4,6 +4,6 @@ import network from '@/networks/devnet'
 
 describe('Builder', () => {
   test('should be instantiated', () => {
-    expect(transactionBuilder).toBeInstanceOf(Builder)
+    expect(transactionBuilder).toBeInstanceOf(Object)
   })
 })

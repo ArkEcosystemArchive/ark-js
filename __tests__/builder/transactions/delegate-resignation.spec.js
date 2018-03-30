@@ -20,7 +20,6 @@ describe('Delegate Resignation Transaction', () => {
     expect(tx).toHaveProperty('id')
     expect(tx).toHaveProperty('type')
     expect(tx).toHaveProperty('fee')
-    expect(tx).toHaveProperty('amount')
     expect(tx).toHaveProperty('timestamp')
     expect(tx).toHaveProperty('version')
   })

@@ -8,13 +8,17 @@ export default class Transaction {
   constructor (transaction) {
     this.serialized = Transaction.serialize(transaction)
     this.data = Transaction.deserialize(this.serialized.toString('hex'))
+
     if (this.data.version === 1) {
       this.verified = cryptoBuilder.verify(this.data)
     }
+
     // if (this.data.amount !== transaction.amount) console.error('bang', transaction, this.data);
-    ['id', 'version', 'timestamp', 'senderPublicKey', 'recipientId', 'type', 'vendorFieldHex', 'amount', 'fee', 'blockId', 'signature', 'secondSignature'].forEach((key) => {
-      this[key] = this.data[key]
-    }, this)
+
+    [
+      'id', 'version', 'timestamp', 'senderPublicKey', 'recipientId', 'type', 'vendorFieldHex',
+      'amount', 'fee', 'blockId', 'signature', 'secondSignature'
+    ].forEach((key) => { this[key] = this.data[key] }, this)
   }
 
   static fromBytes (hexString) {

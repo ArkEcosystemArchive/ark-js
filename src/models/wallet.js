@@ -136,10 +136,10 @@ export default class Wallet {
       [TRANSACTION_TYPES.MULTI_SIGNATURE] () {
         const keysgroup = transaction.asset.multisignature.keysgroup
 
-        return !this.multisignature
-          && keysgroup.length >= transaction.asset.multisignature.min - 1
-          && keysgroup.length === transaction.signatures.length
-          && this.verifySignatures(transaction, transaction.asset.multisignature)
+        return !this.multisignature &&
+          keysgroup.length >= transaction.asset.multisignature.min - 1 &&
+          keysgroup.length === transaction.signatures.length &&
+          this.verifySignatures(transaction, transaction.asset.multisignature)
       },
       [TRANSACTION_TYPES.IPFS]: () => (true),
       [TRANSACTION_TYPES.TIMELOCK_TRANSFER]: () => (true),

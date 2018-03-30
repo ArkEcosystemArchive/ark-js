@@ -1,5 +1,5 @@
 import ApiClient from '@/api'
-import Builder from '@/builder'
+import transactionBuilder from '@/builder'
 import configManager from '@/managers/config'
 import feeManager from '@/managers/fee'
 
@@ -16,12 +16,12 @@ export default class Ark {
     return feeManager
   }
 
-  getConfigManager () {
+  getconfigManager () {
     return configManager
   }
 
   getBuilder () {
-    return new Builder()
+    return transactionBuilder
   }
 
   getClient (host) {

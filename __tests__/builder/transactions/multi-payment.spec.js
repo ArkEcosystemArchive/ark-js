@@ -20,10 +20,23 @@ describe('Multi Payment Transaction', () => {
     expect(tx).toHaveProperty('id')
     expect(tx).toHaveProperty('type')
     expect(tx).toHaveProperty('fee')
-    expect(tx).toHaveProperty('amount')
     expect(tx).toHaveProperty('timestamp')
     expect(tx).toHaveProperty('version')
-    expect(tx).toHaveProperty('network')
+  })
+
+  it('should add new payments', () => {
+    tx.addPayment('address', 'amount')
+    tx.addPayment('address', 'amount')
+    tx.addPayment('address', 'amount')
+
+    expect(tx.payments).toEqual({
+        "address1": "address",
+        "address2": "address",
+        "address3": "address",
+        "amount1": "amount",
+        "amount2": "amount",
+        "amount3": "amount"
+    })
   })
 
   it('should set the fee', () => {

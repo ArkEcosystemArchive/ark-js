@@ -1,5 +1,4 @@
-import { TRANSACTION_TYPES } from '@/constants'
-import _ from 'lodash'
+import { TRANSACTION_TYPES } from '@/constants'
 
 class FeeManager {
   constructor () {

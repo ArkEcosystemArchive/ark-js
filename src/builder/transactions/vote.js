@@ -1,4 +1,3 @@
-import ConfigManager from '../../managers/config'
 import FeeManager from '../../managers/fee'
 import crypto from '../crypto'
 import slots from '../../crypto/slots'

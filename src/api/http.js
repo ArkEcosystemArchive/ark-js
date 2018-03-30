@@ -1,4 +1,4 @@
-import ConfigManager from '../managers/config'
+import configManager from '../managers/config'
 import axios from 'axios'
 
 export default class Http {
@@ -30,8 +30,8 @@ export default class Http {
     const client = axios.create({
       baseURL: this.host,
       headers: {
-        nethash: ConfigManager.get('nethash'),
-        version: ConfigManager.get('version'),
+        nethash: configManager.get('nethash'),
+        version: configManager.get('version'),
         port: '1'
       }
     })

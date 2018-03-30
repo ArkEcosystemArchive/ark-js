@@ -26,7 +26,6 @@ describe('Second Signature Transaction', () => {
     expect(tx).toHaveProperty('senderPublicKey')
     expect(tx).toHaveProperty('asset')
     expect(tx).toHaveProperty('version')
-    expect(tx).toHaveProperty('network')
   })
 
   it('should set the fee', () => {

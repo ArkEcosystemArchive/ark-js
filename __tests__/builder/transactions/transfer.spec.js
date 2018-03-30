@@ -25,7 +25,6 @@ describe('Transfer Transaction', () => {
     expect(tx).toHaveProperty('recipientId')
     expect(tx).toHaveProperty('senderPublicKey')
     expect(tx).toHaveProperty('version')
-    expect(tx).toHaveProperty('network')
   })
 
   it('should set the fee', () => {

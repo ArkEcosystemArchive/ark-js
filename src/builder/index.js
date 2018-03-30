@@ -36,7 +36,7 @@ class Builder {
   }
 
   getTransaction (transactionType) {
-    return new (require(`./transactions/${transactionType}`).default)()
+    return new (require(`./transactions/${transactionType}`).default)() // eslint-disable-line new-cap
   }
 }
 

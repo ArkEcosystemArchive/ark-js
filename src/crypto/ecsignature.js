@@ -12,8 +12,7 @@ import BigInteger from 'bigi'
  */
 export default class ECSignature {
   constructor (r, s) {
-    // FIX: TypeError: types.tuple is not a function
-    // typeforce(types.tuple(types.BigInt, types.BigInt), arguments)
+    typeforce(types.tuple(types.BigInt, types.BigInt), arguments)
 
     /** @type {BigInteger} */
     this.r = r

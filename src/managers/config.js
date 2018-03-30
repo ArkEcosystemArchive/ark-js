@@ -1,9 +1,9 @@
 import _ from 'lodash'
 import deepmerge from 'deepmerge'
 import feeManager from '@/managers/fee'
-import { ARKTOSHI, TRANSACTION_TYPES } from '@/constants'
+import { TRANSACTION_TYPES } from '@/constants'
 
-class configManager {
+class ConfigManager {
   setConfig (config) {
     this.config = {}
 
@@ -82,4 +82,4 @@ class configManager {
   }
 }
 
-export default new configManager()
+export default new ConfigManager()

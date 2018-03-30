@@ -1,15 +1,20 @@
-import assert from require('assert')
-import sinon from require('sinon')
-import sinonTest from require('sinon-test')
-import BigInteger from require('bigi')
+import assert from 'assert'
+import sinon from 'sinon'
+import sinonTestFactory from 'sinon-test'
+import BigInteger from 'bigi'
 
+import configManager from '@/managers/config'
 import ecdsa from '@/crypto/ecdsa'
 import ECPair from '@/crypto/ecpair'
 import HDNode from '@/crypto/hdnode'
-import fixtures from './fixtures/hdnode.json'
 import { NETWORKS, NETWORKS_LIST } from '../utils/network-list'
 
+import fixtures from './fixtures/hdnode.json'
+
 const curve = ecdsa.__curve
+const sinonTest = sinonTestFactory(sinon)
+
+beforeEach(() => configManager.setConfig(NETWORKS.mainnet))
 
 var validAll = []
 fixtures.valid.forEach((f) => {
@@ -21,8 +26,8 @@ fixtures.valid.forEach((f) => {
   validAll = validAll.concat(addNetwork(f.master), f.children.map(addNetwork))
 })
 
-test('HDNode', () => {
-  test('Constructor', () => {
+describe('HDNode', () => {
+  describe('Constructor', () => {
     var keyPair, chainCode
 
     beforeEach(() => {
@@ -62,7 +67,7 @@ test('HDNode', () => {
     })
   })
 
-  test('fromSeed*', () => {
+  describe('fromSeed*', () => {
     fixtures.valid.forEach((f) => {
       it('calculates privKey and chainCode for ' + f.master.fingerprint, () => {
         var network = NETWORKS[f.network]
@@ -104,7 +109,7 @@ test('HDNode', () => {
     })
   })
 
-  test('ECPair wrappers', () => {
+  describe('ECPair wrappers', () => {
     var keyPair, hd, hash
 
     beforeEach(() => {
@@ -115,7 +120,7 @@ test('HDNode', () => {
       hd = new HDNode(keyPair, chainCode)
     })
 
-    test('getAddress', () => {
+    describe('getAddress', () => {
       it('wraps keyPair.getAddress', sinonTest(() => {
         this.mock(keyPair).expects('getAddress')
           .once().withArgs().returns('foobar')
@@ -124,7 +129,7 @@ test('HDNode', () => {
       }))
     })
 
-    test('getNetwork', () => {
+    describe('getNetwork', () => {
       it('wraps keyPair.getNetwork', sinonTest(() => {
         this.mock(keyPair).expects('getNetwork')
           .once().withArgs().returns('network')
@@ -133,7 +138,7 @@ test('HDNode', () => {
       }))
     })
 
-    test('getPublicKeyBuffer', () => {
+    describe('getPublicKeyBuffer', () => {
       it('wraps keyPair.getPublicKeyBuffer', sinonTest(() => {
         this.mock(keyPair).expects('getPublicKeyBuffer')
           .once().withArgs().returns('pubKeyBuffer')
@@ -142,7 +147,7 @@ test('HDNode', () => {
       }))
     })
 
-    test('sign', () => {
+    describe('sign', () => {
       it('wraps keyPair.sign', sinonTest(() => {
         this.mock(keyPair).expects('sign')
           .once().withArgs(hash).returns('signed')
@@ -151,7 +156,7 @@ test('HDNode', () => {
       }))
     })
 
-    test('verify', () => {
+    describe('verify', () => {
       var signature
 
       beforeEach(() => {
@@ -167,7 +172,7 @@ test('HDNode', () => {
     })
   })
 
-  test('fromBase58 / toBase58', () => {
+  describe('fromBase58 / toBase58', () => {
     validAll.forEach((f) => {
       it('exports ' + f.base58 + ' (public) correctly', () => {
         var hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
@@ -199,7 +204,7 @@ test('HDNode', () => {
     })
   })
 
-  test('getIdentifier', () => {
+  describe('getIdentifier', () => {
     validAll.forEach((f) => {
       it('returns the identifier for ' + f.fingerprint, () => {
         var hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
@@ -209,7 +214,7 @@ test('HDNode', () => {
     })
   })
 
-  test('getFingerprint', () => {
+  describe('getFingerprint', () => {
     validAll.forEach((f) => {
       it('returns the fingerprint for ' + f.fingerprint, () => {
         var hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
@@ -219,7 +224,7 @@ test('HDNode', () => {
     })
   })
 
-  test('neutered / isNeutered', () => {
+  describe('neutered / isNeutered', () => {
     validAll.forEach((f) => {
       it('drops the private key for ' + f.fingerprint, () => {
         var hd = HDNode.fromBase58(f.base58Priv, NETWORKS_LIST)
@@ -242,7 +247,7 @@ test('HDNode', () => {
     })
   })
 
-  test('derive', () => {
+  describe('derive', () => {
     function verifyVector(hd, v) {
       if (hd.isNeutered()) {
         assert.strictEqual(hd.toBase58(), v.base58)

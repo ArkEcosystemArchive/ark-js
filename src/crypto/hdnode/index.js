@@ -72,7 +72,7 @@ export default class HDNode {
    * @param {Buffer|string} string
    * @returns {HDNode}
    */
-  fromBase58 (string, networks) {
+  static fromBase58 (string, networks) {
     const buffer = base58check.decode(string)
     if (buffer.length !== 78) throw new Error('Invalid buffer length')
 

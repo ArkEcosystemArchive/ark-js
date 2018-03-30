@@ -31,7 +31,7 @@ export default class ECSignature {
    * @param {*} native
    * @returns {SignatureParseResult}
    */
-  parseNativeSecp256k1 (native) {
+  static parseNativeSecp256k1 (native) {
     if (native.signature.length !== 64) throw new Error('Invalid signature length')
 
     const compressed = 0

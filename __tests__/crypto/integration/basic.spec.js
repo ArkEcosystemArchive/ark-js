@@ -11,7 +11,7 @@ beforeEach(() => configManager.setConfig(network))
 describe('Basic Crypto', () => {
   it('can generate a random ark address', () => {
     const keyPair = ECPair.makeRandom({
-        rng: () => new Buffer('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')
+      rng: () => new Buffer('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')
     })
 
     assert.strictEqual(keyPair.getAddress(), 'ANoMWEJ9jSdE2FgohBLLXeLzci59BDFsP4')

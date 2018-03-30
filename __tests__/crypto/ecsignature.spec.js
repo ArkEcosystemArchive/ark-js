@@ -9,10 +9,10 @@ import fixtures from './fixtures/ecsignature.json'
 
 beforeEach(() => configManager.setConfig(network))
 
-describe('ECSignature', function() {
-  describe('toCompact', function() {
-    fixtures.valid.forEach(function(f) {
-      it('exports ' + f.compact.hex + ' correctly', function() {
+describe('ECSignature', () => {
+  describe('toCompact', () => {
+    fixtures.valid.forEach((f) => {
+      it('exports ' + f.compact.hex + ' correctly', () => {
         var signature = new ECSignature(new BigInteger(f.signature.r), new BigInteger(f.signature.s))
 
         var buffer = signature.toCompact(f.compact.i, f.compact.compressed)
@@ -21,9 +21,9 @@ describe('ECSignature', function() {
     })
   })
 
-  describe('parseCompact', function() {
-    fixtures.valid.forEach(function(f) {
-      it('imports ' + f.compact.hex + ' correctly', function() {
+  describe('parseCompact', () => {
+    fixtures.valid.forEach((f) => {
+      it('imports ' + f.compact.hex + ' correctly', () => {
         var buffer = new Buffer(f.compact.hex, 'hex')
         var parsed = ECSignature.parseCompact(buffer)
 
@@ -34,20 +34,20 @@ describe('ECSignature', function() {
       })
     })
 
-    fixtures.invalid.compact.forEach(function(f) {
-      it('throws on ' + f.hex, function() {
+    fixtures.invalid.compact.forEach((f) => {
+      it('throws on ' + f.hex, () => {
         var buffer = new Buffer(f.hex, 'hex')
 
-        assert.throws(function() {
+        assert.throws(() => {
           ECSignature.parseCompact(buffer)
         }, new RegExp(f.exception))
       })
     })
   })
 
-  describe('toDER', function() {
-    fixtures.valid.forEach(function(f) {
-      it('exports ' + f.DER + ' correctly', function() {
+  describe('toDER', () => {
+    fixtures.valid.forEach((f) => {
+      it('exports ' + f.DER + ' correctly', () => {
         var signature = new ECSignature(new BigInteger(f.signature.r), new BigInteger(f.signature.s))
 
         var DER = signature.toDER()
@@ -56,9 +56,9 @@ describe('ECSignature', function() {
     })
   })
 
-  describe('fromDER', function() {
-    fixtures.valid.forEach(function(f) {
-      it('imports ' + f.DER + ' correctly', function() {
+  describe('fromDER', () => {
+    fixtures.valid.forEach((f) => {
+      it('imports ' + f.DER + ' correctly', () => {
         var buffer = new Buffer(f.DER, 'hex')
         var signature = ECSignature.fromDER(buffer)
 
@@ -67,20 +67,20 @@ describe('ECSignature', function() {
       })
     })
 
-    fixtures.invalid.DER.forEach(function(f) {
-      it('throws "' + f.exception + '" for ' + f.hex, function() {
+    fixtures.invalid.DER.forEach((f) => {
+      it('throws "' + f.exception + '" for ' + f.hex, () => {
         var buffer = new Buffer(f.hex, 'hex')
 
-        assert.throws(function() {
+        assert.throws(() => {
           ECSignature.fromDER(buffer)
         }, new RegExp(f.exception))
       })
     })
   })
 
-  describe('toScriptSignature', function() {
-    fixtures.valid.forEach(function(f) {
-      it('exports ' + f.scriptSignature.hex + ' correctly', function() {
+  describe('toScriptSignature', () => {
+    fixtures.valid.forEach((f) => {
+      it('exports ' + f.scriptSignature.hex + ' correctly', () => {
         var signature = new ECSignature(new BigInteger(f.signature.r), new BigInteger(f.signature.s))
 
         var scriptSignature = signature.toScriptSignature(f.scriptSignature.hashType)
@@ -88,20 +88,20 @@ describe('ECSignature', function() {
       })
     })
 
-    fixtures.invalid.scriptSignature.forEach(function(f) {
-      it('throws ' + f.exception, function() {
+    fixtures.invalid.scriptSignature.forEach((f) => {
+      it('throws ' + f.exception, () => {
         var signature = new ECSignature(new BigInteger(f.signature.r), new BigInteger(f.signature.s))
 
-        assert.throws(function() {
+        assert.throws(() => {
           signature.toScriptSignature(f.hashType)
         }, new RegExp(f.exception))
       })
     })
   })
 
-  describe('parseScriptSignature', function() {
-    fixtures.valid.forEach(function(f) {
-      it('imports ' + f.scriptSignature.hex + ' correctly', function() {
+  describe('parseScriptSignature', () => {
+    fixtures.valid.forEach((f) => {
+      it('imports ' + f.scriptSignature.hex + ' correctly', () => {
         var buffer = new Buffer(f.scriptSignature.hex, 'hex')
         var parsed = ECSignature.parseScriptSignature(buffer)
 
@@ -111,11 +111,11 @@ describe('ECSignature', function() {
       })
     })
 
-    fixtures.invalid.scriptSignature.forEach(function(f) {
-      it('throws on ' + f.hex, function() {
+    fixtures.invalid.scriptSignature.forEach((f) => {
+      it('throws on ' + f.hex, () => {
         var buffer = new Buffer(f.hex, 'hex')
 
-        assert.throws(function() {
+        assert.throws(() => {
           ECSignature.parseScriptSignature(buffer)
         }, new RegExp(f.exception))
       })

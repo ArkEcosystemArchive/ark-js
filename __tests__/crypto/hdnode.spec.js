@@ -12,7 +12,7 @@ import { NETWORKS, NETWORKS_LIST } from '../utils/network-list'
 const curve = ecdsa.__curve
 
 var validAll = []
-fixtures.valid.forEach(function(f) {
+fixtures.valid.forEach((f) => {
   function addNetwork(n) {
     n.network = f.network
     return n
@@ -21,11 +21,11 @@ fixtures.valid.forEach(function(f) {
   validAll = validAll.concat(addNetwork(f.master), f.children.map(addNetwork))
 })
 
-test('HDNode', function() {
-  test('Constructor', function() {
+test('HDNode', () => {
+  test('Constructor', () => {
     var keyPair, chainCode
 
-    beforeEach(function() {
+    beforeEach(() => {
       var d = BigInteger.ONE
 
       keyPair = new ECPair(d, null)
@@ -33,38 +33,38 @@ test('HDNode', function() {
       chainCode.fill(1)
     })
 
-    it('stores the keyPair/chainCode directly', function() {
+    it('stores the keyPair/chainCode directly', () => {
       var hd = new HDNode(keyPair, chainCode)
 
       assert.strictEqual(hd.keyPair, keyPair)
       assert.strictEqual(hd.chainCode, chainCode)
     })
 
-    it('has a default depth/index of 0', function() {
+    it('has a default depth/index of 0', () => {
       var hd = new HDNode(keyPair, chainCode)
 
       assert.strictEqual(hd.depth, 0)
       assert.strictEqual(hd.index, 0)
     })
 
-    it('throws on uncompressed keyPair', function() {
+    it('throws on uncompressed keyPair', () => {
       keyPair.compressed = false
 
-      assert.throws(function() {
+      assert.throws(() => {
         new HDNode(keyPair, chainCode)
       }, /BIP32 only allows compressed keyPairs/)
     })
 
-    it('throws when an invalid length chain code is given', function() {
-      assert.throws(function() {
+    it('throws when an invalid length chain code is given', () => {
+      assert.throws(() => {
         new HDNode(keyPair, new Buffer(20))
       }, /Expected property "1" of type Buffer\(Length: 32\), got Buffer\(Length: 20\)/)
     })
   })
 
-  test('fromSeed*', function() {
-    fixtures.valid.forEach(function(f) {
-      it('calculates privKey and chainCode for ' + f.master.fingerprint, function() {
+  test('fromSeed*', () => {
+    fixtures.valid.forEach((f) => {
+      it('calculates privKey and chainCode for ' + f.master.fingerprint, () => {
         var network = NETWORKS[f.network]
         var hd = HDNode.fromSeedHex(f.master.seed, network)
 
@@ -73,41 +73,41 @@ test('HDNode', function() {
       })
     })
 
-    it('throws if IL is not within interval [1, n - 1] | IL === 0', sinonTest(function() {
+    it('throws if IL is not within interval [1, n - 1] | IL === 0', sinonTest(() => {
       this.mock(BigInteger).expects('fromBuffer')
         .once().returns(BigInteger.ZERO)
 
-      assert.throws(function() {
+      assert.throws(() => {
         HDNode.fromSeedHex('ffffffffffffffffffffffffffffffff')
       }, /Private key must be greater than 0/)
     }))
 
-    it('throws if IL is not within interval [1, n - 1] | IL === n', sinonTest(function() {
+    it('throws if IL is not within interval [1, n - 1] | IL === n', sinonTest(() => {
       this.mock(BigInteger).expects('fromBuffer')
         .once().returns(curve.n)
 
-      assert.throws(function() {
+      assert.throws(() => {
         HDNode.fromSeedHex('ffffffffffffffffffffffffffffffff')
       }, /Private key must be less than the curve order/)
     }))
 
-    it('throws on low entropy seed', function() {
-      assert.throws(function() {
+    it('throws on low entropy seed', () => {
+      assert.throws(() => {
         HDNode.fromSeedHex('ffffffffff')
       }, /Seed should be at least 128 bits/)
     })
 
-    it('throws on too high entropy seed', function() {
-      assert.throws(function() {
+    it('throws on too high entropy seed', () => {
+      assert.throws(() => {
         HDNode.fromSeedHex('ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')
       }, /Seed should be at most 512 bits/)
     })
   })
 
-  test('ECPair wrappers', function() {
+  test('ECPair wrappers', () => {
     var keyPair, hd, hash
 
-    beforeEach(function() {
+    beforeEach(() => {
       keyPair = ECPair.makeRandom()
       hash = new Buffer(32)
 
@@ -115,8 +115,8 @@ test('HDNode', function() {
       hd = new HDNode(keyPair, chainCode)
     })
 
-    test('getAddress', function() {
-      it('wraps keyPair.getAddress', sinonTest(function() {
+    test('getAddress', () => {
+      it('wraps keyPair.getAddress', sinonTest(() => {
         this.mock(keyPair).expects('getAddress')
           .once().withArgs().returns('foobar')
 
@@ -124,8 +124,8 @@ test('HDNode', function() {
       }))
     })
 
-    test('getNetwork', function() {
-      it('wraps keyPair.getNetwork', sinonTest(function() {
+    test('getNetwork', () => {
+      it('wraps keyPair.getNetwork', sinonTest(() => {
         this.mock(keyPair).expects('getNetwork')
           .once().withArgs().returns('network')
 
@@ -133,8 +133,8 @@ test('HDNode', function() {
       }))
     })
 
-    test('getPublicKeyBuffer', function() {
-      it('wraps keyPair.getPublicKeyBuffer', sinonTest(function() {
+    test('getPublicKeyBuffer', () => {
+      it('wraps keyPair.getPublicKeyBuffer', sinonTest(() => {
         this.mock(keyPair).expects('getPublicKeyBuffer')
           .once().withArgs().returns('pubKeyBuffer')
 
@@ -142,8 +142,8 @@ test('HDNode', function() {
       }))
     })
 
-    test('sign', function() {
-      it('wraps keyPair.sign', sinonTest(function() {
+    test('sign', () => {
+      it('wraps keyPair.sign', sinonTest(() => {
         this.mock(keyPair).expects('sign')
           .once().withArgs(hash).returns('signed')
 
@@ -151,14 +151,14 @@ test('HDNode', function() {
       }))
     })
 
-    test('verify', function() {
+    test('verify', () => {
       var signature
 
-      beforeEach(function() {
+      beforeEach(() => {
         signature = hd.sign(hash)
       })
 
-      it('wraps keyPair.verify', sinonTest(function() {
+      it('wraps keyPair.verify', sinonTest(() => {
         this.mock(keyPair).expects('verify')
           .once().withArgs(hash, signature).returns('verified')
 
@@ -167,20 +167,20 @@ test('HDNode', function() {
     })
   })
 
-  test('fromBase58 / toBase58', function() {
-    validAll.forEach(function(f) {
-      it('exports ' + f.base58 + ' (public) correctly', function() {
+  test('fromBase58 / toBase58', () => {
+    validAll.forEach((f) => {
+      it('exports ' + f.base58 + ' (public) correctly', () => {
         var hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
         assert.strictEqual(hd.toBase58(), f.base58)
-        assert.throws(function() {
+        assert.throws(() => {
           hd.keyPair.toWIF()
         }, /Missing private key/)
       })
     })
 
-    validAll.forEach(function(f) {
-      it('exports ' + f.base58Priv + ' (private) correctly', function() {
+    validAll.forEach((f) => {
+      it('exports ' + f.base58Priv + ' (private) correctly', () => {
         var hd = HDNode.fromBase58(f.base58Priv, NETWORKS_LIST)
 
         assert.strictEqual(hd.toBase58(), f.base58Priv)
@@ -188,9 +188,9 @@ test('HDNode', function() {
       })
     })
 
-    fixtures.invalid.fromBase58.forEach(function(f) {
-      it('throws on ' + f.string, function() {
-        assert.throws(function() {
+    fixtures.invalid.fromBase58.forEach((f) => {
+      it('throws on ' + f.string, () => {
+        assert.throws(() => {
           var networks = f.network ? NETWORKS[f.network] : NETWORKS_LIST
 
           HDNode.fromBase58(f.string, networks)
@@ -199,9 +199,9 @@ test('HDNode', function() {
     })
   })
 
-  test('getIdentifier', function() {
-    validAll.forEach(function(f) {
-      it('returns the identifier for ' + f.fingerprint, function() {
+  test('getIdentifier', () => {
+    validAll.forEach((f) => {
+      it('returns the identifier for ' + f.fingerprint, () => {
         var hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
         assert.strictEqual(hd.getIdentifier().toString('hex'), f.identifier)
@@ -209,9 +209,9 @@ test('HDNode', function() {
     })
   })
 
-  test('getFingerprint', function() {
-    validAll.forEach(function(f) {
-      it('returns the fingerprint for ' + f.fingerprint, function() {
+  test('getFingerprint', () => {
+    validAll.forEach((f) => {
+      it('returns the fingerprint for ' + f.fingerprint, () => {
         var hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
         assert.strictEqual(hd.getFingerprint().toString('hex'), f.fingerprint)
@@ -219,14 +219,14 @@ test('HDNode', function() {
     })
   })
 
-  test('neutered / isNeutered', function() {
-    validAll.forEach(function(f) {
-      it('drops the private key for ' + f.fingerprint, function() {
+  test('neutered / isNeutered', () => {
+    validAll.forEach((f) => {
+      it('drops the private key for ' + f.fingerprint, () => {
         var hd = HDNode.fromBase58(f.base58Priv, NETWORKS_LIST)
         var hdn = hd.neutered()
 
         assert.notEqual(hdn.keyPair, hd.keyPair)
-        assert.throws(function() {
+        assert.throws(() => {
           hdn.keyPair.toWIF()
         }, /Missing private key/)
         assert.strictEqual(hdn.toBase58(), f.base58)
@@ -242,7 +242,7 @@ test('HDNode', function() {
     })
   })
 
-  test('derive', function() {
+  test('derive', () => {
     function verifyVector(hd, v) {
       if (hd.isNeutered()) {
         assert.strictEqual(hd.toBase58(), v.base58)
@@ -261,14 +261,14 @@ test('HDNode', function() {
       assert.strictEqual(hd.index, v.index >>> 0)
     }
 
-    fixtures.valid.forEach(function(f) {
+    fixtures.valid.forEach((f) => {
       var network = NETWORKS[f.network]
       var hd = HDNode.fromSeedHex(f.master.seed, network)
       var master = hd
 
       // testing deriving path from master
-      f.children.forEach(function(c) {
-        it(c.path + ' from ' + f.master.fingerprint + ' by path', function() {
+      f.children.forEach((c) => {
+        it(c.path + ' from ' + f.master.fingerprint + ' by path', () => {
           var child = master.derivePath(c.path)
           var childNoM = master.derivePath(c.path.slice(2)) // no m/ on path
 
@@ -278,16 +278,16 @@ test('HDNode', function() {
       })
 
       // testing deriving path from children
-      f.children.forEach(function(c, i) {
+      f.children.forEach((c, i) => {
         var cn = master.derivePath(c.path)
 
         f.children.slice(i + 1).forEach(function(cc) {
-          it(cc.path + ' from ' + c.fingerprint + ' by path', function() {
+          it(cc.path + ' from ' + c.fingerprint + ' by path', () => {
             var ipath = cc.path.slice(2).split('/').slice(i + 1).join('/')
             var child = cn.derivePath(ipath)
             verifyVector(child, cc)
 
-            assert.throws(function() {
+            assert.throws(() => {
               cn.derivePath('m/' + ipath)
             }, /Not a master node/)
           })
@@ -295,10 +295,10 @@ test('HDNode', function() {
       })
 
       // FIXME: test data is only testing Private -> private for now
-      f.children.forEach(function(c, i) {
+      f.children.forEach((c, i) => {
         if (c.m === undefined) return
 
-        it(c.path + ' from ' + f.master.fingerprint, function() {
+        it(c.path + ' from ' + f.master.fingerprint, () => {
           if (c.hardened) {
             hd = hd.deriveHardened(c.m)
           } else {
@@ -310,7 +310,7 @@ test('HDNode', function() {
       })
     })
 
-    it('works for Private -> public (neutered)', function() {
+    it('works for Private -> public (neutered)', () => {
       var f = fixtures.valid[1]
       var c = f.children[0]
 
@@ -320,7 +320,7 @@ test('HDNode', function() {
       assert.strictEqual(child.toBase58(), c.base58)
     })
 
-    it('works for Private -> public (neutered, hardened)', function() {
+    it('works for Private -> public (neutered, hardened)', () => {
       var f = fixtures.valid[0]
       var c = f.children[0]
 
@@ -330,7 +330,7 @@ test('HDNode', function() {
       assert.strictEqual(c.base58, child.toBase58())
     })
 
-    it('works for Public -> public', function() {
+    it('works for Public -> public', () => {
       var f = fixtures.valid[1]
       var c = f.children[0]
 
@@ -340,41 +340,41 @@ test('HDNode', function() {
       assert.strictEqual(c.base58, child.toBase58())
     })
 
-    it('throws on Public -> public (hardened)', function() {
+    it('throws on Public -> public (hardened)', () => {
       var f = fixtures.valid[0]
       var c = f.children[0]
 
       var master = HDNode.fromBase58(f.master.base58, NETWORKS_LIST)
 
-      assert.throws(function() {
+      assert.throws(() => {
         master.deriveHardened(c.m)
       }, /Could not derive hardened child key/)
     })
 
-    it('throws on wrong types', function() {
+    it('throws on wrong types', () => {
       var f = fixtures.valid[0]
       var master = HDNode.fromBase58(f.master.base58, NETWORKS_LIST)
 
-      fixtures.invalid.derive.forEach(function(fx) {
-        assert.throws(function() {
+      fixtures.invalid.derive.forEach((fx) => {
+        assert.throws(() => {
           master.derive(fx)
         }, /Expected UInt32/)
       })
 
-      fixtures.invalid.deriveHardened.forEach(function(fx) {
-        assert.throws(function() {
+      fixtures.invalid.deriveHardened.forEach((fx) => {
+        assert.throws(() => {
           master.deriveHardened(fx)
         }, /Expected UInt31/)
       })
 
-      fixtures.invalid.derivePath.forEach(function(fx) {
-        assert.throws(function() {
+      fixtures.invalid.derivePath.forEach((fx) => {
+        assert.throws(() => {
           master.derivePath(fx)
         }, /Expected BIP32 derivation path/)
       })
     })
 
-    it('works when private key has leading zeros', function() {
+    it('works when private key has leading zeros', () => {
       var key = 'xprv9s21ZrQH143K3ckY9DgU79uMTJkQRLdbCCVDh81SnxTgPzLLGax6uHeBULTtaEtcAvKjXfT7ZWtHzKjTpujMkUd9dDb8msDeAfnJxrgAYhr'
       var hdkey = HDNode.fromBase58(key, NETWORKS.bitcoin)
       assert.strictEqual(hdkey.keyPair.d.toBuffer(32).toString('hex'), '00000055378cf5fafb56c711c674143f9b0ee82ab0ba2924f19b64f5ae7cdbfd')

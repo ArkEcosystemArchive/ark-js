@@ -1,9 +1,8 @@
-import ConfigManager from '../../managers/config'
-import FeeManager from '../../managers/fee'
-import crypto from '../crypto'
-import slots from '../../crypto/slots'
-import Transaction from '../transaction'
-import { TRANSACTION_TYPES } from '../../constants'
+import FeeManager from '@/managers/fee'
+import cryptoBuilder from '@/builder/crypto'
+import slots from '@/crypto/slots'
+import Transaction from '@/builder/transaction'
+import { TRANSACTION_TYPES } from '@/constants'
 
 export default class IPFS extends Transaction {
   constructor () {
@@ -34,26 +33,26 @@ export default class IPFS extends Transaction {
   }
 
   sign (passphrase) {
-    const keys = crypto.getKeys(passphrase)
+    const keys = cryptoBuilder.getKeys(passphrase)
     this.senderPublicKey = keys.publicKey
-    this.signature = crypto.sign(this, keys)
+    this.signature = cryptoBuilder.sign(this, keys)
     return this
   }
 
   secondSign (transaction, passphrase) {
-    const keys = crypto.getKeys(passphrase)
-    this.secondSignature = crypto.secondSign(transaction, keys)
+    const keys = cryptoBuilder.getKeys(passphrase)
+    this.secondSignature = cryptoBuilder.secondSign(transaction, keys)
     return this
   }
 
   verify () {
-    return crypto.verify(this)
+    return cryptoBuilder.verify(this)
   }
 
   serialise () {
     return {
-      hex: crypto.getBytes(this).toString('hex'),
-      id: crypto.getId(this),
+      hex: cryptoBuilder.getBytes(this).toString('hex'),
+      id: cryptoBuilder.getId(this),
       signature: this.signature,
       secondSignature: this.secondSignature,
       timestamp: this.timestamp,

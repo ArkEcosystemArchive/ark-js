@@ -1,6 +1,6 @@
 import deepmerge from 'deepmerge'
-import FeeManager from './fee'
-import { ARKTOSHI, TRANSACTION_TYPES } from '../constants'
+import feeManager from '@/managers/fee'
+import { ARKTOSHI, TRANSACTION_TYPES } from '@/constants'
 
 class ConfigManager {
   setConfig (config) {
@@ -43,21 +43,21 @@ class ConfigManager {
       height = 1
     }
 
-    while ((this.constant.index < this.constants.length - 1) && height >= this.constants[this.constant.index + 1].height) {
-      this.constant.index++
-      this.constant.data = this.constants[this.constant.index]
+    while ((this.current.index < this.constants.length - 1) && height >= this.constants[this.current.index + 1].height) {
+      this.current.index++
+      this.current.data = this.constants[this.current.index]
     }
-    while (height < this.constants[this.constant.index].height) {
-      this.constant.index--
-      this.constant.data = this.constants[this.constant.index]
+    while (height < this.constants[this.current.index].height) {
+      this.current.index--
+      this.current.data = this.constants[this.current.index]
     }
 
-    return this.constant.data
+    return this.current.data
   }
 
   _buildConstants () {
     this.constants = this.config.constants.sort((a, b) => a.height - b.height)
-    this.constant = {
+    this.current = {
       index: 0,
       data: this.constants[0]
     }
@@ -72,15 +72,15 @@ class ConfigManager {
 
   _buildFees () {
     // TODO: Loop over "TRANSACTION_TYPES" and grab base fees from "constants"
-    FeeManager.set(TRANSACTION_TYPES.TRANSFER, 0.1 * ARKTOSHI)
-    FeeManager.set(TRANSACTION_TYPES.SECOND_SIGNATURE, 100 * ARKTOSHI)
-    FeeManager.set(TRANSACTION_TYPES.DELEGATE, 10000 * ARKTOSHI)
-    FeeManager.set(TRANSACTION_TYPES.VOTE, 1 * ARKTOSHI)
-    FeeManager.set(TRANSACTION_TYPES.MULTI_SIGNATURE, 0)
-    FeeManager.set(TRANSACTION_TYPES.IPFS, 0)
-    FeeManager.set(TRANSACTION_TYPES.TIMELOCK_TRANSFER, 0)
-    FeeManager.set(TRANSACTION_TYPES.MULTI_PAYMENT, 0)
-    FeeManager.set(TRANSACTION_TYPES.DELEGATE_RESIGNATION, 0)
+    feeManager.set(TRANSACTION_TYPES.TRANSFER, 0.1 * ARKTOSHI)
+    feeManager.set(TRANSACTION_TYPES.SECOND_SIGNATURE, 100 * ARKTOSHI)
+    feeManager.set(TRANSACTION_TYPES.DELEGATE, 10000 * ARKTOSHI)
+    feeManager.set(TRANSACTION_TYPES.VOTE, 1 * ARKTOSHI)
+    feeManager.set(TRANSACTION_TYPES.MULTI_SIGNATURE, 0)
+    feeManager.set(TRANSACTION_TYPES.IPFS, 0)
+    feeManager.set(TRANSACTION_TYPES.TIMELOCK_TRANSFER, 0)
+    feeManager.set(TRANSACTION_TYPES.MULTI_PAYMENT, 0)
+    feeManager.set(TRANSACTION_TYPES.DELEGATE_RESIGNATION, 0)
   }
 }
 

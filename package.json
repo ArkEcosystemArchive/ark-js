@@ -15,6 +15,8 @@
   "scripts": {
     "build": "rm -rf dist && NODE_ENV=production webpack",
     "test": "jest --no-cache --forceExit",
+    "test:watch": "jest --watch",
+    "test:watch:all": "jest --watchAll",
     "lint": "eslint ./src --fix",
     "lint:test": "eslint ./__tests__ --fix"
   },

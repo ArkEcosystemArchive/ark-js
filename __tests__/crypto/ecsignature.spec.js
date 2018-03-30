@@ -2,10 +2,15 @@ import assert from 'assert'
 import BigInteger from 'bigi'
 
 import ECSignature from '@/crypto/ecsignature'
+import configManager from '@/managers/config'
+import network from '@/networks/ark/mainnet'
+
 import fixtures from './fixtures/ecsignature.json'
 
-test('ECSignature', function() {
-  test('toCompact', function() {
+beforeEach(() => configManager.setConfig(network))
+
+describe('ECSignature', function() {
+  describe('toCompact', function() {
     fixtures.valid.forEach(function(f) {
       it('exports ' + f.compact.hex + ' correctly', function() {
         var signature = new ECSignature(new BigInteger(f.signature.r), new BigInteger(f.signature.s))
@@ -16,7 +21,7 @@ test('ECSignature', function() {
     })
   })
 
-  test('parseCompact', function() {
+  describe('parseCompact', function() {
     fixtures.valid.forEach(function(f) {
       it('imports ' + f.compact.hex + ' correctly', function() {
         var buffer = new Buffer(f.compact.hex, 'hex')
@@ -40,7 +45,7 @@ test('ECSignature', function() {
     })
   })
 
-  test('toDER', function() {
+  describe('toDER', function() {
     fixtures.valid.forEach(function(f) {
       it('exports ' + f.DER + ' correctly', function() {
         var signature = new ECSignature(new BigInteger(f.signature.r), new BigInteger(f.signature.s))
@@ -51,7 +56,7 @@ test('ECSignature', function() {
     })
   })
 
-  test('fromDER', function() {
+  describe('fromDER', function() {
     fixtures.valid.forEach(function(f) {
       it('imports ' + f.DER + ' correctly', function() {
         var buffer = new Buffer(f.DER, 'hex')
@@ -73,7 +78,7 @@ test('ECSignature', function() {
     })
   })
 
-  test('toScriptSignature', function() {
+  describe('toScriptSignature', function() {
     fixtures.valid.forEach(function(f) {
       it('exports ' + f.scriptSignature.hex + ' correctly', function() {
         var signature = new ECSignature(new BigInteger(f.signature.r), new BigInteger(f.signature.s))
@@ -94,7 +99,7 @@ test('ECSignature', function() {
     })
   })
 
-  test('parseScriptSignature', function() {
+  describe('parseScriptSignature', function() {
     fixtures.valid.forEach(function(f) {
       it('imports ' + f.scriptSignature.hex + ' correctly', function() {
         var buffer = new Buffer(f.scriptSignature.hex, 'hex')

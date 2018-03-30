@@ -10,7 +10,7 @@ import BigInteger from 'bigi'
  * @param {BigInteger} r
  * @param {BigInteger} s
  */
-class ECSignature {
+export default class ECSignature {
   constructor (r, s) {
     // FIX: TypeError: types.tuple is not a function
     // typeforce(types.tuple(types.BigInt, types.BigInt), arguments)
@@ -67,7 +67,7 @@ class ECSignature {
    * @param {Buffer} buffer
    * @returns {SignatureParseResult}
    */
-  parseCompact (buffer) {
+  static parseCompact (buffer) {
     if (buffer.length !== 65) throw new Error('Invalid signature length')
 
     const flagByte = buffer.readUInt8(0) - 27
@@ -90,7 +90,7 @@ class ECSignature {
    * @param {Buffer}
    * @returns {ECSignature}
    */
-  fromDER (buffer) {
+  static fromDER (buffer) {
     const decode = bip66.decode(buffer)
     const r = BigInteger.fromDERInteger(decode.r)
     const s = BigInteger.fromDERInteger(decode.s)
@@ -103,7 +103,7 @@ class ECSignature {
    *
    * @param {Buffer} buffer
    */
-  parseScriptSignature (buffer) {
+  static parseScriptSignature (buffer) {
     const hashType = buffer.readUInt8(buffer.length - 1)
     const hashTypeMod = hashType & ~0x80
 
@@ -140,8 +140,8 @@ class ECSignature {
    * @return {Buffer}
    */
   toDER () {
-    const r = Buffer.alloc(this.r.toDERInteger())
-    const s = Buffer.alloc(this.s.toDERInteger())
+    const r = Buffer.from(this.r.toDERInteger())
+    const s = Buffer.from(this.s.toDERInteger())
 
     return bip66.encode(r, s)
   }
@@ -160,5 +160,3 @@ class ECSignature {
     return Buffer.concat([this.toDER(), hashTypeBuffer])
   }
 }
-
-export default new ECSignature()

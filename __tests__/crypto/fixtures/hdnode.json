@@ -1,7 +1,7 @@
 {
   "valid": [
     {
-      "network": "ark",
+      "network": "mainnet",
       "master": {
         "seed": "000102030405060708090a0b0c0d0e0f",
         "wif": "SHP217APiCmjmgjnf9pLDhP1ijJSxu6rsyAV2fibupLKp86JhaBo",
@@ -89,7 +89,7 @@
       ]
     },
     {
-      "network": "ark",
+      "network": "mainnet",
       "master": {
         "seed": "fffcf9f6f3f0edeae7e4e1dedbd8d5d2cfccc9c6c3c0bdbab7b4b1aeaba8a5a29f9c999693908d8a8784817e7b7875726f6c696663605d5a5754514e4b484542",
         "wif": "SC61ikR2WPwbcvJw49Jqa1ifyTuqeoSR9iXve9JW55LzkgT9z6Ux",
@@ -178,7 +178,7 @@
     },
     {
       "comment": "Private key has leading zeros, see PR #673",
-      "network": "ark",
+      "network": "mainnet",
       "master": {
         "seed": "d13de7bd1e54422d1a3b3b699a27fb460de2849e7e66a005c647e8e4a54075cb",
         "wif": "S9aCDFDPDbSBsbyxBvHG3caxMfYmHdkBYggdQWiUYp9M41cTBtT2",

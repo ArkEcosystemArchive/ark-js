@@ -7,7 +7,7 @@ import ecdsa from '@/crypto/ecdsa'
 import ECPair from '@/crypto/ecpair'
 import HDNode from '@/crypto/hdnode'
 import fixtures from './fixtures/hdnode.json'
-import networkList from '../utils/network-list'
+import { NETWORKS, NETWORKS_LIST } from '../utils/network-list'
 
 const curve = ecdsa.__curve
 
@@ -65,7 +65,7 @@ test('HDNode', function() {
   test('fromSeed*', function() {
     fixtures.valid.forEach(function(f) {
       it('calculates privKey and chainCode for ' + f.master.fingerprint, function() {
-        var network = networkList[f.network]
+        var network = NETWORKS[f.network]
         var hd = HDNode.fromSeedHex(f.master.seed, network)
 
         assert.strictEqual(hd.keyPair.toWIF(), f.master.wif)
@@ -170,7 +170,7 @@ test('HDNode', function() {
   test('fromBase58 / toBase58', function() {
     validAll.forEach(function(f) {
       it('exports ' + f.base58 + ' (public) correctly', function() {
-        var hd = HDNode.fromBase58(f.base58, networkList)
+        var hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
         assert.strictEqual(hd.toBase58(), f.base58)
         assert.throws(function() {
@@ -181,7 +181,7 @@ test('HDNode', function() {
 
     validAll.forEach(function(f) {
       it('exports ' + f.base58Priv + ' (private) correctly', function() {
-        var hd = HDNode.fromBase58(f.base58Priv, networkList)
+        var hd = HDNode.fromBase58(f.base58Priv, NETWORKS_LIST)
 
         assert.strictEqual(hd.toBase58(), f.base58Priv)
         assert.strictEqual(hd.keyPair.toWIF(), f.wif)
@@ -191,7 +191,7 @@ test('HDNode', function() {
     fixtures.invalid.fromBase58.forEach(function(f) {
       it('throws on ' + f.string, function() {
         assert.throws(function() {
-          var networks = f.network ? networkList[f.network] : networkList
+          var networks = f.network ? NETWORKS[f.network] : NETWORKS_LIST
 
           HDNode.fromBase58(f.string, networks)
         }, new RegExp(f.exception))
@@ -202,7 +202,7 @@ test('HDNode', function() {
   test('getIdentifier', function() {
     validAll.forEach(function(f) {
       it('returns the identifier for ' + f.fingerprint, function() {
-        var hd = HDNode.fromBase58(f.base58, networkList)
+        var hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
         assert.strictEqual(hd.getIdentifier().toString('hex'), f.identifier)
       })
@@ -212,7 +212,7 @@ test('HDNode', function() {
   test('getFingerprint', function() {
     validAll.forEach(function(f) {
       it('returns the fingerprint for ' + f.fingerprint, function() {
-        var hd = HDNode.fromBase58(f.base58, networkList)
+        var hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
         assert.strictEqual(hd.getFingerprint().toString('hex'), f.fingerprint)
       })
@@ -222,7 +222,7 @@ test('HDNode', function() {
   test('neutered / isNeutered', function() {
     validAll.forEach(function(f) {
       it('drops the private key for ' + f.fingerprint, function() {
-        var hd = HDNode.fromBase58(f.base58Priv, networkList)
+        var hd = HDNode.fromBase58(f.base58Priv, NETWORKS_LIST)
         var hdn = hd.neutered()
 
         assert.notEqual(hdn.keyPair, hd.keyPair)
@@ -262,7 +262,7 @@ test('HDNode', function() {
     }
 
     fixtures.valid.forEach(function(f) {
-      var network = networkList[f.network]
+      var network = NETWORKS[f.network]
       var hd = HDNode.fromSeedHex(f.master.seed, network)
       var master = hd
 
@@ -314,7 +314,7 @@ test('HDNode', function() {
       var f = fixtures.valid[1]
       var c = f.children[0]
 
-      var master = HDNode.fromBase58(f.master.base58Priv, networkList)
+      var master = HDNode.fromBase58(f.master.base58Priv, NETWORKS_LIST)
       var child = master.derive(c.m).neutered()
 
       assert.strictEqual(child.toBase58(), c.base58)
@@ -324,7 +324,7 @@ test('HDNode', function() {
       var f = fixtures.valid[0]
       var c = f.children[0]
 
-      var master = HDNode.fromBase58(f.master.base58Priv, networkList)
+      var master = HDNode.fromBase58(f.master.base58Priv, NETWORKS_LIST)
       var child = master.deriveHardened(c.m).neutered()
 
       assert.strictEqual(c.base58, child.toBase58())
@@ -334,7 +334,7 @@ test('HDNode', function() {
       var f = fixtures.valid[1]
       var c = f.children[0]
 
-      var master = HDNode.fromBase58(f.master.base58, networkList)
+      var master = HDNode.fromBase58(f.master.base58, NETWORKS_LIST)
       var child = master.derive(c.m)
 
       assert.strictEqual(c.base58, child.toBase58())
@@ -344,7 +344,7 @@ test('HDNode', function() {
       var f = fixtures.valid[0]
       var c = f.children[0]
 
-      var master = HDNode.fromBase58(f.master.base58, networkList)
+      var master = HDNode.fromBase58(f.master.base58, NETWORKS_LIST)
 
       assert.throws(function() {
         master.deriveHardened(c.m)
@@ -353,7 +353,7 @@ test('HDNode', function() {
 
     it('throws on wrong types', function() {
       var f = fixtures.valid[0]
-      var master = HDNode.fromBase58(f.master.base58, networkList)
+      var master = HDNode.fromBase58(f.master.base58, NETWORKS_LIST)
 
       fixtures.invalid.derive.forEach(function(fx) {
         assert.throws(function() {

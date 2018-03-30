@@ -3,7 +3,10 @@ import path from 'path'
 
 const entries = fg.sync([path.resolve(__dirname, '../../src/networks/**/*.json')])
 
-let networks = {}
-entries.forEach(file => (networks[path.parse(file).name] = require(file)))
+let NETWORKS = {}
+entries.forEach(file => (NETWORKS[path.parse(file).name] = require(file)))
 
-export default networks
+let NETWORKS_LIST = []
+entries.forEach(file => NETWORKS_LIST.push(require(file)))
+
+export { NETWORKS, NETWORKS_LIST }

@@ -7,11 +7,15 @@ import BigInteger from 'bigi'
 
 import ECPair from '@/crypto/ecpair'
 import ecdsa from '@/crypto/ecdsa'
+import configManager from '@/managers/config'
+
 import fixtures from './fixtures/ecpair.json'
 import { NETWORKS, NETWORKS_LIST } from '../utils/network-list'
 
 const curve = ecdsa.__curve
 const sinonTest = sinonTestFactory(sinon)
+
+beforeEach(() => configManager.setConfig(NETWORKS.mainnet))
 
 describe('ECPair', function() {
   describe('constructor', function() {
@@ -82,7 +86,7 @@ describe('ECPair', function() {
         var network = NETWORKS[f.network]
         var keyPair = ECPair.fromWIF(f.WIF, network)
 
-        assert.strictEqual(keyPair.publicKey.toString(), f.d)
+        assert.strictEqual(keyPair.privateKey.toString(), f.d)
         assert.strictEqual(keyPair.getPublicKeyBuffer().toString('hex'), f.Q)
         assert.strictEqual(keyPair.compressed, f.compressed)
         assert.strictEqual(keyPair.network, network)
@@ -93,7 +97,7 @@ describe('ECPair', function() {
       it('imports ' + f.WIF + ' (via list of networks)', function() {
         var keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
 
-        assert.strictEqual(keyPair.publicKey.toString(), f.d)
+        assert.strictEqual(keyPair.privateKey.toString(), f.d)
         assert.strictEqual(keyPair.getPublicKeyBuffer().toString('hex'), f.Q)
         assert.strictEqual(keyPair.compressed, f.compressed)
         assert.strictEqual(keyPair.network, NETWORKS[f.network])
@@ -126,18 +130,16 @@ describe('ECPair', function() {
     var d = new Buffer('0404040404040404040404040404040404040404040404040404040404040404', 'hex')
     var exWIF = 'S9hzwiZ5ziKjUiFpuZX4Lri3rUocDxZSTy7YzKKHvx8TSjUrYQ27'
 
-    describe('uses randombytes RNG', function() {
-      it('generates a ECPair', function() {
+    it('uses randombytes RNG to generate a ECPair', function() {
         var stub = {
           randombytes: function() {
             return d
           }
         }
-        var ProxiedECPair = proxyquire('../../lib/ecpair', stub)
+        var ProxiedECPair = proxyquire('../../src/crypto/ecpair', stub).default
 
         var keyPair = ProxiedECPair.makeRandom()
         assert.strictEqual(keyPair.toWIF(), exWIF)
-      })
     })
 
     it('allows a custom RNG to be used', function() {
@@ -154,7 +156,7 @@ describe('ECPair', function() {
       var keyPair = ECPair.makeRandom()
 
       assert.strictEqual(keyPair.compressed, true)
-      assert.strictEqual(keyPair.network, NETWORKS.mainnet)
+      expect(keyPair.network).toEqual(NETWORKS.mainnet)
     })
 
     it('supports the options parameter', function() {
@@ -164,7 +166,7 @@ describe('ECPair', function() {
       })
 
       assert.strictEqual(keyPair.compressed, false)
-      assert.strictEqual(keyPair.network, NETWORKS.devnet)
+      expect(keyPair.network).toEqual(NETWORKS.devnet)
     })
 
     it('loops until d is within interval [1, n - 1] : 1', sinonTest(function() {

@@ -1,4 +1,4 @@
-import FeeManager from '@/managers/fee'
+import feeManager from '@/managers/fee'
 import cryptoBuilder from '@/builder/crypto'
 import slots from '@/crypto/slots'
 import Transaction from '@/builder/transaction'
@@ -10,7 +10,7 @@ export default class Delegate extends Transaction {
 
     this.id = null
     this.type = TRANSACTION_TYPES.DELEGATE
-    this.fee = FeeManager.get(TRANSACTION_TYPES.DELEGATE)
+    this.fee = feeManager.get(TRANSACTION_TYPES.DELEGATE)
     this.amount = 0
     this.timestamp = slots.getTime()
     this.recipientId = null

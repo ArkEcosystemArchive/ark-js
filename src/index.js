@@ -16,7 +16,7 @@ export default class Ark {
     return feeManager
   }
 
-  getconfigManager () {
+  getConfigManager () {
     return configManager
   }
 

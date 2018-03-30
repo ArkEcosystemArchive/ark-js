@@ -1,4 +1,4 @@
-import FeeManager from '../../managers/fee'
+import feeManager from '../../managers/fee'
 import crypto from '../crypto'
 import slots from '../../crypto/slots'
 import Transaction from '../transaction'
@@ -23,7 +23,7 @@ export default class MultiSignature extends Transaction {
     this.asset.multisignature.keysgroup = keysgroup
     this.asset.multisignature.lifetime = lifetime
     this.asset.multisignature.min = min
-    this.fee = (keysgroup.length + 1) * FeeManager.get(TRANSACTION_TYPES.MULTI_SIGNATURE)
+    this.fee = (keysgroup.length + 1) * feeManager.get(TRANSACTION_TYPES.MULTI_SIGNATURE)
     return this
   }
 

@@ -1,4 +1,4 @@
-import FeeManager from '../../managers/fee'
+import feeManager from '../../managers/fee'
 import crypto from '../crypto'
 import slots from '../../crypto/slots'
 import Transaction from '../transaction'
@@ -10,7 +10,7 @@ export default class DelegateResignation extends Transaction {
 
     this.id = null
     this.type = TRANSACTION_TYPES.DELEGATE_RESIGNATION
-    this.fee = FeeManager.get(TRANSACTION_TYPES.DELEGATE_RESIGNATION)
+    this.fee = feeManager.get(TRANSACTION_TYPES.DELEGATE_RESIGNATION)
     this.timestamp = slots.getTime()
     this.version = 0x02
   }

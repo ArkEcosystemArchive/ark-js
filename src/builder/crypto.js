@@ -7,7 +7,7 @@ import bs58check from 'bs58check'
 import { Buffer } from 'buffer/'
 import ByteBuffer from 'bytebuffer'
 import { ARKTOSHI, TRANSACTION_TYPES } from '@/constants'
-import FeeManager from '@/managers/fee'
+import feeManager from '@/managers/fee'
 
 class CryptoBuilder {
   getBytes (transaction) {
@@ -205,7 +205,7 @@ class CryptoBuilder {
   }
 
   getFee (transaction) {
-    return FeeManager.get(transaction.type) * ARKTOSHI
+    return feeManager.get(transaction.type) * ARKTOSHI
   }
 
   sign (transaction, keys) {

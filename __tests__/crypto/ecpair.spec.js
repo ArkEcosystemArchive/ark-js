@@ -55,8 +55,8 @@ describe('ECPair', () => {
 
     fixtures.invalid.constructor.forEach((f) => {
       it('throws ' + f.exception, () => {
-        var d = f.d && new BigInteger(f.d)
-        var Q = f.Q && ecurve.Point.decodeFrom(curve, new Buffer(f.Q, 'hex'))
+        var d = f.d && new BigInteger(f.d) // eslint-disable-line no-new
+        var Q = f.Q && ecurve.Point.decodeFrom(curve, Buffer.from(f.Q, 'hex'))
 
         assert.throws(() => {
           new ECPair(d, Q, f.options)
@@ -127,7 +127,7 @@ describe('ECPair', () => {
   })
 
   describe('makeRandom', () => {
-    var d = new Buffer('0404040404040404040404040404040404040404040404040404040404040404', 'hex')
+    var d = Buffer.from('0404040404040404040404040404040404040404040404040404040404040404', 'hex')
     var exWIF = 'S9hzwiZ5ziKjUiFpuZX4Lri3rUocDxZSTy7YzKKHvx8TSjUrYQ27'
 
     it('uses randombytes RNG to generate a ECPair', () => {
@@ -219,16 +219,16 @@ describe('ECPair', () => {
 
     beforeEach(() => {
       keyPair = ECPair.makeRandom()
-      hash = new Buffer(32)
+      hash = Buffer.alloc(32)
     })
 
     describe('signing', () => {
-      //  it('wraps ecdsa.sign', sinonTest(() => {
-      //    this.mock(ecdsa).expects('sign')
-      //      .once().withArgs(hash, keyPair.publicKey)
-      //
-      //    keyPair.sign(hash)
-      //  }))
+      it('wraps ecdsa.sign', sinonTest(() => {
+        this.mock(ecdsa).expects('sign')
+          .once().withArgs(hash, keyPair.publicKey)
+
+        keyPair.sign(hash)
+      }))
 
       it('throws if no private key is found', () => {
         keyPair.publicKey = null
@@ -246,12 +246,12 @@ describe('ECPair', () => {
         signature = keyPair.sign(hash)
       })
 
-      // it('wraps ecdsa.verify', sinonTest(() => {
-      //   this.mock(ecdsa).expects('verify')
-      //     .once().withArgs(hash, signature, keyPair.Q)
-      //
-      //   keyPair.verify(hash, signature)
-      // }))
+      it('wraps ecdsa.verify', sinonTest(() => {
+        this.mock(ecdsa).expects('verify')
+          .once().withArgs(hash, signature, keyPair.Q)
+
+        keyPair.verify(hash, signature)
+      }))
     })
   })
 })

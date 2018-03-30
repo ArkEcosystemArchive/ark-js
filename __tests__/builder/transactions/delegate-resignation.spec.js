@@ -1,5 +1,4 @@
 import Ark from '@/'
-import Builder from '@/builder'
 import Transaction from '@/builder/transactions/delegate-resignation'
 import network from '@/networks/ark/devnet'
 

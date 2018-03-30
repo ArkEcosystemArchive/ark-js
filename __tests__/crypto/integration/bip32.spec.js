@@ -4,6 +4,7 @@ import ecurve from 'ecurve'
 import crypto from 'crypto'
 
 import HDNode from '@/crypto/hdnode'
+import ECPair from '@/crypto/ecpair'
 import configManager from '@/managers/config'
 import network from '@/networks/ark/mainnet'
 
@@ -51,7 +52,7 @@ describe('ark-js (BIP32)', () => {
 
       var d1 = child.keyPair.d
       var d2
-      var data = new Buffer(37)
+      var data = Buffer.alloc(37)
       serQP.copy(data, 0)
 
       // search index space until we find it
@@ -66,11 +67,11 @@ describe('ark-js (BIP32)', () => {
         // See hdnode.js:273 to understand
         d2 = d1.subtract(pIL).mod(curve.n)
 
-        var Qp = new ark.ECPair(d2).Q
+        var Qp = new ECPair(d2).Q
         if (Qp.equals(QP)) break
       }
 
-      var node = new HDNode(new ark.ECPair(d2), master.chainCode, master.network)
+      var node = new HDNode(new ECPair(d2), master.chainCode, master.network)
       node.depth = master.depth
       node.index = master.index
       node.masterFingerprint = master.masterFingerprint

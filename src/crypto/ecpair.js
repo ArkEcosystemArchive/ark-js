@@ -22,7 +22,7 @@ const secp256k1 = ecurve.getCurveByName('secp256k1')
  * @param {Point} [Q] Public key.
  * @param {object} [options]
  * @param {boolean} [options.compressed=true]
- * @param {Network} [options.network=networks.ark]
+ * @param {Network} [options.network=networks.mainnet]
  */
 export default class ECPair {
   constructor (privateKey, publicKey, options) {
@@ -59,7 +59,7 @@ export default class ECPair {
 
   /**
    * @param {Buffer} buffer
-   * @param {Network} [network=networks.ark]
+   * @param {Network} [network=networks.mainnet]
    * @returns {ECPair}
    */
   static fromPublicKeyBuffer (buffer, network) {
@@ -75,7 +75,7 @@ export default class ECPair {
    * @param {string} seed
    * @param {object} [options]
    * @param {boolean} [options.compressed=true]
-   * @param {Network} [options.network=networks.ark]
+   * @param {Network} [options.network=networks.mainnet]
    * @returns {ECPair}
    */
   static fromSeed (seed, options) {
@@ -125,7 +125,7 @@ export default class ECPair {
    * @param {object} [options]
    * @param {function} [options.rng]
    * @param {boolean} [options.compressed=true]
-   * @param {Network} [options.network=networks.ark]
+   * @param {Network} [options.network=networks.mainnet]
    */
   static makeRandom (options) {
     options = options || {}

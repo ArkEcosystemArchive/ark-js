@@ -1,11 +1,11 @@
-var Buffer = require('buffer/').Buffer
-var should = require('should')
-var ark = require('../index')
-var ECPair = require('@/crypto/ecpair')
+import { Buffer } from 'buffer/'
+import should from 'should'
+import ark from '@/'
+import ECPair from '@/crypto/ecpair'
+import ecdsa from '@/crypto/ecdsa'
+import ecurve from 'ecurve'
 
-var ecdsa = require('@/crypto/ecdsa')
-var ecurve = require('ecurve')
-var curve = ecdsa.__curve
+const curve = ecdsa.__curve
 
 test('crypto.js', function () {
   var crypto = ark.crypto

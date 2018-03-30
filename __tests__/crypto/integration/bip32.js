@@ -1,12 +1,11 @@
-/* global describe, it */
+import assert from 'assert'
+import bigi from 'bigi'
+import ecurve from 'ecurve'
+import crypto from 'crypto'
 
-var assert = require('assert')
-var bigi = require('bigi')
-var ark = require('../ark')
-var crypto = require('crypto')
+import ark from '@/'
 
-var ecurve = require('ecurve')
-var secp256k1 = ecurve.getCurveByName('secp256k1')
+const secp256k1 = ecurve.getCurveByName('secp256k1')
 
 test('ark-js (BIP32)', function () {
   it('can create a BIP32 wallet external address', function () {

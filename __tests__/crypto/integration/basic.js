@@ -1,22 +1,24 @@
-/* global describe, it */
+import assert from 'assert'
+import bigi from 'bigi'
+import ark from '@/'
 
-var assert = require('assert')
-var bigi = require('bigi')
-var ark = require('../ark')
-
-test('ark-js (basic)', function () {
-  it('can generate a random ark address', function () {
+test('ark-js (basic)', function() {
+  it('can generate a random ark address', function() {
     // for testing only
-    function rng () { return new Buffer('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz') }
+    function rng() {
+      return new Buffer('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')
+    }
 
     // generate random keyPair
-    var keyPair = ark.ECPair.makeRandom({ rng: rng })
+    var keyPair = ark.ECPair.makeRandom({
+      rng: rng
+    })
     var address = keyPair.getAddress()
 
     assert.strictEqual(address, 'ANoMWEJ9jSdE2FgohBLLXeLzci59BDFsP4')
   })
 
-  it('can generate an address from a SHA256 hash', function () {
+  it('can generate an address from a SHA256 hash', function() {
     var hash = ark.crypto.sha256('correct horse battery staple')
     var d = bigi.fromBuffer(hash)
 
@@ -26,13 +28,18 @@ test('ark-js (basic)', function () {
     assert.strictEqual(address, 'AG5AtmiNbgv51eLwAWnRGvkMudVd7anYP2')
   })
 
-  it('can generate a random keypair for alternative networks', function () {
+  it('can generate a random keypair for alternative networks', function() {
     // for testing only
-    function rng () { return new Buffer('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz') }
+    function rng() {
+      return new Buffer('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')
+    }
 
     var bitcoin = ark.networks.bitcoin
 
-    var keyPair = ark.ECPair.makeRandom({ network: bitcoin, rng: rng })
+    var keyPair = ark.ECPair.makeRandom({
+      network: bitcoin,
+      rng: rng
+    })
     var wif = keyPair.toWIF()
     var address = keyPair.getAddress()
 
@@ -40,7 +47,7 @@ test('ark-js (basic)', function () {
     assert.strictEqual(wif, 'L1Knwj9W3qK3qMKdTvmg3VfzUs3ij2LETTFhxza9LfD5dngnoLG1')
   })
 
-  it('can import an address via WIF', function () {
+  it('can import an address via WIF', function() {
     var keyPair = ark.ECPair.fromWIF('S9aCCSFvm8kNeyFb1t6pLb5oJs9tv96ag6uA8Du6UM7zsmsNHQiz')
     var address = keyPair.getAddress()
 

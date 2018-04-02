@@ -59,7 +59,7 @@ describe('ECPair', () => {
         const Q = f.Q && ecurve.Point.decodeFrom(curve, Buffer.from(f.Q, 'hex'))
 
         assert.throws(() => {
-          new ECPair(d, Q, f.options)
+          new ECPair(d, Q, f.options) // eslint-disable-line no-new
         }, new RegExp(f.exception))
       })
     })
@@ -72,7 +72,7 @@ describe('ECPair', () => {
       keyPair = new ECPair(BigInteger.ONE)
     })
 
-    it('wraps Q.getEncoded', sinonTest(function() {
+    it('wraps Q.getEncoded', sinonTest(function () {
       this
         .mock(keyPair.publicKey)
         .expects('getEncoded')
@@ -169,7 +169,7 @@ describe('ECPair', () => {
       expect(keyPair.network).toEqual(NETWORKS.testnet)
     })
 
-    it('loops until d is within interval [1, n - 1] : 1', sinonTest(function() {
+    it('loops until d is within interval [1, n - 1] : 1', sinonTest(function () {
       const rng = this.mock()
       rng.exactly(2)
       rng.onCall(0).returns(BigInteger.ZERO.toBuffer(32)) // invalid length
@@ -178,7 +178,7 @@ describe('ECPair', () => {
       ECPair.makeRandom({rng})
     }))
 
-    it('loops until d is within interval [1, n - 1] : n - 1', sinonTest(function() {
+    it('loops until d is within interval [1, n - 1] : n - 1', sinonTest(function () {
       const rng = this.mock()
       rng.exactly(3)
       rng.onCall(0).returns(BigInteger.ZERO.toBuffer(32)) // < 1
@@ -219,7 +219,7 @@ describe('ECPair', () => {
     })
 
     describe('signing', () => {
-      it('wraps ecdsa.sign', sinonTest(function() {
+      it('wraps ecdsa.sign', sinonTest(function () {
         this.mock(ecdsa).expects('sign')
           .once().withArgs(hash, keyPair.publicKey)
 
@@ -242,7 +242,7 @@ describe('ECPair', () => {
         signature = keyPair.sign(hash)
       })
 
-      it('wraps ecdsa.verify', sinonTest(function() {
+      it('wraps ecdsa.verify', sinonTest(function () {
         this
           .mock(ecdsa)
           .expects('verify')

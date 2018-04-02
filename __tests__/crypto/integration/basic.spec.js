@@ -1,4 +1,3 @@
-import assert from 'assert'
 import bigi from 'bigi'
 import crypto from '@/crypto'
 import ECPair from '@/crypto/ecpair'

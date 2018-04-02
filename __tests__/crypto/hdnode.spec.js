@@ -18,7 +18,7 @@ beforeEach(() => configManager.setConfig(NETWORKS.mainnet))
 
 let validAll = []
 fixtures.valid.forEach((f) => {
-  function addNetwork(n) {
+  function addNetwork (n) {
     n.network = f.network
     return n
   }
@@ -57,13 +57,13 @@ describe('HDNode', () => {
       keyPair.compressed = false
 
       assert.throws(() => {
-        new HDNode(keyPair, chainCode)
+        new HDNode(keyPair, chainCode) // eslint-disable-line no-new
       }, /BIP32 only allows compressed keyPairs/)
     })
 
     it('throws when an invalid length chain code is given', () => {
       assert.throws(() => {
-        new HDNode(keyPair, Buffer.alloc(20))
+        new HDNode(keyPair, Buffer.alloc(20)) // eslint-disable-line no-new
       }, /Expected property "1" of type Buffer\(Length: 32\), got Buffer\(Length: 20\)/)
     })
   })
@@ -79,7 +79,7 @@ describe('HDNode', () => {
       })
     })
 
-    it('throws if IL is not within interval [1, n - 1] | IL === 0', sinonTest(function() {
+    it('throws if IL is not within interval [1, n - 1] | IL === 0', sinonTest(function () {
       this.mock(BigInteger).expects('fromBuffer')
         .once().returns(BigInteger.ZERO)
 
@@ -88,7 +88,7 @@ describe('HDNode', () => {
       }, /Private key must be greater than 0/)
     }))
 
-    it('throws if IL is not within interval [1, n - 1] | IL === n', sinonTest(function() {
+    it('throws if IL is not within interval [1, n - 1] | IL === n', sinonTest(function () {
       this.mock(BigInteger).expects('fromBuffer')
         .once().returns(curve.n)
 
@@ -105,7 +105,7 @@ describe('HDNode', () => {
 
     it('throws on too high entropy seed', () => {
       assert.throws(() => {
-        HDNode.fromSeedHex('ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')
+        HDNode.fromSeedHex('ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff') // eslint-disable-line max-len
       }, /Seed should be at most 512 bits/)
     })
   })
@@ -124,7 +124,7 @@ describe('HDNode', () => {
     })
 
     describe('getAddress', () => {
-      it('wraps keyPair.getAddress', sinonTest(function() {
+      it('wraps keyPair.getAddress', sinonTest(function () {
         this
           .mock(keyPair)
           .expects('getAddress')
@@ -137,7 +137,7 @@ describe('HDNode', () => {
     })
 
     describe('getNetwork', () => {
-      it('wraps keyPair.getNetwork', sinonTest(function() {
+      it('wraps keyPair.getNetwork', sinonTest(function () {
         this
           .mock(keyPair)
           .expects('getNetwork')
@@ -150,7 +150,7 @@ describe('HDNode', () => {
     })
 
     describe('getPublicKeyBuffer', () => {
-      it('wraps keyPair.getPublicKeyBuffer', sinonTest(function() {
+      it('wraps keyPair.getPublicKeyBuffer', sinonTest(function () {
         this.mock(keyPair).expects('getPublicKeyBuffer')
           .once().withArgs().returns('pubKeyBuffer')
 
@@ -159,7 +159,7 @@ describe('HDNode', () => {
     })
 
     describe('sign', () => {
-      it('wraps keyPair.sign', sinonTest(function() {
+      it('wraps keyPair.sign', sinonTest(function () {
         this.mock(keyPair).expects('sign')
           .once().withArgs(hash).returns('signed')
 
@@ -174,7 +174,7 @@ describe('HDNode', () => {
         signature = hd.sign(hash)
       })
 
-      it('wraps keyPair.verify', sinonTest(function() {
+      it('wraps keyPair.verify', sinonTest(function () {
         this.mock(keyPair).expects('verify')
           .once().withArgs(hash, signature).returns('verified')
 
@@ -259,7 +259,7 @@ describe('HDNode', () => {
   })
 
   describe('derive', () => {
-    function verifyVector(hd, v) {
+    function verifyVector (hd, v) {
       if (hd.isNeutered()) {
         expect(hd.toBase58()).toBe(v.base58)
       } else {
@@ -279,7 +279,7 @@ describe('HDNode', () => {
 
     fixtures.valid.forEach((f) => {
       const network = NETWORKS[f.network]
-      const hd = HDNode.fromSeedHex(f.master.seed, network)
+      let hd = HDNode.fromSeedHex(f.master.seed, network)
       const master = hd
 
       // testing deriving path from master
@@ -297,7 +297,7 @@ describe('HDNode', () => {
       f.children.forEach((c, i) => {
         const cn = master.derivePath(c.path)
 
-        f.children.slice(i + 1).forEach(function(cc) {
+        f.children.slice(i + 1).forEach(function (cc) {
           it(cc.path + ' from ' + c.fingerprint + ' by path', () => {
             const ipath = cc.path.slice(2).split('/').slice(i + 1).join('/')
             const child = cn.derivePath(ipath)

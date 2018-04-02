@@ -52,7 +52,7 @@ describe('ark-js (BIP32)', () => {
       const serQP = master.keyPair.getPublicKeyBuffer()
 
       const d1 = child.keyPair.privateKey
-      const d2
+      let d2
       const data = Buffer.alloc(37)
       serQP.copy(data, 0)
 

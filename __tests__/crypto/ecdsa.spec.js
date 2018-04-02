@@ -1,4 +1,3 @@
-import assert from 'assert'
 import sinon from 'sinon'
 import sinonTestFactory from 'sinon-test'
 import BigInteger from 'bigi'
@@ -28,7 +27,7 @@ describe('ecdsa', () => {
       })
     })
 
-    it('loops until an appropriate k value is found', sinonTest(function() {
+    it('loops until an appropriate k value is found', sinonTest(function () {
       this
         .mock(BigInteger)
         .expects('fromBuffer')
@@ -44,7 +43,7 @@ describe('ecdsa', () => {
       expect(k.toString()).toBe('42')
     }))
 
-    it('loops until a suitable signature is found', sinonTest(function() {
+    it('loops until a suitable signature is found', sinonTest(function () {
       this
         .mock(BigInteger)
         .expects('fromBuffer')
@@ -123,7 +122,7 @@ describe('ecdsa', () => {
         const H = bcrypto.sha256(f.message)
         const d = BigInteger.fromHex(f.d)
 
-        const signature
+        let signature
         if (f.signature) {
           signature = ECSignature.fromDER(Buffer.from(f.signature, 'hex'))
         } else if (f.signatureRaw) {

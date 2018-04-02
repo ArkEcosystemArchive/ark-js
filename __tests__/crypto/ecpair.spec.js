@@ -1,11 +1,9 @@
-import assert from 'assert'
 import ecurve from 'ecurve'
 import proxyquire from 'proxyquire'
 import sinon from 'sinon'
 import sinonTestFactory from 'sinon-test'
 import BigInteger from 'bigi'
 
-import crypto from '@/builder/crypto'
 import ECPair from '@/crypto/ecpair'
 import ecdsa from '@/crypto/ecdsa'
 import configManager from '@/managers/config'
@@ -150,7 +148,7 @@ describe('ECPair', () => {
     it('allows a custom RNG to be used', () => {
       const keyPair = ECPair.makeRandom({
         rng: (size) => {
-            return d.slice(0, size)
+          return d.slice(0, size)
         }
       })
 

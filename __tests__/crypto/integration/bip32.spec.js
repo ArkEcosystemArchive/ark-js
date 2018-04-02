@@ -21,8 +21,8 @@ describe('ark-js (BIP32)', () => {
     // option 2, manually
     const child2 = root.deriveHardened(0).derive(0).derive(0)
 
-    assert.equal(child1.getAddress(), 'AZXdSTRFGHPokX6yfXTfHcTzzHKncioj31')
-    assert.equal(child2.getAddress(), 'AZXdSTRFGHPokX6yfXTfHcTzzHKncioj31')
+    expect(child1.getAddress()).toBe('AZXdSTRFGHPokX6yfXTfHcTzzHKncioj31')
+    expect(child2.getAddress()).toBe('AZXdSTRFGHPokX6yfXTfHcTzzHKncioj31')
   })
 
   it('can create a BIP44, ark, account 0, external address', () => {
@@ -38,8 +38,8 @@ describe('ark-js (BIP32)', () => {
       .derive(0)
       .derive(0)
 
-    assert.equal(child1.getAddress(), 'AVbXc2KyxtXeAP9zQpp7ixsnaxEEQ6wZbq')
-    assert.equal(child2.getAddress(), 'AVbXc2KyxtXeAP9zQpp7ixsnaxEEQ6wZbq')
+    expect(child1.getAddress()).toBe('AVbXc2KyxtXeAP9zQpp7ixsnaxEEQ6wZbq')
+    expect(child2.getAddress()).toBe('AVbXc2KyxtXeAP9zQpp7ixsnaxEEQ6wZbq')
   })
 
   it('can recover a BIP32 parent private key from the parent public key, and a derived, non-hardened child private key', () => {

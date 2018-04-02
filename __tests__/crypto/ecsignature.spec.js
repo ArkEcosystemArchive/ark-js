@@ -1,4 +1,3 @@
-import assert from 'assert'
 import BigInteger from 'bigi'
 
 import ECSignature from '@/crypto/ecsignature'

@@ -214,7 +214,7 @@ describe('HDNode', () => {
           const networks = f.network ? NETWORKS[f.network] : NETWORKS_LIST
 
           HDNode.fromBase58(f.string, networks)
-        }).toThrowError(new RegExp(f.exception));
+        }).toThrowError(new RegExp(f.exception))
       })
     })
   })

@@ -25,7 +25,7 @@ const secp256k1 = ecurve.getCurveByName('secp256k1')
  * @param {Network} [options.network=networks.mainnet]
  */
 export default class ECPair {
-  constructor (privateKey, publicKey, options) {
+  constructor (d, Q, options) {
     if (options) {
       typeforce({
         compressed: types.maybe(types.Boolean),
@@ -35,20 +35,20 @@ export default class ECPair {
 
     options = options || {}
 
-    if (privateKey) {
-      if (privateKey.signum() <= 0) throw new Error('Private key must be greater than 0')
-      if (privateKey.compareTo(secp256k1.n) >= 0) throw new Error('Private key must be less than the curve order')
-      if (publicKey) throw new TypeError('Unexpected publicKey parameter')
+    if (d) {
+      if (d.signum() <= 0) throw new Error('Private key must be greater than 0')
+      if (d.compareTo(secp256k1.n) >= 0) throw new Error('Private key must be less than the curve order')
+      if (Q) throw new TypeError('Unexpected Q parameter')
 
-      this.privateKey = privateKey
+      this.d = d
     } else {
-      typeforce(types.ECPoint, publicKey)
+      typeforce(types.ECPoint, Q)
 
-      this.publicKey = publicKey
+      this.Q = Q
     }
 
-    if (!this.publicKey && this.privateKey) {
-      this.publicKey = secp256k1.G.multiply(this.privateKey)
+    if (!this.Q && this.d) {
+      this.Q = secp256k1.G.multiply(this.d)
     }
 
     /** @type {boolean} */
@@ -113,7 +113,7 @@ export default class ECPair {
       if (version !== network.wif) throw new Error('Invalid network version')
     }
 
-    const d = BigInteger.fromBuffer(decoded.privateKey)
+    const d = BigInteger.fromBuffer(decoded.d)
 
     return new ECPair(d, null, {
       compressed: decoded.compressed,
@@ -164,7 +164,7 @@ export default class ECPair {
   }
 
   getPublicKeyBuffer () {
-    return this.publicKey.getEncoded(this.compressed)
+    return this.Q.getEncoded(this.compressed)
   }
 
   /**
@@ -174,9 +174,9 @@ export default class ECPair {
    * @returns {ECSignature}
    */
   sign (hash) {
-    if (!this.privateKey) throw new Error('Missing private key')
+    if (!this.d) throw new Error('Missing private key')
 
-    const native = secp256k1native.sign(hash, this.privateKey.toBuffer(32))
+    const native = secp256k1native.sign(hash, this.d.toBuffer(32))
     return ECSignature.parseNativeSecp256k1(native).signature
   }
 
@@ -186,9 +186,9 @@ export default class ECPair {
    * @returns {string}
    */
   toWIF () {
-    if (!this.privateKey) throw new Error('Missing private key')
+    if (!this.d) throw new Error('Missing private key')
 
-    return wif.encode(this.network.wif, this.privateKey.toBuffer(32), this.compressed)
+    return wif.encode(this.network.wif, this.d.toBuffer(32), this.compressed)
   }
 
   /**
@@ -196,6 +196,6 @@ export default class ECPair {
    * @returns {boolean}
    */
   verify (hash, signature) {
-    return secp256k1native.verify(hash, signature.toNativeSecp256k1(), this.publicKey.getEncoded(this.compressed))
+    return secp256k1native.verify(hash, signature.toNativeSecp256k1(), this.Q.getEncoded(this.compressed))
   }
 }

@@ -44,14 +44,14 @@ describe('ark-js (BIP32)', () => {
 
   it('can recover a BIP32 parent private key from the parent public key, and a derived, non-hardened child private key', () => {
     function recoverParent (master, child) {
-      assert(!master.keyPair.privateKey, 'You already have the parent private key')
-      assert(child.keyPair.privateKey, 'Missing child private key')
+      assert(!master.keyPair.d, 'You already have the parent private key')
+      assert(child.keyPair.d, 'Missing child private key')
 
       const curve = ecurve.getCurveByName('secp256k1')
-      const QP = master.keyPair.publicKey
+      const QP = master.keyPair.Q
       const serQP = master.keyPair.getPublicKeyBuffer()
 
-      const d1 = child.keyPair.privateKey
+      const d1 = child.keyPair.d
       let d2
       const data = Buffer.alloc(37)
       serQP.copy(data, 0)
@@ -68,7 +68,7 @@ describe('ark-js (BIP32)', () => {
         // See hdnode.js:273 to understand
         d2 = d1.subtract(pIL).mod(curve.n)
 
-        const Qp = new ECPair(d2).publicKey
+        const Qp = new ECPair(d2).Q
         if (Qp.equals(QP)) break
       }
 

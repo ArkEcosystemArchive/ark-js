@@ -74,7 +74,7 @@ describe('ECPair', () => {
 
     it('wraps Q.getEncoded', sinonTest(function () {
       this
-        .mock(keyPair.publicKey)
+        .mock(keyPair.Q)
         .expects('getEncoded')
         .once()
         .withArgs(keyPair.compressed)
@@ -89,7 +89,7 @@ describe('ECPair', () => {
         const network = NETWORKS[f.network]
         const keyPair = ECPair.fromWIF(f.WIF, network)
 
-        expect(keyPair.privateKey.toString()).toBe(f.d)
+        expect(keyPair.d.toString()).toBe(f.d)
         expect(keyPair.getPublicKeyBuffer().toString('hex')).toBe(f.Q)
         expect(keyPair.compressed).toBe(f.compressed)
         expect(keyPair.network).toEqual(network)
@@ -100,7 +100,7 @@ describe('ECPair', () => {
       it('imports ' + f.WIF + ' (via list of networks)', () => {
         const keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
 
-        expect(keyPair.privateKey.toString()).toBe(f.d)
+        expect(keyPair.d.toString()).toBe(f.d)
         expect(keyPair.getPublicKeyBuffer().toString('hex')).toBe(f.Q)
         expect(keyPair.compressed).toBe(f.compressed)
         expect(keyPair.network).toEqual(NETWORKS[f.network])
@@ -146,7 +146,9 @@ describe('ECPair', () => {
 
     it('allows a custom RNG to be used', () => {
       const keyPair = ECPair.makeRandom({
-        rng: (size) => { return d.slice(0, size) }
+        rng: (size) => {
+            return d.slice(0, size)
+        }
       })
 
       expect(keyPair.toWIF()).toBe(exWIF)
@@ -221,13 +223,13 @@ describe('ECPair', () => {
     describe('signing', () => {
       it('wraps ecdsa.sign', sinonTest(function () {
         this.mock(ecdsa).expects('sign')
-          .once().withArgs(hash, keyPair.publicKey)
+          .once().withArgs(hash, keyPair.Q)
 
         keyPair.sign(hash)
       }))
 
       it('throws if no private key is found', () => {
-        keyPair.publicKey = null
+        keyPair.Q = null
 
         assert.throws(() => {
           keyPair.sign(hash)
@@ -247,7 +249,7 @@ describe('ECPair', () => {
           .mock(ecdsa)
           .expects('verify')
           .once()
-          .withArgs(hash, signature, keyPair.publicKey)
+          .withArgs(hash, signature, keyPair.Q)
 
         keyPair.verify(hash, signature)
       }))

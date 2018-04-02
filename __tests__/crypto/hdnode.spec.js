@@ -393,10 +393,10 @@ describe('HDNode', () => {
     it('works when private key has leading zeros', () => {
       const key = 'xprv9s21ZrQH143K3ckY9DgU79uMTJkQRLdbCCVDh81SnxTgPzLLGax6uHeBULTtaEtcAvKjXfT7ZWtHzKjTpujMkUd9dDb8msDeAfnJxrgAYhr'
       const hdkey = HDNode.fromBase58(key, NETWORKS.bitcoin)
-      expect(hdkey.keyPair.privateKey.toBuffer(32).toString('hex')).toBe('00000055378cf5fafb56c711c674143f9b0ee82ab0ba2924f19b64f5ae7cdbfd')
+      expect(hdkey.keyPair.d.toBuffer(32).toString('hex')).toBe('00000055378cf5fafb56c711c674143f9b0ee82ab0ba2924f19b64f5ae7cdbfd')
 
       const child = hdkey.derivePath('m/44\'/0\'/0\'/0/0\'')
-      expect(child.keyPair.privateKey.toBuffer().toString('hex')).toBe('3348069561d2a0fb925e74bf198762acc47dce7db27372257d2d959a9e6f8aeb')
+      expect(child.keyPair.d.toBuffer().toString('hex')).toBe('3348069561d2a0fb925e74bf198762acc47dce7db27372257d2d959a9e6f8aeb')
     })
   })
 })

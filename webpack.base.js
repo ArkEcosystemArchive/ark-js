@@ -4,7 +4,7 @@ function resolve (dir) {
   return path.join(__dirname, dir)
 }
 
-export default {
+module.exports = {
   module: {
     rules: [{
       test: /\.js/,
@@ -18,5 +18,5 @@ export default {
       '@': resolve('src')
     },
     extensions: ['.js'],
-  },
-};
+  }
+}

@@ -70,6 +70,6 @@ export default class MultiPayment extends Transaction {
       vendorFieldHex: this.vendorFieldHex
     }
 
-    return {...struct, ...this.payments}
+    return Object.assign(struct, this.payments)
   }
 }

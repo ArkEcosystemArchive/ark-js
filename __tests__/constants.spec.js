@@ -8,6 +8,7 @@ describe('Constants', () => {
 
   test('transaction types are defined', () => {
     expect(constants.TRANSACTION_TYPES).toBeDefined()
+    expect(constants.TRANSACTION_TYPES).toBeFrozen()
 
     expect(constants.TRANSACTION_TYPES.TRANSFER).toBeDefined()
     expect(constants.TRANSACTION_TYPES.TRANSFER).toBe(0)
@@ -35,5 +36,16 @@ describe('Constants', () => {
 
     expect(constants.TRANSACTION_TYPES.DELEGATE_RESIGNATION).toBeDefined()
     expect(constants.TRANSACTION_TYPES.DELEGATE_RESIGNATION).toBe(8)
+  })
+
+  test('configurations are defined', () => {
+    expect(constants.CONFIGURATIONS).toBeDefined()
+    expect(constants.CONFIGURATIONS).toBeFrozen()
+
+    expect(constants.CONFIGURATIONS.ARK.MAINNET).toBeDefined()
+    expect(constants.CONFIGURATIONS.ARK.MAINNET).toBeString()
+
+    expect(constants.CONFIGURATIONS.ARK.DEVNET).toBeDefined()
+    expect(constants.CONFIGURATIONS.ARK.DEVNET).toBeString()
   })
 })

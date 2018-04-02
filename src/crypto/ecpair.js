@@ -41,14 +41,11 @@ export default class ECPair {
       if (Q) throw new TypeError('Unexpected Q parameter')
 
       this.d = d
+      this.Q = secp256k1.G.multiply(this.d)
     } else {
       typeforce(types.ECPoint, Q)
 
       this.Q = Q
-    }
-
-    if (!this.Q && this.d) {
-      this.Q = secp256k1.G.multiply(this.d)
     }
 
     /** @type {boolean} */

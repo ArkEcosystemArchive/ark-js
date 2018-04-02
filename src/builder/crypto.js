@@ -1,13 +1,14 @@
-import configManager from '@/managers/config'
+import bs58check from 'bs58check'
+import ByteBuffer from 'bytebuffer'
 import crypto from 'crypto'
+import { Buffer } from 'buffer/'
+
+import configManager from '@/managers/config'
 import cryptoUtils from '@/crypto'
 import ECPair from '@/crypto/ecpair'
 import ECSignature from '@/crypto/ecsignature'
-import bs58check from 'bs58check'
-import { Buffer } from 'buffer/'
-import ByteBuffer from 'bytebuffer'
-import { ARKTOSHI, TRANSACTION_TYPES } from '@/constants'
 import feeManager from '@/managers/fee'
+import { ARKTOSHI, TRANSACTION_TYPES } from '@/constants'
 
 class CryptoBuilder {
   getBytes (transaction) {
@@ -252,8 +253,8 @@ class CryptoBuilder {
     return ecpair.verify(hash, ecsignature)
   }
 
-  getKeys (secret, network) {
-    const ecpair = ECPair.fromSeed(secret, { network })
+  getKeys (secret, options) {
+    let ecpair = ECPair.fromSeed(secret, options)
     ecpair.publicKey = ecpair.getPublicKeyBuffer().toString('hex')
     ecpair.privateKey = ''
 

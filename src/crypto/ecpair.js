@@ -149,18 +149,11 @@ export default class ECPair {
   getAddress () {
     const payload = Buffer.alloc(21)
     const hash = bcrypto.ripemd160(this.getPublicKeyBuffer())
-    const version = this.getNetwork().pubKeyHash
+    const version = this.network.pubKeyHash
     payload.writeUInt8(version, 0)
     hash.copy(payload, 1)
 
     return base58check.encode(payload)
-  }
-
-  /**
-   * @returns {Network}
-   */
-  getNetwork () {
-    return this.network
   }
 
   getPublicKeyBuffer () {

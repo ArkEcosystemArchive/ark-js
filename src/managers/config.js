@@ -15,6 +15,10 @@ class ConfigManager {
     this._buildFees()
   }
 
+  setFromFile (file) {
+    this.setConfig(require(file))
+  }
+
   all () {
     return this.config
   }

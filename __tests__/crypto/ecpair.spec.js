@@ -30,23 +30,24 @@ describe('ECPair', () => {
         compressed: false
       })
 
-      expect(keyPair.compressed).toBeTruthy()
+      expect(keyPair.compressed).toBeFalsy()
     })
 
     it('supports the network option', () => {
       const keyPair = new ECPair(BigInteger.ONE, null, {
         compressed: false,
-        network: NETWORKS.testnet
+        network: NETWORKS.devnet
       })
 
-      expect(keyPair.network).toEqual(NETWORKS.testnet)
+      expect(keyPair.network).toEqual(NETWORKS.devnet)
     })
 
     fixtures.valid.forEach((f) => {
       it('calculates the public point for ' + f.WIF, () => {
         const d = new BigInteger(f.d)
         const keyPair = new ECPair(d, null, {
-          compressed: f.compressed
+          compressed: f.compressed,
+          network: NETWORKS[f.network]
         })
 
         expect(keyPair.getPublicKeyBuffer().toString('hex')).toBe(f.Q)

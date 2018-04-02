@@ -8,7 +8,7 @@ import configManager from '@/managers/config'
 import bcrypto from '@/crypto'
 import types from '@/crypto/types'
 import ECPair from '@/crypto/ecpair'
-import { HIGHEST_BIT, LENGTH, MASTER_SECRET } from '@/crypto/hdnode/constants'
+import { HIGHEST_BIT, MASTER_SECRET } from '@/crypto/hdnode/constants'
 
 const curve = ecurve.getCurveByName('secp256k1')
 

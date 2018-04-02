@@ -187,7 +187,7 @@ describe('HDNode', () => {
     })
   })
 
-  describe.only('fromBase58 / toBase58', () => {
+  describe.skip('fromBase58 / toBase58', () => {
     validAll.forEach((f) => {
       it('exports ' + f.base58 + ' (public) correctly', () => {
         const hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)

@@ -74,6 +74,7 @@ export default class HDNode {
    */
   static fromBase58 (string, networks) {
     const buffer = base58check.decode(string)
+
     if (buffer.length !== 78) throw new Error('Invalid buffer length')
 
     // 4 bytes: version bytes

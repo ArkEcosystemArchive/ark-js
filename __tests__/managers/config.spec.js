@@ -8,7 +8,7 @@ beforeEach(() => configManager.setConfig(network))
 
 describe('Configuration', () => {
   it('should be instantiated', () => {
-    expect(configManager).toBeInstanceOf(Object)
+    expect(configManager).toBeObject()
   })
 
   it('should be set on runtime', () => {

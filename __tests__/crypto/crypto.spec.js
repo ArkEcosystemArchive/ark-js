@@ -4,7 +4,7 @@ const buffer = Buffer.from('Hello World')
 
 describe('Ark', () => {
   test('should be instantiated', () => {
-    expect(crypto).toBeInstanceOf(Object)
+    expect(crypto).toBeObject()
   })
 
   it('should return valid ripemd160', () => {

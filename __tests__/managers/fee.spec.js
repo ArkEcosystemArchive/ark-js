@@ -3,7 +3,7 @@ import { TRANSACTION_TYPES } from '@/constants'
 
 describe('Fee Manager', () => {
   it('should be instantiated', () => {
-    expect(feeManager).toBeInstanceOf(Object)
+    expect(feeManager).toBeObject()
   })
 
   it('should set the fee', () => {

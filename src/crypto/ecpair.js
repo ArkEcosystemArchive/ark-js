@@ -153,6 +153,10 @@ export default class ECPair {
     return base58check.encode(payload)
   }
 
+  getNetwork () {
+    return this.network
+  }
+
   getPublicKeyBuffer () {
     return this.Q.getEncoded(this.compressed)
   }

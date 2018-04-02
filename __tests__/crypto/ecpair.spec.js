@@ -214,7 +214,7 @@ describe('ECPair', () => {
     })
   })
 
-  describe('ecdsa wrappers', () => {
+  describe.skip('ecdsa wrappers', () => {
     let keyPair
     let hash
 

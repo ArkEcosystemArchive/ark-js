@@ -3,6 +3,7 @@ import { ARKTOSHI, TRANSACTION_TYPES } from '@/constants'
 import ECPair from '@/crypto/ecpair'
 import ECSignature from '@/crypto/ecsignature'
 import cryptoBuilder from '@/builder/crypto'
+import verifyHash from '@/utils/verify-hash'
 
 export default class Wallet {
   /**
@@ -225,11 +226,7 @@ export default class Wallet {
    */
   verify (transaction, signature, publicKey) {
     const hash = cryptoBuilder.getHash(transaction)
-    const signSignatureBuffer = Buffer.from(signature, 'hex')
-    const publicKeyBuffer = Buffer.from(publicKey, 'hex')
-    const ecpair = ECPair.fromPublicKeyBuffer(publicKeyBuffer, config.network)
-    const ecsignature = ECSignature.fromDER(signSignatureBuffer)
-    return ecpair.verify(hash, ecsignature)
+    return verifyHash(hash, signature, publicKey)
   }
 
   /**

@@ -6,6 +6,7 @@ import configManager from '@/managers/config'
 import ECPair from '@/crypto/ecpair'
 import ECSignature from '@/crypto/ecsignature'
 import slots from '@/crypto/slots'
+import verifyHash from '@/utils/verify-hash'
 
 /**
   * [description]
@@ -92,15 +93,10 @@ export default class Block {
    * @return {[type]} [description]
    */
   verifySignature () {
-    let bytes = Block.serialise(this.data, false)
-    let hash = crypto.createHash('sha256').update(bytes).digest()
-    let blockSignatureBuffer = Buffer.from(this.data.blockSignature, 'hex')
-    let generatorPublicKeyBuffer = Buffer.from(this.data.generatorPublicKey, 'hex')
-    let ecpair = ECPair.fromPublicKeyBuffer(generatorPublicKeyBuffer)
-    let ecsignature = ECSignature.fromDER(blockSignatureBuffer)
-    let res = ecpair.verify(hash, ecsignature)
+    const bytes = Block.serialize(this.data, false)
+    const hash = crypto.createHash('sha256').update(bytes).digest()
 
-    return res
+    return verifyHash(hash, this.data.blockSignature, this.data.generatorPublicKey)
   }
 
   /**

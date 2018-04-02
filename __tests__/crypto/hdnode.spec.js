@@ -56,15 +56,15 @@ describe('HDNode', () => {
     it('throws on uncompressed keyPair', () => {
       keyPair.compressed = false
 
-      assert.throws(() => {
+      expect(() => {
         new HDNode(keyPair, chainCode) // eslint-disable-line no-new
-      }, /BIP32 only allows compressed keyPairs/)
+      }).toThrowError(/BIP32 only allows compressed keyPairs/)
     })
 
     it('throws when an invalid length chain code is given', () => {
-      assert.throws(() => {
+      expect(() => {
         new HDNode(keyPair, Buffer.alloc(20)) // eslint-disable-line no-new
-      }, /Expected property "1" of type Buffer\(Length: 32\), got Buffer\(Length: 20\)/)
+      }).toThrowError(/Expected property "1" of type Buffer\(Length: 32\), got Buffer\(Length: 20\)/)
     })
   })
 
@@ -83,30 +83,30 @@ describe('HDNode', () => {
       this.mock(BigInteger).expects('fromBuffer')
         .once().returns(BigInteger.ZERO)
 
-      assert.throws(() => {
+      expect(() => {
         HDNode.fromSeedHex('ffffffffffffffffffffffffffffffff')
-      }, /Private key must be greater than 0/)
+      }).toThrowError(/Private key must be greater than 0/)
     }))
 
     it('throws if IL is not within interval [1, n - 1] | IL === n', sinonTest(function () {
       this.mock(BigInteger).expects('fromBuffer')
         .once().returns(curve.n)
 
-      assert.throws(() => {
+      expect(() => {
         HDNode.fromSeedHex('ffffffffffffffffffffffffffffffff')
-      }, /Private key must be less than the curve order/)
+      }).toThrowError(/Private key must be less than the curve order/)
     }))
 
     it('throws on low entropy seed', () => {
-      assert.throws(() => {
+      expect(() => {
         HDNode.fromSeedHex('ffffffffff')
-      }, /Seed should be at least 128 bits/)
+      }).toThrowError(/Seed should be at least 128 bits/)
     })
 
     it('throws on too high entropy seed', () => {
-      assert.throws(() => {
+      expect(() => {
         HDNode.fromSeedHex('ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff') // eslint-disable-line max-len
-      }, /Seed should be at most 512 bits/)
+      }).toThrowError(/Seed should be at most 512 bits/)
     })
   })
 
@@ -187,15 +187,15 @@ describe('HDNode', () => {
     })
   })
 
-  describe.skip('fromBase58 / toBase58', () => {
+  describe.only('fromBase58 / toBase58', () => {
     validAll.forEach((f) => {
       it('exports ' + f.base58 + ' (public) correctly', () => {
         const hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
         expect(hd.toBase58()).toBe(f.base58)
-        assert.throws(() => {
+        expect(() => {
           hd.keyPair.toWIF()
-        }, /Missing private key/)
+        }).toThrowError(/Missing private key/)
       })
     })
 
@@ -210,11 +210,11 @@ describe('HDNode', () => {
 
     fixtures.invalid.fromBase58.forEach((f) => {
       it('throws on ' + f.string, () => {
-        assert.throws(() => {
+        expect(() => {
           const networks = f.network ? NETWORKS[f.network] : NETWORKS_LIST
 
           HDNode.fromBase58(f.string, networks)
-        }, new RegExp(f.exception))
+        }).toThrowError(new RegExp(f.exception));
       })
     })
   })
@@ -246,9 +246,9 @@ describe('HDNode', () => {
         const hdn = hd.neutered()
 
         assert.notEqual(hdn.keyPair, hd.keyPair)
-        assert.throws(() => {
+        expect(() => {
           hdn.keyPair.toWIF()
-        }, /Missing private key/)
+        }).toThrowError(/Missing private key/)
         expect(hdn.toBase58()).toBe(f.base58)
         expect(hdn.chainCode).toBe(hd.chainCode)
         expect(hdn.depth).toBe(f.depth >>> 0) // TODO: make sure it works later
@@ -307,9 +307,9 @@ describe('HDNode', () => {
             const child = cn.derivePath(ipath)
             verifyVector(child, cc)
 
-            assert.throws(() => {
+            expect(() => {
               cn.derivePath('m/' + ipath)
-            }, /Not a master node/)
+            }).toThrowError(/Not a master node/)
           })
         })
       })
@@ -366,9 +366,9 @@ describe('HDNode', () => {
 
       const master = HDNode.fromBase58(f.master.base58, NETWORKS_LIST)
 
-      assert.throws(() => {
+      expect(() => {
         master.deriveHardened(c.m)
-      }, /Could not derive hardened child key/)
+      }).toThrowError(/Could not derive hardened child key/)
     })
 
     it('throws on wrong types', () => {
@@ -376,21 +376,21 @@ describe('HDNode', () => {
       const master = HDNode.fromBase58(f.master.base58, NETWORKS_LIST)
 
       fixtures.invalid.derive.forEach((fx) => {
-        assert.throws(() => {
+        expect(() => {
           master.derive(fx)
-        }, /Expected UInt32/)
+        }).toThrowError(/Expected UInt32/)
       })
 
       fixtures.invalid.deriveHardened.forEach((fx) => {
-        assert.throws(() => {
+        expect(() => {
           master.deriveHardened(fx)
-        }, /Expected UInt31/)
+        }).toThrowError(/Expected UInt31/)
       })
 
       fixtures.invalid.derivePath.forEach((fx) => {
-        assert.throws(() => {
+        expect(() => {
           master.derivePath(fx)
-        }, /Expected BIP32 derivation path/)
+        }).toThrowError(/Expected BIP32 derivation path/)
       })
     })
 

@@ -60,9 +60,9 @@ describe('ECPair', () => {
         const d = f.d && new BigInteger(f.d) // eslint-disable-line no-new
         const Q = f.Q && ecurve.Point.decodeFrom(curve, Buffer.from(f.Q, 'hex'))
 
-        assert.throws(() => {
+        expect(() => {
           new ECPair(d, Q, f.options) // eslint-disable-line no-new
-        }, new RegExp(f.exception))
+        }).toThrowError(new RegExp(f.exception))
       })
     })
   })
@@ -112,11 +112,11 @@ describe('ECPair', () => {
 
     fixtures.invalid.fromWIF.forEach((f) => {
       it('throws on ' + f.WIF, () => {
-        assert.throws(() => {
+        expect(() => {
           const networks = f.network ? NETWORKS[f.network] : NETWORKS_LIST
 
           ECPair.fromWIF(f.WIF, networks)
-        }, new RegExp(f.exception))
+        }).toThrowError(new RegExp(f.exception))
       })
     })
   })
@@ -237,9 +237,9 @@ describe('ECPair', () => {
       it('throws if no private key is found', () => {
         keyPair.Q = null
 
-        assert.throws(() => {
+        expect(() => {
           keyPair.sign(hash)
-        }, /Missing private key/)
+        }).toThrowError(/Missing private key/)
       })
     })
 

@@ -38,9 +38,9 @@ describe('ECSignature', () => {
       it('throws on ' + f.hex, () => {
         const buffer = Buffer.from(f.hex, 'hex')
 
-        assert.throws(() => {
+        expect(() => {
           ECSignature.parseCompact(buffer)
-        }, new RegExp(f.exception))
+        }).toThrowError(new RegExp(f.exception))
       })
     })
   })
@@ -71,9 +71,9 @@ describe('ECSignature', () => {
       it('throws "' + f.exception + '" for ' + f.hex, () => {
         const buffer = Buffer.from(f.hex, 'hex')
 
-        assert.throws(() => {
+        expect(() => {
           ECSignature.fromDER(buffer)
-        }, new RegExp(f.exception))
+        }).toThrowError(new RegExp(f.exception))
       })
     })
   })
@@ -92,9 +92,9 @@ describe('ECSignature', () => {
       it('throws ' + f.exception, () => {
         const signature = new ECSignature(new BigInteger(f.signature.r), new BigInteger(f.signature.s))
 
-        assert.throws(() => {
+        expect(() => {
           signature.toScriptSignature(f.hashType)
-        }, new RegExp(f.exception))
+        }).toThrowError(new RegExp(f.exception))
       })
     })
   })
@@ -115,9 +115,9 @@ describe('ECSignature', () => {
       it('throws on ' + f.hex, () => {
         const buffer = Buffer.from(f.hex, 'hex')
 
-        assert.throws(() => {
+        expect(() => {
           ECSignature.parseScriptSignature(buffer)
-        }, new RegExp(f.exception))
+        }).toThrowError(new RegExp(f.exception))
       })
     })
   })

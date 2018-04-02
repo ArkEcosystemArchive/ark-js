@@ -17,6 +17,7 @@ exports.TRANSACTION_TYPES = Object.freeze({
 exports.CONFIGURATIONS = Object.freeze({
   ARK: {
     MAINNET: path.resolve(__dirname, 'networks/ark/mainnet.json'),
-    DEVNET: path.resolve(__dirname, 'networks/ark/devnet.json')
+    DEVNET: path.resolve(__dirname, 'networks/ark/devnet.json'),
+    TESTNET: path.resolve(__dirname, 'networks/ark/testnet.json')
   }
 })

@@ -206,7 +206,7 @@ class CryptoBuilder {
   }
 
   getFee (transaction) {
-    return feeManager.get(transaction.type) * ARKTOSHI
+    return feeManager.get(transaction.type)
   }
 
   sign (transaction, keys) {

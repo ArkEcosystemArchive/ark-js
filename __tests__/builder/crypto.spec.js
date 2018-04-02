@@ -1,12 +1,13 @@
 import { Buffer } from 'buffer/'
 import ecurve from 'ecurve'
+
 import ECPair from '@/crypto/ecpair'
 import ecdsa from '@/crypto/ecdsa'
 import cryptoBuilder from '@/builder/crypto'
 import configManager from '@/managers/config'
-import { CONFIGURATIONS } from '@/constants'
+import { TRANSACTION_TYPES, CONFIGURATIONS } from '@/constants'
 
-const curve = ecdsa.__curve
+beforeEach(() => configManager.setFromFile(CONFIGURATIONS.ARK.DEVNET))
 
 describe('cryptoBuilder.js', () => {
   describe('getBytes', () => {
@@ -77,7 +78,7 @@ describe('cryptoBuilder.js', () => {
     })
   })
 
-  describe.only('#getId', () => {
+  describe('getId', () => {
     it('should be a function', () => {
       expect(cryptoBuilder.getId).toBeFunction()
     })
@@ -101,51 +102,14 @@ describe('cryptoBuilder.js', () => {
   })
 
   describe('getFee', () => {
-    const getFee = cryptoBuilder.getFee
-
     it('should be a function', () => {
-      expect(getFee).toBeFunction()
-    })
-
-    it('should return number', () => {
-      const fee = getFee({amount: 100000, type: 0})
-      expect(fee).toBeNumber()
-      expect(fee).not.toBeNaN()
+      expect(cryptoBuilder.getFee).toBeFunction()
     })
 
     it('should return 10000000', () => {
-      const fee = getFee({amount: 100000, type: 0})
+      const fee = cryptoBuilder.getFee({ type: TRANSACTION_TYPES.TRANSFER })
       expect(fee).toBeNumber()
       expect(fee).toBe(10000000)
-    })
-
-    it('should return 10000000000', () => {
-      const fee = getFee({type: 1})
-      expect(fee).toBeNumber()
-      expect(fee).toBe(10000000000)
-    })
-
-    it('should be equal 1000000000000', () => {
-      const fee = getFee({type: 2})
-      expect(fee).toBeNumber()
-      expect(fee).toBe(1000000000000)
-    })
-
-    it('should be equal 100000000', () => {
-      const fee = getFee({type: 3})
-      expect(fee).toBeNumber()
-      expect(fee).toBe(100000000)
-    })
-  })
-
-  describe('fixedPoint', () => {
-    it('should be number', () => {
-      expect(cryptoBuilder.fixedPoint).toBeNumber()
-      expect(cryptoBuilder.fixedPoint).not.toBeNaN()
-    })
-
-    it('should be equal 100000000', () => {
-      expect(cryptoBuilder.fixedPoint).toBe(100000000)
     })
   })
 
@@ -174,10 +138,10 @@ describe('cryptoBuilder.js', () => {
       expect(keys).toHaveProperty('privateKey')
 
       expect(keys.publicKey).toBeString()
-      expect(keys.publicKey).toMatch(Buffer.from(keys.publicKey, 'hex'))
+      expect(keys.publicKey).toMatch(Buffer.from(keys.publicKey, 'hex').toString('hex'))
 
       expect(keys.privateKey).toBeString()
-      expect(keys.privateKey).toMatch(Buffer.from(keys.privateKey, 'hex'))
+      expect(keys.privateKey).toMatch(Buffer.from(keys.privateKey, 'hex').toString('hex'))
     })
   })
 
@@ -191,7 +155,7 @@ describe('cryptoBuilder.js', () => {
       const address = cryptoBuilder.getAddress(keys.publicKey)
 
       expect(address).toBeString()
-      expect(address).toBe('AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff')
+      expect(address).toBe('D7seWn8JLVwX4nHd9hh2Lf7gvZNiRJ7qLk')
     })
 
     it('should generate address by publicKey - second test', () => {
@@ -199,14 +163,14 @@ describe('cryptoBuilder.js', () => {
       const address = cryptoBuilder.getAddress(keys.publicKey)
 
       expect(address).toBeString()
-      expect(address).toBe('AQSqYnjmwj1GBL5twD4K9EBXDaTHZognox')
+      expect(address).toBe('DDp4SYpnuzFPuN4W79PYY762d7FtW3DFFN')
     })
 
     it('should generate the same address as ECPair.getAddress()', () => {
       const keys = cryptoBuilder.getKeys('secret second test to be sure it works correctly')
       const address = cryptoBuilder.getAddress(keys.publicKey)
 
-      const Q = ecurve.Point.decodeFrom(curve, Buffer.from(keys.publicKey, 'hex'))
+      const Q = ecurve.Point.decodeFrom(ecdsa.__curve, Buffer.from(keys.publicKey, 'hex'))
       const keyPair = new ECPair(null, Q)
 
       expect(address).toBe(keyPair.getAddress())

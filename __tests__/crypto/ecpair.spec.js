@@ -22,7 +22,7 @@ describe('ECPair', () => {
     it('defaults to compressed', () => {
       var keyPair = new ECPair(BigInteger.ONE)
 
-      assert.strictEqual(keyPair.compressed, true)
+      expect(keyPair.compressed).toBeTruthy()
     })
 
     it('supports the uncompressed option', () => {
@@ -30,7 +30,7 @@ describe('ECPair', () => {
         compressed: false
       })
 
-      assert.strictEqual(keyPair.compressed, false)
+      expect(keyPair.compressed).toBeTruthy()
     })
 
     it('supports the network option', () => {
@@ -39,7 +39,7 @@ describe('ECPair', () => {
         network: NETWORKS.testnet
       })
 
-      assert.strictEqual(keyPair.network, NETWORKS.testnet)
+      expect(keyPair.network).toEqual(NETWORKS.testnet)
     })
 
     fixtures.valid.forEach((f) => {
@@ -49,7 +49,7 @@ describe('ECPair', () => {
           compressed: f.compressed
         })
 
-        assert.strictEqual(keyPair.getPublicKeyBuffer().toString('hex'), f.Q)
+        expect(keyPair.getPublicKeyBuffer().toString('hex')).toBe(f.Q)
       })
     })
 
@@ -73,8 +73,11 @@ describe('ECPair', () => {
     })
 
     it('wraps Q.getEncoded', sinonTest(function() {
-      this.mock(keyPair.publicKey).expects('getEncoded')
-        .once().withArgs(keyPair.compressed)
+      this
+      	.mock(keyPair.publicKey)
+      	.expects('getEncoded')
+        .once()
+        .withArgs(keyPair.compressed)
 
       keyPair.getPublicKeyBuffer()
     }))
@@ -86,10 +89,10 @@ describe('ECPair', () => {
         var network = NETWORKS[f.network]
         var keyPair = ECPair.fromWIF(f.WIF, network)
 
-        assert.strictEqual(keyPair.privateKey.toString(), f.d)
-        assert.strictEqual(keyPair.getPublicKeyBuffer().toString('hex'), f.Q)
-        assert.strictEqual(keyPair.compressed, f.compressed)
-        assert.strictEqual(keyPair.network, network)
+        expect(keyPair.privateKey.toString()).toBe(f.d)
+        expect(keyPair.getPublicKeyBuffer().toString('hex')).toBe(f.Q)
+        expect(keyPair.compressed).toBe(f.compressed)
+        expect(keyPair.network).toEqual(network)
       })
     })
 
@@ -97,10 +100,10 @@ describe('ECPair', () => {
       it('imports ' + f.WIF + ' (via list of networks)', () => {
         var keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
 
-        assert.strictEqual(keyPair.privateKey.toString(), f.d)
-        assert.strictEqual(keyPair.getPublicKeyBuffer().toString('hex'), f.Q)
-        assert.strictEqual(keyPair.compressed, f.compressed)
-        assert.strictEqual(keyPair.network, NETWORKS[f.network])
+        expect(keyPair.privateKey.toString()).toBe(f.d)
+        expect(keyPair.getPublicKeyBuffer().toString('hex')).toBe(f.Q)
+        expect(keyPair.compressed).toBe(f.compressed)
+        expect(keyPair.network).toEqual(NETWORKS[f.network])
       })
     })
 
@@ -121,7 +124,7 @@ describe('ECPair', () => {
         var keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
         var result = keyPair.toWIF()
 
-        assert.strictEqual(result, f.WIF)
+        expect(result).toBe(f.WIF)
       })
     })
   })
@@ -139,7 +142,7 @@ describe('ECPair', () => {
       var ProxiedECPair = proxyquire('../../src/crypto/ecpair', stub).default
 
       var keyPair = ProxiedECPair.makeRandom()
-      assert.strictEqual(keyPair.toWIF(), exWIF)
+      expect(keyPair.toWIF()).toBe(exWIF)
     })
 
     it('allows a custom RNG to be used', () => {
@@ -149,13 +152,13 @@ describe('ECPair', () => {
         }
       })
 
-      assert.strictEqual(keyPair.toWIF(), exWIF)
+      expect(keyPair.toWIF()).toBe(exWIF)
     })
 
     it('retains the same defaults as ECPair constructor', () => {
       var keyPair = ECPair.makeRandom()
 
-      assert.strictEqual(keyPair.compressed, true)
+      expect(keyPair.compressed, true)
       expect(keyPair.network).toEqual(NETWORKS.mainnet)
     })
 
@@ -165,7 +168,7 @@ describe('ECPair', () => {
         network: NETWORKS.testnet
       })
 
-      assert.strictEqual(keyPair.compressed, false)
+      expect(keyPair.compressed).toBeFalsy()
       expect(keyPair.network).toEqual(NETWORKS.testnet)
     })
 
@@ -175,9 +178,7 @@ describe('ECPair', () => {
       rng.onCall(0).returns(BigInteger.ZERO.toBuffer(32)) // invalid length
       rng.onCall(1).returns(BigInteger.ONE.toBuffer(32)) // === 1
 
-      ECPair.makeRandom({
-        rng: rng
-      })
+      ECPair.makeRandom({rng})
     }))
 
     it('loops until d is within interval [1, n - 1] : n - 1', sinonTest(function() {
@@ -187,9 +188,7 @@ describe('ECPair', () => {
       rng.onCall(1).returns(curve.n.toBuffer(32)) // > n-1
       rng.onCall(2).returns(curve.n.subtract(BigInteger.ONE).toBuffer(32)) // === n-1
 
-      ECPair.makeRandom({
-        rng: rng
-      })
+      ECPair.makeRandom({rng})
     }))
   })
 
@@ -198,7 +197,7 @@ describe('ECPair', () => {
       it('returns ' + f.address + ' for ' + f.WIF, () => {
         var keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
 
-        assert.strictEqual(keyPair.getAddress(), f.address)
+        expect(keyPair.getAddress()).toBe(f.address)
       })
     })
   })
@@ -209,7 +208,7 @@ describe('ECPair', () => {
         var network = NETWORKS[f.network]
         var keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
 
-        assert.strictEqual(keyPair.getNetwork(), network)
+        expect(keyPair.getNetwork()).toEqual(network)
       })
     })
   })

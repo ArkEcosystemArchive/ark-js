@@ -14,14 +14,14 @@ describe('Basic Crypto', () => {
       rng: () => Buffer.from('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')
     })
 
-    assert.strictEqual(keyPair.getAddress(), 'ANoMWEJ9jSdE2FgohBLLXeLzci59BDFsP4')
+    expect(keyPair.getAddress()).toBe('ANoMWEJ9jSdE2FgohBLLXeLzci59BDFsP4')
   })
 
   it('can generate an address from a SHA256 hash', () => {
     const hash = crypto.sha256('correct horse battery staple')
     const keyPair = new ECPair(bigi.fromBuffer(hash))
 
-    assert.strictEqual(keyPair.getAddress(), 'AG5AtmiNbgv51eLwAWnRGvkMudVd7anYP2')
+    expect(keyPair.getAddress()).toBe('AG5AtmiNbgv51eLwAWnRGvkMudVd7anYP2')
   })
 
   it('can generate a random keypair for alternative networks', () => {
@@ -30,13 +30,13 @@ describe('Basic Crypto', () => {
       rng: () => Buffer.from('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')
     })
 
-    assert.strictEqual(keyPair.getAddress(), 'ANoMWEJ9jSdE2FgohBLLXeLzci59BDFsP4')
-    assert.strictEqual(keyPair.toWIF(), 'SDgGxWHHQHnpm5sth7MBUoeSw7V7nbimJ1RBU587xkryTh4qe9ov')
+    expect(keyPair.getAddress()).toBe('ANoMWEJ9jSdE2FgohBLLXeLzci59BDFsP4')
+    expect(keyPair.toWIF()).toBe('SDgGxWHHQHnpm5sth7MBUoeSw7V7nbimJ1RBU587xkryTh4qe9ov')
   })
 
   it('can import an address via WIF', () => {
     const keyPair = ECPair.fromWIF('SDgGxWHHQHnpm5sth7MBUoeSw7V7nbimJ1RBU587xkryTh4qe9ov')
 
-    assert.strictEqual(keyPair.getAddress(), 'ANoMWEJ9jSdE2FgohBLLXeLzci59BDFsP4')
+    expect(keyPair.getAddress()).toBe('ANoMWEJ9jSdE2FgohBLLXeLzci59BDFsP4')
   })
 })

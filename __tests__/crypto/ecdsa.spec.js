@@ -24,7 +24,7 @@ describe('ecdsa', () => {
         var h1 = bcrypto.sha256(f.message)
 
         var k = ecdsa.deterministicGenerateK(h1, x, checkSig)
-        assert.strictEqual(k.toHex(), f.k)
+        expect(k.toHex()).toBe(f.k)
       })
     })
 
@@ -39,7 +39,7 @@ describe('ecdsa', () => {
       var h1 = Buffer.alloc(32)
       var k = ecdsa.deterministicGenerateK(h1, x, checkSig)
 
-      assert.strictEqual(k.toString(), '42')
+      expect(k.toString()).toBe('42')
     }))
 
     it('loops until a suitable signature is found', sinonTest(function() {
@@ -59,7 +59,7 @@ describe('ecdsa', () => {
       var h1 = Buffer.alloc(32)
       var k = ecdsa.deterministicGenerateK(h1, x, checkSig)
 
-      assert.strictEqual(k.toString(), '53')
+      expect(k.toString()).toBe('53')
     }))
 
     fixtures.valid.rfc6979.forEach((f) => {
@@ -74,9 +74,9 @@ describe('ecdsa', () => {
           return results.length === 16
         })
 
-        assert.strictEqual(results[0].toHex(), f.k0)
-        assert.strictEqual(results[1].toHex(), f.k1)
-        assert.strictEqual(results[15].toHex(), f.k15)
+        expect(results[0].toHex()).toBe(f.k0)
+        expect(results[1].toHex()).toBe(f.k1)
+        expect(results[15].toHex()).toBe(f.k15)
       })
     })
   })
@@ -88,7 +88,7 @@ describe('ecdsa', () => {
         var hash = bcrypto.sha256(f.message)
         var signature = ecdsa.sign(hash, d).toDER()
 
-        assert.strictEqual(signature.toString('hex'), f.signature)
+        expect(signature.toString('hex')).toBe(f.signature)
       })
     })
 
@@ -98,7 +98,7 @@ describe('ecdsa', () => {
 
       // See BIP62 for more information
       var N_OVER_TWO = curve.n.shiftRight(1)
-      assert(sig.s.compareTo(N_OVER_TWO) <= 0)
+      expect(sig.s.compareTo(N_OVER_TWO)).toBeLessThanOrEqual(0)
     })
   })
 
@@ -110,7 +110,7 @@ describe('ecdsa', () => {
         var signature = ECSignature.fromDER(Buffer.from(f.signature, 'hex'))
         var Q = curve.G.multiply(d)
 
-        assert(ecdsa.verify(H, signature, Q))
+        expect(ecdsa.verify(H, signature, Q)).toBeTruthy()
       })
     })
 
@@ -128,7 +128,7 @@ describe('ecdsa', () => {
 
         var Q = curve.G.multiply(d)
 
-        assert.strictEqual(ecdsa.verify(H, signature, Q), false)
+        expect(ecdsa.verify(H, signature, Q)).toBeFalsy()
       })
     })
   })

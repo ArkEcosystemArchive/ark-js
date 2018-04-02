@@ -41,15 +41,15 @@ describe('HDNode', () => {
     it('stores the keyPair/chainCode directly', () => {
       var hd = new HDNode(keyPair, chainCode)
 
-      assert.strictEqual(hd.keyPair, keyPair)
-      assert.strictEqual(hd.chainCode, chainCode)
+      expect(hd.keyPair).toBe(keyPair)
+      expect(hd.chainCode).toBe(chainCode)
     })
 
     it('has a default depth/index of 0', () => {
       var hd = new HDNode(keyPair, chainCode)
 
-      assert.strictEqual(hd.depth, 0)
-      assert.strictEqual(hd.index, 0)
+      expect(hd.depth).toBe(0)
+      expect(hd.index).toBe(0)
     })
 
     it('throws on uncompressed keyPair', () => {
@@ -73,8 +73,8 @@ describe('HDNode', () => {
         var network = NETWORKS[f.network]
         var hd = HDNode.fromSeedHex(f.master.seed, network)
 
-        assert.strictEqual(hd.keyPair.toWIF(), f.master.wif)
-        assert.strictEqual(hd.chainCode.toString('hex'), f.master.chainCode)
+        expect(hd.keyPair.toWIF()).toBe(f.master.wif)
+        expect(hd.chainCode.toString('hex')).toBe(f.master.chainCode)
       })
     })
 
@@ -125,7 +125,7 @@ describe('HDNode', () => {
         this.mock(keyPair).expects('getAddress')
           .once().withArgs().returns('foobar')
 
-        assert.strictEqual(hd.getAddress(), 'foobar')
+        expect(hd.getAddress()).toBe('foobar')
       }))
     })
 
@@ -134,7 +134,7 @@ describe('HDNode', () => {
         this.mock(keyPair).expects('getNetwork')
           .once().withArgs().returns('network')
 
-        assert.strictEqual(hd.getNetwork(), 'network')
+        expect(hd.getNetwork()).toBe('network')
       }))
     })
 
@@ -143,7 +143,7 @@ describe('HDNode', () => {
         this.mock(keyPair).expects('getPublicKeyBuffer')
           .once().withArgs().returns('pubKeyBuffer')
 
-        assert.strictEqual(hd.getPublicKeyBuffer(), 'pubKeyBuffer')
+        expect(hd.getPublicKeyBuffer()).toBe('pubKeyBuffer')
       }))
     })
 
@@ -152,7 +152,7 @@ describe('HDNode', () => {
         this.mock(keyPair).expects('sign')
           .once().withArgs(hash).returns('signed')
 
-        assert.strictEqual(hd.sign(hash), 'signed')
+        expect(hd.sign(hash)).toBe('signed')
       }))
     })
 
@@ -167,7 +167,7 @@ describe('HDNode', () => {
         this.mock(keyPair).expects('verify')
           .once().withArgs(hash, signature).returns('verified')
 
-        assert.strictEqual(hd.verify(hash, signature), 'verified')
+        expect(hd.verify(hash, signature)).toBe('verified')
       }))
     })
   })
@@ -177,7 +177,7 @@ describe('HDNode', () => {
       it('exports ' + f.base58 + ' (public) correctly', () => {
         var hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
-        assert.strictEqual(hd.toBase58(), f.base58)
+        expect(hd.toBase58()).toBe(f.base58)
         assert.throws(() => {
           hd.keyPair.toWIF()
         }, /Missing private key/)
@@ -188,8 +188,8 @@ describe('HDNode', () => {
       it('exports ' + f.base58Priv + ' (private) correctly', () => {
         var hd = HDNode.fromBase58(f.base58Priv, NETWORKS_LIST)
 
-        assert.strictEqual(hd.toBase58(), f.base58Priv)
-        assert.strictEqual(hd.keyPair.toWIF(), f.wif)
+        expect(hd.toBase58()).toBe(f.base58Priv)
+        expect(hd.keyPair.toWIF()).toBe(f.wif)
       })
     })
 
@@ -209,7 +209,7 @@ describe('HDNode', () => {
       it('returns the identifier for ' + f.fingerprint, () => {
         var hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
-        assert.strictEqual(hd.getIdentifier().toString('hex'), f.identifier)
+        expect(hd.getIdentifier().toString('hex')).toBe(f.identifier)
       })
     })
   })
@@ -219,7 +219,7 @@ describe('HDNode', () => {
       it('returns the fingerprint for ' + f.fingerprint, () => {
         var hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
-        assert.strictEqual(hd.getFingerprint().toString('hex'), f.fingerprint)
+        expect(hd.getFingerprint().toString('hex')).toBe(f.fingerprint)
       })
     })
   })
@@ -234,15 +234,15 @@ describe('HDNode', () => {
         assert.throws(() => {
           hdn.keyPair.toWIF()
         }, /Missing private key/)
-        assert.strictEqual(hdn.toBase58(), f.base58)
-        assert.strictEqual(hdn.chainCode, hd.chainCode)
-        assert.strictEqual(hdn.depth, f.depth >>> 0)
-        assert.strictEqual(hdn.index, f.index >>> 0)
-        assert.strictEqual(hdn.isNeutered(), true)
+        expect(hdn.toBase58()).toBe(f.base58)
+        expect(hdn.chainCode).toBe(hd.chainCode)
+        expect(hdn.depth).toBe(f.depth >>> 0) // TODO: make sure it works later
+        expect(hdn.index).toBe(f.index >>> 0) // TODO: make sure it works later
+        expect(hdn.isNeutered()).toBeTruthy()
 
         // does not modify the original
-        assert.strictEqual(hd.toBase58(), f.base58Priv)
-        assert.strictEqual(hd.isNeutered(), false)
+        expect(hd.toBase58()).toBe(f.base58Priv)
+        expect(hd.isNeutered()).toBeTruthy()
       })
     })
   })
@@ -250,20 +250,20 @@ describe('HDNode', () => {
   describe('derive', () => {
     function verifyVector(hd, v) {
       if (hd.isNeutered()) {
-        assert.strictEqual(hd.toBase58(), v.base58)
+        expect(hd.toBase58()).toBe(v.base58)
       } else {
-        assert.strictEqual(hd.neutered().toBase58(), v.base58)
-        assert.strictEqual(hd.toBase58(), v.base58Priv)
+        expect(hd.neutered().toBase58()).toBe(v.base58)
+        expect(hd.toBase58()).toBe(v.base58Priv)
       }
 
-      assert.strictEqual(hd.getFingerprint().toString('hex'), v.fingerprint)
-      assert.strictEqual(hd.getIdentifier().toString('hex'), v.identifier)
-      assert.strictEqual(hd.getAddress(), v.address)
-      assert.strictEqual(hd.keyPair.toWIF(), v.wif)
-      assert.strictEqual(hd.keyPair.getPublicKeyBuffer().toString('hex'), v.pubKey)
-      assert.strictEqual(hd.chainCode.toString('hex'), v.chainCode)
-      assert.strictEqual(hd.depth, v.depth >>> 0)
-      assert.strictEqual(hd.index, v.index >>> 0)
+      expect(hd.getFingerprint().toString('hex')).toBe(v.fingerprint)
+      expect(hd.getIdentifier().toString('hex')).toBe(v.identifier)
+      expect(hd.getAddress()).toBe(v.address)
+      expect(hd.keyPair.toWIF()).toBe(v.wif)
+      expect(hd.keyPair.getPublicKeyBuffer().toString('hex')).toBe(v.pubKey)
+      expect(hd.chainCode.toString('hex')).toBe(v.chainCode)
+      expect(hd.depth).toBe(v.depth >>> 0) // TODO: make sure it works later
+      expect(hd.index).toBe(v.index >>> 0) // TODO: make sure it works later
     }
 
     fixtures.valid.forEach((f) => {
@@ -322,7 +322,7 @@ describe('HDNode', () => {
       var master = HDNode.fromBase58(f.master.base58Priv, NETWORKS_LIST)
       var child = master.derive(c.m).neutered()
 
-      assert.strictEqual(child.toBase58(), c.base58)
+      expect(child.toBase58()).toBe(c.base58)
     })
 
     it('works for Private -> public (neutered, hardened)', () => {
@@ -332,7 +332,7 @@ describe('HDNode', () => {
       var master = HDNode.fromBase58(f.master.base58Priv, NETWORKS_LIST)
       var child = master.deriveHardened(c.m).neutered()
 
-      assert.strictEqual(c.base58, child.toBase58())
+      expect(c.base58).toBe(child.toBase58())
     })
 
     it('works for Public -> public', () => {
@@ -342,7 +342,7 @@ describe('HDNode', () => {
       var master = HDNode.fromBase58(f.master.base58, NETWORKS_LIST)
       var child = master.derive(c.m)
 
-      assert.strictEqual(c.base58, child.toBase58())
+      expect(c.base58).toBe(child.toBase58())
     })
 
     it('throws on Public -> public (hardened)', () => {
@@ -382,9 +382,10 @@ describe('HDNode', () => {
     it('works when private key has leading zeros', () => {
       var key = 'xprv9s21ZrQH143K3ckY9DgU79uMTJkQRLdbCCVDh81SnxTgPzLLGax6uHeBULTtaEtcAvKjXfT7ZWtHzKjTpujMkUd9dDb8msDeAfnJxrgAYhr'
       var hdkey = HDNode.fromBase58(key, NETWORKS.bitcoin)
-      assert.strictEqual(hdkey.keyPair.privateKey.toBuffer(32).toString('hex'), '00000055378cf5fafb56c711c674143f9b0ee82ab0ba2924f19b64f5ae7cdbfd')
+      expect(hdkey.keyPair.privateKey.toBuffer(32).toString('hex')).toBe('00000055378cf5fafb56c711c674143f9b0ee82ab0ba2924f19b64f5ae7cdbfd')
+
       var child = hdkey.derivePath('m/44\'/0\'/0\'/0/0\'')
-      assert.strictEqual(child.keyPair.privateKey.toBuffer().toString('hex'), '3348069561d2a0fb925e74bf198762acc47dce7db27372257d2d959a9e6f8aeb')
+      expect(child.keyPair.privateKey.toBuffer().toString('hex')).toBe('3348069561d2a0fb925e74bf198762acc47dce7db27372257d2d959a9e6f8aeb')
     })
   })
 })

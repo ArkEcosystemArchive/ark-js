@@ -20,13 +20,13 @@ beforeEach(() => configManager.setConfig(NETWORKS.mainnet))
 describe('ECPair', () => {
   describe('constructor', () => {
     it('defaults to compressed', () => {
-      var keyPair = new ECPair(BigInteger.ONE)
+      const keyPair = new ECPair(BigInteger.ONE)
 
       expect(keyPair.compressed).toBeTruthy()
     })
 
     it('supports the uncompressed option', () => {
-      var keyPair = new ECPair(BigInteger.ONE, null, {
+      const keyPair = new ECPair(BigInteger.ONE, null, {
         compressed: false
       })
 
@@ -34,7 +34,7 @@ describe('ECPair', () => {
     })
 
     it('supports the network option', () => {
-      var keyPair = new ECPair(BigInteger.ONE, null, {
+      const keyPair = new ECPair(BigInteger.ONE, null, {
         compressed: false,
         network: NETWORKS.testnet
       })
@@ -44,8 +44,8 @@ describe('ECPair', () => {
 
     fixtures.valid.forEach((f) => {
       it('calculates the public point for ' + f.WIF, () => {
-        var d = new BigInteger(f.d)
-        var keyPair = new ECPair(d, null, {
+        const d = new BigInteger(f.d)
+        const keyPair = new ECPair(d, null, {
           compressed: f.compressed
         })
 
@@ -55,8 +55,8 @@ describe('ECPair', () => {
 
     fixtures.invalid.constructor.forEach((f) => {
       it('throws ' + f.exception, () => {
-        var d = f.d && new BigInteger(f.d) // eslint-disable-line no-new
-        var Q = f.Q && ecurve.Point.decodeFrom(curve, Buffer.from(f.Q, 'hex'))
+        const d = f.d && new BigInteger(f.d) // eslint-disable-line no-new
+        const Q = f.Q && ecurve.Point.decodeFrom(curve, Buffer.from(f.Q, 'hex'))
 
         assert.throws(() => {
           new ECPair(d, Q, f.options)
@@ -66,7 +66,7 @@ describe('ECPair', () => {
   })
 
   describe('getPublicKeyBuffer', () => {
-    var keyPair
+    let keyPair
 
     beforeEach(() => {
       keyPair = new ECPair(BigInteger.ONE)
@@ -74,8 +74,8 @@ describe('ECPair', () => {
 
     it('wraps Q.getEncoded', sinonTest(function() {
       this
-      	.mock(keyPair.publicKey)
-      	.expects('getEncoded')
+        .mock(keyPair.publicKey)
+        .expects('getEncoded')
         .once()
         .withArgs(keyPair.compressed)
 
@@ -86,8 +86,8 @@ describe('ECPair', () => {
   describe('fromWIF', () => {
     fixtures.valid.forEach((f) => {
       it('imports ' + f.WIF + ' (' + f.network + ')', () => {
-        var network = NETWORKS[f.network]
-        var keyPair = ECPair.fromWIF(f.WIF, network)
+        const network = NETWORKS[f.network]
+        const keyPair = ECPair.fromWIF(f.WIF, network)
 
         expect(keyPair.privateKey.toString()).toBe(f.d)
         expect(keyPair.getPublicKeyBuffer().toString('hex')).toBe(f.Q)
@@ -98,7 +98,7 @@ describe('ECPair', () => {
 
     fixtures.valid.forEach((f) => {
       it('imports ' + f.WIF + ' (via list of networks)', () => {
-        var keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
+        const keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
 
         expect(keyPair.privateKey.toString()).toBe(f.d)
         expect(keyPair.getPublicKeyBuffer().toString('hex')).toBe(f.Q)
@@ -110,7 +110,7 @@ describe('ECPair', () => {
     fixtures.invalid.fromWIF.forEach((f) => {
       it('throws on ' + f.WIF, () => {
         assert.throws(() => {
-          var networks = f.network ? NETWORKS[f.network] : NETWORKS_LIST
+          const networks = f.network ? NETWORKS[f.network] : NETWORKS_LIST
 
           ECPair.fromWIF(f.WIF, networks)
         }, new RegExp(f.exception))
@@ -121,49 +121,46 @@ describe('ECPair', () => {
   describe('toWIF', () => {
     fixtures.valid.forEach((f) => {
       it('exports ' + f.WIF, () => {
-        var keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
-        var result = keyPair.toWIF()
+        const keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
 
-        expect(result).toBe(f.WIF)
+        expect(keyPair.toWIF()).toBe(f.WIF)
       })
     })
   })
 
   describe('makeRandom', () => {
-    var d = Buffer.from('0404040404040404040404040404040404040404040404040404040404040404', 'hex')
-    var exWIF = 'S9hzwiZ5ziKjUiFpuZX4Lri3rUocDxZSTy7YzKKHvx8TSjUrYQ27'
+    let d = Buffer.from('0404040404040404040404040404040404040404040404040404040404040404', 'hex')
+    let exWIF = 'S9hzwiZ5ziKjUiFpuZX4Lri3rUocDxZSTy7YzKKHvx8TSjUrYQ27'
 
     it.skip('uses randombytes RNG to generate a ECPair', () => {
-      var stub = {
+      const stub = {
         randombytes: () => {
           return d
         }
       }
-      var ProxiedECPair = proxyquire('../../src/crypto/ecpair', stub).default
+      const ProxiedECPair = proxyquire('../../src/crypto/ecpair', stub).default
 
-      var keyPair = ProxiedECPair.makeRandom()
+      const keyPair = ProxiedECPair.makeRandom()
       expect(keyPair.toWIF()).toBe(exWIF)
     })
 
     it('allows a custom RNG to be used', () => {
-      var keyPair = ECPair.makeRandom({
-        rng: function (size) {
-          return d.slice(0, size)
-        }
+      const keyPair = ECPair.makeRandom({
+        rng: (size) => { return d.slice(0, size) }
       })
 
       expect(keyPair.toWIF()).toBe(exWIF)
     })
 
     it('retains the same defaults as ECPair constructor', () => {
-      var keyPair = ECPair.makeRandom()
+      const keyPair = ECPair.makeRandom()
 
       expect(keyPair.compressed, true)
       expect(keyPair.network).toEqual(NETWORKS.mainnet)
     })
 
     it('supports the options parameter', () => {
-      var keyPair = ECPair.makeRandom({
+      const keyPair = ECPair.makeRandom({
         compressed: false,
         network: NETWORKS.testnet
       })
@@ -173,7 +170,7 @@ describe('ECPair', () => {
     })
 
     it('loops until d is within interval [1, n - 1] : 1', sinonTest(function() {
-      var rng = this.mock()
+      const rng = this.mock()
       rng.exactly(2)
       rng.onCall(0).returns(BigInteger.ZERO.toBuffer(32)) // invalid length
       rng.onCall(1).returns(BigInteger.ONE.toBuffer(32)) // === 1
@@ -182,7 +179,7 @@ describe('ECPair', () => {
     }))
 
     it('loops until d is within interval [1, n - 1] : n - 1', sinonTest(function() {
-      var rng = this.mock()
+      const rng = this.mock()
       rng.exactly(3)
       rng.onCall(0).returns(BigInteger.ZERO.toBuffer(32)) // < 1
       rng.onCall(1).returns(curve.n.toBuffer(32)) // > n-1
@@ -195,7 +192,7 @@ describe('ECPair', () => {
   describe('getAddress', () => {
     fixtures.valid.forEach((f) => {
       it('returns ' + f.address + ' for ' + f.WIF, () => {
-        var keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
+        const keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
 
         expect(keyPair.getAddress()).toBe(f.address)
       })
@@ -205,16 +202,16 @@ describe('ECPair', () => {
   describe('getNetwork', () => {
     fixtures.valid.forEach((f) => {
       it('returns ' + f.network + ' for ' + f.WIF, () => {
-        var network = NETWORKS[f.network]
-        var keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
+        const keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
 
-        expect(keyPair.getNetwork()).toEqual(network)
+        expect(keyPair.getNetwork()).toEqual(NETWORKS[f.network])
       })
     })
   })
 
   describe('ecdsa wrappers', () => {
-    var keyPair, hash
+    let keyPair
+    let hash
 
     beforeEach(() => {
       keyPair = ECPair.makeRandom()
@@ -239,15 +236,18 @@ describe('ECPair', () => {
     })
 
     describe('verify', () => {
-      var signature
+      let signature
 
       beforeEach(() => {
         signature = keyPair.sign(hash)
       })
 
       it('wraps ecdsa.verify', sinonTest(function() {
-        this.mock(ecdsa).expects('verify')
-          .once().withArgs(hash, signature, keyPair.publicKey)
+        this
+          .mock(ecdsa)
+          .expects('verify')
+          .once()
+          .withArgs(hash, signature, keyPair.publicKey)
 
         keyPair.verify(hash, signature)
       }))

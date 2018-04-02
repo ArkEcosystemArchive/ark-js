@@ -13,9 +13,9 @@ describe('ECSignature', () => {
   describe('toCompact', () => {
     fixtures.valid.forEach((f) => {
       it('exports ' + f.compact.hex + ' correctly', () => {
-        var signature = new ECSignature(new BigInteger(f.signature.r), new BigInteger(f.signature.s))
+        const signature = new ECSignature(new BigInteger(f.signature.r), new BigInteger(f.signature.s))
 
-        var buffer = signature.toCompact(f.compact.i, f.compact.compressed)
+        const buffer = signature.toCompact(f.compact.i, f.compact.compressed)
         expect(buffer.toString('hex')).toBe(f.compact.hex)
       })
     })
@@ -24,8 +24,8 @@ describe('ECSignature', () => {
   describe('parseCompact', () => {
     fixtures.valid.forEach((f) => {
       it('imports ' + f.compact.hex + ' correctly', () => {
-        var buffer = Buffer.from(f.compact.hex, 'hex')
-        var parsed = ECSignature.parseCompact(buffer)
+        const buffer = Buffer.from(f.compact.hex, 'hex')
+        const parsed = ECSignature.parseCompact(buffer)
 
         expect(parsed.compressed).toBe(f.compact.compressed)
         expect(parsed.i).toBe(f.compact.i)
@@ -36,7 +36,7 @@ describe('ECSignature', () => {
 
     fixtures.invalid.compact.forEach((f) => {
       it('throws on ' + f.hex, () => {
-        var buffer = Buffer.from(f.hex, 'hex')
+        const buffer = Buffer.from(f.hex, 'hex')
 
         assert.throws(() => {
           ECSignature.parseCompact(buffer)
@@ -48,9 +48,9 @@ describe('ECSignature', () => {
   describe('toDER', () => {
     fixtures.valid.forEach((f) => {
       it('exports ' + f.DER + ' correctly', () => {
-        var signature = new ECSignature(new BigInteger(f.signature.r), new BigInteger(f.signature.s))
+        const signature = new ECSignature(new BigInteger(f.signature.r), new BigInteger(f.signature.s))
 
-        var DER = signature.toDER()
+        const DER = signature.toDER()
         expect(DER.toString('hex')).toBe(f.DER)
       })
     })
@@ -59,8 +59,8 @@ describe('ECSignature', () => {
   describe('fromDER', () => {
     fixtures.valid.forEach((f) => {
       it('imports ' + f.DER + ' correctly', () => {
-        var buffer = Buffer.from(f.DER, 'hex')
-        var signature = ECSignature.fromDER(buffer)
+        const buffer = Buffer.from(f.DER, 'hex')
+        const signature = ECSignature.fromDER(buffer)
 
         expect(signature.r.toString()).toBe(f.signature.r)
         expect(signature.s.toString()).toBe(f.signature.s)
@@ -69,7 +69,7 @@ describe('ECSignature', () => {
 
     fixtures.invalid.DER.forEach((f) => {
       it('throws "' + f.exception + '" for ' + f.hex, () => {
-        var buffer = Buffer.from(f.hex, 'hex')
+        const buffer = Buffer.from(f.hex, 'hex')
 
         assert.throws(() => {
           ECSignature.fromDER(buffer)
@@ -81,16 +81,16 @@ describe('ECSignature', () => {
   describe('toScriptSignature', () => {
     fixtures.valid.forEach((f) => {
       it('exports ' + f.scriptSignature.hex + ' correctly', () => {
-        var signature = new ECSignature(new BigInteger(f.signature.r), new BigInteger(f.signature.s))
+        const signature = new ECSignature(new BigInteger(f.signature.r), new BigInteger(f.signature.s))
 
-        var scriptSignature = signature.toScriptSignature(f.scriptSignature.hashType)
+        const scriptSignature = signature.toScriptSignature(f.scriptSignature.hashType)
         expect(scriptSignature.toString('hex')).toBe(f.scriptSignature.hex)
       })
     })
 
     fixtures.invalid.scriptSignature.forEach((f) => {
       it('throws ' + f.exception, () => {
-        var signature = new ECSignature(new BigInteger(f.signature.r), new BigInteger(f.signature.s))
+        const signature = new ECSignature(new BigInteger(f.signature.r), new BigInteger(f.signature.s))
 
         assert.throws(() => {
           signature.toScriptSignature(f.hashType)
@@ -102,8 +102,8 @@ describe('ECSignature', () => {
   describe('parseScriptSignature', () => {
     fixtures.valid.forEach((f) => {
       it('imports ' + f.scriptSignature.hex + ' correctly', () => {
-        var buffer = Buffer.from(f.scriptSignature.hex, 'hex')
-        var parsed = ECSignature.parseScriptSignature(buffer)
+        const buffer = Buffer.from(f.scriptSignature.hex, 'hex')
+        const parsed = ECSignature.parseScriptSignature(buffer)
 
         expect(parsed.signature.r.toString()).toBe(f.signature.r)
         expect(parsed.signature.s.toString()).toBe(f.signature.s)
@@ -113,7 +113,7 @@ describe('ECSignature', () => {
 
     fixtures.invalid.scriptSignature.forEach((f) => {
       it('throws on ' + f.hex, () => {
-        var buffer = Buffer.from(f.hex, 'hex')
+        const buffer = Buffer.from(f.hex, 'hex')
 
         assert.throws(() => {
           ECSignature.parseScriptSignature(buffer)

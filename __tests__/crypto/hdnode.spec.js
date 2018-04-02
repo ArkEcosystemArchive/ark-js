@@ -16,7 +16,7 @@ const sinonTest = sinonTestFactory(sinon)
 
 beforeEach(() => configManager.setConfig(NETWORKS.mainnet))
 
-var validAll = []
+let validAll = []
 fixtures.valid.forEach((f) => {
   function addNetwork(n) {
     n.network = f.network
@@ -28,10 +28,11 @@ fixtures.valid.forEach((f) => {
 
 describe('HDNode', () => {
   describe('Constructor', () => {
-    var keyPair, chainCode
+    let keyPair
+    let chainCode
 
     beforeEach(() => {
-      var d = BigInteger.ONE
+      const d = BigInteger.ONE
 
       keyPair = new ECPair(d, null)
       chainCode = Buffer.alloc(32)
@@ -39,14 +40,14 @@ describe('HDNode', () => {
     })
 
     it('stores the keyPair/chainCode directly', () => {
-      var hd = new HDNode(keyPair, chainCode)
+      const hd = new HDNode(keyPair, chainCode)
 
       expect(hd.keyPair).toBe(keyPair)
       expect(hd.chainCode).toBe(chainCode)
     })
 
     it('has a default depth/index of 0', () => {
-      var hd = new HDNode(keyPair, chainCode)
+      const hd = new HDNode(keyPair, chainCode)
 
       expect(hd.depth).toBe(0)
       expect(hd.index).toBe(0)
@@ -70,8 +71,8 @@ describe('HDNode', () => {
   describe('fromSeed*', () => {
     fixtures.valid.forEach((f) => {
       it('calculates privKey and chainCode for ' + f.master.fingerprint, () => {
-        var network = NETWORKS[f.network]
-        var hd = HDNode.fromSeedHex(f.master.seed, network)
+        const network = NETWORKS[f.network]
+        const hd = HDNode.fromSeedHex(f.master.seed, network)
 
         expect(hd.keyPair.toWIF()).toBe(f.master.wif)
         expect(hd.chainCode.toString('hex')).toBe(f.master.chainCode)
@@ -110,20 +111,26 @@ describe('HDNode', () => {
   })
 
   describe('ECPair wrappers', () => {
-    var keyPair, hd, hash
+    let keyPair
+    let hd
+    let hash
 
     beforeEach(() => {
       keyPair = ECPair.makeRandom()
       hash = Buffer.alloc(32)
 
-      var chainCode = Buffer.alloc(32)
+      const chainCode = Buffer.alloc(32)
       hd = new HDNode(keyPair, chainCode)
     })
 
     describe('getAddress', () => {
       it('wraps keyPair.getAddress', sinonTest(function() {
-        this.mock(keyPair).expects('getAddress')
-          .once().withArgs().returns('foobar')
+        this
+          .mock(keyPair)
+          .expects('getAddress')
+          .once()
+          .withArgs()
+          .returns('foobar')
 
         expect(hd.getAddress()).toBe('foobar')
       }))
@@ -131,8 +138,12 @@ describe('HDNode', () => {
 
     describe('getNetwork', () => {
       it('wraps keyPair.getNetwork', sinonTest(function() {
-        this.mock(keyPair).expects('getNetwork')
-          .once().withArgs().returns('network')
+        this
+          .mock(keyPair)
+          .expects('getNetwork')
+          .once()
+          .withArgs()
+          .returns('network')
 
         expect(hd.getNetwork()).toBe('network')
       }))
@@ -157,7 +168,7 @@ describe('HDNode', () => {
     })
 
     describe('verify', () => {
-      var signature
+      let signature
 
       beforeEach(() => {
         signature = hd.sign(hash)
@@ -175,7 +186,7 @@ describe('HDNode', () => {
   describe('fromBase58 / toBase58', () => {
     validAll.forEach((f) => {
       it('exports ' + f.base58 + ' (public) correctly', () => {
-        var hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
+        const hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
         expect(hd.toBase58()).toBe(f.base58)
         assert.throws(() => {
@@ -186,7 +197,7 @@ describe('HDNode', () => {
 
     validAll.forEach((f) => {
       it('exports ' + f.base58Priv + ' (private) correctly', () => {
-        var hd = HDNode.fromBase58(f.base58Priv, NETWORKS_LIST)
+        const hd = HDNode.fromBase58(f.base58Priv, NETWORKS_LIST)
 
         expect(hd.toBase58()).toBe(f.base58Priv)
         expect(hd.keyPair.toWIF()).toBe(f.wif)
@@ -196,7 +207,7 @@ describe('HDNode', () => {
     fixtures.invalid.fromBase58.forEach((f) => {
       it('throws on ' + f.string, () => {
         assert.throws(() => {
-          var networks = f.network ? NETWORKS[f.network] : NETWORKS_LIST
+          const networks = f.network ? NETWORKS[f.network] : NETWORKS_LIST
 
           HDNode.fromBase58(f.string, networks)
         }, new RegExp(f.exception))
@@ -207,7 +218,7 @@ describe('HDNode', () => {
   describe('getIdentifier', () => {
     validAll.forEach((f) => {
       it('returns the identifier for ' + f.fingerprint, () => {
-        var hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
+        const hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
         expect(hd.getIdentifier().toString('hex')).toBe(f.identifier)
       })
@@ -217,7 +228,7 @@ describe('HDNode', () => {
   describe('getFingerprint', () => {
     validAll.forEach((f) => {
       it('returns the fingerprint for ' + f.fingerprint, () => {
-        var hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
+        const hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
         expect(hd.getFingerprint().toString('hex')).toBe(f.fingerprint)
       })
@@ -227,8 +238,8 @@ describe('HDNode', () => {
   describe('neutered / isNeutered', () => {
     validAll.forEach((f) => {
       it('drops the private key for ' + f.fingerprint, () => {
-        var hd = HDNode.fromBase58(f.base58Priv, NETWORKS_LIST)
-        var hdn = hd.neutered()
+        const hd = HDNode.fromBase58(f.base58Priv, NETWORKS_LIST)
+        const hdn = hd.neutered()
 
         assert.notEqual(hdn.keyPair, hd.keyPair)
         assert.throws(() => {
@@ -267,15 +278,15 @@ describe('HDNode', () => {
     }
 
     fixtures.valid.forEach((f) => {
-      var network = NETWORKS[f.network]
-      var hd = HDNode.fromSeedHex(f.master.seed, network)
-      var master = hd
+      const network = NETWORKS[f.network]
+      const hd = HDNode.fromSeedHex(f.master.seed, network)
+      const master = hd
 
       // testing deriving path from master
       f.children.forEach((c) => {
         it(c.path + ' from ' + f.master.fingerprint + ' by path', () => {
-          var child = master.derivePath(c.path)
-          var childNoM = master.derivePath(c.path.slice(2)) // no m/ on path
+          const child = master.derivePath(c.path)
+          const childNoM = master.derivePath(c.path.slice(2)) // no m/ on path
 
           verifyVector(child, c)
           verifyVector(childNoM, c)
@@ -284,12 +295,12 @@ describe('HDNode', () => {
 
       // testing deriving path from children
       f.children.forEach((c, i) => {
-        var cn = master.derivePath(c.path)
+        const cn = master.derivePath(c.path)
 
         f.children.slice(i + 1).forEach(function(cc) {
           it(cc.path + ' from ' + c.fingerprint + ' by path', () => {
-            var ipath = cc.path.slice(2).split('/').slice(i + 1).join('/')
-            var child = cn.derivePath(ipath)
+            const ipath = cc.path.slice(2).split('/').slice(i + 1).join('/')
+            const child = cn.derivePath(ipath)
             verifyVector(child, cc)
 
             assert.throws(() => {
@@ -316,40 +327,40 @@ describe('HDNode', () => {
     })
 
     it('works for Private -> public (neutered)', () => {
-      var f = fixtures.valid[1]
-      var c = f.children[0]
+      const f = fixtures.valid[1]
+      const c = f.children[0]
 
-      var master = HDNode.fromBase58(f.master.base58Priv, NETWORKS_LIST)
-      var child = master.derive(c.m).neutered()
+      const master = HDNode.fromBase58(f.master.base58Priv, NETWORKS_LIST)
+      const child = master.derive(c.m).neutered()
 
       expect(child.toBase58()).toBe(c.base58)
     })
 
     it('works for Private -> public (neutered, hardened)', () => {
-      var f = fixtures.valid[0]
-      var c = f.children[0]
+      const f = fixtures.valid[0]
+      const c = f.children[0]
 
-      var master = HDNode.fromBase58(f.master.base58Priv, NETWORKS_LIST)
-      var child = master.deriveHardened(c.m).neutered()
+      const master = HDNode.fromBase58(f.master.base58Priv, NETWORKS_LIST)
+      const child = master.deriveHardened(c.m).neutered()
 
       expect(c.base58).toBe(child.toBase58())
     })
 
     it('works for Public -> public', () => {
-      var f = fixtures.valid[1]
-      var c = f.children[0]
+      const f = fixtures.valid[1]
+      const c = f.children[0]
 
-      var master = HDNode.fromBase58(f.master.base58, NETWORKS_LIST)
-      var child = master.derive(c.m)
+      const master = HDNode.fromBase58(f.master.base58, NETWORKS_LIST)
+      const child = master.derive(c.m)
 
       expect(c.base58).toBe(child.toBase58())
     })
 
     it('throws on Public -> public (hardened)', () => {
-      var f = fixtures.valid[0]
-      var c = f.children[0]
+      const f = fixtures.valid[0]
+      const c = f.children[0]
 
-      var master = HDNode.fromBase58(f.master.base58, NETWORKS_LIST)
+      const master = HDNode.fromBase58(f.master.base58, NETWORKS_LIST)
 
       assert.throws(() => {
         master.deriveHardened(c.m)
@@ -357,8 +368,8 @@ describe('HDNode', () => {
     })
 
     it('throws on wrong types', () => {
-      var f = fixtures.valid[0]
-      var master = HDNode.fromBase58(f.master.base58, NETWORKS_LIST)
+      const f = fixtures.valid[0]
+      const master = HDNode.fromBase58(f.master.base58, NETWORKS_LIST)
 
       fixtures.invalid.derive.forEach((fx) => {
         assert.throws(() => {
@@ -380,11 +391,11 @@ describe('HDNode', () => {
     })
 
     it('works when private key has leading zeros', () => {
-      var key = 'xprv9s21ZrQH143K3ckY9DgU79uMTJkQRLdbCCVDh81SnxTgPzLLGax6uHeBULTtaEtcAvKjXfT7ZWtHzKjTpujMkUd9dDb8msDeAfnJxrgAYhr'
-      var hdkey = HDNode.fromBase58(key, NETWORKS.bitcoin)
+      const key = 'xprv9s21ZrQH143K3ckY9DgU79uMTJkQRLdbCCVDh81SnxTgPzLLGax6uHeBULTtaEtcAvKjXfT7ZWtHzKjTpujMkUd9dDb8msDeAfnJxrgAYhr'
+      const hdkey = HDNode.fromBase58(key, NETWORKS.bitcoin)
       expect(hdkey.keyPair.privateKey.toBuffer(32).toString('hex')).toBe('00000055378cf5fafb56c711c674143f9b0ee82ab0ba2924f19b64f5ae7cdbfd')
 
-      var child = hdkey.derivePath('m/44\'/0\'/0\'/0/0\'')
+      const child = hdkey.derivePath('m/44\'/0\'/0\'/0/0\'')
       expect(child.keyPair.privateKey.toBuffer().toString('hex')).toBe('3348069561d2a0fb925e74bf198762acc47dce7db27372257d2d959a9e6f8aeb')
     })
   })

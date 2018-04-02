@@ -8,7 +8,7 @@ import ecurve from 'ecurve'
 const curve = ecdsa.__curve
 
 test('crypto.js', () => {
-  var crypto = ark.crypto
+  const crypto = ark.crypto
 
   it('should be ok', () => {
     (crypto).should.be.ok
@@ -19,15 +19,15 @@ test('crypto.js', () => {
   })
 
   it('should has properties', () => {
-    var properties = ['getBytes', 'getHash', 'getId', 'getFee', 'sign', 'secondSign', 'getKeys', 'getAddress', 'verify', 'verifySecondSignature', 'fixedPoint']
+    const properties = ['getBytes', 'getHash', 'getId', 'getFee', 'sign', 'secondSign', 'getKeys', 'getAddress', 'verify', 'verifySecondSignature', 'fixedPoint']
     properties.forEach(function (property) {
       (crypto).should.have.property(property)
     })
   })
 
   test('#getBytes', () => {
-    var getBytes = crypto.getBytes
-    var bytes = null
+    const getBytes = crypto.getBytes
+    let bytes = null
 
     it('should be ok', () => {
       (getBytes).should.be.ok
@@ -38,7 +38,7 @@ test('crypto.js', () => {
     })
 
     it('should return Buffer of simply transaction and buffer must be 202 length', () => {
-      var transaction = {
+      const transaction = {
         type: 0,
         amount: 1000,
         fee: 2000,
@@ -57,7 +57,7 @@ test('crypto.js', () => {
     })
 
     it('should return Buffer of transaction with second signature and buffer must be 266 length', () => {
-      var transaction = {
+      const transaction = {
         type: 0,
         amount: 1000,
         fee: 2000,
@@ -78,7 +78,7 @@ test('crypto.js', () => {
   })
 
   test('#getHash', () => {
-    var getHash = crypto.getHash
+    const getHash = crypto.getHash
 
     it('should be ok', () => {
       (getHash).should.be.ok
@@ -89,7 +89,7 @@ test('crypto.js', () => {
     })
 
     it('should return Buffer and Buffer most be 32 bytes length', () => {
-      var transaction = {
+      const transaction = {
         type: 0,
         amount: 1000,
         fee: 2000,
@@ -100,7 +100,7 @@ test('crypto.js', () => {
         signature: '618a54975212ead93df8c881655c625544bce8ed7ccdfe6f08a42eecfb1adebd051307be5014bb051617baf7815d50f62129e70918190361e5d4dd4796541b0a'
       }
 
-      var result = getHash(transaction);
+      const result = getHash(transaction);
       (result).should.be.ok;
       (result).should.be.type('object');
       (result.length).should.be.equal(32)
@@ -108,7 +108,7 @@ test('crypto.js', () => {
   })
 
   test('#getId', () => {
-    var getId = crypto.getId
+    const getId = crypto.getId
 
     it('should be ok', () => {
       (getId).should.be.ok
@@ -119,7 +119,7 @@ test('crypto.js', () => {
     })
 
     it('should return string id and be equal to 619fd7971db6f317fdee3675c862291c976d072a0a1782410e3a6f5309022491', () => {
-      var transaction = {
+      const transaction = {
         type: 0,
         amount: 1000,
         fee: 2000,
@@ -130,13 +130,13 @@ test('crypto.js', () => {
         signature: '618a54975212ead93df8c881655c625544bce8ed7ccdfe6f08a42eecfb1adebd051307be5014bb051617baf7815d50f62129e70918190361e5d4dd4796541b0a'
       }
 
-      var id = getId(transaction);
+      const id = getId(transaction);
       (id).should.be.type('string').and.equal('952e33b66c35a3805015657c008e73a0dee1efefd9af8c41adb59fe79745ccea')
     })
   })
 
   test('#getFee', () => {
-    var getFee = crypto.getFee
+    const getFee = crypto.getFee
 
     it('should be ok', () => {
       (getFee).should.be.ok
@@ -147,34 +147,34 @@ test('crypto.js', () => {
     })
 
     it('should return number', () => {
-      var fee = getFee({amount: 100000, type: 0});
+      const fee = getFee({amount: 100000, type: 0});
       (fee).should.be.type('number');
       (fee).should.be.not.NaN
     })
 
     it('should return 10000000', () => {
-      var fee = getFee({amount: 100000, type: 0});
+      const fee = getFee({amount: 100000, type: 0});
       (fee).should.be.type('number').and.equal(10000000)
     })
 
     it('should return 10000000000', () => {
-      var fee = getFee({type: 1});
+      const fee = getFee({type: 1});
       (fee).should.be.type('number').and.equal(10000000000)
     })
 
     it('should be equal 1000000000000', () => {
-      var fee = getFee({type: 2});
+      const fee = getFee({type: 2});
       (fee).should.be.type('number').and.equal(1000000000000)
     })
 
     it('should be equal 100000000', () => {
-      var fee = getFee({type: 3});
+      const fee = getFee({type: 3});
       (fee).should.be.type('number').and.equal(100000000)
     })
   })
 
   test('fixedPoint', () => {
-    var fixedPoint = crypto.fixedPoint
+    const fixedPoint = crypto.fixedPoint
 
     it('should be ok', () => {
       (fixedPoint).should.be.ok
@@ -190,7 +190,7 @@ test('crypto.js', () => {
   })
 
   test('#sign', () => {
-    var sign = crypto.sign
+    const sign = crypto.sign
 
     it('should be ok', () => {
       (sign).should.be.ok
@@ -202,7 +202,7 @@ test('crypto.js', () => {
   })
 
   test('#secondSign', () => {
-    var secondSign = crypto.secondSign
+    const secondSign = crypto.secondSign
 
     it('should be ok', () => {
       (secondSign).should.be.ok
@@ -214,7 +214,7 @@ test('crypto.js', () => {
   })
 
   test('#getKeys', () => {
-    var getKeys = crypto.getKeys
+    const getKeys = crypto.getKeys
 
     it('should be ok', () => {
       (getKeys).should.be.ok
@@ -225,7 +225,7 @@ test('crypto.js', () => {
     })
 
     it('should return two keys in hex', () => {
-      var keys = getKeys('secret');
+      const keys = getKeys('secret');
 
       (keys).should.be.ok;
       (keys).should.be.type('object');
@@ -253,7 +253,7 @@ test('crypto.js', () => {
   })
 
   test('#getAddress', () => {
-    var getAddress = crypto.getAddress
+    const getAddress = crypto.getAddress
 
     it('should be ok', () => {
       (getAddress).should.be.ok
@@ -264,8 +264,8 @@ test('crypto.js', () => {
     })
 
     it('should generate address by publicKey', () => {
-      var keys = crypto.getKeys('secret')
-      var address = getAddress(keys.publicKey);
+      const keys = crypto.getKeys('secret')
+      const address = getAddress(keys.publicKey);
 
       (address).should.be.ok;
       (address).should.be.type('string');
@@ -273,8 +273,8 @@ test('crypto.js', () => {
     })
 
     it('should generate address by publicKey - second test', () => {
-      var keys = crypto.getKeys('secret second test to be sure it works correctly')
-      var address = getAddress(keys.publicKey);
+      const keys = crypto.getKeys('secret second test to be sure it works correctly')
+      const address = getAddress(keys.publicKey);
 
       (address).should.be.ok;
       (address).should.be.type('string');
@@ -282,18 +282,18 @@ test('crypto.js', () => {
     })
 
     it('should generate the same address as ECPair.getAddress()', () => {
-      var keys = crypto.getKeys('secret second test to be sure it works correctly')
-      var address = getAddress(keys.publicKey)
+      const keys = crypto.getKeys('secret second test to be sure it works correctly')
+      const address = getAddress(keys.publicKey)
 
-      var Q = ecurve.Point.decodeFrom(curve, new Buffer(keys.publicKey, 'hex'))
-      var keyPair = new ECPair(null, Q);
+      const Q = ecurve.Point.decodeFrom(curve, new Buffer(keys.publicKey, 'hex'))
+      const keyPair = new ECPair(null, Q);
 
       (address).should.be.equal(keyPair.getAddress())
     })
   })
 
   test('#verify', () => {
-    var verify = crypto.verify
+    const verify = crypto.verify
 
     it('should be ok', () => {
       (verify).should.be.ok
@@ -305,7 +305,7 @@ test('crypto.js', () => {
   })
 
   test('#verifySecondSignature', () => {
-    var verifySecondSignature = crypto.verifySecondSignature
+    const verifySecondSignature = crypto.verifySecondSignature
 
     it('should be ok', () => {
       (verifySecondSignature).should.be.ok
@@ -321,7 +321,7 @@ test('different networks', () => {
   it('validate address on tesnet should be ok', () => {
     ark.crypto.setNetworkVersion(0x52)
     ark.crypto.getNetworkVersion().should.equal(0x52)
-    var validate = ark.crypto.validateAddress('a6fpb1BJZq4otWiVsBcuLG1ZGs5WsqqQtH');
+    const validate = ark.crypto.validateAddress('a6fpb1BJZq4otWiVsBcuLG1ZGs5WsqqQtH');
     (validate).should.equal(true)
     ark.crypto.setNetworkVersion(0x17)
     ark.crypto.getNetworkVersion().should.equal(0x17)
@@ -329,7 +329,7 @@ test('different networks', () => {
 })
 
 test('delegate.js', () => {
-  var delegate = ark.delegate
+  const delegate = ark.delegate
 
   it('should be ok', () => {
     (delegate).should.be.ok
@@ -344,8 +344,8 @@ test('delegate.js', () => {
   })
 
   test('#createDelegate', () => {
-    var createDelegate = delegate.createDelegate
-    var trs = null
+    const createDelegate = delegate.createDelegate
+    const trs = null
 
     it('should be ok', () => {
       (createDelegate).should.be.ok
@@ -377,9 +377,9 @@ test('delegate.js', () => {
     })
 
     it('should be deserialised correctly', () => {
-      var deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(trs).toString('hex'))
+      const deserialisedTx = ark.crypto.fromBytes(ark.crypto.getBytes(trs).toString('hex'))
       delete deserialisedTx.vendorFieldHex
-      var keys = Object.keys(deserialisedTx)
+      const keys = Object.keys(deserialisedTx)
       for (key in keys) {
         if (keys[key] == 'asset') {
           deserialisedTx.asset.delegate.username.should.equal(trs.asset.delegate.username)
@@ -390,8 +390,8 @@ test('delegate.js', () => {
     })
 
     test('returned delegate', () => {
-      var keys = ark.crypto.getKeys('secret')
-      var secondKeys = ark.crypto.getKeys('secret 2')
+      const keys = ark.crypto.getKeys('secret')
+      const secondKeys = ark.crypto.getKeys('secret 2')
 
       it('should be ok', () => {
         (trs).should.be.ok
@@ -463,24 +463,24 @@ test('delegate.js', () => {
       })
 
       it('should be signed correctly', () => {
-        var result = ark.crypto.verify(trs);
+        const result = ark.crypto.verify(trs);
         (result).should.be.ok
       })
 
       it('should be second signed correctly', () => {
-        var result = ark.crypto.verifySecondSignature(trs, secondKeys.publicKey);
+        const result = ark.crypto.verifySecondSignature(trs, secondKeys.publicKey);
         (result).should.be.ok
       })
 
       it('should not be signed correctly now', () => {
         trs.amount = 100
-        var result = ark.crypto.verify(trs);
+        const result = ark.crypto.verify(trs);
         (result).should.be.not.ok
       })
 
       it('should not be second signed correctly now', () => {
         trs.amount = 100
-        var result = ark.crypto.verifySecondSignature(trs, secondKeys.publicKey);
+        const result = ark.crypto.verifySecondSignature(trs, secondKeys.publicKey);
         (result).should.be.not.ok
       })
 

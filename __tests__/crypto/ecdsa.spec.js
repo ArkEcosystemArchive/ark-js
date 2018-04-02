@@ -20,54 +20,58 @@ describe('ecdsa', () => {
 
     fixtures.valid.ecdsa.forEach((f) => {
       it('for "' + f.message + '"', () => {
-        var x = BigInteger.fromHex(f.d).toBuffer(32)
-        var h1 = bcrypto.sha256(f.message)
+        const x = BigInteger.fromHex(f.d).toBuffer(32)
+        const h1 = bcrypto.sha256(f.message)
 
-        var k = ecdsa.deterministicGenerateK(h1, x, checkSig)
+        const k = ecdsa.deterministicGenerateK(h1, x, checkSig)
         expect(k.toHex()).toBe(f.k)
       })
     })
 
     it('loops until an appropriate k value is found', sinonTest(function() {
-      this.mock(BigInteger).expects('fromBuffer')
+      this
+        .mock(BigInteger)
+        .expects('fromBuffer')
         .exactly(3)
         .onCall(0).returns(new BigInteger('0')) // < 1
         .onCall(1).returns(curve.n) // > n-1
         .onCall(2).returns(new BigInteger('42')) // valid
 
-      var x = new BigInteger('1').toBuffer(32)
-      var h1 = Buffer.alloc(32)
-      var k = ecdsa.deterministicGenerateK(h1, x, checkSig)
+      const x = new BigInteger('1').toBuffer(32)
+      const h1 = Buffer.alloc(32)
+      const k = ecdsa.deterministicGenerateK(h1, x, checkSig)
 
       expect(k.toString()).toBe('42')
     }))
 
     it('loops until a suitable signature is found', sinonTest(function() {
-      this.mock(BigInteger).expects('fromBuffer')
+      this
+        .mock(BigInteger)
+        .expects('fromBuffer')
         .exactly(4)
         .onCall(0).returns(new BigInteger('0')) // < 1
         .onCall(1).returns(curve.n) // > n-1
         .onCall(2).returns(new BigInteger('42')) // valid, but 'bad' signature
         .onCall(3).returns(new BigInteger('53')) // valid, good signature
 
-      var checkSig = this.mock()
+      const checkSig = this.mock()
       checkSig.exactly(2)
       checkSig.onCall(0).returns(false) // bad signature
       checkSig.onCall(1).returns(true) // good signature
 
-      var x = new BigInteger('1').toBuffer(32)
-      var h1 = Buffer.alloc(32)
-      var k = ecdsa.deterministicGenerateK(h1, x, checkSig)
+      const x = new BigInteger('1').toBuffer(32)
+      const h1 = Buffer.alloc(32)
+      const k = ecdsa.deterministicGenerateK(h1, x, checkSig)
 
       expect(k.toString()).toBe('53')
     }))
 
     fixtures.valid.rfc6979.forEach((f) => {
       it('produces the expected k values for ' + f.message + " if k wasn't suitable", () => {
-        var x = BigInteger.fromHex(f.d).toBuffer(32)
-        var h1 = bcrypto.sha256(f.message)
+        const x = BigInteger.fromHex(f.d).toBuffer(32)
+        const h1 = bcrypto.sha256(f.message)
 
-        var results = []
+        const results = []
         ecdsa.deterministicGenerateK(h1, x, function (k) {
           results.push(k)
 
@@ -84,20 +88,20 @@ describe('ecdsa', () => {
   describe('sign', () => {
     fixtures.valid.ecdsa.forEach((f) => {
       it('produces a deterministic signature for "' + f.message + '"', () => {
-        var d = BigInteger.fromHex(f.d)
-        var hash = bcrypto.sha256(f.message)
-        var signature = ecdsa.sign(hash, d).toDER()
+        const d = BigInteger.fromHex(f.d)
+        const hash = bcrypto.sha256(f.message)
+        const signature = ecdsa.sign(hash, d).toDER()
 
         expect(signature.toString('hex')).toBe(f.signature)
       })
     })
 
     it('should sign with low S value', () => {
-      var hash = bcrypto.sha256('Vires in numeris')
-      var sig = ecdsa.sign(hash, BigInteger.ONE)
+      const hash = bcrypto.sha256('Vires in numeris')
+      const sig = ecdsa.sign(hash, BigInteger.ONE)
 
       // See BIP62 for more information
-      var N_OVER_TWO = curve.n.shiftRight(1)
+      const N_OVER_TWO = curve.n.shiftRight(1)
       expect(sig.s.compareTo(N_OVER_TWO)).toBeLessThanOrEqual(0)
     })
   })
@@ -105,10 +109,10 @@ describe('ecdsa', () => {
   describe('verify', () => {
     fixtures.valid.ecdsa.forEach((f) => {
       it('verifies a valid signature for "' + f.message + '"', () => {
-        var d = BigInteger.fromHex(f.d)
-        var H = bcrypto.sha256(f.message)
-        var signature = ECSignature.fromDER(Buffer.from(f.signature, 'hex'))
-        var Q = curve.G.multiply(d)
+        const d = BigInteger.fromHex(f.d)
+        const H = bcrypto.sha256(f.message)
+        const signature = ECSignature.fromDER(Buffer.from(f.signature, 'hex'))
+        const Q = curve.G.multiply(d)
 
         expect(ecdsa.verify(H, signature, Q)).toBeTruthy()
       })
@@ -116,17 +120,17 @@ describe('ecdsa', () => {
 
     fixtures.invalid.verify.forEach((f) => {
       it('fails to verify with ' + f.description, () => {
-        var H = bcrypto.sha256(f.message)
-        var d = BigInteger.fromHex(f.d)
+        const H = bcrypto.sha256(f.message)
+        const d = BigInteger.fromHex(f.d)
 
-        var signature
+        const signature
         if (f.signature) {
           signature = ECSignature.fromDER(Buffer.from(f.signature, 'hex'))
         } else if (f.signatureRaw) {
           signature = new ECSignature(new BigInteger(f.signatureRaw.r, 16), new BigInteger(f.signatureRaw.s, 16))
         }
 
-        var Q = curve.G.multiply(d)
+        const Q = curve.G.multiply(d)
 
         expect(ecdsa.verify(H, signature, Q)).toBeFalsy()
       })

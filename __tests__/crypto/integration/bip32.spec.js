@@ -26,13 +26,13 @@ describe('ark-js (BIP32)', () => {
   })
 
   it('can create a BIP44, ark, account 0, external address', () => {
-    var path = "m/44'/0'/0'/0/0"
-    var root = HDNode.fromSeedHex('dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd')
+    const path = "m/44'/0'/0'/0/0"
+    const root = HDNode.fromSeedHex('dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd')
 
-    var child1 = root.derivePath(path)
+    const child1 = root.derivePath(path)
 
     // option 2, manually
-    var child2 = root.deriveHardened(44)
+    const child2 = root.deriveHardened(44)
       .deriveHardened(0)
       .deriveHardened(0)
       .derive(0)
@@ -47,45 +47,45 @@ describe('ark-js (BIP32)', () => {
       assert(!master.keyPair.privateKey, 'You already have the parent private key')
       assert(child.keyPair.privateKey, 'Missing child private key')
 
-      var curve = ecurve.getCurveByName('secp256k1')
-      var QP = master.keyPair.publicKey
-      var serQP = master.keyPair.getPublicKeyBuffer()
+      const curve = ecurve.getCurveByName('secp256k1')
+      const QP = master.keyPair.publicKey
+      const serQP = master.keyPair.getPublicKeyBuffer()
 
-      var d1 = child.keyPair.privateKey
-      var d2
-      var data = Buffer.alloc(37)
+      const d1 = child.keyPair.privateKey
+      const d2
+      const data = Buffer.alloc(37)
       serQP.copy(data, 0)
 
       // search index space until we find it
-      for (var i = 0; i < HIGHEST_BIT; ++i) {
+      for (let i = 0; i < HIGHEST_BIT; ++i) {
         data.writeUInt32BE(i, 33)
 
         // calculate I
-        var I = crypto.createHmac('sha512', master.chainCode).update(data).digest()
-        var IL = I.slice(0, 32)
-        var pIL = bigi.fromBuffer(IL)
+        const I = crypto.createHmac('sha512', master.chainCode).update(data).digest()
+        const IL = I.slice(0, 32)
+        const pIL = bigi.fromBuffer(IL)
 
         // See hdnode.js:273 to understand
         d2 = d1.subtract(pIL).mod(curve.n)
 
-        var Qp = new ECPair(d2).publicKey
+        const Qp = new ECPair(d2).publicKey
         if (Qp.equals(QP)) break
       }
 
-      var node = new HDNode(new ECPair(d2), master.chainCode, master.network)
+      let node = new HDNode(new ECPair(d2), master.chainCode, master.network)
       node.depth = master.depth
       node.index = master.index
       node.masterFingerprint = master.masterFingerprint
       return node
     }
 
-    var seed = crypto.randomBytes(32)
-    var master = HDNode.fromSeedBuffer(seed)
-    var child = master.derive(6) // m/6
+    const seed = crypto.randomBytes(32)
+    const master = HDNode.fromSeedBuffer(seed)
+    const child = master.derive(6) // m/6
 
     // now for the recovery
-    var neuteredMaster = master.neutered()
-    var recovered = recoverParent(neuteredMaster, child)
+    const neuteredMaster = master.neutered()
+    const recovered = recoverParent(neuteredMaster, child)
     expect(recovered.toBase58()).toBe(master.toBase58())
   })
 })

@@ -70,9 +70,8 @@ describe('HDNode', () => {
 
   describe('fromSeed*', () => {
     fixtures.valid.forEach((f) => {
-      it('calculates privKey and chainCode for ' + f.master.fingerprint, () => {
-        const network = NETWORKS[f.network]
-        const hd = HDNode.fromSeedHex(f.master.seed, network)
+      it(`calculates privKey and chainCode for ${f.master.fingerprint}`, () => {
+        const hd = HDNode.fromSeedHex(f.master.seed, NETWORKS[f.network])
 
         expect(hd.keyPair.toWIF()).toBe(f.master.wif)
         expect(hd.chainCode.toString('hex')).toBe(f.master.chainCode)
@@ -189,7 +188,7 @@ describe('HDNode', () => {
 
   describe('fromBase58 / toBase58', () => {
     validAll.forEach((f) => {
-      it('exports ' + f.base58 + ' (public) correctly', () => {
+      it(`exports ${f.base58} (public) correctly`, () => {
         const hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
         expect(hd.toBase58()).toBe(f.base58)
@@ -200,7 +199,7 @@ describe('HDNode', () => {
     })
 
     validAll.forEach((f) => {
-      it('exports ' + f.base58Priv + ' (private) correctly', () => {
+      it(`exports ${f.base58Priv} (private) correctly`, () => {
         const hd = HDNode.fromBase58(f.base58Priv, NETWORKS_LIST)
 
         expect(hd.toBase58()).toBe(f.base58Priv)
@@ -209,7 +208,7 @@ describe('HDNode', () => {
     })
 
     fixtures.invalid.fromBase58.forEach((f) => {
-      it('throws on ' + f.string, () => {
+      it(`throws on ${f.string}`, () => {
         expect(() => {
           const networks = f.network ? NETWORKS[f.network] : NETWORKS_LIST
 
@@ -221,7 +220,7 @@ describe('HDNode', () => {
 
   describe('getIdentifier', () => {
     validAll.forEach((f) => {
-      it('returns the identifier for ' + f.fingerprint, () => {
+      it(`returns the identifier for ${f.fingerprint}`, () => {
         const hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
         expect(hd.getIdentifier().toString('hex')).toBe(f.identifier)
@@ -231,7 +230,7 @@ describe('HDNode', () => {
 
   describe('getFingerprint', () => {
     validAll.forEach((f) => {
-      it('returns the fingerprint for ' + f.fingerprint, () => {
+      it(`returns the fingerprint for ${f.fingerprint}`, () => {
         const hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
 
         expect(hd.getFingerprint().toString('hex')).toBe(f.fingerprint)
@@ -241,7 +240,7 @@ describe('HDNode', () => {
 
   describe('neutered / isNeutered', () => {
     validAll.forEach((f) => {
-      it('drops the private key for ' + f.fingerprint, () => {
+      it(`drops the private key for ${f.fingerprint}`, () => {
         const hd = HDNode.fromBase58(f.base58Priv, NETWORKS_LIST)
         const hdn = hd.neutered()
 
@@ -288,7 +287,7 @@ describe('HDNode', () => {
 
       // testing deriving path from master
       f.children.forEach((c) => {
-        it(c.path + ' from ' + f.master.fingerprint + ' by path', () => {
+        it(`${c.path} from ${f.master.fingerprint} by path`, () => {
           const child = master.derivePath(c.path)
           const childNoM = master.derivePath(c.path.slice(2)) // no m/ on path
 
@@ -302,7 +301,7 @@ describe('HDNode', () => {
         const cn = master.derivePath(c.path)
 
         f.children.slice(i + 1).forEach(function (cc) {
-          it(cc.path + ' from ' + c.fingerprint + ' by path', () => {
+          it(`${cc.path} from ${f.fingerprint} by path`, () => {
             const ipath = cc.path.slice(2).split('/').slice(i + 1).join('/')
             const child = cn.derivePath(ipath)
             verifyVector(child, cc)
@@ -318,7 +317,7 @@ describe('HDNode', () => {
       f.children.forEach((c, i) => {
         if (c.m === undefined) return
 
-        it(c.path + ' from ' + f.master.fingerprint, () => {
+        it(`${c.path} from ${f.master.fingerprint}`, () => {
           if (c.hardened) {
             hd = hd.deriveHardened(c.m)
           } else {

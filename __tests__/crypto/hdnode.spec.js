@@ -145,7 +145,7 @@ describe('HDNode', () => {
           .withArgs()
           .returns('network')
 
-        expect(hd.getNetwork()).toEqual('network')
+        expect(hd.getNetwork()).toBe('network')
       }))
     })
 

@@ -5,6 +5,7 @@ import sinon from 'sinon'
 import sinonTestFactory from 'sinon-test'
 import BigInteger from 'bigi'
 
+import crypto from '@/builder/crypto'
 import ECPair from '@/crypto/ecpair'
 import ecdsa from '@/crypto/ecdsa'
 import configManager from '@/managers/config'
@@ -99,12 +100,13 @@ describe('ECPair', () => {
 
     fixtures.valid.forEach((f) => {
       it('imports ' + f.WIF + ' (via list of networks)', () => {
-        const keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
+        const network = NETWORKS[f.network]
+        const keyPair = ECPair.fromWIF(f.WIF, network)
 
         expect(keyPair.d.toString()).toBe(f.d)
         expect(keyPair.getPublicKeyBuffer().toString('hex')).toBe(f.Q)
         expect(keyPair.compressed).toBe(f.compressed)
-        expect(keyPair.network).toEqual(NETWORKS[f.network])
+        expect(keyPair.network).toEqual(network)
       })
     })
 
@@ -158,18 +160,18 @@ describe('ECPair', () => {
     it('retains the same defaults as ECPair constructor', () => {
       const keyPair = ECPair.makeRandom()
 
-      expect(keyPair.compressed, true)
+      expect(keyPair.compressed).toBeTruthy()
       expect(keyPair.network).toEqual(NETWORKS.mainnet)
     })
 
     it('supports the options parameter', () => {
       const keyPair = ECPair.makeRandom({
         compressed: false,
-        network: NETWORKS.testnet
+        network: NETWORKS.devnet
       })
 
       expect(keyPair.compressed).toBeFalsy()
-      expect(keyPair.network).toEqual(NETWORKS.testnet)
+      expect(keyPair.network).toEqual(NETWORKS.devnet)
     })
 
     it('loops until d is within interval [1, n - 1] : 1', sinonTest(function () {
@@ -195,7 +197,7 @@ describe('ECPair', () => {
   describe('getAddress', () => {
     fixtures.valid.forEach((f) => {
       it('returns ' + f.address + ' for ' + f.WIF, () => {
-        const keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
+        const keyPair = ECPair.fromWIF(f.WIF, NETWORKS[f.network])
 
         expect(keyPair.getAddress()).toBe(f.address)
       })
@@ -205,9 +207,9 @@ describe('ECPair', () => {
   describe('getNetwork', () => {
     fixtures.valid.forEach((f) => {
       it('returns ' + f.network + ' for ' + f.WIF, () => {
-        const keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
+        const keyPair = ECPair.fromWIF(f.WIF, NETWORKS[f.network])
 
-        expect(keyPair.getNetwork()).toEqual(NETWORKS[f.network])
+        expect(keyPair.network).toEqual(NETWORKS[f.network])
       })
     })
   })
@@ -223,8 +225,11 @@ describe('ECPair', () => {
 
     describe('signing', () => {
       it('wraps ecdsa.sign', sinonTest(function () {
-        this.mock(ecdsa).expects('sign')
-          .once().withArgs(hash, keyPair.Q)
+        this
+          .mock(ecdsa)
+          .expects('sign')
+          .once()
+          .withArgs(hash, keyPair.Q)
 
         keyPair.sign(hash)
       }))

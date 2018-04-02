@@ -110,7 +110,7 @@ export default class ECPair {
       if (version !== network.wif) throw new Error('Invalid network version')
     }
 
-    const d = BigInteger.fromBuffer(decoded.d)
+    const d = BigInteger.fromBuffer(decoded.privateKey)
 
     return new ECPair(d, null, {
       compressed: decoded.compressed,

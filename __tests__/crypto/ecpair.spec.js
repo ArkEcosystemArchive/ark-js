@@ -135,7 +135,7 @@ describe('ECPair', () => {
     let d = Buffer.from('0404040404040404040404040404040404040404040404040404040404040404', 'hex')
     let exWIF = 'S9hzwiZ5ziKjUiFpuZX4Lri3rUocDxZSTy7YzKKHvx8TSjUrYQ27'
 
-    it.skip('uses randombytes RNG to generate a ECPair', () => {
+    it('uses randombytes RNG to generate a ECPair', () => {
       const stub = {
         randombytes: () => {
           return d
@@ -214,7 +214,7 @@ describe('ECPair', () => {
     })
   })
 
-  describe.skip('ecdsa wrappers', () => {
+  describe('ecdsa wrappers', () => {
     let keyPair
     let hash
 

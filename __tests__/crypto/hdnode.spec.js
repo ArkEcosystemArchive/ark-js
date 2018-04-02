@@ -187,7 +187,7 @@ describe('HDNode', () => {
     })
   })
 
-  describe.skip('fromBase58 / toBase58', () => {
+  describe('fromBase58 / toBase58', () => {
     validAll.forEach((f) => {
       it('exports ' + f.base58 + ' (public) correctly', () => {
         const hd = HDNode.fromBase58(f.base58, NETWORKS_LIST)
@@ -239,7 +239,7 @@ describe('HDNode', () => {
     })
   })
 
-  describe.skip('neutered / isNeutered', () => {
+  describe('neutered / isNeutered', () => {
     validAll.forEach((f) => {
       it('drops the private key for ' + f.fingerprint, () => {
         const hd = HDNode.fromBase58(f.base58Priv, NETWORKS_LIST)
@@ -262,7 +262,7 @@ describe('HDNode', () => {
     })
   })
 
-  describe.skip('derive', () => {
+  describe('derive', () => {
     function verifyVector (hd, v) {
       if (hd.isNeutered()) {
         expect(hd.toBase58()).toBe(v.base58)

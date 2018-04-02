@@ -7,7 +7,7 @@ import ecurve from 'ecurve'
 
 const curve = ecdsa.__curve
 
-test('crypto.js', () => {
+describe('crypto.js', () => {
   const crypto = ark.crypto
 
   it('should be ok', () => {
@@ -25,7 +25,7 @@ test('crypto.js', () => {
     })
   })
 
-  test('#getBytes', () => {
+  describe('#getBytes', () => {
     const getBytes = crypto.getBytes
     let bytes = null
 
@@ -77,7 +77,7 @@ test('crypto.js', () => {
     })
   })
 
-  test('#getHash', () => {
+  describe('#getHash', () => {
     const getHash = crypto.getHash
 
     it('should be ok', () => {
@@ -107,7 +107,7 @@ test('crypto.js', () => {
     })
   })
 
-  test('#getId', () => {
+  describe('#getId', () => {
     const getId = crypto.getId
 
     it('should be ok', () => {
@@ -135,7 +135,7 @@ test('crypto.js', () => {
     })
   })
 
-  test('#getFee', () => {
+  describe('#getFee', () => {
     const getFee = crypto.getFee
 
     it('should be ok', () => {
@@ -173,7 +173,7 @@ test('crypto.js', () => {
     })
   })
 
-  test('fixedPoint', () => {
+  describe('fixedPoint', () => {
     const fixedPoint = crypto.fixedPoint
 
     it('should be ok', () => {
@@ -189,7 +189,7 @@ test('crypto.js', () => {
     })
   })
 
-  test('#sign', () => {
+  describe('#sign', () => {
     const sign = crypto.sign
 
     it('should be ok', () => {
@@ -201,7 +201,7 @@ test('crypto.js', () => {
     })
   })
 
-  test('#secondSign', () => {
+  describe('#secondSign', () => {
     const secondSign = crypto.secondSign
 
     it('should be ok', () => {
@@ -213,7 +213,7 @@ test('crypto.js', () => {
     })
   })
 
-  test('#getKeys', () => {
+  describe('#getKeys', () => {
     const getKeys = crypto.getKeys
 
     it('should be ok', () => {
@@ -252,7 +252,7 @@ test('crypto.js', () => {
     })
   })
 
-  test('#getAddress', () => {
+  describe('#getAddress', () => {
     const getAddress = crypto.getAddress
 
     it('should be ok', () => {
@@ -292,7 +292,7 @@ test('crypto.js', () => {
     })
   })
 
-  test('#verify', () => {
+  describe('#verify', () => {
     const verify = crypto.verify
 
     it('should be ok', () => {
@@ -304,7 +304,7 @@ test('crypto.js', () => {
     })
   })
 
-  test('#verifySecondSignature', () => {
+  describe('#verifySecondSignature', () => {
     const verifySecondSignature = crypto.verifySecondSignature
 
     it('should be ok', () => {
@@ -317,7 +317,7 @@ test('crypto.js', () => {
   })
 })
 
-test('different networks', () => {
+describe('different networks', () => {
   it('validate address on tesnet should be ok', () => {
     ark.crypto.setNetworkVersion(0x52)
     ark.crypto.getNetworkVersion().should.equal(0x52)
@@ -328,7 +328,7 @@ test('different networks', () => {
   })
 })
 
-test('delegate.js', () => {
+describe('delegate.js', () => {
   const delegate = ark.delegate
 
   it('should be ok', () => {
@@ -343,9 +343,9 @@ test('delegate.js', () => {
     (delegate).should.have.property('createDelegate')
   })
 
-  test('#createDelegate', () => {
+  describe('#createDelegate', () => {
     const createDelegate = delegate.createDelegate
-    const trs = null
+    let trs = null
 
     it('should be ok', () => {
       (createDelegate).should.be.ok
@@ -389,7 +389,7 @@ test('delegate.js', () => {
       }
     })
 
-    test('returned delegate', () => {
+    describe('returned delegate', () => {
       const keys = ark.crypto.getKeys('secret')
       const secondKeys = ark.crypto.getKeys('secret 2')
 
@@ -484,7 +484,7 @@ test('delegate.js', () => {
         (result).should.be.not.ok
       })
 
-      test('delegate asset', () => {
+      describe('delegate asset', () => {
         it('should be ok', () => {
           (trs.asset.delegate).should.be.ok
         })

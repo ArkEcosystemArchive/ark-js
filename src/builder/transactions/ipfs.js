@@ -1,7 +1,8 @@
 import feeManager from '@/managers/fee'
-import cryptoBuilder from '@/builder/crypto'
+import crypto from '@/builder/crypto'
 import slots from '@/crypto/slots'
 import Transaction from '@/builder/transaction'
+import Model from '@/models/transaction'
 import { TRANSACTION_TYPES } from '@/constants'
 
 export default class IPFS extends Transaction {
@@ -50,7 +51,7 @@ export default class IPFS extends Transaction {
   }
 
   serialise () {
-    return {
+    return Model.serialise({
       hex: cryptoBuilder.getBytes(this).toString('hex'),
       id: cryptoBuilder.getId(this),
       signature: this.signature,
@@ -62,6 +63,6 @@ export default class IPFS extends Transaction {
       fee: this.fee,
       senderPublicKey: this.senderPublicKey,
       asset: this.asset
-    }
+    })
   }
 }

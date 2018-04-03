@@ -2,6 +2,7 @@ import feeManager from '@/managers/fee'
 import crypto from '@/builder/crypto'
 import slots from '@/crypto/slots'
 import Transaction from '@/builder/transaction'
+import Model from '@/models/transaction'
 import { TRANSACTION_TYPES } from '@/constants'
 
 export default class MultiPayment extends Transaction {
@@ -70,6 +71,6 @@ export default class MultiPayment extends Transaction {
       vendorFieldHex: this.vendorFieldHex
     }
 
-    return Object.assign(struct, this.payments)
+    return Model.serialise(Object.assign(struct, this.payments))
   }
 }

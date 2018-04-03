@@ -38,7 +38,7 @@ export default class Block {
   }
 
   static create (data, keys) {
-    const payloadHash = Block.serialize(data)
+    const payloadHash = Block.serialise(data)
     const hash = crypto.createHash('sha256').update(payloadHash).digest()
     data.generatorPublicKey = keys.publicKey
     data.blockSignature = keys.sign(hash).toDER().toString('hex')
@@ -47,7 +47,7 @@ export default class Block {
   }
 
   static getId (data) {
-    const hash = crypto.createHash('sha256').update(Block.serialize(data, true)).digest()
+    const hash = crypto.createHash('sha256').update(Block.serialise(data, true)).digest()
     const temp = Buffer.alloc(8)
     for (let i = 0; i < 8; i++) {
       temp[i] = hash[7 - i]
@@ -64,7 +64,7 @@ export default class Block {
 
   verifySignature () {
     // console.log(this.data)
-    let bytes = Block.serialize(this.data, false)
+    let bytes = Block.serialise(this.data, false)
     let hash = crypto.createHash('sha256').update(bytes).digest()
     let blockSignatureBuffer = Buffer.from(this.data.blockSignature, 'hex')
     let generatorPublicKeyBuffer = Buffer.from(this.data.generatorPublicKey, 'hex')
@@ -172,7 +172,7 @@ export default class Block {
     return result
   }
 
-  static serialize (block, includeSignature) {
+  static serialise (block, includeSignature) {
     if (includeSignature === undefined) {
       includeSignature = block.blockSignature !== undefined
     }

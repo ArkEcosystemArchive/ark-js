@@ -106,7 +106,7 @@ export default class HDNode {
       if (parentFingerprint !== 0x00000000) throw new Error('Invalid parent fingerprint')
     }
 
-    // 4 bytes: child number. This is the number i in xi = xpar/i, with xi the key being serialized.
+    // 4 bytes: child number. This is the number i in xi = xpar/i, with xi the key being serialised.
     // This is encoded in MSB order. (0x00000000 if master key)
     const index = buffer.readUInt32BE(9)
     if (depth === 0 && index !== 0) throw new Error('Invalid index')
@@ -231,7 +231,7 @@ export default class HDNode {
     // 4 bytes: the fingerprint of the parent's key (0x00000000 if master key)
     buffer.writeUInt32BE(this.parentFingerprint, 5)
 
-    // 4 bytes: child number. This is the number i in xi = xpar/i, with xi the key being serialized.
+    // 4 bytes: child number. This is the number i in xi = xpar/i, with xi the key being serialised.
     // This is encoded in big endian. (0x00000000 if master key)
     buffer.writeUInt32BE(this.index, 9)
 

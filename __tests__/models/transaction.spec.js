@@ -63,10 +63,10 @@ describe('Models - Transaction', () => {
       // ;[0, 1, 2, 3, 4]
       ;[0]
         .map(type => createRandomTx(type))
-        .map(tx => Transaction.serialize(tx).toString('hex'))
-        .map(serialized => Transaction.fromBytes(serialized))
+        .map(tx => Transaction.serialise(tx).toString('hex'))
+        .map(serialised => Transaction.fromBytes(serialised))
 
-      const hex = Transaction.serialize(txData).toString('hex')
+      const hex = Transaction.serialise(txData).toString('hex')
       const tx = Transaction.fromBytes(hex)
 
       expect(tx).toBeInstanceOf(Transaction)
@@ -78,7 +78,7 @@ describe('Models - Transaction', () => {
     })
   })
 
-  test('static deserialize', () => {})
+  test('static deserialise', () => {})
 
-  test('serialize', () => {})
+  test('serialise', () => {})
 })

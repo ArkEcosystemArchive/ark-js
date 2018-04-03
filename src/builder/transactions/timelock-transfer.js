@@ -2,6 +2,7 @@ import feeManager from '@/managers/fee'
 import crypto from '@/builder/crypto'
 import slots from '@/crypto/slots'
 import Transaction from '@/builder/transaction'
+import Model from '@/models/transaction'
 import { TRANSACTION_TYPES } from '@/constants'
 
 export default class TimelockTransfer extends Transaction {
@@ -51,7 +52,7 @@ export default class TimelockTransfer extends Transaction {
   }
 
   serialise () {
-    return {
+    return Model.serialise({
       hex: crypto.getBytes(this).toString('hex'),
       id: crypto.getId(this),
       signature: this.signature,
@@ -67,6 +68,6 @@ export default class TimelockTransfer extends Transaction {
       asset: this.asset,
       timelock: this.timelock,
       timelockType: this.timelockType
-    }
+    })
   }
 }

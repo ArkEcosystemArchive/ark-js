@@ -2,6 +2,7 @@ import feeManager from '@/managers/fee'
 import crypto from '@/builder/crypto'
 import slots from '@/crypto/slots'
 import Transaction from '@/builder/transaction'
+import Model from '@/models/transaction'
 import { TRANSACTION_TYPES } from '@/constants'
 
 export default class Transfer extends Transaction {
@@ -47,7 +48,7 @@ export default class Transfer extends Transaction {
   }
 
   serialise () {
-    return {
+    return Model.serialise({
       hex: crypto.getBytes(this).toString('hex'),
       id: crypto.getId(this),
       signature: this.signature,
@@ -61,6 +62,6 @@ export default class Transfer extends Transaction {
       senderPublicKey: this.senderPublicKey,
       vendorFieldHex: this.vendorFieldHex,
       asset: this.asset
-    }
+    })
   }
 }

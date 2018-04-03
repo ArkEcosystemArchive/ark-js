@@ -6,8 +6,8 @@ import cryptoBuilder from '@/builder/crypto'
 
 export default class Transaction {
   constructor (transaction) {
-    this.serialized = Transaction.serialize(transaction)
-    this.data = Transaction.deserialize(this.serialized.toString('hex'))
+    this.serialised = Transaction.serialise(transaction)
+    this.data = Transaction.deserialise(this.serialised.toString('hex'))
 
     if (this.data.version === 1) {
       this.verified = cryptoBuilder.verify(this.data)
@@ -22,7 +22,7 @@ export default class Transaction {
   }
 
   static fromBytes (hexString) {
-    return new Transaction(Transaction.deserialize(hexString))
+    return new Transaction(Transaction.deserialise(hexString))
   }
 
   verify () {
@@ -30,7 +30,7 @@ export default class Transaction {
     return true
   }
 
-  static serialize (transaction) {
+  static serialise (transaction) {
     const bb = new ByteBuffer(512, true)
     bb.writeByte(0xff) // fill, to disambiguate from v1
     bb.writeByte(transaction.version || 0x01) // version
@@ -108,7 +108,7 @@ export default class Transaction {
     return bb.toBuffer()
   }
 
-  static deserialize (hexString) {
+  static deserialise (hexString) {
     const tx = {}
     const buf = ByteBuffer.fromHex(hexString, true)
     tx.version = buf.readInt8(1)

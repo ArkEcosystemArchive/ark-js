@@ -11,7 +11,6 @@ import { NETWORKS, NETWORKS_LIST } from '../utils/network-list'
 
 import fixtures from './fixtures/hdnode.json'
 
-const curve = ecdsa.__curve
 const sinonTest = sinonTestFactory(sinon)
 
 beforeEach(() => configManager.setConfig(NETWORKS.mainnet))
@@ -88,8 +87,11 @@ describe('HDNode', () => {
     }))
 
     it('throws if IL is not within interval [1, n - 1] | IL === n', sinonTest(function () {
-      this.mock(BigInteger).expects('fromBuffer')
-        .once().returns(curve.n)
+      this
+        .mock(BigInteger)
+        .expects('fromBuffer')
+        .once()
+        .returns(ecdsa.__curve.n)
 
       expect(() => {
         HDNode.fromSeedHex('ffffffffffffffffffffffffffffffff')

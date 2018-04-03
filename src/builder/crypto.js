@@ -8,7 +8,7 @@ import cryptoUtils from '@/crypto'
 import ECPair from '@/crypto/ecpair'
 import ECSignature from '@/crypto/ecsignature'
 import feeManager from '@/managers/fee'
-import { ARKTOSHI, TRANSACTION_TYPES } from '@/constants'
+import { TRANSACTION_TYPES } from '@/constants'
 
 class CryptoBuilder {
   getBytes (transaction) {

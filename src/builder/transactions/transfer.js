@@ -1,5 +1,5 @@
 import feeManager from '@/managers/fee'
-import crypto from '@/builder/crypto'
+import cryptoBuilder from '@/builder/crypto'
 import slots from '@/crypto/slots'
 import Transaction from '@/builder/transaction'
 import Model from '@/models/transaction'

@@ -97,8 +97,9 @@ describe('ECPair', () => {
     })
 
     fixtures.valid.forEach((f) => {
-      it.skip(`imports ${f.WIF} (via list of networks)`, () => {
-        const keyPair = ECPair.fromWIF(f.WIF, NETWORKS_LIST)
+      it(`imports ${f.WIF} (via list of networks)`, () => {
+        const network = NETWORKS[f.network]
+        const keyPair = ECPair.fromWIF(f.WIF, network)
 
         expect(keyPair.d.toString()).toBe(f.d)
         expect(keyPair.getPublicKeyBuffer().toString('hex')).toBe(f.Q)
@@ -134,13 +135,12 @@ describe('ECPair', () => {
 
     it('uses randombytes RNG to generate a ECPair', () => {
       const stub = {
-        randombytes: () => {
+        rng: () => {
           return d
         }
       }
-      const ProxiedECPair = proxyquire('../../src/crypto/ecpair', stub).default
 
-      const keyPair = ProxiedECPair.makeRandom()
+      const keyPair = ECPair.makeRandom(stub)
       expect(keyPair.toWIF()).toBe(exWIF)
     })
 
@@ -221,41 +221,14 @@ describe('ECPair', () => {
     })
 
     describe('signing', () => {
-      it('wraps ecdsa.sign', sinonTest(function () {
-        this
-          .mock(ecdsa)
-          .expects('sign')
-          .once()
-          .withArgs(hash, keyPair.Q)
-
-        keyPair.sign(hash)
-      }))
 
       it('throws if no private key is found', () => {
-        keyPair.Q = null
+        keyPair.d = null
 
         expect(() => {
           keyPair.sign(hash)
         }).toThrowError(/Missing private key/)
       })
-    })
-
-    describe('verify', () => {
-      let signature
-
-      beforeEach(() => {
-        signature = keyPair.sign(hash)
-      })
-
-      it('wraps ecdsa.verify', sinonTest(function () {
-        this
-          .mock(ecdsa)
-          .expects('verify')
-          .once()
-          .withArgs(hash, signature, keyPair.Q)
-
-        keyPair.verify(hash, signature)
-      }))
     })
   })
 })

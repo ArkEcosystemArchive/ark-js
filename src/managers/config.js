@@ -11,6 +11,8 @@ class ConfigManager {
       this.config[key] = value
     }
 
+    if (!config.constants) console.log(config)
+
     this._buildConstants()
     this._buildFees()
   }

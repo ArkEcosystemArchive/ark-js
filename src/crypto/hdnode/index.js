@@ -185,7 +185,7 @@ export default class HDNode {
    * @returns {HDNode}
    */
   neutered () {
-    const neuteredKeyPair = new ECPair(null, this.keyPair.publicKey, {
+    const neuteredKeyPair = new ECPair(null, this.keyPair.Q, {
       network: this.keyPair.network
     })
 
@@ -219,7 +219,7 @@ export default class HDNode {
   toBase58 () {
     // Version
     const network = this.keyPair.network
-    const version = (!this.isNeutered()) ? network.bip32.private : network.bip32.public
+    const version = this.isNeutered() ? network.bip32.public : network.bip32.private
     const buffer = Buffer.alloc(78)
 
     // 4 bytes: version bytes
@@ -242,7 +242,7 @@ export default class HDNode {
     if (!this.isNeutered()) {
       // 0x00 + k for private keys
       buffer.writeUInt8(0, 45)
-      this.keyPair.privateKey.toBuffer(32).copy(buffer, 46)
+      this.keyPair.d.toBuffer(32).copy(buffer, 46)
 
       // 33 bytes: the public key
     } else {
@@ -271,7 +271,7 @@ export default class HDNode {
 
       // data = 0x00 || ser256(kpar) || ser32(index)
       data[0] = 0x00
-      this.keyPair.privateKey.toBuffer(32).copy(data, 1)
+      this.keyPair.d.toBuffer(32).copy(data, 1)
       data.writeUInt32BE(index, 33)
 
       // Normal child
@@ -297,7 +297,7 @@ export default class HDNode {
     let derivedKeyPair
     if (!this.isNeutered()) {
       // ki = parse256(IL) + kpar (mod n)
-      const ki = pIL.add(this.keyPair.privateKey).mod(curve.n)
+      const ki = pIL.add(this.keyPair.d).mod(curve.n)
 
       // In case ki === 0, proceed with the next value for i
       if (ki.signum() === 0) {
@@ -312,7 +312,7 @@ export default class HDNode {
     } else {
       // Ki = point(parse256(IL)) + Kpar
       //    = G*IL + Kpar
-      const Ki = curve.G.multiply(pIL).add(this.keyPair.publicKey)
+      const Ki = curve.G.multiply(pIL).add(this.keyPair.Q)
 
       // In case Ki is the point at infinity, proceed with the next value for i
       if (curve.isInfinity(Ki)) {
@@ -350,7 +350,7 @@ export default class HDNode {
    * @returns {boolean}
    */
   isNeutered () {
-    return !(this.keyPair.privateKey)
+    return !(this.keyPair.d)
   }
 
   /**

@@ -38,7 +38,7 @@ export default class ECPair {
     if (d) {
       if (d.signum() <= 0) throw new Error('Private key must be greater than 0')
       if (d.compareTo(secp256k1.n) >= 0) throw new Error('Private key must be less than the curve order')
-      if (Q) throw new TypeError('Unexpected Q parameter')
+      if (Q) throw new TypeError('Unexpected publicKey parameter')
 
       this.d = d
       this.Q = secp256k1.G.multiply(this.d)

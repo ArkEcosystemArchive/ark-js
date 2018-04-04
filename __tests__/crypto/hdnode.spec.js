@@ -209,16 +209,15 @@ describe('HDNode', () => {
       })
     })
 
-    // fixtures.invalid.fromBase58.forEach((f) => {
-    //   it(`throws on ${f.string}`, () => {
-    //     expect(() => {
-    //       console.log(f.network, NETWORKS[f.network])
-    //       const networks = f.network ? NETWORKS[f.network] : NETWORKS_LIST
+    fixtures.invalid.fromBase58.forEach((f) => {
+      it(`throws on ${f.string}`, () => {
+        expect(() => {
+          const networks = f.network ? NETWORKS[f.network] : NETWORKS_LIST
 
-    //       HDNode.fromBase58(f.string, networks)
-    //     }).toThrowError(new RegExp(f.exception))
-    //   })
-    // })
+          HDNode.fromBase58(f.string, networks)
+        }).toThrowError(new RegExp(f.exception))
+      })
+    })
   })
 
   describe('getIdentifier', () => {

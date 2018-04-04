@@ -9,7 +9,7 @@ Ark JS is a JavaScript library for sending ARK transactions. It's main benefit i
 ## Installation
 
 ```bash
-yarn add github:arkecosystem/ark-js#master
+yarn add https://github.com/ArkEcosystem/ark-js
 ```
 
 ## Security

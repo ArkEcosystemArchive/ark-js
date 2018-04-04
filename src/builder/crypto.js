@@ -12,6 +12,11 @@ import { TRANSACTION_TYPES } from '@/constants'
 
 class CryptoBuilder {
   getBytes (transaction) {
+    if (!transaction.version) {
+      transaction.version = 1
+      transaction.network = configManager.get('pubKeyHash')
+      transaction.expiration = 0
+    }
     const bb = new ByteBuffer(512, true)
     bb.writeByte(0xff) // fill, to disambiguate from v1
     bb.writeByte(transaction.version) // version 2

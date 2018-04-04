@@ -63,7 +63,6 @@ export default class Block {
   }
 
   verifySignature () {
-    // console.log(this.data)
     let bytes = Block.serialise(this.data, false)
     let hash = crypto.createHash('sha256').update(bytes).digest()
     let blockSignatureBuffer = Buffer.from(this.data.blockSignature, 'hex')

@@ -243,7 +243,6 @@ describe('HDNode', () => {
   describe('neutered / isNeutered', () => {
     validAll.forEach((f) => {
       it(`drops the private key for ${f.fingerprint}`, () => {
-        //console.log(f)
         const hd = HDNode.fromBase58(f.base58Priv, NETWORKS_LIST)
         const hdn = hd.neutered()
 

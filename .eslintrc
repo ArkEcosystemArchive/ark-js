@@ -5,7 +5,7 @@
     "node": true
   },
   "extends": [
-    "standard",
+    "standard"
   ],
   "rules": {
     "func-names": ["error", "never"],

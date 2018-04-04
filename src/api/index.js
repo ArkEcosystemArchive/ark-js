@@ -1,4 +1,3 @@
-import builder from '../builder'
 import HttpClient from './http'
 
 export default class ApiClient {
@@ -17,6 +16,6 @@ export default class ApiClient {
   resource (name) {
     const Resource = require(`./resources/${name}`).default
 
-    return new Resource(this.http, builder)
+    return new Resource(this.http)
   }
 }

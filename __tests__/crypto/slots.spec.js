@@ -8,17 +8,17 @@ beforeEach(() => configManager.setConfig(network))
 describe('Slots', () => {
   describe('getEpochTime', () => {
     test('should be a function', () => {
-      expect(getType(slots.getEpochTime)).toBeFunction()
+      expect(slots.getEpochTime).toBeFunction()
     })
 
     test('return epoch datetime', () => {
-      expect(getType(slots.getEpochTime())).toBeNumber()
+      expect(slots.getEpochTime()).toBeNumber()
     })
   })
 
   describe('beginEpochTime', () => {
     test('should be a function', () => {
-      expect(getType(slots.beginEpochTime)).toBeFunction()
+      expect(slots.beginEpochTime).toBeFunction()
     })
 
     test('return epoch datetime', () => {
@@ -32,20 +32,20 @@ describe('Slots', () => {
 
   describe('getTime', () => {
     test('should be a function', () => {
-      expect(getType(slots.getTime)).toBeFunction()
+      expect(slots.getTime).toBeFunction()
     })
 
     test('return epoch time as number', () => {
       const result = slots.getTime(1490101210000)
 
-      expect(getType(result)).toBeNumber()
+      expect(result).toBeNumber()
       expect(result).toEqual(10)
     })
   })
 
   describe('getRealTime', () => {
     test('should be a function', () => {
-      expect(getType(slots.getRealTime)).toBeFunction()
+      expect(slots.getRealTime).toBeFunction()
     })
 
     test('return return real time', () => {
@@ -55,7 +55,7 @@ describe('Slots', () => {
 
   describe('getSlotNumber', () => {
     test('should be a function', () => {
-      expect(getType(slots.getSlotNumber)).toBeFunction()
+      expect(slots.getSlotNumber).toBeFunction()
     })
 
     test('return slot number', () => {
@@ -65,7 +65,7 @@ describe('Slots', () => {
 
   describe('getSlotTime', () => {
     test('should be a function', () => {
-      expect(getType(slots.getSlotTime)).toBeFunction()
+      expect(slots.getSlotTime).toBeFunction()
     })
 
     test('returns slot time', () => {
@@ -75,17 +75,17 @@ describe('Slots', () => {
 
   describe('getNextSlot', () => {
     test('should be a function', () => {
-      expect(getType(slots.getNextSlot)).toBeFunction()
+      expect(slots.getNextSlot).toBeFunction()
     })
 
     test('returns next slot', () => {
-      expect(getType(slots.getNextSlot())).toBeNumber()
+      expect(slots.getNextSlot()).toBeNumber()
     })
   })
 
   describe('getLastSlot', () => {
     test('should be a function', () => {
-      expect(getType(slots.getLastSlot)).toBeFunction()
+      expect(slots.getLastSlot).toBeFunction()
     })
 
     test('returns last slot', () => {
@@ -95,7 +95,7 @@ describe('Slots', () => {
 
   describe('getConstant', () => {
     test('should be a function', () => {
-      expect(getType(slots.getConstant)).toBeFunction()
+      expect(slots.getConstant).toBeFunction()
     })
 
     test('returns constant', () => {

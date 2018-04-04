@@ -1,5 +1,5 @@
 import crypto from '@/crypto'
-import crypto from './fixtures/crypto.json'
+import fixtures from './fixtures/crypto.json'
 
 const buffer = Buffer.from('Hello World')
 

@@ -209,8 +209,7 @@ export default class Wallet {
     let publicKey = multisignature.keysgroup[index].slice(1)
 
     for (let i in transaction.signatures) {
-      // TODO rename to verifyTransaction
-      if (!this.verify(transaction, transaction.signatures[i], publicKey)) {
+      if (!this.verifyTransaction(transaction, transaction.signatures[i], publicKey)) {
         if (index++ > transaction.signatures.length - 1) return false
         else if (index < multisignature.keysgroup.length) publicKey = multisignature.keysgroup[index].slice(1)
       }
@@ -219,14 +218,13 @@ export default class Wallet {
   }
 
   /**
-   * [verify description]
+   * [verifyTransaction description]
    * @param  {[type]} transaction [description]
    * @param  {String} signature   [description]
    * @param  {String} publicKey   [description]
    * @return {[type]}             [description]
    */
-  // TODO rename to verifyTransaction
-  verify (transaction, signature, publicKey) {
+  verifyTransaction (transaction, signature, publicKey) {
     const hash = cryptoBuilder.getHash(transaction)
     return verifyHash(hash, signature, publicKey)
   }

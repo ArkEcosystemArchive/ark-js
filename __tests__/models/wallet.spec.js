@@ -45,7 +45,7 @@ describe('Models - Wallet', () => {
     })
   })
 
-  describe('verify', ()=> {
+  describe('verifyTransaction', ()=> {
     it('computes and verifies the hash of the transaction', () => {
       const wallet = new Wallet('AdVSe37niA3uFUPgCgMUH2tMsHF4LpLoiX')
       const transaction = {
@@ -61,7 +61,7 @@ describe('Models - Wallet', () => {
       const hash = cryptoBuilder.getHash(transaction)
       const publicKey = '036928c98ee53a1f52ed01dd87db10ffe1980eb47cd7c0a7d688321f47b5d7d760'
 
-      wallet.verify(transaction, wallet.signature, publicKey)
+      wallet.verifyTransaction(transaction, wallet.signature, publicKey)
       expect(verifyHashMock).toHaveBeenCalledWith(hash, wallet.signature, publicKey)
     })
   })

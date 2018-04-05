@@ -16,6 +16,17 @@ describe('Models - Block', () => {
     it('verifies the block', () => {})
   })
 
+  describe('static create', ()=> {
+    xit('returns a new Block', () => {
+      // FIXME
+      const keys = {}
+      expect(Block.create(data, keys)).toBeInstanceOf(Block)
+    })
+  })
+
+  describe('static getId', ()=> {
+  })
+
   describe('getHeader', () => {
     it('returns the block data without the transactions', () => {
       // Ignore the verification for testing purposes

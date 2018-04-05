@@ -101,8 +101,8 @@ export default class Delegate {
    * @return {[type]}          [description]
    */
   encryptData (content, password) {
-    let derivedKey = forge.pkcs5.pbkdf2(password, this.otpSecret, this.iterations, this.keySize)
-    let cipher = forge.cipher.createCipher('AES-CBC', derivedKey)
+    const derivedKey = forge.pkcs5.pbkdf2(password, this.otpSecret, this.iterations, this.keySize)
+    const cipher = forge.cipher.createCipher('AES-CBC', derivedKey)
     cipher.start({ iv: forge.util.decode64(this.otp) })
     cipher.update(forge.util.createBuffer(content))
     cipher.finish()
@@ -117,8 +117,8 @@ export default class Delegate {
    * @return {[type]}            [description]
    */
   decryptData (cipherText, password) {
-    let derivedKey = forge.pkcs5.pbkdf2(password, this.otpSecret, this.iterations, this.keySize)
-    let decipher = forge.cipher.createDecipher('AES-CBC', derivedKey)
+    const derivedKey = forge.pkcs5.pbkdf2(password, this.otpSecret, this.iterations, this.keySize)
+    const decipher = forge.cipher.createDecipher('AES-CBC', derivedKey)
     decipher.start({ iv: forge.util.decode64(this.otp) })
     decipher.update(forge.util.createBuffer(forge.util.decode64(cipherText)))
     decipher.finish()
@@ -166,7 +166,7 @@ export default class Delegate {
       if (this.bip38) {
         this.decryptKeysWithOtp()
       }
-      let block = Block.create(data, this.keys)
+      const block = Block.create(data, this.keys)
       if (this.bip38) {
         this.encryptKeysWithOtp()
       }

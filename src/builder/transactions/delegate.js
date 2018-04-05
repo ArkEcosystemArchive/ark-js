@@ -1,4 +1,5 @@
 import feeManager from '@/managers/fee'
+import configManager from '@/managers/config'
 import cryptoBuilder from '@/builder/crypto'
 import slots from '@/crypto/slots'
 import Transaction from '@/builder/transaction'
@@ -18,6 +19,7 @@ export default class Delegate extends Transaction {
     this.senderPublicKey = null
     this.asset = { delegate: {} }
     this.version = 0x02
+    this.network = configManager.get('pubKeyHash')
   }
 
   create (username) {
@@ -43,8 +45,8 @@ export default class Delegate extends Transaction {
     return cryptoBuilder.verify(this)
   }
 
-  serialise () {
-    return Model.serialise({
+  getStruct () {
+    return {
       hex: cryptoBuilder.getBytes(this).toString('hex'),
       id: cryptoBuilder.getId(this),
       signature: this.signature,
@@ -57,6 +59,10 @@ export default class Delegate extends Transaction {
       recipientId: this.recipientId,
       senderPublicKey: this.senderPublicKey,
       asset: this.asset
-    })
+    }
+  }
+
+  serialise () {
+    return Model.serialise(this.getStruct())
   }
 }

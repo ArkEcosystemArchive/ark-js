@@ -1,4 +1,5 @@
 import feeManager from '@/managers/fee'
+import configManager from '@/managers/config'
 import cryptoBuilder from '@/builder/crypto'
 import slots from '@/crypto/slots'
 import Transaction from '@/builder/transaction'
@@ -19,6 +20,7 @@ export default class TimelockTransfer extends Transaction {
     this.timelockType = 0x00
     this.timelock = null
     this.version = 0x02
+    this.network = configManager.get('pubKeyHash')
   }
 
   create (recipientId, amount, timelock, timelockType) {
@@ -51,8 +53,8 @@ export default class TimelockTransfer extends Transaction {
     return this
   }
 
-  serialise () {
-    return Model.serialise({
+  getStruct () {
+    return {
       hex: crypto.getBytes(this).toString('hex'),
       id: crypto.getId(this),
       signature: this.signature,
@@ -68,6 +70,10 @@ export default class TimelockTransfer extends Transaction {
       asset: this.asset,
       timelock: this.timelock,
       timelockType: this.timelockType
-    })
+    }
+  }
+
+  serialise () {
+    return Model.serialise(this.getStruct())
   }
 }

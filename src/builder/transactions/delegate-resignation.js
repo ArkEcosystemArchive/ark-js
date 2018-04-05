@@ -1,4 +1,5 @@
 import feeManager from '@/managers/fee'
+import configManager from '@/managers/config'
 import cryptoBuilder from '@/builder/crypto'
 import slots from '@/crypto/slots'
 import Transaction from '@/builder/transaction'
@@ -14,6 +15,7 @@ export default class DelegateResignation extends Transaction {
     this.fee = feeManager.get(TRANSACTION_TYPES.DELEGATE_RESIGNATION)
     this.timestamp = slots.getTime()
     this.version = 0x02
+    this.network = configManager.get('pubKeyHash')
   }
 
   create () {
@@ -37,8 +39,8 @@ export default class DelegateResignation extends Transaction {
     return crypto.verify(this)
   }
 
-  serialise () {
-    return Model.serialise({
+  getStruct () {
+    return {
       hex: crypto.getBytes(this).toString('hex'),
       id: crypto.getId(this),
       signature: this.signature,
@@ -48,6 +50,10 @@ export default class DelegateResignation extends Transaction {
       type: this.type,
       fee: this.fee,
       senderPublicKey: this.senderPublicKey
-    })
+    }
+  }
+
+  serialise () {
+    return Model.serialise(this.getStruct())
   }
 }

@@ -1,4 +1,5 @@
 import feeManager from '@/managers/fee'
+import configManager from '@/managers/config'
 import cryptoBuilder from '@/builder/crypto'
 import slots from '@/crypto/slots'
 import Transaction from '@/builder/transaction'
@@ -16,6 +17,7 @@ export default class MultiPayment extends Transaction {
     this.payments = {}
     this.vendorFieldHex = null
     this.version = 0x02
+    this.network = configManager.get('pubKeyHash')
   }
 
   create () {
@@ -57,7 +59,7 @@ export default class MultiPayment extends Transaction {
     return crypto.verify(this)
   }
 
-  serialise () {
+  getStruct () {
     const struct = {
       hex: crypto.getBytes(this).toString('hex'),
       id: crypto.getId(this),
@@ -71,6 +73,10 @@ export default class MultiPayment extends Transaction {
       vendorFieldHex: this.vendorFieldHex
     }
 
-    return Model.serialise(Object.assign(struct, this.payments))
+    return Object.assign(struct, this.payments)
+  }
+
+  serialise () {
+    return Model.serialise(this.getStruct())
   }
 }

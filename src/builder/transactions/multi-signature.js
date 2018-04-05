@@ -1,4 +1,5 @@
 import feeManager from '@/managers/fee'
+import configManager from '@/managers/config'
 import cryptoBuilder from '@/builder/crypto'
 import slots from '@/crypto/slots'
 import Transaction from '@/builder/transaction'
@@ -18,6 +19,7 @@ export default class MultiSignature extends Transaction {
     this.senderPublicKey = null
     this.asset = { multisignature: {} }
     this.version = 0x02
+    this.network = configManager.get('pubKeyHash')
   }
 
   create (keysgroup, lifetime, min) {
@@ -45,8 +47,8 @@ export default class MultiSignature extends Transaction {
     return crypto.verify(this)
   }
 
-  serialise () {
-    return Model.serialise({
+  getStruct () {
+    return {
       hex: crypto.getBytes(this).toString('hex'),
       id: crypto.getId(this),
       signature: this.signature,
@@ -59,6 +61,10 @@ export default class MultiSignature extends Transaction {
       recipientId: this.recipientId,
       senderPublicKey: this.senderPublicKey,
       asset: this.asset
-    })
+    }
+  }
+
+  serialise () {
+    return Model.serialise(this.getStruct())
   }
 }

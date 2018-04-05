@@ -18,4 +18,8 @@ export default class Transaction {
     this.senderPublicKey = value
     return this
   }
+
+  serialise () {
+    return this.model.serialise(this.getStruct())
+  }
 }

@@ -10,6 +10,8 @@ export default class Transfer extends Transaction {
   constructor () {
     super()
 
+    this.model = Model
+
     this.id = null
     this.type = TRANSACTION_TYPES.TRANSFER
     this.fee = feeManager.get(TRANSACTION_TYPES.TRANSFER)
@@ -67,9 +69,5 @@ export default class Transfer extends Transaction {
       vendorFieldHex: this.vendorFieldHex,
       asset: this.asset
     }
-  }
-
-  serialise () {
-    return Model.serialise(this.getStruct())
   }
 }

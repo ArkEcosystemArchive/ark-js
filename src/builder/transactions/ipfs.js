@@ -10,6 +10,8 @@ export default class IPFS extends Transaction {
   constructor () {
     super()
 
+    this.model = Model
+
     this.id = null
     this.type = TRANSACTION_TYPES.IPFS
     this.fee = feeManager.get(TRANSACTION_TYPES.IPFS)
@@ -66,9 +68,5 @@ export default class IPFS extends Transaction {
       senderPublicKey: this.senderPublicKey,
       asset: this.asset
     }
-  }
-
-  serialise () {
-    return Model.serialise(this.getStruct())
   }
 }

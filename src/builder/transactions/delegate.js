@@ -10,6 +10,8 @@ export default class Delegate extends Transaction {
   constructor () {
     super()
 
+    this.model = Model
+
     this.id = null
     this.type = TRANSACTION_TYPES.DELEGATE
     this.fee = feeManager.get(TRANSACTION_TYPES.DELEGATE)
@@ -60,9 +62,5 @@ export default class Delegate extends Transaction {
       senderPublicKey: this.senderPublicKey,
       asset: this.asset
     }
-  }
-
-  serialise () {
-    return Model.serialise(this.getStruct())
   }
 }

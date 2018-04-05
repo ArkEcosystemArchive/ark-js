@@ -110,8 +110,9 @@ describe('ecdsa', () => {
       it(`verifies a valid signature for "${f.message}"`, () => {
         const d = BigInteger.fromHex(f.d)
         const H = bcrypto.sha256(f.message)
-        const signature = ECSignature.fromDER(Buffer.from(f.signature, 'hex'))
         const Q = curve.G.multiply(d)
+
+        const signature = ECSignature.fromDER(Buffer.from(f.signature, 'hex'))
 
         expect(ecdsa.verify(H, signature, Q)).toBeTruthy()
       })
@@ -121,15 +122,17 @@ describe('ecdsa', () => {
       it(`fails to verify with ${f.description}`, () => {
         const H = bcrypto.sha256(f.message)
         const d = BigInteger.fromHex(f.d)
+        const Q = curve.G.multiply(d)
 
         let signature
         if (f.signature) {
           signature = ECSignature.fromDER(Buffer.from(f.signature, 'hex'))
         } else if (f.signatureRaw) {
-          signature = new ECSignature(new BigInteger(f.signatureRaw.r, 16), new BigInteger(f.signatureRaw.s, 16))
+          signature = new ECSignature(
+            new BigInteger(f.signatureRaw.r, 16),
+            new BigInteger(f.signatureRaw.s, 16)
+          )
         }
-
-        const Q = curve.G.multiply(d)
 
         expect(ecdsa.verify(H, signature, Q)).toBeFalsy()
       })

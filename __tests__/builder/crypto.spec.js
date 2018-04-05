@@ -7,6 +7,10 @@ import cryptoBuilder from '@/builder/crypto'
 import configManager from '@/managers/config'
 import { TRANSACTION_TYPES, CONFIGURATIONS } from '@/constants'
 
+const verifyHash = require('@/utils/verify-hash')
+const verifyHashMock = jest.fn()
+jest.spyOn(verifyHash, 'default').mockImplementation(verifyHashMock)
+
 beforeEach(() => configManager.setFromFile(CONFIGURATIONS.ARK.DEVNET))
 
 describe('cryptoBuilder.js', () => {
@@ -180,7 +184,7 @@ describe('cryptoBuilder.js', () => {
       expect(cryptoBuilder.verify).toBeFunction()
     })
 
-    xit('verifies the hash of the transaction', () => {
+    it('computes and verifies the hash of the transaction', () => {
       const transaction = {
         type: 0,
         amount: 1000,
@@ -194,7 +198,7 @@ describe('cryptoBuilder.js', () => {
       const hash = cryptoBuilder.getHash(transaction)
 
       cryptoBuilder.verify(transaction)
-      expect(verifyHash).toHaveBeenCalledWith(hash, transaction.signature, transaction.senderPublicKey)
+      expect(verifyHashMock).toHaveBeenCalledWith(hash, transaction.signature, transaction.senderPublicKey)
     })
   })
 
@@ -203,7 +207,7 @@ describe('cryptoBuilder.js', () => {
       expect(cryptoBuilder.verifySecondSignature).toBeFunction()
     })
 
-    xit('verifies the hash of the transaction', () => {
+    it('computes and verifies the hash of the transaction', () => {
       const transaction = {
         type: 0,
         amount: 1000,
@@ -215,9 +219,10 @@ describe('cryptoBuilder.js', () => {
         signature: '618a54975212ead93df8c881655c625544bce8ed7ccdfe6f08a42eecfb1adebd051307be5014bb051617baf7815d50f62129e70918190361e5d4dd4796541b0a', // eslint-disable-line max-len
       }
       const hash = cryptoBuilder.getHash(transaction)
+      const publicKey = '036928c98ee53a1f52ed01dd87db10ffe1980eb47cd7c0a7d688321f47b5d7d760'
 
-      cryptoBuilder.verifySecondSignature(transaction, 'publicKey')
-      expect(verifyHash).toHaveBeenCalledWith(hash, transaction.signature, 'publicKey')
+      cryptoBuilder.verifySecondSignature(transaction, publicKey)
+      expect(verifyHashMock).toHaveBeenCalledWith(hash, transaction.secondSignature, publicKey)
     })
   })
 

@@ -1,5 +1,5 @@
 {
-  "name": "arkjs",
+  "name": "@arkecosystem/client",
   "version": "0.2.1",
   "description": "JavaScript library for sending Ark transactions from the client or server",
   "main": "index.js",

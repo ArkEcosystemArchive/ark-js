@@ -1,5 +1,5 @@
 {
-  "name": "arkjs",
+  "name": "@arkecosystem/client",
   "version": "2.0.0",
   "description": "A JavaScript library to interact with the ARK Blockchain",
   "main": "src/index.js",

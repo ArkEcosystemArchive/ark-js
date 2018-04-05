@@ -9,6 +9,7 @@ import ECPair from '@/crypto/ecpair'
 import ECSignature from '@/crypto/ecsignature'
 import feeManager from '@/managers/fee'
 import { TRANSACTION_TYPES } from '@/constants'
+import verifyHash from '@/utils/verify-hash'
 
 class CryptoBuilder {
   /**
@@ -97,7 +98,7 @@ class CryptoBuilder {
    * @return {[type]}           [description]
    */
   fromBytes (hexString) {
-    let tx = {}
+    const tx = {}
     const buf = Buffer.from(hexString, 'hex')
     tx.version = buf.readInt8(1) & 0xff
     tx.network = buf.readInt8(2) & 0xff
@@ -183,7 +184,7 @@ class CryptoBuilder {
         const total = buf.readInt8(assetOffset / 2) & 0xff
         let offset = assetOffset / 2 + 1
         for (let i = 0; i < total; i++) {
-          let payment = {}
+          const payment = {}
           payment.amount = buf.readUInt32LE(offset)
           payment.recipientId = bs58check.encode(buf.slice(offset + 1, offset + 1 + 21))
           tx.asset.payments.push(payment)
@@ -283,36 +284,24 @@ class CryptoBuilder {
   /**
    * [verify description]
    * @param  {[type]} transaction [description]
-   * @param  {[type]} network     [description]
    * @return {[type]}             [description]
    */
-  verify (transaction, network) {
+  verify (transaction) {
     const hash = this.getHash(transaction)
 
-    const signatureBuffer = Buffer.from(transaction.signature, 'hex')
-    const senderPublicKeyBuffer = Buffer.from(transaction.senderPublicKey, 'hex')
-    const ecpair = ECPair.fromPublicKeyBuffer(senderPublicKeyBuffer, network)
-    const ecsignature = ECSignature.fromDER(signatureBuffer)
-
-    return ecpair.verify(hash, ecsignature)
+    return verifyHash(hash, transaction.signature, transaction.senderPublicKey)
   }
 
   /**
    * [verifySecondSignature description]
    * @param  {[type]} transaction [description]
    * @param  {String} publicKey   [description]
-   * @param  {[type]} network     [description]
    * @return {[type]}             [description]
    */
-  verifySecondSignature (transaction, publicKey, network) {
+  verifySecondSignature (transaction, publicKey) {
     const hash = this.getHash(transaction)
 
-    const secondSignatureBuffer = Buffer.from(transaction.secondSignature, 'hex')
-    const publicKeyBuffer = Buffer.from(publicKey, 'hex')
-    const ecpair = ECPair.fromPublicKeyBuffer(publicKeyBuffer, network)
-    const ecsignature = ECSignature.fromDER(secondSignatureBuffer)
-
-    return ecpair.verify(hash, ecsignature)
+    return verifyHash(hash, transaction.secondSignature, publicKey)
   }
 
   /**
@@ -360,7 +349,7 @@ class CryptoBuilder {
       version = configManager.get('pubKeyHash')
     }
     try {
-      var decode = bs58check.decode(address)
+      const decode = bs58check.decode(address)
       return decode[0] === version
     } catch (e) {
       return false

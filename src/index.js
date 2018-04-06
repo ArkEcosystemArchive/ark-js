@@ -6,7 +6,7 @@ import defaultConfig from '@/networks/ark/devnet'
 
 export default class Ark {
   constructor (config) {
-    this.setConfig(config ? config : defaultConfig)
+    this.setConfig(config || defaultConfig)
   }
 
   setConfig (config) {

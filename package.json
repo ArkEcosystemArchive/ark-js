@@ -2,8 +2,30 @@
   "name": "@arkecosystem/client",
   "version": "2.0.0",
   "description": "A JavaScript library to interact with the ARK Blockchain",
-  "main": "src/index.js",
-  "repository": "https://github.com/ArkEcosystem/ark-js",
+  "main": "dist/index.min.js",
+  "browser": "dist/index.min.js",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "prepublishOnly": "yarn run lint && yarn run test && yarn run build",
+    "build": "rm -rf dist && NODE_ENV=production webpack",
+    "test": "jest --no-cache --forceExit",
+    "test:watch": "jest --watch",
+    "test:watch:all": "jest --watchAll",
+    "lint": "eslint ./src --fix",
+    "lint:test": "eslint ./__tests__ --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ArkEcosystem/ark-js.git"
+  },
+  "keywords": [
+    "ark",
+    "crypto",
+    "currency",
+    "blockchain"
+  ],
   "contributors": [
     "François-Xavier Thoorens <fx@ark.io>",
     "Brian Faust <brian@ark.io>",
@@ -12,17 +34,12 @@
     "Juan A. Martín <juan@ark.io>"
   ],
   "license": "MIT",
-  "scripts": {
-    "build": "rm -rf dist && NODE_ENV=production webpack",
-    "test": "jest --no-cache --forceExit",
-    "test:watch": "jest --watch",
-    "test:watch:all": "jest --watchAll",
-    "lint": "eslint ./src --fix",
-    "lint:test": "eslint ./__tests__ --fix"
+  "bugs": {
+    "url": "https://github.com/ArkEcosystem/ark-js/issues"
   },
+  "homepage": "https://github.com/ArkEcosystem/ark-js",
   "dependencies": {
     "axios": "^0.17.1",
-    "axios-mock-adapter": "^1.14.1",
     "bigi": "^1.4.2",
     "bignum": "^0.12.5",
     "bignumber.js": "^6.0.0",
@@ -44,6 +61,7 @@
     "wif": "^2.0.6"
   },
   "devDependencies": {
+    "axios-mock-adapter": "^1.14.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-jest": "^22.4.1",

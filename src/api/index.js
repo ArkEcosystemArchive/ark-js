@@ -3,6 +3,8 @@ import HttpClient from './http'
 export default class ApiClient {
   constructor (host) {
     this.setConnection(host)
+
+    this.version = 1
   }
 
   setConnection (host) {
@@ -13,8 +15,12 @@ export default class ApiClient {
     return this.http
   }
 
+  setVersion () {
+    this.version = 1
+  }
+
   resource (name) {
-    const Resource = require(`./resources/${name}`).default
+    const Resource = require(`./resources/v${version}/${name}`).default
 
     return new Resource(this.http)
   }

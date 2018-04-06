@@ -1,16 +1,16 @@
 import Ark from '@/'
 import network from '@/networks/ark/devnet'
-import ApiResource from '@/api/resources/peers'
+import ApiResource from '@/api/resources/v2/votes'
 require('../mocks')
 
 let resource
 
 beforeEach(() => {
   const ark = new Ark(network)
-  resource = ark.getClient('https://localhost:4003/').resource('peers')
+  resource = ark.getClient('https://localhost:4003/').resource('votes')
 })
 
-describe('API - Resources - Peers', () => {
+describe('API - Resources - Voters', () => {
   test('should be instantiated', () => {
     expect(resource).toBeInstanceOf(ApiResource)
   })

@@ -1,16 +1,16 @@
 import Ark from '@/'
 import network from '@/networks/ark/devnet'
-import ApiResource from '@/api/resources/multisignatures'
+import ApiResource from '@/api/resources/v2/peers'
 require('../mocks')
 
 let resource
 
 beforeEach(() => {
   const ark = new Ark(network)
-  resource = ark.getClient('https://localhost:4003/').resource('multisignatures')
+  resource = ark.getClient('https://localhost:4003/').resource('peers')
 })
 
-describe('API - Resources - MultiSignatures', () => {
+describe('API - Resources - Peers', () => {
   test('should be instantiated', () => {
     expect(resource).toBeInstanceOf(ApiResource)
   })
@@ -20,13 +20,8 @@ describe('API - Resources - MultiSignatures', () => {
     await expect(response.status).toBe(200)
   })
 
-  test('should call "pending" method', async () => {
-    const response = await resource.pending()
-    await expect(response.status).toBe(200)
-  })
-
-  test('should call "wallets" method', async () => {
-    const response = await resource.wallets()
+  test('should call "get" method', async () => {
+    const response = await resource.get('123')
     await expect(response.status).toBe(200)
   })
 })

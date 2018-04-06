@@ -1,16 +1,16 @@
 import Ark from '@/'
 import network from '@/networks/ark/devnet'
-import ApiResource from '@/api/resources/blocks'
+import ApiResource from '@/api/resources/v2/delegates'
 require('../mocks')
 
 let resource
 
 beforeEach(() => {
   const ark = new Ark(network)
-  resource = ark.getClient('https://localhost:4003/').resource('blocks')
+  resource = ark.getClient('https://localhost:4003/').resource('delegates')
 })
 
-describe('API - Resources - Blocks', () => {
+describe('API - Resources - Delegates', () => {
   test('should be instantiated', () => {
     expect(resource).toBeInstanceOf(ApiResource)
   })
@@ -25,13 +25,13 @@ describe('API - Resources - Blocks', () => {
     await expect(response.status).toBe(200)
   })
 
-  test('should call "transactions" method', async () => {
-    const response = await resource.transactions('123')
+  test('should call "blocks" method', async () => {
+    const response = await resource.blocks('123')
     await expect(response.status).toBe(200)
   })
 
-  test('should call "search" method', async () => {
-    const response = await resource.search({})
+  test('should call "voters" method', async () => {
+    const response = await resource.voters('123')
     await expect(response.status).toBe(200)
   })
 })

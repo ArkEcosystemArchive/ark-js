@@ -1,4 +1,4 @@
-import configManager from '../managers/config'
+import configManager from '@/managers/config'
 import axios from 'axios'
 
 export default class HttpClient {

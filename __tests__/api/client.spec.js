@@ -2,7 +2,7 @@ import Ark from '@/'
 import network from '@/networks/ark/devnet'
 import ApiClient from '@/api'
 import HttpClient from '@/api/http'
-import ApiResource from '@/api/resources/transactions'
+import ApiResource from '@/api/resources/v2/transactions'
 
 let client
 

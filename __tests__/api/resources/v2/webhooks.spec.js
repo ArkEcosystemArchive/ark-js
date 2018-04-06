@@ -1,16 +1,16 @@
 import Ark from '@/'
 import network from '@/networks/ark/devnet'
-import ApiResource from '@/api/resources/transactions'
+import ApiResource from '@/api/resources/v2/webhooks'
 require('../mocks')
 
 let resource
 
 beforeEach(() => {
   const ark = new Ark(network)
-  resource = ark.getClient('https://localhost:4003/').resource('transactions')
+  resource = ark.getClient('https://localhost:4003/').resource('webhooks')
 })
 
-describe('API - Resources - Transactions', () => {
+describe('API - Resources - Blocks', () => {
   test('should be instantiated', () => {
     expect(resource).toBeInstanceOf(ApiResource)
   })
@@ -30,23 +30,18 @@ describe('API - Resources - Transactions', () => {
     await expect(response.status).toBe(200)
   })
 
-  test('should call "allUnconfirmed" method', async () => {
-    const response = await resource.allUnconfirmed()
+  test('should call "update" method', async () => {
+    const response = await resource.update('123')
     await expect(response.status).toBe(200)
   })
 
-  test('should call "getUnconfirmed" method', async () => {
-    const response = await resource.getUnconfirmed('123')
+  test('should call "delete" method', async () => {
+    const response = await resource.delete('123')
     await expect(response.status).toBe(200)
   })
 
-  test('should call "search" method', async () => {
-    const response = await resource.search({})
-    await expect(response.status).toBe(200)
-  })
-
-  test('should call "types" method', async () => {
-    const response = await resource.types()
+  test('should call "events" method', async () => {
+    const response = await resource.events()
     await expect(response.status).toBe(200)
   })
 })

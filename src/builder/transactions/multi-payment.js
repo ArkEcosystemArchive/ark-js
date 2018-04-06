@@ -7,6 +7,10 @@ import Model from '@/models/transaction'
 import { TRANSACTION_TYPES } from '@/constants'
 
 export default class MultiPayment extends Transaction {
+  /**
+   * [constructor description]
+   * @return {[type]} [description]
+   */
   constructor () {
     super()
 
@@ -22,15 +26,29 @@ export default class MultiPayment extends Transaction {
     this.network = configManager.get('pubKeyHash')
   }
 
+  /**
+   * [create description]
+   * @return {[type]} [description]
+   */
   create () {
     return this
   }
 
+  /**
+   * [setVendorField description]
+   * @param {[type]} data [description]
+   * @param {[type]} type [description]
+   */
   setVendorField (data, type) {
     this.vendorFieldHex = Buffer.from(data, type).toString('hex')
     return this
   }
 
+  /**
+   * [addPayment description]
+   * @param {[type]} address [description]
+   * @param {[type]} amount  [description]
+   */
   addPayment (address, amount) {
     const paymentsCount = Object.keys(this.payments).length / 2
 
@@ -44,6 +62,11 @@ export default class MultiPayment extends Transaction {
     return this
   }
 
+  /**
+   * [sign description]
+   * @param  {[type]} passphrase [description]
+   * @return {[type]}            [description]
+   */
   sign (passphrase) {
     const keys = cryptoBuilder.getKeys(passphrase)
     this.senderPublicKey = keys.publicKey
@@ -51,16 +74,22 @@ export default class MultiPayment extends Transaction {
     return this
   }
 
+  /**
+   * [secondSign description]
+   * @param  {[type]} transaction [description]
+   * @param  {[type]} passphrase  [description]
+   * @return {[type]}             [description]
+   */
   secondSign (transaction, passphrase) {
     const keys = cryptoBuilder.getKeys(passphrase)
     this.secondSignature = cryptoBuilder.secondSign(transaction, keys)
     return this
   }
 
-  verify () {
-    return cryptoBuilder.verify(this)
-  }
-
+  /**
+   * [getStruct description]
+   * @return {[type]} [description]
+   */
   getStruct () {
     const struct = {
       hex: cryptoBuilder.getBytes(this).toString('hex'),

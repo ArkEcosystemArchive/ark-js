@@ -5,6 +5,11 @@ import ECSignature from '@/crypto/ecsignature'
 import cryptoBuilder from '@/builder/crypto'
 
 export default class Wallet {
+  /**
+   * [constructor description]
+   * @param  {[type]} address [description]
+   * @return {[type]}         [description]
+   */
   constructor (address) {
     this.address = address
     this.publicKey = null
@@ -20,6 +25,11 @@ export default class Wallet {
     this.missedBlocks = 0
   }
 
+  /**
+   * [applyTransactionToSender description]
+   * @param  {[type]} transaction [description]
+   * @return {[type]}             [description]
+   */
   applyTransactionToSender (transaction) {
     if (transaction.senderPublicKey === this.publicKey || cryptoBuilder.getAddress(transaction.senderPublicKey) === this.address) {
       this.balance -= transaction.amount + transaction.fee
@@ -45,6 +55,11 @@ export default class Wallet {
     }
   }
 
+  /**
+   * [undoTransactionToSender description]
+   * @param  {[type]} transaction [description]
+   * @return {[type]}             [description]
+   */
   undoTransactionToSender (transaction) {
     if (transaction.senderPublicKey === this.publicKey || cryptoBuilder.getAddress(transaction.senderPublicKey) === this.address) {
       this.balance += transaction.amount + transaction.fee
@@ -72,6 +87,11 @@ export default class Wallet {
     }
   }
 
+  /**
+   * [applyTransactionToRecipient description]
+   * @param  {[type]} transaction [description]
+   * @return {[type]}             [description]
+   */
   applyTransactionToRecipient (transaction) {
     if (transaction.recipientId === this.address) {
       this.balance += transaction.amount
@@ -79,6 +99,11 @@ export default class Wallet {
     }
   }
 
+  /**
+   * [undoTransactionToRecipient description]
+   * @param  {[type]} transaction [description]
+   * @return {[type]}             [description]
+   */
   undoTransactionToRecipient (transaction) {
     if (transaction.recipientId === this.address) {
       this.balance -= transaction.amount
@@ -86,6 +111,11 @@ export default class Wallet {
     }
   }
 
+  /**
+   * [applyBlock description]
+   * @param  {[type]} block [description]
+   * @return {[type]}       [description]
+   */
   applyBlock (block) {
     if (block.generatorPublicKey === this.publicKey || cryptoBuilder.getAddress(block.generatorPublicKey) === this.address) {
       this.balance += block.reward + block.totalFee
@@ -95,6 +125,11 @@ export default class Wallet {
     this.dirty = true
   }
 
+  /**
+   * [undoBlock description]
+   * @param  {[type]} block [description]
+   * @return {[type]}       [description]
+   */
   undoBlock (block) {
     if (block.generatorPublicKey === this.publicKey || cryptoBuilder.getAddress(block.generatorPublicKey) === this.address) {
       this.balance -= block.reward + block.totalFee
@@ -105,6 +140,11 @@ export default class Wallet {
     this.dirty = true
   }
 
+  /**
+   * [canApply description]
+   * @param  {[type]} transaction [description]
+   * @return {[type]}             [description]
+   */
   canApply (transaction) {
     let check = true
 
@@ -156,6 +196,12 @@ export default class Wallet {
       : actions['default']()
   }
 
+  /**
+   * [verifySignatures description]
+   * @param  {[type]} transaction    [description]
+   * @param  {[type]} multisignature [description]
+   * @return {[type]}                [description]
+   */
   verifySignatures (transaction, multisignature) {
     if (!transaction.signatures || !transaction.signatures.length > multisignature.min - 1) return false
     let index = 0
@@ -170,6 +216,13 @@ export default class Wallet {
     return true
   }
 
+  /**
+   * [verify description]
+   * @param  {[type]} transaction [description]
+   * @param  {[type]} signature   [description]
+   * @param  {[type]} publicKey   [description]
+   * @return {[type]}             [description]
+   */
   verify (transaction, signature, publicKey) {
     const hash = cryptoBuilder.getHash(transaction)
     const signSignatureBuffer = Buffer.from(signature, 'hex')
@@ -179,6 +232,10 @@ export default class Wallet {
     return ecpair.verify(hash, ecsignature)
   }
 
+  /**
+   * [toString description]
+   * @return {[type]} [description]
+   */
   toString () {
     return `${this.address}=${this.balance / ARKTOSHI}`
   }

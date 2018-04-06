@@ -4,6 +4,10 @@ import feeManager from '@/managers/fee'
 import { TRANSACTION_TYPES } from '@/constants'
 
 class ConfigManager {
+  /**
+   * [setConfig description]
+   * @param {[type]} config [description]
+   */
   setConfig (config) {
     this.config = {}
 
@@ -15,34 +19,70 @@ class ConfigManager {
     this._buildFees()
   }
 
+  /**
+   * [setFromFile description]
+   * @param {[type]} file [description]
+   */
   setFromFile (file) {
     this.setConfig(require(file))
   }
 
+  /**
+   * [all description]
+   * @return {[type]} [description]
+   */
   all () {
     return this.config
   }
 
+  /**
+   * [set description]
+   * @param {[type]} key   [description]
+   * @param {[type]} value [description]
+   */
   set (key, value) {
     this.config[key] = value
   }
 
+  /**
+   * [get description]
+   * @param  {[type]} key [description]
+   * @return {[type]}     [description]
+   */
   get (key) {
     return this.config[key]
   }
 
+  /**
+   * [setHeight description]
+   * @param {[type]} value [description]
+   */
   setHeight (value) {
     this.height = value
   }
 
+  /**
+   * [getHeight description]
+   * @return {[type]} [description]
+   */
   getHeight () {
     return this.height
   }
 
+  /**
+   * [getConstant description]
+   * @param  {[type]} key [description]
+   * @return {[type]}     [description]
+   */
   getConstant (key) {
     return this.getConstants()[key]
   }
 
+  /**
+   * [getConstants description]
+   * @param  {[type]} height [description]
+   * @return {[type]}        [description]
+   */
   getConstants (height) {
     if (this.height) {
       height = this.height
@@ -64,6 +104,10 @@ class ConfigManager {
     return this.current.data
   }
 
+  /**
+   * [_buildConstants description]
+   * @return {[type]} [description]
+   */
   _buildConstants () {
     this.constants = this.config.constants.sort((a, b) => a.height - b.height)
     this.current = {
@@ -79,6 +123,10 @@ class ConfigManager {
     }
   }
 
+  /**
+   * [_buildFees description]
+   * @return {[type]} [description]
+   */
   _buildFees () {
     Object
       .keys(TRANSACTION_TYPES)

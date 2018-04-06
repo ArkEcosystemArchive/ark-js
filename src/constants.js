@@ -1,7 +1,15 @@
 const path = require('path')
 
+/**
+ * [ARKTOSHI description]
+ * @type {[type]}
+ */
 exports.ARKTOSHI = Math.pow(10, 8)
 
+/**
+ * [TRANSACTION_TYPES description]
+ * @type {[type]}
+ */
 exports.TRANSACTION_TYPES = Object.freeze({
   TRANSFER: 0,
   SECOND_SIGNATURE: 1,
@@ -14,6 +22,10 @@ exports.TRANSACTION_TYPES = Object.freeze({
   DELEGATE_RESIGNATION: 8
 })
 
+/**
+ * [CONFIGURATIONS description]
+ * @type {[type]}
+ */
 exports.CONFIGURATIONS = Object.freeze({
   ARK: {
     MAINNET: path.resolve(__dirname, 'networks/ark/mainnet.js'),

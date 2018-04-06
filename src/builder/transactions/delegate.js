@@ -7,6 +7,10 @@ import Model from '@/models/transaction'
 import { TRANSACTION_TYPES } from '@/constants'
 
 export default class Delegate extends Transaction {
+  /**
+   * [constructor description]
+   * @return {[type]} [description]
+   */
   constructor () {
     super()
 
@@ -24,11 +28,21 @@ export default class Delegate extends Transaction {
     this.network = configManager.get('pubKeyHash')
   }
 
+  /**
+   * [create description]
+   * @param  {[type]} username [description]
+   * @return {[type]}          [description]
+   */
   create (username) {
     this.username = username
     return this
   }
 
+  /**
+   * [sign description]
+   * @param  {[type]} passphrase [description]
+   * @return {[type]}            [description]
+   */
   sign (passphrase) {
     const keys = cryptoBuilder.getKeys(passphrase)
     this.senderPublicKey = keys.publicKey
@@ -37,16 +51,22 @@ export default class Delegate extends Transaction {
     return this
   }
 
+  /**
+   * [secondSign description]
+   * @param  {[type]} transaction [description]
+   * @param  {[type]} passphrase  [description]
+   * @return {[type]}             [description]
+   */
   secondSign (transaction, passphrase) {
     const keys = cryptoBuilder.getKeys(passphrase)
     this.secondSignature = cryptoBuilder.secondSign(transaction, keys)
     return this
   }
 
-  verify () {
-    return cryptoBuilder.verify(this)
-  }
-
+  /**
+   * [getStruct description]
+   * @return {[type]} [description]
+   */
   getStruct () {
     return {
       hex: cryptoBuilder.getBytes(this).toString('hex'),

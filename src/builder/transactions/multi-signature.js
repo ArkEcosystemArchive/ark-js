@@ -7,6 +7,10 @@ import Model from '@/models/transaction'
 import { TRANSACTION_TYPES } from '@/constants'
 
 export default class MultiSignature extends Transaction {
+  /**
+   * [constructor description]
+   * @return {[type]} [description]
+   */
   constructor () {
     super()
 
@@ -24,6 +28,13 @@ export default class MultiSignature extends Transaction {
     this.network = configManager.get('pubKeyHash')
   }
 
+  /**
+   * [create description]
+   * @param  {[type]} keysgroup [description]
+   * @param  {[type]} lifetime  [description]
+   * @param  {[type]} min       [description]
+   * @return {[type]}           [description]
+   */
   create (keysgroup, lifetime, min) {
     this.asset.multisignature.keysgroup = keysgroup
     this.asset.multisignature.lifetime = lifetime
@@ -32,6 +43,11 @@ export default class MultiSignature extends Transaction {
     return this
   }
 
+  /**
+   * [sign description]
+   * @param  {[type]} passphrase [description]
+   * @return {[type]}            [description]
+   */
   sign (passphrase) {
     const keys = cryptoBuilder.getKeys(passphrase)
     this.senderPublicKey = keys.publicKey
@@ -39,16 +55,22 @@ export default class MultiSignature extends Transaction {
     return this
   }
 
+  /**
+   * [secondSign description]
+   * @param  {[type]} transaction [description]
+   * @param  {[type]} passphrase  [description]
+   * @return {[type]}             [description]
+   */
   secondSign (transaction, passphrase) {
     const keys = cryptoBuilder.getKeys(passphrase)
     this.secondSignature = cryptoBuilder.secondSign(transaction, keys)
     return this
   }
 
-  verify () {
-    return cryptoBuilder.verify(this)
-  }
-
+  /**
+   * [getStruct description]
+   * @return {[type]} [description]
+   */
   getStruct () {
     return {
       hex: cryptoBuilder.getBytes(this).toString('hex'),

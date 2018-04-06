@@ -7,6 +7,12 @@ import ECPair from '@/crypto/ecpair'
 import ECSignature from '@/crypto/ecsignature'
 import slots from '@/crypto/slots'
 
+
+/**
+  * [description]
+  * @param  {[type]} data [description]
+  * @return {[type]}      [description]
+  */
 const applyV1Fix = data => {
   // START Fix for v1 api
   data.totalAmount = parseInt(data.totalAmount)
@@ -23,6 +29,11 @@ const applyV1Fix = data => {
 }
 
 export default class Block {
+  /**
+   * [constructor description]
+   * @param  {[type]} data [description]
+   * @return {[type]}      [description]
+   */
   constructor (data) {
     applyV1Fix(data)
 
@@ -37,6 +48,12 @@ export default class Block {
     this.verification = this.verify()
   }
 
+  /**
+   * [create description]
+   * @param  {[type]} data [description]
+   * @param  {[type]} keys [description]
+   * @return {[type]}      [description]
+   */
   static create (data, keys) {
     const payloadHash = Block.serialise(data)
     const hash = crypto.createHash('sha256').update(payloadHash).digest()
@@ -46,6 +63,11 @@ export default class Block {
     return new Block(data)
   }
 
+  /**
+   * [getId description]
+   * @param  {[type]} data [description]
+   * @return {[type]}      [description]
+   */
   static getId (data) {
     const hash = crypto.createHash('sha256').update(Block.serialise(data, true)).digest()
     const temp = Buffer.alloc(8)
@@ -56,12 +78,20 @@ export default class Block {
     return bignum.fromBuffer(temp).toString()
   }
 
+  /**
+   * [getHeader description]
+   * @return {[type]} [description]
+   */
   getHeader () {
     const header = {...{}, ...this.data}
     delete header.transactions
     return header
   }
 
+  /**
+   * [verifySignature description]
+   * @return {[type]} [description]
+   */
   verifySignature () {
     let bytes = Block.serialise(this.data, false)
     let hash = crypto.createHash('sha256').update(bytes).digest()
@@ -74,6 +104,10 @@ export default class Block {
     return res
   }
 
+  /**
+   * [verify description]
+   * @return {[type]} [description]
+   */
   verify () {
     let block = this.data
     let result = {
@@ -171,6 +205,12 @@ export default class Block {
     return result
   }
 
+  /**
+   * [serialise description]
+   * @param  {[type]} block            [description]
+   * @param  {[type]} includeSignature [description]
+   * @return {[type]}                  [description]
+   */
   static serialise (block, includeSignature) {
     if (includeSignature === undefined) {
       includeSignature = block.blockSignature !== undefined
@@ -236,6 +276,10 @@ export default class Block {
     return b
   }
 
+  /**
+   * [toString description]
+   * @return {[type]} [description]
+   */
   toString () {
     return `${this.data.id}, height: ${this.data.height}, ${this.data.transactions.length} transactions, verified: ${this.verification.verified}, errors:${this.verification.errors}` // eslint-disable-line max-len
   }

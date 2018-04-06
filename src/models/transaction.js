@@ -5,6 +5,11 @@ import { TRANSACTION_TYPES } from '@/constants'
 import cryptoBuilder from '@/builder/crypto'
 
 export default class Transaction {
+  /**
+   * [constructor description]
+   * @param  {[type]} transaction [description]
+   * @return {[type]}             [description]
+   */
   constructor (transaction) {
     this.serialised = Transaction.serialise(transaction)
     this.data = Transaction.deserialise(this.serialised.toString('hex'))
@@ -21,15 +26,29 @@ export default class Transaction {
     ].forEach((key) => { this[key] = this.data[key] }, this)
   }
 
+  /**
+   * [fromBytes description]
+   * @param  {[type]} hexString [description]
+   * @return {[type]}           [description]
+   */
   static fromBytes (hexString) {
     return new Transaction(Transaction.deserialise(hexString))
   }
 
+  /**
+   * [verify description]
+   * @return {[type]} [description]
+   */
   verify () {
     if (!this.verified) return false
     return true
   }
 
+  /**
+   * [serialise description]
+   * @param  {[type]} transaction [description]
+   * @return {[type]}             [description]
+   */
   static serialise (transaction) {
     const bb = new ByteBuffer(512, true)
     bb.writeByte(0xff) // fill, to disambiguate from v1
@@ -108,6 +127,11 @@ export default class Transaction {
     return bb.toBuffer()
   }
 
+  /**
+   * [deserialise description]
+   * @param  {[type]} hexString [description]
+   * @return {[type]}           [description]
+   */
   static deserialise (hexString) {
     const transaction = {}
     const buf = ByteBuffer.fromHex(hexString, true)
@@ -241,7 +265,15 @@ export default class Transaction {
     return transaction
   }
 
-  // TODO support multisignatures
+  /**
+   * TODO: support multisignatures
+   *
+   * [parseSignatures description]
+   * @param  {[type]} hexString   [description]
+   * @param  {[type]} transaction [description]
+   * @param  {[type]} startOffset [description]
+   * @return {[type]}             [description]
+   */
   static parseSignatures (hexString, transaction, startOffset) {
     transaction.signature = hexString.substring(startOffset)
 

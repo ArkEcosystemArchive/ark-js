@@ -14,9 +14,10 @@ const curve = ecurve.getCurveByName('secp256k1')
 
 export default class HDNode {
   /**
-   * @constructor
-   * @param {ECPair} keyPair
-   * @param {Buffer} chainCode
+   * [constructor description]
+   * @param  {[type]} keyPair   [description]
+   * @param  {[type]} chainCode [description]
+   * @return {[type]}           [description]
    */
   constructor (keyPair, chainCode) {
     typeforce(types.tuple('ECPair', types.Buffer256bit), arguments)
@@ -36,9 +37,10 @@ export default class HDNode {
   }
 
   /**
-   * @param {string|Buffer} seed
-   * @param {Network} [network]
-   * @returns {HDNode}
+   * [fromSeedBuffer description]
+   * @param  {[type]} seed    [description]
+   * @param  {[type]} network [description]
+   * @return {[type]}         [description]
    */
   static fromSeedBuffer (seed, network) {
     typeforce(types.tuple(types.Buffer, types.maybe(types.Network)), arguments)
@@ -61,16 +63,20 @@ export default class HDNode {
   }
 
   /**
-   * @param {string} hex
-   * @returns {HDNode}
+   * [fromSeedHex description]
+   * @param  {[type]} hex     [description]
+   * @param  {[type]} network [description]
+   * @return {[type]}         [description]
    */
   static fromSeedHex (hex, network) {
     return HDNode.fromSeedBuffer(Buffer.from(hex, 'hex'), network)
   }
 
   /**
-   * @param {Buffer|string} string
-   * @returns {HDNode}
+   * [fromBase58 description]
+   * @param  {[type]} string   [description]
+   * @param  {[type]} networks [description]
+   * @return {[type]}          [description]
    */
   static fromBase58 (string, networks) {
     const buffer = base58check.decode(string)
@@ -147,42 +153,48 @@ export default class HDNode {
   }
 
   /**
-   * @returns {string}
+   * [getAddress description]
+   * @return {[type]} [description]
    */
   getAddress () {
     return this.keyPair.getAddress()
   }
 
   /**
-   * @returns {Buffer}
+   * [getIdentifier description]
+   * @return {[type]} [description]
    */
   getIdentifier () {
     return bcrypto.hash160(this.keyPair.getPublicKeyBuffer())
   }
 
   /**
-   * @returns {Buffer}
+   * [getFingerprint description]
+   * @return {[type]} [description]
    */
   getFingerprint () {
     return this.getIdentifier().slice(0, 4)
   }
 
   /**
-   * @returns {Network}
+   * [getNetwork description]
+   * @return {[type]} [description]
    */
   getNetwork () {
     return this.keyPair.getNetwork()
   }
 
   /**
-   * @returns {Buffer}
+   * [getPublicKeyBuffer description]
+   * @return {[type]} [description]
    */
   getPublicKeyBuffer () {
     return this.keyPair.getPublicKeyBuffer()
   }
 
   /**
-   * @returns {HDNode}
+   * [neutered description]
+   * @return {[type]} [description]
    */
   neutered () {
     const neuteredKeyPair = new ECPair(null, this.keyPair.Q, {
@@ -198,23 +210,27 @@ export default class HDNode {
   }
 
   /**
-   * @param {Buffer} hash
-   * @returns {ECSignature}
+   * [sign description]
+   * @param  {[type]} hash [description]
+   * @return {[type]}      [description]
    */
   sign (hash) {
     return this.keyPair.sign(hash)
   }
 
   /**
-   * @param {Buffer} hash
-   * @returns {boolean}
+   * [verify description]
+   * @param  {[type]} hash      [description]
+   * @param  {[type]} signature [description]
+   * @return {[type]}           [description]
    */
   verify (hash, signature) {
     return this.keyPair.verify(hash, signature)
   }
 
   /**
-   * @returns {string}
+   * [toBase58 description]
+   * @return {[type]} [description]
    */
   toBase58 () {
     // Version
@@ -256,8 +272,9 @@ export default class HDNode {
   /**
    * https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#child-key-derivation-ckd-functions
    *
-   * @param {number} index UInt32
-   * @returns {HDNode}
+   * [derive description]
+   * @param  {[type]} index [description]
+   * @return {[type]}       [description]
    */
   derive (index) {
     typeforce(types.UInt32, index)
@@ -333,8 +350,9 @@ export default class HDNode {
   }
 
   /**
-   * @param {number} index
-   * @returns {HDNode}
+   * [deriveHardened description]
+   * @param  {[type]} index [description]
+   * @return {[type]}       [description]
    */
   deriveHardened (index) {
     typeforce(types.UInt31, index)
@@ -347,15 +365,17 @@ export default class HDNode {
    * Private `===` not neutered.
    * Public `===` neutered.
    *
-   * @returns {boolean}
+   * [isNeutered description]
+   * @return {Boolean} [description]
    */
   isNeutered () {
     return !(this.keyPair.d)
   }
 
   /**
-   * @param {string} path
-   * @returns {HDNode}
+   * [derivePath description]
+   * @param  {[type]} path [description]
+   * @return {[type]}      [description]
    */
   derivePath (path) {
     typeforce(types.BIP32Path, path)

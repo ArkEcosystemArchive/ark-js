@@ -13,19 +13,23 @@ const secp256k1 = ecurve.getCurveByName('secp256k1')
 const N_OVER_TWO = secp256k1.n.shiftRight(1)
 
 class ECDSA {
+  /**
+   * [constructor description]
+   * @return {[type]} [description]
+   */
   constructor () {
     this.__curve = secp256k1
   }
 
   /**
- * [Generation of k.](https://tools.ietf.org/html/rfc6979#section-3.2)
- *
- * @static
- * @param {Buffer} hash
- * @param {Buffer} x
- * @param {function} checkSig
- * @returns {BigInteger}
- */
+   * [Generation of k.](https://tools.ietf.org/html/rfc6979#section-3.2)
+   *
+   * @static
+   * @param {Buffer} hash
+   * @param {Buffer} x
+   * @param {function} checkSig
+   * @returns {BigInteger}
+   */
   deterministicGenerateK (hash, x, checkSig) {
     typeforce(types.tuple(
       types.Hash256bit,
@@ -90,11 +94,11 @@ class ECDSA {
   }
 
   /**
- * @static
- * @param {Buffer} hash
- * @param {BigInteger} d
- * @returns {ECSignature}
- */
+   * @static
+   * @param {Buffer} hash
+   * @param {BigInteger} d
+   * @returns {ECSignature}
+   */
   sign (hash, d) {
     typeforce(types.tuple(types.Hash256bit, types.BigInt), arguments)
 
@@ -127,12 +131,12 @@ class ECDSA {
   }
 
   /**
- * @static
- * @param {Buffer} hash
- * @param {ECSignature} signature
- * @param {ECPoint} Q
- * @returns {boolean}
- */
+   * @static
+   * @param {Buffer} hash
+   * @param {ECSignature} signature
+   * @param {ECPoint} Q
+   * @returns {boolean}
+   */
   verify (hash, signature, Q) {
     typeforce(types.tuple(
       types.Hash256bit,

@@ -25,6 +25,13 @@ const secp256k1 = ecurve.getCurveByName('secp256k1')
  * @param {Network} [options.network=networks.mainnet]
  */
 export default class ECPair {
+  /**
+   * [constructor description]
+   * @param  {[type]} d       [description]
+   * @param  {[type]} Q       [description]
+   * @param  {[type]} options [description]
+   * @return {[type]}         [description]
+   */
   constructor (d, Q, options) {
     if (options) {
       typeforce({
@@ -55,9 +62,10 @@ export default class ECPair {
   }
 
   /**
-   * @param {Buffer} buffer
-   * @param {Network} [network=networks.mainnet]
-   * @returns {ECPair}
+   * [fromPublicKeyBuffer description]
+   * @param  {[type]} buffer  [description]
+   * @param  {[type]} network [description]
+   * @return {[type]}         [description]
    */
   static fromPublicKeyBuffer (buffer, network) {
     const Q = ecurve.Point.decodeFrom(secp256k1, buffer)
@@ -69,11 +77,10 @@ export default class ECPair {
   }
 
   /**
-   * @param {string} seed
-   * @param {object} [options]
-   * @param {boolean} [options.compressed=true]
-   * @param {Network} [options.network=networks.mainnet]
-   * @returns {ECPair}
+   * [fromSeed description]
+   * @param  {[type]} seed    [description]
+   * @param  {[type]} options [description]
+   * @return {[type]}         [description]
    */
   static fromSeed (seed, options) {
     const hash = bcrypto.sha256(Buffer.from(seed, 'utf-8'))
@@ -87,9 +94,10 @@ export default class ECPair {
   }
 
   /**
-   * @param {string} string
-   * @param {Network[]|Network} network
-   * @returns {ECPair}
+   * [fromWIF description]
+   * @param  {[type]} string  [description]
+   * @param  {[type]} network [description]
+   * @return {[type]}         [description]
    */
   static fromWIF (string, network) {
     const decoded = wif.decode(string)
@@ -119,10 +127,9 @@ export default class ECPair {
   }
 
   /**
-   * @param {object} [options]
-   * @param {function} [options.rng]
-   * @param {boolean} [options.compressed=true]
-   * @param {Network} [options.network=networks.mainnet]
+   * [makeRandom description]
+   * @param  {[type]} options [description]
+   * @return {[type]}         [description]
    */
   static makeRandom (options) {
     options = options || {}
@@ -141,7 +148,8 @@ export default class ECPair {
   }
 
   /**
-   * @returns {string}
+   * [getAddress description]
+   * @return {[type]} [description]
    */
   getAddress () {
     const payload = Buffer.alloc(21)
@@ -153,19 +161,26 @@ export default class ECPair {
     return base58check.encode(payload)
   }
 
+  /**
+   * [getNetwork description]
+   * @return {[type]} [description]
+   */
   getNetwork () {
     return this.network
   }
 
+  /**
+   * [getPublicKeyBuffer description]
+   * @return {[type]} [description]
+   */
   getPublicKeyBuffer () {
     return this.Q.getEncoded(this.compressed)
   }
 
   /**
-   * Requires a private key (`d`) to be set.
-   *
-   * @param {Buffer} hash
-   * @returns {ECSignature}
+   * [sign description]
+   * @param  {[type]} hash [description]
+   * @return {[type]}      [description]
    */
   sign (hash) {
     if (!this.d) throw new Error('Missing private key')
@@ -175,9 +190,8 @@ export default class ECPair {
   }
 
   /**
-   * Requires a private key (`d`) to be set.
-   *
-   * @returns {string}
+   * [toWIF description]
+   * @return {[type]} [description]
    */
   toWIF () {
     if (!this.d) throw new Error('Missing private key')
@@ -186,8 +200,10 @@ export default class ECPair {
   }
 
   /**
-   * @param {Buffer} hash
-   * @returns {boolean}
+   * [verify description]
+   * @param  {[type]} hash      [description]
+   * @param  {[type]} signature [description]
+   * @return {[type]}           [description]
    */
   verify (hash, signature) {
     return secp256k1native.verify(hash, signature.toNativeSecp256k1(), this.Q.getEncoded(this.compressed))

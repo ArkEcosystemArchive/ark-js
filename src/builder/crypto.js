@@ -11,6 +11,11 @@ import feeManager from '@/managers/fee'
 import { TRANSACTION_TYPES } from '@/constants'
 
 class CryptoBuilder {
+  /**
+   * [getBytes description]
+   * @param  {[type]} transaction [description]
+   * @return {[type]}             [description]
+   */
   getBytes (transaction) {
     if (!transaction.version) {
       transaction.version = 1
@@ -86,6 +91,11 @@ class CryptoBuilder {
     return bb.toBuffer()
   }
 
+  /**
+   * [fromBytes description]
+   * @param  {[type]} hexString [description]
+   * @return {[type]}           [description]
+   */
   fromBytes (hexString) {
     let tx = {}
     const buf = Buffer.from(hexString, 'hex')
@@ -191,6 +201,13 @@ class CryptoBuilder {
     return tx
   }
 
+  /**
+   * [parseSignatures description]
+   * @param  {[type]} hexString   [description]
+   * @param  {[type]} tx          [description]
+   * @param  {[type]} startOffset [description]
+   * @return {[type]}             [description]
+   */
   parseSignatures (hexString, tx, startOffset) {
     tx.signature = hexString.substring(startOffset)
     if (tx.signature.length === 0) delete tx.signature
@@ -202,18 +219,39 @@ class CryptoBuilder {
     }
   }
 
+  /**
+   * [getId description]
+   * @param  {[type]} transaction [description]
+   * @return {[type]}             [description]
+   */
   getId (transaction) {
     return this.getHash(transaction).toString('hex')
   }
 
+  /**
+   * [getHash description]
+   * @param  {[type]} transaction [description]
+   * @return {[type]}             [description]
+   */
   getHash (transaction) {
     return crypto.createHash('sha256').update(this.getBytes(transaction)).digest()
   }
 
+  /**
+   * [getFee description]
+   * @param  {[type]} transaction [description]
+   * @return {[type]}             [description]
+   */
   getFee (transaction) {
     return feeManager.get(transaction.type)
   }
 
+  /**
+   * [sign description]
+   * @param  {[type]} transaction [description]
+   * @param  {[type]} keys        [description]
+   * @return {[type]}             [description]
+   */
   sign (transaction, keys) {
     const hash = this.getHash(transaction)
     const signature = keys.sign(hash).toDER().toString('hex')
@@ -225,6 +263,12 @@ class CryptoBuilder {
     return signature
   }
 
+  /**
+   * [secondSign description]
+   * @param  {[type]} transaction [description]
+   * @param  {[type]} keys        [description]
+   * @return {[type]}             [description]
+   */
   secondSign (transaction, keys) {
     const hash = this.getHash(transaction)
     const signature = keys.sign(hash).toDER().toString('hex')
@@ -236,6 +280,12 @@ class CryptoBuilder {
     return signature
   }
 
+  /**
+   * [verify description]
+   * @param  {[type]} transaction [description]
+   * @param  {[type]} network     [description]
+   * @return {[type]}             [description]
+   */
   verify (transaction, network) {
     const hash = this.getHash(transaction)
 
@@ -247,6 +297,13 @@ class CryptoBuilder {
     return ecpair.verify(hash, ecsignature)
   }
 
+  /**
+   * [verifySecondSignature description]
+   * @param  {[type]} transaction [description]
+   * @param  {[type]} publicKey   [description]
+   * @param  {[type]} network     [description]
+   * @return {[type]}             [description]
+   */
   verifySecondSignature (transaction, publicKey, network) {
     const hash = this.getHash(transaction)
 
@@ -258,6 +315,12 @@ class CryptoBuilder {
     return ecpair.verify(hash, ecsignature)
   }
 
+  /**
+   * [getKeys description]
+   * @param  {[type]} secret  [description]
+   * @param  {[type]} options [description]
+   * @return {[type]}         [description]
+   */
   getKeys (secret, options) {
     let ecpair = ECPair.fromSeed(secret, options)
     ecpair.publicKey = ecpair.getPublicKeyBuffer().toString('hex')
@@ -266,6 +329,12 @@ class CryptoBuilder {
     return ecpair
   }
 
+  /**
+   * [getAddress description]
+   * @param  {[type]} publicKey [description]
+   * @param  {[type]} version   [description]
+   * @return {[type]}           [description]
+   */
   getAddress (publicKey, version) {
     if (!version) {
       version = configManager.get('pubKeyHash')
@@ -280,6 +349,12 @@ class CryptoBuilder {
     return bs58check.encode(payload)
   }
 
+  /**
+   * [validateAddress description]
+   * @param  {[type]} address [description]
+   * @param  {[type]} version [description]
+   * @return {[type]}         [description]
+   */
   validateAddress (address, version) {
     if (!version) {
       version = configManager.get('pubKeyHash')

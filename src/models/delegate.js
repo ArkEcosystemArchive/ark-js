@@ -10,6 +10,13 @@ import cryptoBuilder from '@/builder/crypto'
 import sortTransactions from '@/utils/sort-transactions'
 
 export default class Delegate {
+  /**
+   * [constructor description]
+   * @param  {[type]} passphrase [description]
+   * @param  {[type]} network    [description]
+   * @param  {[type]} password   [description]
+   * @return {[type]}            [description]
+   */
   constructor (passphrase, network, password) {
     this.network = network
     this.keySize = 32 // AES-256
@@ -34,6 +41,13 @@ export default class Delegate {
     }
   }
 
+  /**
+   * [encrypt description]
+   * @param  {[type]} passphrase [description]
+   * @param  {[type]} network    [description]
+   * @param  {[type]} password   [description]
+   * @return {[type]}            [description]
+   */
   static encrypt (passphrase, network, password) {
     const keys = cryptoBuilder.getKeys(passphrase, network)
     const wifKey = keys.toWIF()
@@ -42,12 +56,20 @@ export default class Delegate {
     return bip38.encrypt(decoded.privateKey, decoded.compressed, password)
   }
 
+  /**
+   * [encryptKeysWithOtp description]
+   * @return {[type]} [description]
+   */
   encryptKeysWithOtp () {
     this.otp = otplib.authenticator.generate(this.otpSecret)
     this.encryptedKeys = this.encryptData(this.keys.toWIF(), this.otp)
     this.keys = null
   }
 
+  /**
+   * [decryptKeysWithOtp description]
+   * @return {[type]} [description]
+   */
   decryptKeysWithOtp () {
     let wifKey = this.decryptData(this.encryptedKeys, this.otp)
     this.keys = ECPair.fromWIF(wifKey, this.network)
@@ -56,6 +78,13 @@ export default class Delegate {
     this.encryptedKeys = null
   }
 
+  /**
+   * [decrypt description]
+   * @param  {[type]} passphrase [description]
+   * @param  {[type]} network    [description]
+   * @param  {[type]} password   [description]
+   * @return {[type]}            [description]
+   */
   decrypt (passphrase, network, password) {
     const decryptedWif = bip38.decrypt(passphrase, password)
     const wifKey = wif.encode(network.wif, decryptedWif.privateKey, decryptedWif.compressed)
@@ -65,6 +94,12 @@ export default class Delegate {
     return keys
   }
 
+  /**
+   * [encryptData description]
+   * @param  {[type]} content  [description]
+   * @param  {[type]} password [description]
+   * @return {[type]}          [description]
+   */
   encryptData (content, password) {
     let derivedKey = forge.pkcs5.pbkdf2(password, this.otpSecret, this.iterations, this.keySize)
     let cipher = forge.cipher.createCipher('AES-CBC', derivedKey)
@@ -75,6 +110,12 @@ export default class Delegate {
     return forge.util.encode64(cipher.output.getBytes())
   }
 
+  /**
+   * [decryptData description]
+   * @param  {[type]} cipherText [description]
+   * @param  {[type]} password   [description]
+   * @return {[type]}            [description]
+   */
   decryptData (cipherText, password) {
     let derivedKey = forge.pkcs5.pbkdf2(password, this.otpSecret, this.iterations, this.keySize)
     let decipher = forge.cipher.createDecipher('AES-CBC', derivedKey)
@@ -86,6 +127,12 @@ export default class Delegate {
   }
 
   // we consider transactions are signed, verified and unique
+  /**
+   * [forge description]
+   * @param  {[type]} transactions [description]
+   * @param  {[type]} options      [description]
+   * @return {[type]}              [description]
+   */
   forge (transactions, options) {
     if (!options.version && (this.encryptedKeys || !this.bip38)) {
       const txstats = {

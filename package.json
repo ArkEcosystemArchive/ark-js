@@ -13,8 +13,7 @@
     "test": "jest --no-cache --forceExit",
     "test:watch": "jest --watch",
     "test:watch:all": "jest --watchAll",
-    "lint": "eslint ./src --fix",
-    "lint:test": "eslint ./__tests__ --fix"
+    "lint": "eslint ./ --fix"
   },
   "repository": {
     "type": "git",
@@ -77,7 +76,6 @@
     "jest": "^22.4.2",
     "jest-extended": "^0.6.0",
     "jest-get-type": "^22.4.3",
-    "proxyquire": "^2.0.1",
     "regenerator-runtime": "^0.11.1",
     "sinon": "^4.4.10",
     "sinon-test": "^2.1.3",

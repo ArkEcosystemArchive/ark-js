@@ -1,5 +1,4 @@
 import ecurve from 'ecurve'
-import proxyquire from 'proxyquire'
 import sinon from 'sinon'
 import sinonTestFactory from 'sinon-test'
 import BigInteger from 'bigi'
@@ -221,7 +220,6 @@ describe('ECPair', () => {
     })
 
     describe('signing', () => {
-
       it('throws if no private key is found', () => {
         keyPair.d = null
 

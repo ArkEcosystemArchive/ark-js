@@ -9,14 +9,14 @@ module.exports = {
     rules: [{
       test: /\.js/,
       loaders: ['babel-loader'],
-      exclude: /node_modules/,
-    }],
+      exclude: /node_modules/
+    }]
   },
 
   resolve: {
     alias: {
       '@': resolve('src')
     },
-    extensions: ['.js'],
+    extensions: ['.js']
   }
 }

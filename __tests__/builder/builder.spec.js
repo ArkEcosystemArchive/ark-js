@@ -1,7 +1,7 @@
 import transactionBuilder from '@/builder'
 
 describe('Builder', () => {
-  test('should be instantiated', () => {
+  it('should be instantiated', () => {
     expect(transactionBuilder).toBeObject()
   })
 })

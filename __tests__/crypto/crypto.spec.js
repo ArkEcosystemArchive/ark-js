@@ -4,7 +4,7 @@ import fixtures from './fixtures/crypto.json'
 const buffer = Buffer.from('Hello World')
 
 describe('Ark', () => {
-  test('should be instantiated', () => {
+  it('should be instantiated', () => {
     expect(crypto).toBeObject()
   })
 

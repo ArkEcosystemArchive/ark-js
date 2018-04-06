@@ -1,12 +1,12 @@
 import constants from '@/constants'
 
 describe('Constants', () => {
-  test('arktoshi is valid', () => {
+  it('arktoshi is valid', () => {
     expect(constants.ARKTOSHI).toBeDefined()
     expect(constants.ARKTOSHI).toBe(100000000)
   })
 
-  test('transaction types are defined', () => {
+  it('transaction types are defined', () => {
     expect(constants.TRANSACTION_TYPES).toBeDefined()
     expect(constants.TRANSACTION_TYPES).toBeFrozen()
 
@@ -38,7 +38,7 @@ describe('Constants', () => {
     expect(constants.TRANSACTION_TYPES.DELEGATE_RESIGNATION).toBe(8)
   })
 
-  test('configurations are defined', () => {
+  it('configurations are defined', () => {
     expect(constants.CONFIGURATIONS).toBeDefined()
     expect(constants.CONFIGURATIONS).toBeFrozen()
 

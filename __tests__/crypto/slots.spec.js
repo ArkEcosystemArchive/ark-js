@@ -6,35 +6,35 @@ beforeEach(() => configManager.setConfig(network))
 
 describe('Slots', () => {
   describe('getEpochTime', () => {
-    test('should be a function', () => {
+    it('should be a function', () => {
       expect(slots.getEpochTime).toBeFunction()
     })
 
-    test('return epoch datetime', () => {
+    it('return epoch datetime', () => {
       expect(slots.getEpochTime()).toBeNumber()
     })
   })
 
   describe('beginEpochTime', () => {
-    test('should be a function', () => {
+    it('should be a function', () => {
       expect(slots.beginEpochTime).toBeFunction()
     })
 
-    test('return epoch datetime', () => {
+    it('return epoch datetime', () => {
       expect(slots.beginEpochTime().format()).toBe('2017-03-21T13:00:00Z')
     })
 
-    test('return epoch datetime', () => {
+    it('return epoch datetime', () => {
       expect(slots.beginEpochTime().unix()).toBe(1490101200)
     })
   })
 
   describe('getTime', () => {
-    test('should be a function', () => {
+    it('should be a function', () => {
       expect(slots.getTime).toBeFunction()
     })
 
-    test('return epoch time as number', () => {
+    it('return epoch time as number', () => {
       const result = slots.getTime(1490101210000)
 
       expect(result).toBeNumber()
@@ -43,61 +43,61 @@ describe('Slots', () => {
   })
 
   describe('getRealTime', () => {
-    test('should be a function', () => {
+    it('should be a function', () => {
       expect(slots.getRealTime).toBeFunction()
     })
 
-    test('return return real time', () => {
+    it('return return real time', () => {
       expect(slots.getRealTime(10)).toBe(1490101210000)
     })
   })
 
   describe('getSlotNumber', () => {
-    test('should be a function', () => {
+    it('should be a function', () => {
       expect(slots.getSlotNumber).toBeFunction()
     })
 
-    test('return slot number', () => {
+    it('return slot number', () => {
       expect(slots.getSlotNumber(10)).toBe(1)
     })
   })
 
   describe('getSlotTime', () => {
-    test('should be a function', () => {
+    it('should be a function', () => {
       expect(slots.getSlotTime).toBeFunction()
     })
 
-    test('returns slot time', () => {
+    it('returns slot time', () => {
       expect(slots.getSlotTime(19614)).toBe(156912)
     })
   })
 
   describe('getNextSlot', () => {
-    test('should be a function', () => {
+    it('should be a function', () => {
       expect(slots.getNextSlot).toBeFunction()
     })
 
-    test('returns next slot', () => {
+    it('returns next slot', () => {
       expect(slots.getNextSlot()).toBeNumber()
     })
   })
 
   describe('getLastSlot', () => {
-    test('should be a function', () => {
+    it('should be a function', () => {
       expect(slots.getLastSlot).toBeFunction()
     })
 
-    test('returns last slot', () => {
+    it('returns last slot', () => {
       expect(slots.getLastSlot(1)).toBe(52)
     })
   })
 
   describe('getConstant', () => {
-    test('should be a function', () => {
+    it('should be a function', () => {
       expect(slots.getConstant).toBeFunction()
     })
 
-    test('returns constant', () => {
+    it('returns constant', () => {
       expect(slots.getConstant('epoch')).toBe('2017-03-21T13:00:00.000Z')
     })
   })

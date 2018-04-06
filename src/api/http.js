@@ -2,8 +2,13 @@ import configManager from '@/managers/config'
 import axios from 'axios'
 
 export default class HttpClient {
-  constructor (host) {
-    this.host = host
+  constructor (host, version) {
+    this.host = host.endsWith('/') ? host.slice(0, -1) : host
+    this.version = version
+  }
+
+  setVersion (version) {
+    this.version = version
   }
 
   get (path, params = {}) {
@@ -32,7 +37,8 @@ export default class HttpClient {
       headers: {
         nethash: configManager.get('nethash'),
         version: configManager.get('version'),
-        port: '1'
+        port: '1',
+        'API-Version': this.version
       }
     })
 

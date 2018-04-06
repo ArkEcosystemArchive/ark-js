@@ -10,31 +10,31 @@ beforeEach(() => {
 })
 
 describe('API - HTTP Client', () => {
-  test('should be instantiated', () => {
+  it('should be instantiated', () => {
     expect(client).toBeInstanceOf(HttpClient)
   })
 
-  test('should send GET request', async () => {
+  it('should send GET request', async () => {
     const response = await client.get('get')
     await expect(response.status).toBe(200)
   })
 
-  test('should send POST request', async () => {
+  it('should send POST request', async () => {
     const response = await client.post('post')
     await expect(response.status).toBe(200)
   })
 
-  test('should send PUT request', async () => {
+  it('should send PUT request', async () => {
     const response = await client.put('put')
     await expect(response.status).toBe(200)
   })
 
-  test('should send PATCH request', async () => {
+  it('should send PATCH request', async () => {
     const response = await client.patch('patch')
     await expect(response.status).toBe(200)
   })
 
-  test('should send DELETE request', async () => {
+  it('should send DELETE request', async () => {
     const response = await client.delete('delete')
     await expect(response.status).toBe(200)
   })

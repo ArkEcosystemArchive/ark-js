@@ -78,7 +78,7 @@ describe('Models - Transaction', () => {
     })
   })
 
-  test('static deserialise', () => {})
+  it('static deserialise', () => {})
 
-  test('serialise', () => {})
+  it('serialise', () => {})
 })

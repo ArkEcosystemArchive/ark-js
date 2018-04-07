@@ -36,10 +36,8 @@ export default class Vote extends Transaction {
    * @return {[type]}            [description]
    */
   sign (passphrase) {
-    const keys = cryptoBuilder.getKeys(passphrase)
-    this.recipientId = cryptoBuilder.getAddress(keys.publicKey)
-    this.senderPublicKey = keys.publicKey
-    this.signature = cryptoBuilder.sign(this, keys)
+    super.sign(passphrase)
+    this.recipientId = cryptoBuilder.getAddress(this.senderPublicKey)
     return this
   }
 

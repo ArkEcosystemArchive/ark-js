@@ -37,10 +37,8 @@ export default class Delegate extends Transaction {
    * @return {[type]}            [description]
    */
   sign (passphrase) {
-    const keys = cryptoBuilder.getKeys(passphrase)
-    this.senderPublicKey = keys.publicKey
-    this.signature = cryptoBuilder.sign(this, keys)
-    this.asset.delegate.publicKey = keys.publicKey
+    super.sign(passphrase)
+    this.asset.delegate.publicKey = this.senderPublicKey
     return this
   }
 
@@ -51,19 +49,10 @@ export default class Delegate extends Transaction {
    * @return {Object} [description]
    */
   getStruct () {
-    return {
-      hex: cryptoBuilder.getBytes(this).toString('hex'),
-      id: cryptoBuilder.getId(this),
-      signature: this.signature,
-      secondSignature: this.secondSignature,
-      timestamp: this.timestamp,
-
-      type: this.type,
-      amount: this.amount,
-      fee: this.fee,
-      recipientId: this.recipientId,
-      senderPublicKey: this.senderPublicKey,
-      asset: this.asset
-    }
+    const struct = super.getStruct()
+    struct.amount = this.amount
+    struct.recipientId = this.recipientId
+    struct.asset = this.asset
+    return struct
   }
 }

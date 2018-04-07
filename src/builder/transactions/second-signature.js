@@ -21,15 +21,13 @@ export default class SecondSignature extends Transaction {
 
   /**
    * [sign description]
-   * Overrides the inherited `sign` method to include the generatedd second
+   * Overrides the inherited `sign` method to include the generated second
    * signature
    * @param  {String} passphrase [description]
    * @return {[type]}            [description]
    */
   sign (passphrase) {
-    const keys = cryptoBuilder.getKeys(passphrase)
-    this.senderPublicKey = keys.publicKey
-    this.signature = cryptoBuilder.sign(this, keys)
+    super.sign(passphrase)
     this.asset.signature = this.signature
     return this
   }

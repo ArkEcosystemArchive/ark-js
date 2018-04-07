@@ -6,7 +6,7 @@ import cryptoBuilder from '@/builder/crypto'
 
 export default class Transaction {
   /**
-   * [constructor description]
+   * @constructor
    * @param  {[type]} transaction [description]
    * @return {[type]}             [description]
    */
@@ -28,7 +28,7 @@ export default class Transaction {
 
   /**
    * [fromBytes description]
-   * @param  {[type]} hexString [description]
+   * @param  {String} hexString [description]
    * @return {[type]}           [description]
    */
   static fromBytes (hexString) {
@@ -129,7 +129,7 @@ export default class Transaction {
 
   /**
    * [deserialise description]
-   * @param  {[type]} hexString [description]
+   * @param  {String} hexString [description]
    * @return {[type]}           [description]
    */
   static deserialise (hexString) {
@@ -269,9 +269,9 @@ export default class Transaction {
    * TODO: support multisignatures
    *
    * [parseSignatures description]
-   * @param  {[type]} hexString   [description]
+   * @param  {String} hexString   [description]
    * @param  {[type]} transaction [description]
-   * @param  {[type]} startOffset [description]
+   * @param  {Number} startOffset [description]
    * @return {[type]}             [description]
    */
   static parseSignatures (hexString, transaction, startOffset) {

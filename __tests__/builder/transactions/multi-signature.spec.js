@@ -2,6 +2,7 @@ import Ark from '@/'
 import network from '@/networks/ark/devnet'
 import feeManager from '@/managers/fee'
 import { TRANSACTION_TYPES } from '@/constants'
+import transactionTests from './__shared__/transaction'
 
 let ark
 let tx
@@ -9,9 +10,13 @@ let tx
 beforeEach(() => {
   ark = new Ark(network)
   tx = ark.getBuilder().multiSignature()
+
+  global.tx = tx
 })
 
 describe('Multi Signature Transaction', () => {
+  transactionTests()
+
   it('should have its specific properties', () => {
     expect(tx).toHaveProperty('amount')
     expect(tx).toHaveProperty('recipientId')

@@ -1,5 +1,6 @@
 import Ark from '@/'
 import network from '@/networks/ark/devnet'
+import transactionTests from './__shared__/transaction'
 
 let ark
 let tx
@@ -7,9 +8,13 @@ let tx
 beforeEach(() => {
   ark = new Ark(network)
   tx = ark.getBuilder().timelockTransfer()
+
+  global.tx = tx
 })
 
 describe('Timelock Transfer Transaction', () => {
+  transactionTests()
+
   it('should have its specific properties', () => {
     expect(tx).toHaveProperty('amount')
     expect(tx).toHaveProperty('recipientId')

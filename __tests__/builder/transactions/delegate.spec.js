@@ -17,4 +17,25 @@ describe('Delegate Transaction', () => {
     expect(tx).toHaveProperty('senderPublicKey')
     expect(tx).toHaveProperty('asset')
   })
+
+  it('should not have the username yet', () => {
+    expect(tx).not.toHaveProperty('username')
+  })
+
+  describe('create', ()=> {
+    it('establish the username', () => {
+      tx.create('homer')
+      expect(tx.username).toBe('homer')
+    })
+  })
+
+  describe('sign', ()=> {
+    xit('signs this transaction with the keys of the passphrase', () => {
+    })
+  })
+
+  describe('signSecond', ()=> {
+    xit('signs this transaction with the keys of the second passphrase', () => {
+    })
+  })
 })

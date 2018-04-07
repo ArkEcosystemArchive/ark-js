@@ -21,7 +21,7 @@ export default class IPFS extends Transaction {
   /**
    * [create description]
    * Overrides the inherited method to add the necessary parameters
-   * @param  {String} ipfshash [description]
+   * @param  {String} ipfshash IPFS hash
    * @return {[type]}          [description]
    */
   create (ipfshash) {

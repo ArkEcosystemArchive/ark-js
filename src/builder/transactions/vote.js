@@ -21,7 +21,7 @@ export default class Vote extends Transaction {
 
   /**
    * [create description]
-   * @param  {[type]} delegates [description]
+   * @param  {Array} delegates [description]
    * @return {[type]}           [description]
    */
   create (delegates) {

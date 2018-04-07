@@ -16,4 +16,12 @@ describe('Vote Transaction', () => {
     expect(tx).toHaveProperty('senderPublicKey')
     expect(tx).toHaveProperty('asset')
   })
+
+  describe('create', ()=> {
+    it('establish the votes asset', () => {
+      const nonsenseVotes = ['Trump', 'Brexit', 'Rajoy']
+      tx.create(nonsenseVotes)
+      expect(tx.asset.votes).toBe(nonsenseVotes)
+    })
+  })
 })

@@ -29,12 +29,12 @@ describe('Multi Signature Transaction', () => {
     const lifetime = 'TODO'
     const min = 'TODO'
 
-    it('establish the multi-signature asset', () => {
+    it('establishes the multi-signature asset', () => {
       tx.create(keysgroup, lifetime, min)
       expect(tx.asset.multisignature).toEqual({ keysgroup, lifetime, min })
     })
 
-    it('calculates and establish the fee based on the number of key groups', () => {
+    it('calculates and establishes the fee based on the number of key groups', () => {
       const multiSignatureFee = feeManager.get(TRANSACTION_TYPES.MULTI_SIGNATURE)
 
       tx.create(keysgroup, lifetime, min)

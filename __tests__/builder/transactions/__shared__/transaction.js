@@ -68,7 +68,7 @@ export default () => {
       expect(cryptoBuilder.sign).toHaveBeenCalledWith(tx, keys)
     })
 
-    it('establish the public key of the sender', () => {
+    it('establishes the public key of the sender', () => {
       cryptoBuilder.getKeys = jest.fn(pass => ({ publicKey: `${pass} public key` }))
       cryptoBuilder.sign = jest.fn()
       tx.sign('my real pass')

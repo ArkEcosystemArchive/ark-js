@@ -28,14 +28,14 @@ describe('Delegate Transaction', () => {
   })
 
   describe('create', ()=> {
-    it('establish the username', () => {
+    it('establishes the username', () => {
       tx.create('homer')
       expect(tx.username).toBe('homer')
     })
   })
 
   describe('sign', ()=> {
-    xit('establish the public key of the delegate (on the asset property)', () => {
+    xit('establishes the public key of the delegate (on the asset property)', () => {
       cryptoBuilder.getKeys = jest.fn(pass => ({ publicKey: `${pass} public key` }))
       cryptoBuilder.sign = jest.fn()
       tx.sign('bad pass')

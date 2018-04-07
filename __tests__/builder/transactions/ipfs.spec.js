@@ -27,7 +27,7 @@ describe('IPFS Transaction', () => {
   })
 
   describe('create', ()=> {
-    it('establish the IPFS hash', () => {
+    it('establishes the IPFS hash', () => {
       tx.create('zyx')
       expect(tx.ipfshash).toBe('zyx')
     })

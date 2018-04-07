@@ -1,6 +1,15 @@
 import cryptoBuilder from '@/builder/crypto'
 
 export default class Transaction {
+
+  /**
+   * [create description]
+   * @return {[type]} [description]
+   */
+  create () {
+    return this
+  }
+
   /**
    * [setFee description]
    * @param {[type]} value [description]

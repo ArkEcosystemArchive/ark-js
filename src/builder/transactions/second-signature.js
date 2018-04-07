@@ -29,14 +29,6 @@ export default class SecondSignature extends Transaction {
   }
 
   /**
-   * [create description]
-   * @return {[type]} [description]
-   */
-  create () {
-    return this
-  }
-
-  /**
    * [sign description]
    * Overrides the inherited `sign` method to include the generatedd second
    * signature

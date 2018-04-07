@@ -27,14 +27,6 @@ export default class MultiPayment extends Transaction {
   }
 
   /**
-   * [create description]
-   * @return {[type]} [description]
-   */
-  create () {
-    return this
-  }
-
-  /**
    * [setVendorField description]
    * @param {[type]} data [description]
    * @param {[type]} type [description]

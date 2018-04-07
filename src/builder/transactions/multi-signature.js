@@ -30,6 +30,7 @@ export default class MultiSignature extends Transaction {
 
   /**
    * [create description]
+   * Overrides the inherited method to add the necessary parameters
    * @param  {[type]} keysgroup [description]
    * @param  {[type]} lifetime  [description]
    * @param  {[type]} min       [description]

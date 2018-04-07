@@ -29,6 +29,7 @@ export default class Delegate extends Transaction {
 
   /**
    * [create description]
+   * Overrides the inherited method to add the necessary parameters
    * @param  {String} username [description]
    * @return {[type]}          [description]
    */

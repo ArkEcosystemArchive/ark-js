@@ -24,14 +24,6 @@ export default class DelegateResignation extends Transaction {
   }
 
   /**
-   * [create description]
-   * @return {[type]} [description]
-   */
-  create () {
-    return this
-  }
-
-  /**
    * [getStruct description]
    * @return {[type]} [description]
    */

@@ -31,7 +31,8 @@ export default class TimelockTransfer extends Transaction {
 
   /**
    * [create description]
-   * @param  {[type]} recipientId  [description]
+   * Overrides the inherited method to add the necessary parameters
+   * @param  {String} recipientId  [description]
    * @param  {[type]} amount       [description]
    * @param  {[type]} timelock     [description]
    * @param  {[type]} timelockType [description]

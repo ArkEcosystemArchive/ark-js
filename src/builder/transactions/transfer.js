@@ -31,7 +31,8 @@ export default class Transfer extends Transaction {
 
   /**
    * [create description]
-   * @param  {[type]} recipientId [description]
+   * Overrides the inherited method to add the necessary parameters
+   * @param  {String} recipientId [description]
    * @param  {[type]} amount      [description]
    * @return {[type]}             [description]
    */

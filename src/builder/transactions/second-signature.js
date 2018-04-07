@@ -8,7 +8,7 @@ import { TRANSACTION_TYPES } from '@/constants'
 
 export default class SecondSignature extends Transaction {
   /**
-   * [constructor description]
+   * @constructor
    * @return {[type]} [description]
    */
   constructor () {
@@ -38,7 +38,9 @@ export default class SecondSignature extends Transaction {
 
   /**
    * [sign description]
-   * @param  {[type]} passphrase [description]
+   * Overrides the inherited `sign` method to include the generatedd second
+   * signature
+   * @param  {String} passphrase [description]
    * @return {[type]}            [description]
    */
   sign (passphrase) {
@@ -46,18 +48,6 @@ export default class SecondSignature extends Transaction {
     this.senderPublicKey = keys.publicKey
     this.signature = cryptoBuilder.sign(this, keys)
     this.asset.signature = this.signature
-    return this
-  }
-
-  /**
-   * [secondSign description]
-   * @param  {[type]} transaction [description]
-   * @param  {[type]} passphrase  [description]
-   * @return {[type]}             [description]
-   */
-  secondSign (transaction, passphrase) {
-    const keys = cryptoBuilder.getKeys(passphrase)
-    this.secondSignature = cryptoBuilder.secondSign(transaction, keys)
     return this
   }
 

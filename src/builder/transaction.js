@@ -1,3 +1,5 @@
+import cryptoBuilder from '@/builder/crypto'
+
 export default class Transaction {
   /**
    * [setFee description]
@@ -49,5 +51,28 @@ export default class Transaction {
    */
   serialise () {
     return this.model.serialise(this.getStruct())
+  }
+
+  /**
+   * [sign description]
+   * @param  {String} passphrase [description]
+   * @return {[type]}            [description]
+   */
+  sign (passphrase) {
+    const keys = cryptoBuilder.getKeys(passphrase)
+    this.senderPublicKey = keys.publicKey
+    this.signature = cryptoBuilder.sign(this, keys)
+    return this
+  }
+
+  /**
+   * [secondSign description]
+   * @param  {String} secondPassphrase  [description]
+   * @return {[type]}             [description]
+   */
+  secondSign (secondPassphrase) {
+    const keys = cryptoBuilder.getKeys(secondPassphrase)
+    this.secondSignature = cryptoBuilder.secondSign(this, keys)
+    return this
   }
 }

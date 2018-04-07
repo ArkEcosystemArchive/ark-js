@@ -8,8 +8,7 @@ import { TRANSACTION_TYPES } from '@/constants'
 
 export default class IPFS extends Transaction {
   /**
-   * [constructor description]
-   * @return {[type]} [description]
+   * @constructor
    */
   constructor () {
     super()
@@ -30,7 +29,7 @@ export default class IPFS extends Transaction {
 
   /**
    * [create description]
-   * @param  {[type]} ipfshash [description]
+   * @param  {String} ipfshash [description]
    * @return {[type]}          [description]
    */
   create (ipfshash) {
@@ -40,37 +39,13 @@ export default class IPFS extends Transaction {
 
   /**
    * [setVendorField description]
-   * @param {[type]} type [description]
+   * @param {String} type [description]
    */
   setVendorField (type) {
     this.vendorFieldHex = Buffer.from(this.ipfshash, type).toString('hex')
     while (this.vendorFieldHex.length < 128) {
       this.vendorFieldHex = '00' + this.vendorFieldHex
     }
-    return this
-  }
-
-  /**
-   * [sign description]
-   * @param  {[type]} passphrase [description]
-   * @return {[type]}            [description]
-   */
-  sign (passphrase) {
-    const keys = cryptoBuilder.getKeys(passphrase)
-    this.senderPublicKey = keys.publicKey
-    this.signature = cryptoBuilder.sign(this, keys)
-    return this
-  }
-
-  /**
-   * [secondSign description]
-   * @param  {[type]} transaction [description]
-   * @param  {[type]} passphrase  [description]
-   * @return {[type]}             [description]
-   */
-  secondSign (transaction, passphrase) {
-    const keys = cryptoBuilder.getKeys(passphrase)
-    this.secondSignature = cryptoBuilder.secondSign(transaction, keys)
     return this
   }
 

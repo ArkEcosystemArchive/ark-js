@@ -8,7 +8,7 @@ import { TRANSACTION_TYPES } from '@/constants'
 
 export default class Vote extends Transaction {
   /**
-   * [constructor description]
+   * @constructor
    * @return {[type]} [description]
    */
   constructor () {
@@ -40,6 +40,7 @@ export default class Vote extends Transaction {
 
   /**
    * [sign description]
+   * Overrides the inherited `sign` method to set the sender as the recipient too
    * @param  {[type]} passphrase [description]
    * @return {[type]}            [description]
    */
@@ -48,18 +49,6 @@ export default class Vote extends Transaction {
     this.recipientId = cryptoBuilder.getAddress(keys.publicKey)
     this.senderPublicKey = keys.publicKey
     this.signature = cryptoBuilder.sign(this, keys)
-    return this
-  }
-
-  /**
-   * [secondSign description]
-   * @param  {[type]} transaction [description]
-   * @param  {[type]} passphrase  [description]
-   * @return {[type]}             [description]
-   */
-  secondSign (transaction, passphrase) {
-    const keys = cryptoBuilder.getKeys(passphrase)
-    this.secondSignature = cryptoBuilder.secondSign(transaction, keys)
     return this
   }
 

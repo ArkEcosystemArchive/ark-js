@@ -8,8 +8,7 @@ import { TRANSACTION_TYPES } from '@/constants'
 
 export default class DelegateResignation extends Transaction {
   /**
-   * [constructor description]
-   * @return {[type]} [description]
+   * @constructor
    */
   constructor () {
     super()
@@ -29,30 +28,6 @@ export default class DelegateResignation extends Transaction {
    * @return {[type]} [description]
    */
   create () {
-    return this
-  }
-
-  /**
-   * [sign description]
-   * @param  {[type]} passphrase [description]
-   * @return {[type]}            [description]
-   */
-  sign (passphrase) {
-    const keys = cryptoBuilder.getKeys(passphrase)
-    this.senderPublicKey = keys.publicKey
-    this.signature = cryptoBuilder.sign(this, keys)
-    return this
-  }
-
-  /**
-   * [secondSign description]
-   * @param  {[type]} transaction [description]
-   * @param  {[type]} passphrase  [description]
-   * @return {[type]}             [description]
-   */
-  secondSign (transaction, passphrase) {
-    const keys = cryptoBuilder.getKeys(passphrase)
-    this.secondSignature = cryptoBuilder.secondSign(transaction, keys)
     return this
   }
 

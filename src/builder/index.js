@@ -73,8 +73,8 @@ class TransactionBuilder {
 
   /**
    * [getTransaction description]
-   * @param  {[type]} transactionType [description]
-   * @return {[type]}                 [description]
+   * @param  {String} transactionType [description]
+   * @return {Transaction}            [description]
    */
   __getTransaction (transactionType) {
     return new (require(`./transactions/${transactionType}`).default)() // eslint-disable-line new-cap

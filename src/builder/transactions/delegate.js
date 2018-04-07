@@ -8,8 +8,7 @@ import { TRANSACTION_TYPES } from '@/constants'
 
 export default class Delegate extends Transaction {
   /**
-   * [constructor description]
-   * @return {[type]} [description]
+   * @constructor
    */
   constructor () {
     super()
@@ -30,7 +29,7 @@ export default class Delegate extends Transaction {
 
   /**
    * [create description]
-   * @param  {[type]} username [description]
+   * @param  {String} username [description]
    * @return {[type]}          [description]
    */
   create (username) {
@@ -40,7 +39,9 @@ export default class Delegate extends Transaction {
 
   /**
    * [sign description]
-   * @param  {[type]} passphrase [description]
+   * Overrides the inherited `sign` method to include the public key of the new
+   * delegate
+   * @param  {String} passphrase [description]
    * @return {[type]}            [description]
    */
   sign (passphrase) {
@@ -48,18 +49,6 @@ export default class Delegate extends Transaction {
     this.senderPublicKey = keys.publicKey
     this.signature = cryptoBuilder.sign(this, keys)
     this.asset.delegate.publicKey = keys.publicKey
-    return this
-  }
-
-  /**
-   * [secondSign description]
-   * @param  {[type]} transaction [description]
-   * @param  {[type]} passphrase  [description]
-   * @return {[type]}             [description]
-   */
-  secondSign (transaction, passphrase) {
-    const keys = cryptoBuilder.getKeys(passphrase)
-    this.secondSignature = cryptoBuilder.secondSign(transaction, keys)
     return this
   }
 

@@ -3,7 +3,6 @@ import configManager from '@/managers/config'
 import cryptoBuilder from '@/builder/crypto'
 import slots from '@/crypto/slots'
 import Transaction from '@/builder/transaction'
-import Model from '@/models/transaction'
 import { TRANSACTION_TYPES } from '@/constants'
 
 export default class TimelockTransfer extends Transaction {
@@ -14,19 +13,13 @@ export default class TimelockTransfer extends Transaction {
   constructor () {
     super()
 
-    this.model = Model
-
-    this.id = null
     this.type = TRANSACTION_TYPES.TIMELOCK_TRANSFER
     this.fee = feeManager.get(TRANSACTION_TYPES.TIMELOCK_TRANSFER)
     this.amount = 0
-    this.timestamp = slots.getTime()
     this.recipientId = null
     this.senderPublicKey = null
     this.timelockType = 0x00
     this.timelock = null
-    this.version = 0x02
-    this.network = configManager.get('pubKeyHash')
   }
 
   /**

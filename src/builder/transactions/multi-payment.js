@@ -3,7 +3,6 @@ import configManager from '@/managers/config'
 import cryptoBuilder from '@/builder/crypto'
 import slots from '@/crypto/slots'
 import Transaction from '@/builder/transaction'
-import Model from '@/models/transaction'
 import { TRANSACTION_TYPES } from '@/constants'
 
 export default class MultiPayment extends Transaction {
@@ -14,16 +13,10 @@ export default class MultiPayment extends Transaction {
   constructor () {
     super()
 
-    this.model = Model
-
-    this.id = null
     this.type = TRANSACTION_TYPES.MULTI_PAYMENT
     this.fee = feeManager.get(TRANSACTION_TYPES.MULTI_PAYMENT)
-    this.timestamp = slots.getTime()
     this.payments = {}
     this.vendorFieldHex = null
-    this.version = 0x02
-    this.network = configManager.get('pubKeyHash')
   }
 
   /**

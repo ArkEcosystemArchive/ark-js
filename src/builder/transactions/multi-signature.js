@@ -3,7 +3,6 @@ import configManager from '@/managers/config'
 import cryptoBuilder from '@/builder/crypto'
 import slots from '@/crypto/slots'
 import Transaction from '@/builder/transaction'
-import Model from '@/models/transaction'
 import { TRANSACTION_TYPES } from '@/constants'
 
 export default class MultiSignature extends Transaction {
@@ -14,18 +13,12 @@ export default class MultiSignature extends Transaction {
   constructor () {
     super()
 
-    this.model = Model
-
-    this.id = null
     this.type = TRANSACTION_TYPES.MULTI_SIGNATURE
     this.fee = 0
     this.amount = 0
-    this.timestamp = slots.getTime()
     this.recipientId = null
     this.senderPublicKey = null
     this.asset = { multisignature: {} }
-    this.version = 0x02
-    this.network = configManager.get('pubKeyHash')
   }
 
   /**

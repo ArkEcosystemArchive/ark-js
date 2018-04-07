@@ -3,7 +3,6 @@ import configManager from '@/managers/config'
 import cryptoBuilder from '@/builder/crypto'
 import slots from '@/crypto/slots'
 import Transaction from '@/builder/transaction'
-import Model from '@/models/transaction'
 import { TRANSACTION_TYPES } from '@/constants'
 
 export default class SecondSignature extends Transaction {
@@ -14,18 +13,12 @@ export default class SecondSignature extends Transaction {
   constructor () {
     super()
 
-    this.model = Model
-
-    this.id = null
     this.type = TRANSACTION_TYPES.SECOND_SIGNATURE
     this.fee = feeManager.get(TRANSACTION_TYPES.SECOND_SIGNATURE)
     this.amount = 0
-    this.timestamp = slots.getTime()
     this.recipientId = null
     this.senderPublicKey = null
     this.asset = { signature: {} }
-    this.version = 0x02
-    this.network = configManager.get('pubKeyHash')
   }
 
   /**

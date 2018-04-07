@@ -3,7 +3,6 @@ import configManager from '@/managers/config'
 import cryptoBuilder from '@/builder/crypto'
 import slots from '@/crypto/slots'
 import Transaction from '@/builder/transaction'
-import Model from '@/models/transaction'
 import { TRANSACTION_TYPES } from '@/constants'
 
 export default class IPFS extends Transaction {
@@ -13,18 +12,12 @@ export default class IPFS extends Transaction {
   constructor () {
     super()
 
-    this.model = Model
-
-    this.id = null
     this.type = TRANSACTION_TYPES.IPFS
     this.fee = feeManager.get(TRANSACTION_TYPES.IPFS)
     this.amount = 0
-    this.timestamp = slots.getTime()
     this.vendorFieldHex = null
     this.senderPublicKey = null
     this.asset = {}
-    this.version = 0x02
-    this.network = configManager.get('pubKeyHash')
   }
 
   /**

@@ -3,7 +3,6 @@ import configManager from '@/managers/config'
 import cryptoBuilder from '@/builder/crypto'
 import slots from '@/crypto/slots'
 import Transaction from '@/builder/transaction'
-import Model from '@/models/transaction'
 import { TRANSACTION_TYPES } from '@/constants'
 
 export default class Transfer extends Transaction {
@@ -14,19 +13,13 @@ export default class Transfer extends Transaction {
   constructor () {
     super()
 
-    this.model = Model
-
-    this.id = null
     this.type = TRANSACTION_TYPES.TRANSFER
     this.fee = feeManager.get(TRANSACTION_TYPES.TRANSFER)
     this.amount = 0
-    this.timestamp = slots.getTime()
     this.recipientId = null
     this.senderPublicKey = null
     // TODO: why is this in the normal transfer and not timelock?
     this.expiration = 15 // 15 blocks, 120s
-    this.version = 0x02
-    this.network = configManager.get('pubKeyHash')
   }
 
   /**

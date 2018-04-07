@@ -1,6 +1,18 @@
 import cryptoBuilder from '@/builder/crypto'
+import Model from '@/models/transaction'
 
 export default class Transaction {
+  /**
+   * @constructor
+   */
+  constructor () {
+    this.model = Model
+
+    this.id = null
+    this.timestamp = slots.getTime()
+    this.version = 0x02
+    this.network = configManager.get('pubKeyHash')
+  }
 
   /**
    * [create description]

@@ -22,22 +22,4 @@ export default class DelegateResignation extends Transaction {
     this.version = 0x02
     this.network = configManager.get('pubKeyHash')
   }
-
-  /**
-   * [getStruct description]
-   * @return {[type]} [description]
-   */
-  getStruct () {
-    return {
-      hex: cryptoBuilder.getBytes(this).toString('hex'),
-      id: cryptoBuilder.getId(this),
-      signature: this.signature,
-      secondSignature: this.secondSignature,
-      timestamp: this.timestamp,
-
-      type: this.type,
-      fee: this.fee,
-      senderPublicKey: this.senderPublicKey
-    }
-  }
 }

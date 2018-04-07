@@ -63,6 +63,24 @@ export default class Transaction {
   }
 
   /**
+   * [getStruct description]
+   * @return {Object} [description]
+   */
+  getStruct () {
+    return {
+      hex: cryptoBuilder.getBytes(this).toString('hex'),
+      id: cryptoBuilder.getId(this),
+      signature: this.signature,
+      secondSignature: this.secondSignature,
+      timestamp: this.timestamp,
+
+      type: this.type,
+      fee: this.fee,
+      senderPublicKey: this.senderPublicKey
+    }
+  }
+
+  /**
    * [sign description]
    * @param  {String} passphrase [description]
    * @return {[type]}            [description]

@@ -45,7 +45,8 @@ export default class SecondSignature extends Transaction {
 
   /**
    * [getStruct description]
-   * @return {[type]} [description]
+   * Overrides the inherited method to return the additional required by this
+   * @return {Object} [description]
    */
   getStruct () {
     return {

@@ -54,8 +54,10 @@ export default class Delegate extends Transaction {
   }
 
   /**
+   * Overrides the inherited method to return the additional required by this
+   * type of transaction
    * [getStruct description]
-   * @return {[type]} [description]
+   * @return {Object} [description]
    */
   getStruct () {
     return {

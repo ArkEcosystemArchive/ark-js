@@ -1,5 +1,6 @@
 import Ark from '@/'
 import network from '@/networks/ark/devnet'
+import cryptoBuilder from '@/builder/crypto'
 import transactionTests from './__shared__/transaction'
 
 let ark
@@ -29,13 +30,41 @@ describe('Delegate Transaction', () => {
     })
   })
 
+  // TODO to shared
   describe('sign', ()=> {
-    xit('signs this transaction with the keys of the passphrase', () => {
+    it('signs this transaction with the keys of the passphrase', () => {
+      let keys
+      cryptoBuilder.getKeys = jest.fn(pass => {
+        keys = { publicKey: `${pass} public key` }
+        return keys
+      })
+      cryptoBuilder.sign = jest.fn()
+      tx.sign('bad pass')
+
+      expect(cryptoBuilder.getKeys).toHaveBeenCalledWith('bad pass')
+      expect(cryptoBuilder.sign).toHaveBeenCalledWith(tx, keys)
+    })
+
+    it('establish the public key of the sender', () => {
+      cryptoBuilder.getKeys = jest.fn(pass => ({ publicKey: `${pass} public key` }))
+      cryptoBuilder.sign = jest.fn()
+      tx.sign('bad pass')
+      expect(tx.senderPublicKey).toBe('bad pass public key')
     })
   })
 
   describe('signSecond', ()=> {
-    xit('signs this transaction with the keys of the second passphrase', () => {
+    it('signs this transaction with the keys of the second passphrase', () => {
+      let keys
+      cryptoBuilder.getKeys = jest.fn(pass => {
+        keys = { publicKey: `${pass} public key` }
+        return keys
+      })
+      cryptoBuilder.secondSign = jest.fn()
+      tx.secondSign('bad second pass')
+
+      expect(cryptoBuilder.getKeys).toHaveBeenCalledWith('bad second pass')
+      expect(cryptoBuilder.secondSign).toHaveBeenCalledWith(tx, keys)
     })
   })
 })

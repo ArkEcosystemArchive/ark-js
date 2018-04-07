@@ -1,5 +1,7 @@
-import cryptoBuilder from '@/builder/crypto'
 import Model from '@/models/transaction'
+import cryptoBuilder from '@/builder/crypto'
+import configManager from '@/managers/config'
+import slots from '@/crypto/slots'
 
 export default class Transaction {
   /**

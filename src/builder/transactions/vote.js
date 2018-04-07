@@ -1,7 +1,5 @@
 import feeManager from '@/managers/fee'
-import configManager from '@/managers/config'
 import cryptoBuilder from '@/builder/crypto'
-import slots from '@/crypto/slots'
 import Transaction from '@/builder/transaction'
 import { TRANSACTION_TYPES } from '@/constants'
 

@@ -19,7 +19,7 @@ export default class Webhooks extends Base {
 
   /**
    * [get description]
-   * @param  {[type]} id [description]
+   * @param  {String} id [description]
    * @return {[type]}    [description]
    */
   get (id) {
@@ -28,7 +28,7 @@ export default class Webhooks extends Base {
 
   /**
    * [update description]
-   * @param  {[type]} id [description]
+   * @param  {String} id [description]
    * @return {[type]}    [description]
    */
   update (id) {
@@ -37,7 +37,7 @@ export default class Webhooks extends Base {
 
   /**
    * [delete description]
-   * @param  {[type]} id [description]
+   * @param  {String} id [description]
    * @return {[type]}    [description]
    */
   delete (id) {

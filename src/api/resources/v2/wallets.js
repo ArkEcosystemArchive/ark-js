@@ -19,7 +19,7 @@ export default class Wallets extends Base {
 
   /**
    * [get description]
-   * @param  {[type]} id [description]
+   * @param  {String} id [description]
    * @return {[type]}    [description]
    */
   get (id) {
@@ -28,7 +28,7 @@ export default class Wallets extends Base {
 
   /**
    * [transactions description]
-   * @param  {[type]} id [description]
+   * @param  {String} id [description]
    * @return {[type]}    [description]
    */
   transactions (id) {
@@ -37,7 +37,7 @@ export default class Wallets extends Base {
 
   /**
    * [transactionsSent description]
-   * @param  {[type]} id [description]
+   * @param  {String} id [description]
    * @return {[type]}    [description]
    */
   transactionsSent (id) {
@@ -46,7 +46,7 @@ export default class Wallets extends Base {
 
   /**
    * [transactionsReceived description]
-   * @param  {[type]} id [description]
+   * @param  {String} id [description]
    * @return {[type]}    [description]
    */
   transactionsReceived (id) {
@@ -55,7 +55,7 @@ export default class Wallets extends Base {
 
   /**
    * [votes description]
-   * @param  {[type]} id [description]
+   * @param  {String} id [description]
    * @return {[type]}    [description]
    */
   votes (id) {

@@ -20,7 +20,7 @@ export default class Transactions extends Base {
 
   /**
    * [get description]
-   * @param  {[type]} id [description]
+   * @param  {String} id [description]
    * @return {[type]}    [description]
    */
   get (id) {
@@ -37,7 +37,7 @@ export default class Transactions extends Base {
 
   /**
    * [getUnconfirmed description]
-   * @param  {[type]} id [description]
+   * @param  {String} id [description]
    * @return {[type]}    [description]
    */
   getUnconfirmed (id) {

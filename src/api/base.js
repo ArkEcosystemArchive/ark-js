@@ -1,6 +1,6 @@
 export default class Base {
   /**
-   * [constructor description]
+   * @constructor
    * @param  {[type]} http [description]
    * @return {[type]}      [description]
    */

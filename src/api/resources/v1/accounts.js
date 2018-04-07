@@ -12,7 +12,7 @@ export default class Wallets extends Base {
 
   /**
    * [get description]
-   * @param  {[type]} address [description]
+   * @param  {String} address [description]
    * @return {[type]}         [description]
    */
   get (address) {
@@ -29,7 +29,7 @@ export default class Wallets extends Base {
 
   /**
    * [delegates description]
-   * @param  {[type]} address [description]
+   * @param  {String} address [description]
    * @return {[type]}         [description]
    */
   delegates (address) {
@@ -46,7 +46,7 @@ export default class Wallets extends Base {
 
   /**
    * [balance description]
-   * @param  {[type]} address [description]
+   * @param  {String} address [description]
    * @return {[type]}         [description]
    */
   balance (address) {
@@ -55,7 +55,7 @@ export default class Wallets extends Base {
 
   /**
    * [publicKey description]
-   * @param  {[type]} address [description]
+   * @param  {String} address [description]
    * @return {[type]}         [description]
    */
   publicKey (address) {

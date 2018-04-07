@@ -11,7 +11,7 @@ export default class Blocks extends Base {
 
   /**
    * [get description]
-   * @param  {[type]} id [description]
+   * @param  {String} id [description]
    * @return {[type]}    [description]
    */
   get (id) {
@@ -20,7 +20,7 @@ export default class Blocks extends Base {
 
   /**
    * [transactions description]
-   * @param  {[type]} id [description]
+   * @param  {String} id [description]
    * @return {[type]}    [description]
    */
   transactions (id) {

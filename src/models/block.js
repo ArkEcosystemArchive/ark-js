@@ -30,7 +30,7 @@ const applyV1Fix = data => {
 
 export default class Block {
   /**
-   * [constructor description]
+   * @constructor
    * @param  {[type]} data [description]
    * @return {[type]}      [description]
    */

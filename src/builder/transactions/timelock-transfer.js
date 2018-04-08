@@ -1,37 +1,29 @@
 import feeManager from '@/managers/fee'
-import configManager from '@/managers/config'
 import cryptoBuilder from '@/builder/crypto'
-import slots from '@/crypto/slots'
 import Transaction from '@/builder/transaction'
-import Model from '@/models/transaction'
 import { TRANSACTION_TYPES } from '@/constants'
 
 export default class TimelockTransfer extends Transaction {
   /**
-   * [constructor description]
+   * @constructor
    * @return {[type]} [description]
    */
   constructor () {
     super()
 
-    this.model = Model
-
-    this.id = null
     this.type = TRANSACTION_TYPES.TIMELOCK_TRANSFER
     this.fee = feeManager.get(TRANSACTION_TYPES.TIMELOCK_TRANSFER)
     this.amount = 0
-    this.timestamp = slots.getTime()
     this.recipientId = null
     this.senderPublicKey = null
     this.timelockType = 0x00
     this.timelock = null
-    this.version = 0x02
-    this.network = configManager.get('pubKeyHash')
   }
 
   /**
    * [create description]
-   * @param  {[type]} recipientId  [description]
+   * Overrides the inherited method to add the necessary parameters
+   * @param  {String} recipientId  [description]
    * @param  {[type]} amount       [description]
    * @param  {[type]} timelock     [description]
    * @param  {[type]} timelockType [description]
@@ -56,32 +48,9 @@ export default class TimelockTransfer extends Transaction {
   }
 
   /**
-   * [sign description]
-   * @param  {[type]} passphrase [description]
-   * @return {[type]}            [description]
-   */
-  sign (passphrase) {
-    const keys = cryptoBuilder.getKeys(passphrase)
-    this.senderPublicKey = keys.publicKey
-    this.signature = cryptoBuilder.sign(this, keys)
-    return this
-  }
-
-  /**
-   * [secondSign description]
-   * @param  {[type]} transaction [description]
-   * @param  {[type]} passphrase  [description]
-   * @return {[type]}             [description]
-   */
-  secondSign (transaction, passphrase) {
-    const keys = cryptoBuilder.getKeys(passphrase)
-    this.secondSignature = cryptoBuilder.secondSign(transaction, keys)
-    return this
-  }
-
-  /**
    * [getStruct description]
-   * @return {[type]} [description]
+   * Overrides the inherited method to return the additional required by this
+   * @return {Object} [description]
    */
   getStruct () {
     return {

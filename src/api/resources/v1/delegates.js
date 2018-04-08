@@ -12,7 +12,7 @@ export default class Delegates extends Base {
 
   /**
    * [get description]
-   * @param  {[type]} id [description]
+   * @param  {String} id [description]
    * @return {[type]}    [description]
    */
   get (id) {
@@ -37,7 +37,7 @@ export default class Delegates extends Base {
 
   /**
    * [forged description]
-   * @param  {[type]} generatorPublicKey [description]
+   * @param  {String} generatorPublicKey [description]
    * @return {[type]}                    [description]
    */
   forged (generatorPublicKey) {
@@ -46,7 +46,9 @@ export default class Delegates extends Base {
 
   /**
    * [search description]
-   * @param  {[type]} query [description]
+   * @param  {Object} query [description]
+   * @param  {String} query.q [description]
+   * @param  {Number} query.limit [description]
    * @return {[type]}       [description]
    */
   search (query) {
@@ -55,7 +57,7 @@ export default class Delegates extends Base {
 
   /**
    * [voters description]
-   * @param  {[type]} publicKey [description]
+   * @param  {String} publicKey [description]
    * @return {[type]}           [description]
    */
   voters (publicKey) {

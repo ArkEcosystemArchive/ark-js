@@ -1,6 +1,6 @@
 import Ark from '@/'
-import Transaction from '@/builder/transactions/transfer'
 import network from '@/networks/ark/devnet'
+import transactionTests from './__shared__/transaction'
 
 let ark
 let tx
@@ -8,45 +8,28 @@ let tx
 beforeEach(() => {
   ark = new Ark(network)
   tx = ark.getBuilder().transfer()
+
+  global.tx = tx
 })
 
 describe('Transfer Transaction', () => {
-  it('should be instantiated', () => {
-    expect(tx).toBeInstanceOf(Transaction)
-  })
+  transactionTests()
 
-  it('should have all properties', () => {
-    expect(tx).toHaveProperty('id')
-    expect(tx).toHaveProperty('type')
-    expect(tx).toHaveProperty('fee')
+  it('should have its specific properties', () => {
     expect(tx).toHaveProperty('amount')
-    expect(tx).toHaveProperty('timestamp')
     expect(tx).toHaveProperty('recipientId')
     expect(tx).toHaveProperty('senderPublicKey')
-    expect(tx).toHaveProperty('version')
+    expect(tx).toHaveProperty('expiration')
   })
 
-  it('should set the fee', () => {
-    tx.setFee('fake')
-
-    expect(tx.fee).toBe('fake')
-  })
-
-  it('should set the amount', () => {
-    tx.setAmount('fake')
-
-    expect(tx.amount).toBe('fake')
-  })
-
-  it('should set the recipient id', () => {
-    tx.setRecipientId('fake')
-
-    expect(tx.recipientId).toBe('fake')
-  })
-
-  it('should set the sender public key', () => {
-    tx.setSenderPublicKey('fake')
-
-    expect(tx.senderPublicKey).toBe('fake')
+  describe('create', ()=> {
+    it('establishes the recipient id', () => {
+      tx.create('homer')
+      expect(tx.recipientId).toBe('homer')
+    })
+    it('establishes the amount', () => {
+      tx.create(null, 'a lot of ARK')
+      expect(tx.amount).toBe('a lot of ARK')
+    })
   })
 })

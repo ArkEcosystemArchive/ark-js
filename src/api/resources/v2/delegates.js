@@ -11,7 +11,7 @@ export default class Delegates extends Base {
 
   /**
    * [get description]
-   * @param  {[type]} id [description]
+   * @param  {String} id [description]
    * @return {[type]}    [description]
    */
   get (id) {
@@ -20,7 +20,7 @@ export default class Delegates extends Base {
 
   /**
    * [blocks description]
-   * @param  {[type]} id [description]
+   * @param  {String} id [description]
    * @return {[type]}    [description]
    */
   blocks (id) {
@@ -29,7 +29,7 @@ export default class Delegates extends Base {
 
   /**
    * [voters description]
-   * @param  {[type]} id [description]
+   * @param  {String} id [description]
    * @return {[type]}    [description]
    */
   voters (id) {

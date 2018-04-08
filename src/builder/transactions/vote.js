@@ -1,36 +1,27 @@
 import feeManager from '@/managers/fee'
-import configManager from '@/managers/config'
 import cryptoBuilder from '@/builder/crypto'
-import slots from '@/crypto/slots'
 import Transaction from '@/builder/transaction'
-import Model from '@/models/transaction'
 import { TRANSACTION_TYPES } from '@/constants'
 
 export default class Vote extends Transaction {
   /**
-   * [constructor description]
+   * @constructor
    * @return {[type]} [description]
    */
   constructor () {
     super()
 
-    this.model = Model
-
-    this.id = null
     this.type = TRANSACTION_TYPES.VOTE
     this.fee = feeManager.get(TRANSACTION_TYPES.VOTE)
     this.amount = 0
-    this.timestamp = slots.getTime()
     this.recipientId = null
     this.senderPublicKey = null
     this.asset = { votes: {} }
-    this.version = 0x02
-    this.network = configManager.get('pubKeyHash')
   }
 
   /**
    * [create description]
-   * @param  {[type]} delegates [description]
+   * @param  {Array} delegates [description]
    * @return {[type]}           [description]
    */
   create (delegates) {
@@ -40,32 +31,20 @@ export default class Vote extends Transaction {
 
   /**
    * [sign description]
+   * Overrides the inherited `sign` method to set the sender as the recipient too
    * @param  {[type]} passphrase [description]
    * @return {[type]}            [description]
    */
   sign (passphrase) {
-    const keys = cryptoBuilder.getKeys(passphrase)
-    this.recipientId = cryptoBuilder.getAddress(keys.publicKey)
-    this.senderPublicKey = keys.publicKey
-    this.signature = cryptoBuilder.sign(this, keys)
-    return this
-  }
-
-  /**
-   * [secondSign description]
-   * @param  {[type]} transaction [description]
-   * @param  {[type]} passphrase  [description]
-   * @return {[type]}             [description]
-   */
-  secondSign (transaction, passphrase) {
-    const keys = cryptoBuilder.getKeys(passphrase)
-    this.secondSignature = cryptoBuilder.secondSign(transaction, keys)
+    super.sign(passphrase)
+    this.recipientId = cryptoBuilder.getAddress(this.senderPublicKey)
     return this
   }
 
   /**
    * [getStruct description]
-   * @return {[type]} [description]
+   * Overrides the inherited method to return the additional required by this
+   * @return {Object} [description]
    */
   getStruct () {
     return {

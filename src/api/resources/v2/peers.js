@@ -11,7 +11,7 @@ export default class Peers extends Base {
 
   /**
    * [get description]
-   * @param  {[type]} ip [description]
+   * @param  {String} ip [description]
    * @return {[type]}    [description]
    */
   get (ip) {

@@ -93,7 +93,7 @@ class CryptoBuilder {
 
   /**
    * [fromBytes description]
-   * @param  {[type]} hexString [description]
+   * @param  {String} hexString [description]
    * @return {[type]}           [description]
    */
   fromBytes (hexString) {
@@ -203,7 +203,7 @@ class CryptoBuilder {
 
   /**
    * [parseSignatures description]
-   * @param  {[type]} hexString   [description]
+   * @param  {String} hexString   [description]
    * @param  {[type]} tx          [description]
    * @param  {[type]} startOffset [description]
    * @return {[type]}             [description]
@@ -300,7 +300,7 @@ class CryptoBuilder {
   /**
    * [verifySecondSignature description]
    * @param  {[type]} transaction [description]
-   * @param  {[type]} publicKey   [description]
+   * @param  {String} publicKey   [description]
    * @param  {[type]} network     [description]
    * @return {[type]}             [description]
    */
@@ -317,12 +317,12 @@ class CryptoBuilder {
 
   /**
    * [getKeys description]
-   * @param  {[type]} secret  [description]
+   * @param  {String} secret  [description]
    * @param  {[type]} options [description]
    * @return {[type]}         [description]
    */
   getKeys (secret, options) {
-    let ecpair = ECPair.fromSeed(secret, options)
+    const ecpair = ECPair.fromSeed(secret, options)
     ecpair.publicKey = ecpair.getPublicKeyBuffer().toString('hex')
     ecpair.privateKey = ''
 
@@ -331,8 +331,8 @@ class CryptoBuilder {
 
   /**
    * [getAddress description]
-   * @param  {[type]} publicKey [description]
-   * @param  {[type]} version   [description]
+   * @param  {String} publicKey [description]
+   * @param  {[type]} [version] [description]
    * @return {[type]}           [description]
    */
   getAddress (publicKey, version) {
@@ -351,9 +351,9 @@ class CryptoBuilder {
 
   /**
    * [validateAddress description]
-   * @param  {[type]} address [description]
-   * @param  {[type]} version [description]
-   * @return {[type]}         [description]
+   * @param  {String} address   [description]
+   * @param  {[type]} [version] [description]
+   * @return {[type]}           [description]
    */
   validateAddress (address, version) {
     if (!version) {

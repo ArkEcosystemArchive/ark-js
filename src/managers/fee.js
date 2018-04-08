@@ -2,7 +2,7 @@ import { TRANSACTION_TYPES } from '@/constants'
 
 class FeeManager {
   /**
-   * [constructor description]
+   * @constructor
    * @return {[type]} [description]
    */
   constructor () {

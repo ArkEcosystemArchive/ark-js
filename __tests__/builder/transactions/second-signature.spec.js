@@ -1,6 +1,6 @@
 import Ark from '@/'
-import Transaction from '@/builder/transactions/second-signature'
 import network from '@/networks/ark/devnet'
+import transactionTests from './__shared__/transaction'
 
 let ark
 let tx
@@ -8,46 +8,26 @@ let tx
 beforeEach(() => {
   ark = new Ark(network)
   tx = ark.getBuilder().secondSignature()
+
+  global.tx = tx
 })
 
 describe('Second Signature Transaction', () => {
-  it('should be instantiated', () => {
-    expect(tx).toBeInstanceOf(Transaction)
-  })
+  transactionTests()
 
-  it('should have all properties', () => {
-    expect(tx).toHaveProperty('id')
-    expect(tx).toHaveProperty('type')
-    expect(tx).toHaveProperty('fee')
+  it('should have its specific properties', () => {
     expect(tx).toHaveProperty('amount')
-    expect(tx).toHaveProperty('timestamp')
     expect(tx).toHaveProperty('recipientId')
     expect(tx).toHaveProperty('senderPublicKey')
     expect(tx).toHaveProperty('asset')
-    expect(tx).toHaveProperty('version')
   })
 
-  it('should set the fee', () => {
-    tx.setFee('fake')
-
-    expect(tx.fee).toBe('fake')
-  })
-
-  it('should set the amount', () => {
-    tx.setAmount('fake')
-
-    expect(tx.amount).toBe('fake')
-  })
-
-  it('should set the recipient id', () => {
-    tx.setRecipientId('fake')
-
-    expect(tx.recipientId).toBe('fake')
-  })
-
-  it('should set the sender public key', () => {
-    tx.setSenderPublicKey('fake')
-
-    expect(tx.senderPublicKey).toBe('fake')
+  describe('sign', ()=> {
+    xit('establishes the signature on the asset', () => {
+      cryptoBuilder.getKeys = jest.fn(pass => ({ publicKey: `${pass} public key` }))
+      cryptoBuilder.sign = jest.fn()
+      tx.sign('bad pass')
+      expect(tx.asset.signature).toBe('bad pass public key')
+    })
   })
 })

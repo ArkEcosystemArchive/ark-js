@@ -1,6 +1,8 @@
 import Ark from '@/'
-import Transaction from '@/builder/transactions/multi-signature'
 import network from '@/networks/ark/devnet'
+import feeManager from '@/managers/fee'
+import { TRANSACTION_TYPES } from '@/constants'
+import transactionTests from './__shared__/transaction'
 
 let ark
 let tx
@@ -8,46 +10,40 @@ let tx
 beforeEach(() => {
   ark = new Ark(network)
   tx = ark.getBuilder().multiSignature()
+
+  global.tx = tx
 })
 
 describe('Multi Signature Transaction', () => {
-  it('should be instantiated', () => {
-    expect(tx).toBeInstanceOf(Transaction)
-  })
+  transactionTests()
 
-  it('should have all properties', () => {
-    expect(tx).toHaveProperty('id')
-    expect(tx).toHaveProperty('type')
-    expect(tx).toHaveProperty('fee')
+  it('should have its specific properties', () => {
     expect(tx).toHaveProperty('amount')
-    expect(tx).toHaveProperty('timestamp')
     expect(tx).toHaveProperty('recipientId')
     expect(tx).toHaveProperty('senderPublicKey')
     expect(tx).toHaveProperty('asset')
-    expect(tx).toHaveProperty('version')
   })
 
-  it('should set the fee', () => {
-    tx.setFee('fake')
+  describe('create', ()=> {
+    const keysgroup = []
+    const lifetime = 'TODO'
+    const min = 'TODO'
 
-    expect(tx.fee).toBe('fake')
-  })
+    it('establishes the multi-signature asset', () => {
+      tx.create(keysgroup, lifetime, min)
+      expect(tx.asset.multisignature).toEqual({ keysgroup, lifetime, min })
+    })
 
-  it('should set the amount', () => {
-    tx.setAmount('fake')
+    it('calculates and establishes the fee based on the number of key groups', () => {
+      const multiSignatureFee = feeManager.get(TRANSACTION_TYPES.MULTI_SIGNATURE)
 
-    expect(tx.amount).toBe('fake')
-  })
+      tx.create(keysgroup, lifetime, min)
+      expect(tx.fee).toEqual(multiSignatureFee)
 
-  it('should set the recipient id', () => {
-    tx.setRecipientId('fake')
-
-    expect(tx.recipientId).toBe('fake')
-  })
-
-  it('should set the sender public key', () => {
-    tx.setSenderPublicKey('fake')
-
-    expect(tx.senderPublicKey).toBe('fake')
+      keysgroup.push('key 1')
+      keysgroup.push('key 2')
+      tx.create(keysgroup, lifetime, min)
+      expect(tx.fee).toEqual(3 * multiSignatureFee)
+    })
   })
 })

@@ -6,8 +6,8 @@ import cryptoBuilder from '@/builder/crypto'
 
 export default class Wallet {
   /**
-   * [constructor description]
-   * @param  {[type]} address [description]
+   * @constructor
+   * @param  {String} address [description]
    * @return {[type]}         [description]
    */
   constructor (address) {
@@ -219,8 +219,8 @@ export default class Wallet {
   /**
    * [verify description]
    * @param  {[type]} transaction [description]
-   * @param  {[type]} signature   [description]
-   * @param  {[type]} publicKey   [description]
+   * @param  {String} signature   [description]
+   * @param  {String} publicKey   [description]
    * @return {[type]}             [description]
    */
   verify (transaction, signature, publicKey) {
@@ -234,7 +234,7 @@ export default class Wallet {
 
   /**
    * [toString description]
-   * @return {[type]} [description]
+   * @return {String} [description]
    */
   toString () {
     return `${this.address}=${this.balance / ARKTOSHI}`

@@ -1,6 +1,6 @@
 import Ark from '@/'
-import Transaction from '@/builder/transactions/timelock-transfer'
 import network from '@/networks/ark/devnet'
+import transactionTests from './__shared__/transaction'
 
 let ark
 let tx
@@ -8,43 +8,37 @@ let tx
 beforeEach(() => {
   ark = new Ark(network)
   tx = ark.getBuilder().timelockTransfer()
+
+  global.tx = tx
 })
 
 describe('Timelock Transfer Transaction', () => {
-  it('should be instantiated', () => {
-    expect(tx).toBeInstanceOf(Transaction)
-  })
+  transactionTests()
 
-  it('should have all properties', () => {
-    expect(tx).toHaveProperty('id')
-    expect(tx).toHaveProperty('type')
-    expect(tx).toHaveProperty('fee')
+  it('should have its specific properties', () => {
     expect(tx).toHaveProperty('amount')
-    expect(tx).toHaveProperty('timestamp')
-    expect(tx).toHaveProperty('version')
+    expect(tx).toHaveProperty('recipientId')
+    expect(tx).toHaveProperty('senderPublicKey')
+    expect(tx).toHaveProperty('timelockType')
+    expect(tx).toHaveProperty('timelock')
   })
 
-  it('should set the fee', () => {
-    tx.setFee('fake')
-
-    expect(tx.fee).toBe('fake')
-  })
-
-  it('should set the amount', () => {
-    tx.setAmount('fake')
-
-    expect(tx.amount).toBe('fake')
-  })
-
-  it('should set the recipient id', () => {
-    tx.setRecipientId('fake')
-
-    expect(tx.recipientId).toBe('fake')
-  })
-
-  it('should set the sender public key', () => {
-    tx.setSenderPublicKey('fake')
-
-    expect(tx.senderPublicKey).toBe('fake')
+  describe('create', ()=> {
+    it('establishes the recipient id', () => {
+      tx.create('homer')
+      expect(tx.recipientId).toBe('homer')
+    })
+    it('establishes the amount', () => {
+      tx.create(null, 'a lot of ARK')
+      expect(tx.amount).toBe('a lot of ARK')
+    })
+    it('establishes the time lock', () => {
+      tx.create(null, null, 'time lock')
+      expect(tx.timelock).toBe('time lock')
+    })
+    it('establishes the time lock type', () => {
+      tx.create(null, null, null, 'time lock type')
+      expect(tx.timelockType).toBe('time lock type')
+    })
   })
 })

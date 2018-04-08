@@ -6,7 +6,7 @@ import { TRANSACTION_TYPES } from '@/constants'
 class ConfigManager {
   /**
    * [setConfig description]
-   * @param {[type]} config [description]
+   * @param {Object} config [description]
    */
   setConfig (config) {
     this.config = {}
@@ -21,15 +21,15 @@ class ConfigManager {
 
   /**
    * [setFromFile description]
-   * @param {[type]} file [description]
+   * @param {String} path [description]
    */
-  setFromFile (file) {
-    this.setConfig(require(file))
+  setFromFile (path) {
+    this.setConfig(require(path))
   }
 
   /**
    * [all description]
-   * @return {[type]} [description]
+   * @return {Object} [description]
    */
   all () {
     return this.config
@@ -37,7 +37,7 @@ class ConfigManager {
 
   /**
    * [set description]
-   * @param {[type]} key   [description]
+   * @param {String} key   [description]
    * @param {[type]} value [description]
    */
   set (key, value) {
@@ -46,7 +46,7 @@ class ConfigManager {
 
   /**
    * [get description]
-   * @param  {[type]} key [description]
+   * @param  {String} key [description]
    * @return {[type]}     [description]
    */
   get (key) {

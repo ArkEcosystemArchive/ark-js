@@ -3,10 +3,9 @@ import axios from 'axios'
 
 export default class HttpClient {
   /**
-   * [constructor description]
-   * @param  {[type]} host    [description]
+   * @constructor
+   * @param  {String} host    [description]
    * @param  {[type]} version [description]
-   * @return {[type]}         [description]
    */
   constructor (host, version) {
     this.host = host.endsWith('/') ? host.slice(0, -1) : host
@@ -23,7 +22,7 @@ export default class HttpClient {
 
   /**
    * [get description]
-   * @param  {[type]} path   [description]
+   * @param  {String} path   [description]
    * @param  {Object} params [description]
    * @return {[type]}        [description]
    */
@@ -33,7 +32,7 @@ export default class HttpClient {
 
   /**
    * [post description]
-   * @param  {[type]} path [description]
+   * @param  {String} path [description]
    * @param  {Object} data [description]
    * @return {[type]}      [description]
    */
@@ -43,7 +42,7 @@ export default class HttpClient {
 
   /**
    * [put description]
-   * @param  {[type]} path [description]
+   * @param  {String} path [description]
    * @param  {Object} data [description]
    * @return {[type]}      [description]
    */
@@ -53,7 +52,7 @@ export default class HttpClient {
 
   /**
    * [patch description]
-   * @param  {[type]} path [description]
+   * @param  {String} path [description]
    * @param  {Object} data [description]
    * @return {[type]}      [description]
    */
@@ -63,7 +62,7 @@ export default class HttpClient {
 
   /**
    * [delete description]
-   * @param  {[type]} path   [description]
+   * @param  {String} path   [description]
    * @param  {Object} params [description]
    * @return {[type]}        [description]
    */
@@ -72,9 +71,9 @@ export default class HttpClient {
   }
 
   /**
-   * [sendRequest description]
-   * @param  {[type]} method  [description]
-   * @param  {[type]} path    [description]
+   * Performs a request, using the headers that are expected by the network
+   * @param  {String} method  [description]
+   * @param  {String} path    [description]
    * @param  {[type]} payload [description]
    * @return {[type]}         [description]
    */

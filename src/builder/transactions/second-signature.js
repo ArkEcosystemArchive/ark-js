@@ -1,69 +1,41 @@
 import feeManager from '@/managers/fee'
-import configManager from '@/managers/config'
 import cryptoBuilder from '@/builder/crypto'
-import slots from '@/crypto/slots'
 import Transaction from '@/builder/transaction'
-import Model from '@/models/transaction'
 import { TRANSACTION_TYPES } from '@/constants'
 
 export default class SecondSignature extends Transaction {
   /**
-   * [constructor description]
+   * @constructor
    * @return {[type]} [description]
    */
   constructor () {
     super()
 
-    this.model = Model
-
-    this.id = null
     this.type = TRANSACTION_TYPES.SECOND_SIGNATURE
     this.fee = feeManager.get(TRANSACTION_TYPES.SECOND_SIGNATURE)
     this.amount = 0
-    this.timestamp = slots.getTime()
     this.recipientId = null
     this.senderPublicKey = null
     this.asset = { signature: {} }
-    this.version = 0x02
-    this.network = configManager.get('pubKeyHash')
-  }
-
-  /**
-   * [create description]
-   * @return {[type]} [description]
-   */
-  create () {
-    return this
   }
 
   /**
    * [sign description]
-   * @param  {[type]} passphrase [description]
+   * Overrides the inherited `sign` method to include the generated second
+   * signature
+   * @param  {String} passphrase [description]
    * @return {[type]}            [description]
    */
   sign (passphrase) {
-    const keys = cryptoBuilder.getKeys(passphrase)
-    this.senderPublicKey = keys.publicKey
-    this.signature = cryptoBuilder.sign(this, keys)
+    super.sign(passphrase)
     this.asset.signature = this.signature
     return this
   }
 
   /**
-   * [secondSign description]
-   * @param  {[type]} transaction [description]
-   * @param  {[type]} passphrase  [description]
-   * @return {[type]}             [description]
-   */
-  secondSign (transaction, passphrase) {
-    const keys = cryptoBuilder.getKeys(passphrase)
-    this.secondSignature = cryptoBuilder.secondSign(transaction, keys)
-    return this
-  }
-
-  /**
    * [getStruct description]
-   * @return {[type]} [description]
+   * Overrides the inherited method to return the additional required by this
+   * @return {Object} [description]
    */
   getStruct () {
     return {

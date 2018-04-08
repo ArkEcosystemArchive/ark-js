@@ -2,7 +2,7 @@ import HttpClient from './http'
 
 export default class ApiClient {
   /**
-   * [constructor description]
+   * @constructor
    * @param  {[type]} host [description]
    * @return {[type]}      [description]
    */
@@ -41,8 +41,8 @@ export default class ApiClient {
 
   /**
    * [resource description]
-   * @param  {[type]} name [description]
-   * @return {[type]}      [description]
+   * @param  {String} name [description]
+   * @return {Resource}      [description]
    */
   resource (name) {
     const Resource = require(`./resources/v${this.version}/${name}`).default

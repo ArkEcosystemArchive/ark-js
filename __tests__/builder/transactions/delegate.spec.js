@@ -27,14 +27,14 @@ describe('Delegate Transaction', () => {
     expect(tx).not.toHaveProperty('username')
   })
 
-  describe('create', ()=> {
+  describe('create', () => {
     it('establishes the username', () => {
       tx.create('homer')
       expect(tx.username).toBe('homer')
     })
   })
 
-  describe('sign', ()=> {
+  describe('sign', () => {
     xit('establishes the public key of the delegate (on the asset property)', () => {
       cryptoBuilder.getKeys = jest.fn(pass => ({ publicKey: `${pass} public key` }))
       cryptoBuilder.sign = jest.fn()
@@ -44,7 +44,7 @@ describe('Delegate Transaction', () => {
   })
 
   // FIXME asset.delegate.username
-  xdescribe('getStruct', ()=> {
+  xdescribe('getStruct', () => {
     beforeEach(() => {
       tx.senderPublicKey = '01'
       tx.asset = { delegate: {} }

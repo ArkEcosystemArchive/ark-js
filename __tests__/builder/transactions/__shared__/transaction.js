@@ -8,7 +8,7 @@ export default () => {
     tx = global.tx
   })
 
-  describe('inherits from Transaction', ()=> {
+  describe('inherits from Transaction', () => {
     it('as an instance', () => {
       expect(tx).toBeInstanceOf(Transaction)
     })
@@ -25,28 +25,28 @@ export default () => {
       expect(tx).toHaveProperty('fee')
     })
 
-    describe('setFee', ()=> {
+    describe('setFee', () => {
       it('should set the fee', () => {
         tx.setFee('fake')
         expect(tx.fee).toBe('fake')
       })
     })
 
-    describe('setAmount', ()=> {
+    describe('setAmount', () => {
       it('should set the amount', () => {
         tx.setAmount('fake')
         expect(tx.amount).toBe('fake')
       })
     })
 
-    describe('setRecipientId', ()=> {
+    describe('setRecipientId', () => {
       it('should set the recipient id', () => {
         tx.setRecipientId('fake')
         expect(tx.recipientId).toBe('fake')
       })
     })
 
-    describe('setSenderPublicKey', ()=> {
+    describe('setSenderPublicKey', () => {
       it('should set the sender public key', () => {
         tx.setSenderPublicKey('fake')
         expect(tx.senderPublicKey).toBe('fake')
@@ -54,7 +54,7 @@ export default () => {
     })
   })
 
-  describe('sign', ()=> {
+  describe('sign', () => {
     it('signs this transaction with the keys of the passphrase', () => {
       let keys
       cryptoBuilder.getKeys = jest.fn(pass => {
@@ -76,7 +76,7 @@ export default () => {
     })
   })
 
-  describe('signSecond', ()=> {
+  describe('signSecond', () => {
     it('signs this transaction with the keys of the second passphrase', () => {
       let keys
       cryptoBuilder.getKeys = jest.fn(pass => {

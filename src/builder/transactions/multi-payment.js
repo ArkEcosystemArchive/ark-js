@@ -1,5 +1,4 @@
 import feeManager from '@/managers/fee'
-import cryptoBuilder from '@/builder/crypto'
 import Transaction from '@/builder/transaction'
 import { TRANSACTION_TYPES } from '@/constants'
 
@@ -51,19 +50,9 @@ export default class MultiPayment extends Transaction {
    * @return {Object} [description]
    */
   getStruct () {
-    const struct = {
-      hex: cryptoBuilder.getBytes(this).toString('hex'),
-      id: cryptoBuilder.getId(this),
-      signature: this.signature,
-      secondSignature: this.secondSignature,
-      timestamp: this.timestamp,
-
-      type: this.type,
-      fee: this.fee,
-      senderPublicKey: this.senderPublicKey,
-      vendorFieldHex: this.vendorFieldHex
-    }
-
+    const struct = super.getStruct()
+    struct.senderPublicKey = this.senderPublicKey
+    struct.vendorFieldHex = this.vendorFieldHex
     return Object.assign(struct, this.payments)
   }
 }

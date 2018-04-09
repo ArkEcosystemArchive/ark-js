@@ -1,5 +1,4 @@
 import feeManager from '@/managers/fee'
-import cryptoBuilder from '@/builder/crypto'
 import Transaction from '@/builder/transaction'
 import { TRANSACTION_TYPES } from '@/constants'
 
@@ -53,22 +52,13 @@ export default class TimelockTransfer extends Transaction {
    * @return {Object} [description]
    */
   getStruct () {
-    return {
-      hex: cryptoBuilder.getBytes(this).toString('hex'),
-      id: cryptoBuilder.getId(this),
-      signature: this.signature,
-      secondSignature: this.secondSignature,
-      timestamp: this.timestamp,
-
-      type: this.type,
-      amount: this.amount,
-      fee: this.fee,
-      recipientId: this.recipientId,
-      senderPublicKey: this.senderPublicKey,
-      vendorFieldHex: this.vendorFieldHex,
-      asset: this.asset,
-      timelock: this.timelock,
-      timelockType: this.timelockType
-    }
+    const struct = super.getStruct()
+    struct.amount = this.amount
+    struct.recipientId = this.recipientId
+    struct.vendorFieldHex = this.vendorFieldHex
+    struct.asset = this.asset
+    struct.timelock = this.timelock
+    struct.timelockType = this.timelockType
+    return struct
   }
 }

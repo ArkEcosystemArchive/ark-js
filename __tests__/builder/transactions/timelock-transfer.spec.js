@@ -23,7 +23,7 @@ describe('Timelock Transfer Transaction', () => {
     expect(tx).toHaveProperty('timelock')
   })
 
-  describe('create', ()=> {
+  describe('create', () => {
     it('establishes the recipient id', () => {
       tx.create('homer')
       expect(tx.recipientId).toBe('homer')

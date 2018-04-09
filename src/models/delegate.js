@@ -14,16 +14,16 @@ export default class Delegate {
    * @constructor
    * @param  {String} passphrase [description]
    * @param  {[type]} network    [description]
-   * @param  {String} passphrase   [description]
+   * @param  {String} password   [description]
    * @return {[type]}            [description]
    */
-  constructor (passphrase, network, passphrase) {
+  constructor (passphrase, network, password) {
     this.network = network
     this.keySize = 32 // AES-256
     this.iterations = 5000
     if (bip38.verify(passphrase)) {
       try {
-        this.keys = this.decrypt(passphrase, network, passphrase)
+        this.keys = this.decrypt(passphrase, network, password)
         this.publicKey = this.keys.getPublicKeyBuffer().toString('hex')
         this.address = this.keys.getAddress(network.pubKeyHash)
         this.otpSecret = otplib.authenticator.generateSecret()
@@ -45,15 +45,15 @@ export default class Delegate {
    * [encrypt description]
    * @param  {type} passphrase [description]
    * @param  {[type]} network    [description]
-   * @param  {type} passphrase   [description]
+   * @param  {type} password   [description]
    * @return {[type]}            [description]
    */
-  static encrypt (passphrase, network, passphrase) {
+  static encrypt (passphrase, network, password) {
     const keys = cryptoBuilder.getKeys(passphrase, network)
     const wifKey = keys.toWIF()
     const decoded = wif.decode(wifKey)
 
-    return bip38.encrypt(decoded.privateKey, decoded.compressed, passphrase)
+    return bip38.encrypt(decoded.privateKey, decoded.compressed, password)
   }
 
   /**
@@ -82,11 +82,11 @@ export default class Delegate {
    * [decrypt description]
    * @param  {type} passphrase [description]
    * @param  {[type]} network    [description]
-   * @param  {type} passphrase   [description]
+   * @param  {type} password   [description]
    * @return {[type]}            [description]
    */
-  decrypt (passphrase, network, passphrase) {
-    const decryptedWif = bip38.decrypt(passphrase, passphrase)
+  decrypt (passphrase, network, password) {
+    const decryptedWif = bip38.decrypt(passphrase, password)
     const wifKey = wif.encode(network.wif, decryptedWif.privateKey, decryptedWif.compressed)
     let keys = ECPair.fromWIF(wifKey, network)
     keys.publicKey = keys.getPublicKeyBuffer().toString('hex')
@@ -97,11 +97,11 @@ export default class Delegate {
   /**
    * [encryptData description]
    * @param  {[type]} content  [description]
-   * @param  {type} passphrase [description]
+   * @param  {type} password [description]
    * @return {[type]}          [description]
    */
-  encryptData (content, passphrase) {
-    let derivedKey = forge.pkcs5.pbkdf2(passphrase, this.otpSecret, this.iterations, this.keySize)
+  encryptData (content, password) {
+    let derivedKey = forge.pkcs5.pbkdf2(password, this.otpSecret, this.iterations, this.keySize)
     let cipher = forge.cipher.createCipher('AES-CBC', derivedKey)
     cipher.start({ iv: forge.util.decode64(this.otp) })
     cipher.update(forge.util.createBuffer(content))
@@ -113,11 +113,11 @@ export default class Delegate {
   /**
    * [decryptData description]
    * @param  {[type]} cipherText [description]
-   * @param  {type} passphrase   [description]
+   * @param  {type} password   [description]
    * @return {[type]}            [description]
    */
-  decryptData (cipherText, passphrase) {
-    let derivedKey = forge.pkcs5.pbkdf2(passphrase, this.otpSecret, this.iterations, this.keySize)
+  decryptData (cipherText, password) {
+    let derivedKey = forge.pkcs5.pbkdf2(password, this.otpSecret, this.iterations, this.keySize)
     let decipher = forge.cipher.createDecipher('AES-CBC', derivedKey)
     decipher.start({ iv: forge.util.decode64(this.otp) })
     decipher.update(forge.util.createBuffer(forge.util.decode64(cipherText)))

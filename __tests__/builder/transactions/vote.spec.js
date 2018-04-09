@@ -1,4 +1,5 @@
 import Ark from '@/'
+import cryptoBuilder from '@/builder/crypto'
 import network from '@/networks/ark/devnet'
 import transactionTests from './__shared__/transaction'
 
@@ -22,7 +23,7 @@ describe('Vote Transaction', () => {
     expect(tx).toHaveProperty('asset')
   })
 
-  describe('create', ()=> {
+  describe('create', () => {
     it('establishes the votes asset', () => {
       const nonsenseVotes = ['Trump', 'Brexit', 'Rajoy']
       tx.create(nonsenseVotes)
@@ -30,7 +31,7 @@ describe('Vote Transaction', () => {
     })
   })
 
-  describe('sign', ()=> {
+  describe('sign', () => {
     xit('establishes the recipient id', () => {
       cryptoBuilder.getKeys = jest.fn(pass => ({ publicKey: `${pass} public key` }))
       cryptoBuilder.sign = jest.fn()

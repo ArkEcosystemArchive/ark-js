@@ -1,5 +1,4 @@
 import feeManager from '@/managers/fee'
-import cryptoBuilder from '@/builder/crypto'
 import Transaction from '@/builder/transaction'
 import { TRANSACTION_TYPES } from '@/constants'
 
@@ -16,7 +15,6 @@ export default class Transfer extends Transaction {
     this.amount = 0
     this.recipientId = null
     this.senderPublicKey = null
-    // TODO: why is this in the normal transfer and not timelock?
     this.expiration = 15 // 15 blocks, 120s
   }
 
@@ -49,20 +47,11 @@ export default class Transfer extends Transaction {
    * @return {Object} [description]
    */
   getStruct () {
-    return {
-      hex: cryptoBuilder.getBytes(this).toString('hex'),
-      id: cryptoBuilder.getId(this),
-      signature: this.signature,
-      secondSignature: this.secondSignature,
-      timestamp: this.timestamp,
-
-      type: this.type,
-      amount: this.amount,
-      fee: this.fee,
-      recipientId: this.recipientId,
-      senderPublicKey: this.senderPublicKey,
-      vendorFieldHex: this.vendorFieldHex,
-      asset: this.asset
-    }
+    const struct = super.getStruct()
+    struct.amount = this.amount
+    struct.recipientId = this.recipientId
+    struct.asset = this.asset
+    struct.vendorFieldHex = this.vendorFieldHex
+    return struct
   }
 }

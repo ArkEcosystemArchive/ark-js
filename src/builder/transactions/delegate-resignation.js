@@ -1,5 +1,4 @@
 import feeManager from '@/managers/fee'
-import cryptoBuilder from '@/builder/crypto'
 import Transaction from '@/builder/transaction'
 import { TRANSACTION_TYPES } from '@/constants'
 

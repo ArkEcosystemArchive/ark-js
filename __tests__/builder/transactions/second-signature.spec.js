@@ -1,4 +1,5 @@
 import Ark from '@/'
+import cryptoBuilder from '@/builder/crypto'
 import network from '@/networks/ark/devnet'
 import transactionTests from './__shared__/transaction'
 
@@ -22,7 +23,7 @@ describe('Second Signature Transaction', () => {
     expect(tx).toHaveProperty('asset')
   })
 
-  describe('sign', ()=> {
+  describe('sign', () => {
     xit('establishes the signature on the asset', () => {
       cryptoBuilder.getKeys = jest.fn(pass => ({ publicKey: `${pass} public key` }))
       cryptoBuilder.sign = jest.fn()

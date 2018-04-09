@@ -24,7 +24,7 @@ describe('Multi Signature Transaction', () => {
     expect(tx).toHaveProperty('asset')
   })
 
-  describe('create', ()=> {
+  describe('create', () => {
     const keysgroup = []
     const lifetime = 'TODO'
     const min = 'TODO'

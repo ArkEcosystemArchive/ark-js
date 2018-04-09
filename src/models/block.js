@@ -7,7 +7,6 @@ import ECPair from '@/crypto/ecpair'
 import ECSignature from '@/crypto/ecsignature'
 import slots from '@/crypto/slots'
 
-
 /**
   * [description]
   * @param  {[type]} data [description]

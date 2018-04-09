@@ -20,14 +20,14 @@ describe('Multi Payment Transaction', () => {
     expect(tx).toHaveProperty('vendorFieldHex')
   })
 
-  describe('setVendorField', ()=> {
+  describe('setVendorField', () => {
     xit('should generate and set the vendorFieldHex', () => {
       tx.setVendorField('fake')
       expect(tx.vendorFieldHex).toBe('fake')
     })
   })
 
-  describe('addPayment', ()=> {
+  describe('addPayment', () => {
     it('should add new payments', () => {
       tx.addPayment('address', 'amount')
       tx.addPayment('address', 'amount')

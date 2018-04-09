@@ -3,8 +3,6 @@ import bignum from 'bignum'
 import ByteBuffer from 'bytebuffer'
 import Transaction from '@/models/transaction'
 import configManager from '@/managers/config'
-import ECPair from '@/crypto/ecpair'
-import ECSignature from '@/crypto/ecsignature'
 import slots from '@/crypto/slots'
 import verifyHash from '@/utils/verify-hash'
 

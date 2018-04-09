@@ -4,7 +4,6 @@ import fixtures from './fixtures/verify-hash.json'
 import bcrypto from '@/crypto'
 import BigInteger from 'bigi'
 import ecurve from 'ecurve'
-import ECSignature from '@/crypto/ecsignature'
 
 const secp256k1 = ecurve.getCurveByName('secp256k1')
 

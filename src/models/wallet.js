@@ -1,7 +1,4 @@
-import config from '@/managers/config'
 import { ARKTOSHI, TRANSACTION_TYPES } from '@/constants'
-import ECPair from '@/crypto/ecpair'
-import ECSignature from '@/crypto/ecsignature'
 import cryptoBuilder from '@/builder/crypto'
 import verifyHash from '@/utils/verify-hash'
 

@@ -1,8 +1,8 @@
 import ApiClient from '@/api'
+import NetworkManager from '@/managers/network'
 import transactionBuilder from '@/builder'
 import configManager from '@/managers/config'
 import feeManager from '@/managers/fee'
-import defaultConfig from '@/networks/ark/devnet'
 
 export default class Ark {
   /**
@@ -11,7 +11,7 @@ export default class Ark {
    * @return {[type]}        [description]
    */
   constructor (config) {
-    this.setConfig(config || defaultConfig)
+    this.setConfig(config || NetworkManager.findByName('devnet'))
   }
 
   /**
@@ -53,5 +53,9 @@ export default class Ark {
    */
   getClient (host) {
     return new ApiClient(host)
+  }
+
+  static getNetworkManager () {
+    return NetworkManager
   }
 }

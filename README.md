@@ -1,3 +1,5 @@
+**:warning: SOON TO BE DEPRECATED IN FAVOR OF https://github.com/ArkEcosystem/core/tree/master/packages/crypto - PLEASE SUBMIT PULL REQUESTS TO THE CORE V2 REPOSITORY :warning:***
+
 ![ARK JavaScript](https://i.imgur.com/ywwE2uF.png)
 
 

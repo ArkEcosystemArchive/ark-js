@@ -284,6 +284,10 @@ var transaction = ark.vote.createVote("secret", ["+58199578191950019299181920120
 
 ***
 
+## Security
+
+If you discover a security vulnerability within this package, please send an e-mail to security@ark.io. All security vulnerabilities will be promptly addressed.
+
 ## Authors
 - FX Thoorens <fx@ark.io>
 - Guillaume Verbal <doweig@ark.io>
